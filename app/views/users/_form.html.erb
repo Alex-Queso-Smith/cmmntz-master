@@ -12,6 +12,10 @@
       </div>
     <% end %>
 
+    <h3 class="text-center">Sign-Up Required Information </h3>
+
+    <hr />
+
     <div class="form-group">
       <%= form.label :user_name %>
       <%= form.text_field :user_name, class: "form-control" %>
@@ -26,6 +30,16 @@
       <%= form.label :password_confirmation %>
       <%= form.password_field :password_confirmation, class: "form-control" %>
     </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <br />
+      <input type="text" class="form-control" name="user[email]" >
+    </div>
+
+    <h3 class="text-center">Sign-Up Optional Information 1/2 </h3>
+
+    <hr />
 
     <div class="form-group">
       <%= form.label :age_range %>
@@ -109,11 +123,7 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="email">Email</label>
-      <br />
-      <input type="text" class="form-control" name="user[email]" >
-    </div>
+    <h3 class="text-center">Sign-Up Optional Information 2/2 </h3>
 
     <hr />
 
