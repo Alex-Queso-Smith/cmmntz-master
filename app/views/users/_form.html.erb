@@ -29,26 +29,87 @@
 
     <div class="form-group">
       <%= form.label :age_range %>
-      <%= form.text_field :age_range, class: "form-control" %>
+      <br />
+      <input type="hidden" name="user[age_range]" value="">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[age_range]" id="user_age_range_15" autocomplete="off" value="15"> 15-19
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[age_range]" id="user_age_range_20" autocomplete="off" value="20"> 20-24
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[age_range]" id="user_age_range_25" autocomplete="off" value="25"> 25-29
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[age_range]" id="user_age_range_30" autocomplete="off" value="30"> 30-34
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[age_range]" id="user_age_range_35" autocomplete="off" value="35"> 35-39
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[age_range]" id="user_age_range_40" autocomplete="off" value="40"> 40-44
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[age_range]" id="user_age_range_45" autocomplete="off" value="45"> 45-49
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[age_range]" id="user_age_range_50" autocomplete="off" value="50"> 50-54
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[age_range]" id="user_age_range_55" autocomplete="off" value="55"> 55-59
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[age_range]" id="user_age_range_60" autocomplete="off" value="60"> 60+
+        </label>
+      </div>
+      <br />
+
+      <input id="age_range-opt-out" type="checkbox" autocomplete="off"> Prefer not to say
     </div>
+
+    <hr />
+
+    <div class="form-group">
+      <label for="location">Location</label>
+      <br />
+      <%= form.text_field :latitude, class: "form-control" %>
+      <%= form.text_field :longitude, class: "form-control" %>
+
+      <input id="location-opt-out" type="checkbox" autocomplete="off"> Prefer not to say
+    </div>
+
+    <hr />
 
     <div class="form-group">
       <%= form.label :gender %>
-      <%= form.text_field :gender, class: "form-control" %>
+      <br />
+      <input type="hidden" name="user[gender]" value="">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[gender]" id="user_gender_0" autocomplete="off" value="0"> Male
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[gender]" id="user_gender_1" autocomplete="off" value="1"> Other
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="user[gender]" id="user_gender_2" autocomplete="off" value="2"> Female
+        </label>
+      </div>
+      <br />
+      <input id="gender-opt-out" type="checkbox" autocomplete="off"> Prefer not to say
     </div>
 
     <div class="form-group">
-      <%= form.label :latitude %>
-      <%= form.text_field :latitude, class: "form-control" %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :longitude %>
-      <%= form.text_field :longitude, class: "form-control" %>
+      <label for="email">Email</label>
+      <br />
+      <input type="text" class="form-control" name="user[email]" >
+      <br />
+      <input id="email-opt-out" type="checkbox" autocomplete="off"> Prefer not to say
     </div>
 
     <div class="actions form-group">
-      <%= form.submit "Save", class: "button" %>
+      <%= form.submit "Save", class: "btn btn-dark" %>
     </div>
   <% end %>
 </div>
