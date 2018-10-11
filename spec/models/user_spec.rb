@@ -7,6 +7,7 @@ RSpec.describe User, type: :model do
     let!(:user3) { FactoryBot.build(:user, password: "") }
     let!(:user4) { FactoryBot.build(:user) }
     let!(:user5) { FactoryBot.build(:user, gender: 0) }
+    let!(:user6) { FactoryBot.build(:user) }
 
     it "is valid with valid inputs" do
       expect(user1).to be_valid
@@ -96,6 +97,13 @@ RSpec.describe User, type: :model do
 
           expect(user4).to_not be_valid
         end
+      end
+    end
+
+    describe "email validations" do
+      it "should be invalid with invalid email" do
+        user6.email = "invalid"
+        expect(user6).to_not be_valid
       end
     end
 
