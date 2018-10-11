@@ -1,0 +1,6 @@
+$breakpoint-tablet: 768px;
+@media (max-width: $breakpoint-tablet) {
+  #user-age-range{
+    position: relative;
+  }
+}

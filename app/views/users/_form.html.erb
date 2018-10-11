@@ -31,7 +31,7 @@
       <%= form.label :age_range %>
       <br />
       <input type="hidden" name="user[age_range]" value="">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <div id="user-age-range" class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-secondary">
           <input type="radio" name="user[age_range]" id="user_age_range_15" autocomplete="off" value="15"> 15-19
         </label>
@@ -65,7 +65,10 @@
       </div>
       <br />
 
-      <input id="age_range-opt-out" type="checkbox" autocomplete="off"> Prefer not to say
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="age_range-opt-out" autocomplete="off">
+        <label class="custom-control-label" for="age_range-opt-out">Prefer not to say</label>
+      </div>
     </div>
 
     <hr />
@@ -76,7 +79,10 @@
       <%= form.text_field :latitude, class: "form-control" %>
       <%= form.text_field :longitude, class: "form-control" %>
 
-      <input id="location-opt-out" type="checkbox" autocomplete="off"> Prefer not to say
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="location-opt-out" autocomplete="off">
+        <label class="custom-control-label" for="location-opt-out">Prefer not to say</label>
+      </div>
     </div>
 
     <hr />
@@ -97,17 +103,25 @@
         </label>
       </div>
       <br />
-      <input id="gender-opt-out" type="checkbox" autocomplete="off"> Prefer not to say
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="gender-opt-out" autocomplete="off">
+        <label class="custom-control-label" for="gender-opt-out">Prefer not to say</label>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="email">Email</label>
       <br />
       <input type="text" class="form-control" name="user[email]" >
-      <br />
-      <input id="email-opt-out" type="checkbox" autocomplete="off"> Prefer not to say
     </div>
 
+    <hr />
+
+    <div class="form-group">
+      <label for="avatar">Avatar</label>
+      <br />
+      Coming Soon
+    </div>
     <div class="actions form-group">
       <%= form.submit "Save", class: "btn btn-dark" %>
     </div>
