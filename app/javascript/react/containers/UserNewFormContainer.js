@@ -3,6 +3,7 @@ import React from 'react';
 
 import Input from '../components/form/Input';
 import GenderButton from '../components/form/GenderButton';
+import AgeRange from '../components/form/AgeRange';
 
 class UserNewFormContainer extends React.Component {
   constructor(props){
@@ -117,7 +118,6 @@ class UserNewFormContainer extends React.Component {
   }
 
   render(){
-    // let token = document.querySelector('meta[name="csrf-token"]');
     let errorDiv;
 
     let errorItems;
@@ -130,66 +130,109 @@ class UserNewFormContainer extends React.Component {
 
     return(
       <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
-        <h1 className="user-title">User Registration</h1>
-        {errorDiv}
-        <Input
-          name="userName"
-          label="User Name"
-          handleChange={this.handleChange}
-          content={this.state.userName}
-          type="text"
-        />
-        <Input
-          name="email"
-          label="Email"
-          handleChange={this.handleChange}
-          content={this.state.email}
-          type="text"
-        />
-        <Input
-          name="password"
-          label="Password"
-          handleChange={this.handleChange}
-          content={this.state.password}
-          type="password"
-        />
-        <Input
-          name="passwordConfirmation"
-          label="Password Confirmation"
-          handleChange={this.handleChange}
-          content={this.state.passwordConfirmation}
-          type="password"
-        />
-        <Input
-          name="ageRange"
-          label="Age Range"
-          handleChange={this.handleChange}
-          content={this.state.ageRange}
-          type="text"
-        />
-        <GenderButton
-          name="gender"
-          label="Gender"
-          handleChange={this.handleChange}
-          content={this.state.gender}
-          type="text"
-        />
-        <Input
-          name="latitude"
-          label="Latitude"
-          handleChange={this.handleChange}
-          content={this.state.latitude}
-          type="text"
-        />
-        <Input
-          name="loingitude"
-          label="Longitude"
-          handleChange={this.handleChange}
-          content={this.state.longitude}
-          type="text"
-        />
+        <h1 className="user-title text-center">User Registration</h1>
 
-      <button id="user-registration-button" type="submit" className="btn btn-dark" value="Submit">Register</button>
+        {errorDiv}
+
+        <div id="reg-required" className="form-group">
+          <h3 className="text-center">Sign-Up Required Information </h3>
+          <Input
+            name="userName"
+            label="User Name"
+            handleChange={this.handleChange}
+            content={this.state.userName}
+            type="text"
+          />
+          <Input
+            name="email"
+            label="Email"
+            handleChange={this.handleChange}
+            content={this.state.email}
+            type="text"
+          />
+          <Input
+            name="password"
+            label="Password"
+            handleChange={this.handleChange}
+            content={this.state.password}
+            type="password"
+          />
+          <Input
+            name="passwordConfirmation"
+            label="Password Confirmation"
+            handleChange={this.handleChange}
+            content={this.state.passwordConfirmation}
+            type="password"
+          />
+          <div className="form-group actions margin-top-10px">
+            <button id="user-registration-button" className="btn btn-block btn-large btn-dark" >
+              <span className="text-large">Next Page (Optional)</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="reg-optional-1" className="form-group">
+          <h3 className="text-center">Sign-Up Optional Information 1/2 </h3>
+
+          <hr />
+
+          <AgeRange
+            name="ageRange"
+            label="Age Range"
+            handleChange={this.handleChange}
+            content={this.state.ageRange}
+            type="text"
+          />
+          <hr />
+          <GenderButton
+            name="gender"
+            label="Gender"
+            handleChange={this.handleChange}
+            content={this.state.gender}
+            type="text"
+          />
+          <hr />
+          <Input
+            name="latitude"
+            label="Latitude"
+            handleChange={this.handleChange}
+            content={this.state.latitude}
+            type="text"
+          />
+          <Input
+            name="longitude"
+            label="Longitude"
+            handleChange={this.handleChange}
+            content={this.state.longitude}
+            type="text"
+          />
+          <div className="custom-control custom-checkbox margin-top-10px">
+            <input type="checkbox" className="custom-control-input" id='location-opt-out' autoComplete="off" />
+            <label className="custom-control-label text-medium" htmlFor='location-opt-out' >None of Your Business</label>
+          </div>
+          <div className="form-group actions margin-top-10px">
+            <button id="user-registration-button" className="btn btn-block btn-large btn-dark" >
+              <span className="text-large">Next Page (Optional)</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="reg-optional-2" className="form-group hidden">
+          <h3 className="text-center">Sign-Up Optional Information 2/2 </h3>
+
+          <hr />
+
+          <div className="form-group margin-top-10px">
+            <label className="text-large" htmlFor="avatar">Avatar</label>
+            <br />
+            Coming Soon
+          </div>
+        </div>
+        <div className="form-group actions margin-top-10px">
+          <button id="user-registration-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit">
+            <span className="text-large">Register</span>
+          </button>
+        </div>
       </form>
     )
   }
