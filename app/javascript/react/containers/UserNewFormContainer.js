@@ -2,15 +2,16 @@ import React from 'react';
 // import { Router } from 'react-router-dom';
 
 import Input from '../components/form/Input';
+import GenderButton from '../components/form/GenderButton';
 
 class UserNewFormContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      userName: 'Howdy',
-      password: 'password',
-      passwordConfirmation: 'password',
-      email: 'howdy@doody.com',
+      userName: '',
+      password: '',
+      passwordConfirmation: '',
+      email: '',
       ageRange: '',
       latitude: '',
       longitude: '',
@@ -67,12 +68,7 @@ class UserNewFormContainer extends React.Component {
       }
     })
     if (Object.keys(this.state.errors).length == 0){
-      // var newUser = {
-      //   user_name: this.state.userName,
-      //   password: this.state.password,
-      //   password_confirmation: this.state.passwordConfirmation
-      // }
-      let newUser = new FormData();
+      var newUser = new FormData();
       newUser.append("user[user_name]", this.state.userName);
       newUser.append("user[password]", this.state.password);
       newUser.append("user[password_confirmation]", this.state.passwordConfirmation);
@@ -83,7 +79,7 @@ class UserNewFormContainer extends React.Component {
       newUser.append("user[gender]", this.state.gender);
 
       this.createUser(newUser);
-      // this.handleClear();
+      this.handleClear();
     }
   }
 
@@ -133,7 +129,7 @@ class UserNewFormContainer extends React.Component {
     }
 
     return(
-      <form className="" id="academy-form" onSubmit={this.handleSubmit} >
+      <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
         <h1 className="user-title">User Registration</h1>
         {errorDiv}
         <Input
@@ -171,7 +167,7 @@ class UserNewFormContainer extends React.Component {
           content={this.state.ageRange}
           type="text"
         />
-        <Input
+        <GenderButton
           name="gender"
           label="Gender"
           handleChange={this.handleChange}
@@ -193,7 +189,7 @@ class UserNewFormContainer extends React.Component {
           type="text"
         />
 
-      <button id="" type="submit" className="" value="Submit">Register</button>
+      <button id="user-registration-button" type="submit" className="btn btn-dark" value="Submit">Register</button>
       </form>
     )
   }

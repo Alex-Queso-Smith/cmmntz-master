@@ -2,9 +2,9 @@ import React from 'react';
 
 const Input = props => {
   return(
-    <div>
+    <div className="form-group">
       <label htmlFor={props.name}>{props.label}</label>
-      <input type={props.type} name={props.name} value={props.content} onChange={props.handleChange}></input>
+      <input className="form-control" type={props.type} name={props.name} value={props.content} onChange={props.handleChange}></input>
     </div>
   );
 };
