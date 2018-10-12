@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserHistory } from 'react-router';
+// import { Router } from 'react-router-dom';
 
 import Input from '../components/form/Input';
 
@@ -7,10 +7,10 @@ class UserNewFormContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      userName: '',
-      password: '',
-      passwordConfirmation: '',
-      email: '',
+      userName: 'Howdy',
+      password: 'password',
+      passwordConfirmation: 'password',
+      email: 'howdy@doody.com',
       ageRange: '',
       latitude: '',
       longitude: '',
@@ -19,6 +19,9 @@ class UserNewFormContainer extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.validateEntry = this.validateEntry.bind(this);
+    this.createUser = this.createUser.bind(this);
   }
 
   handleChange(event){
@@ -64,22 +67,28 @@ class UserNewFormContainer extends React.Component {
       }
     })
     if (Object.keys(this.state.errors).length == 0){
+      // var newUser = {
+      //   user_name: this.state.userName,
+      //   password: this.state.password,
+      //   password_confirmation: this.state.passwordConfirmation
+      // }
       let newUser = new FormData();
-      newUser.append("userName", this.state.userName);
-      newUser.append("password", this.state.password);
-      newUser.append("passwordConfirmation", this.state.passwordConfirmation);
-      newUser.append("ageRange", this.state.ageRange);
-      newUser.append("latitude", this.state.latitude);
-      newUser.append("longitude", this.state.longitude);
-      newUser.append("gender", this.state.gender)
+      newUser.append("user[user_name]", this.state.userName);
+      newUser.append("user[password]", this.state.password);
+      newUser.append("user[password_confirmation]", this.state.passwordConfirmation);
+      newUser.append("user[age_range]", this.state.ageRange);
+      newUser.append("user[latitude]", this.state.latitude);
+      newUser.append("user[longitude]", this.state.longitude);
+      newUser.append("user[email]", this.state.email);
+      newUser.append("user[gender]", this.state.gender);
 
       this.createUser(newUser);
-      this.handleClear();
+      // this.handleClear();
     }
   }
 
   createUser(payload){
-    fetch('/users.json', {
+    fetch('/api/v1/users.json', {
       method: 'POST',
       credentials: 'same-origin',
       body: payload
@@ -94,7 +103,6 @@ class UserNewFormContainer extends React.Component {
        }
      })
      .then(response => response.json())
-     .then(browserHistory.push(`/users`))
      .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
@@ -113,7 +121,7 @@ class UserNewFormContainer extends React.Component {
   }
 
   render(){
-
+    // let token = document.querySelector('meta[name="csrf-token"]');
     let errorDiv;
 
     let errorItems;
@@ -133,6 +141,13 @@ class UserNewFormContainer extends React.Component {
           label="User Name"
           handleChange={this.handleChange}
           content={this.state.userName}
+          type="text"
+        />
+        <Input
+          name="email"
+          label="Email"
+          handleChange={this.handleChange}
+          content={this.state.email}
           type="text"
         />
         <Input
