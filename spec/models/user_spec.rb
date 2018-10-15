@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  xdescribe "validation" do
+  describe "validation" do
     let!(:user1) { FactoryBot.build(:user) }
     let!(:user2) { FactoryBot.build(:user) }
     let!(:user3) { FactoryBot.build(:user, password: "") }
@@ -22,9 +22,42 @@ RSpec.describe User, type: :model do
       end
     end
 
-    # authlogic does not allow password to be blanked....
-    it "is invalid with password blank" do
-      expect(user3).to_not be_valid
+    describe "password validations" do
+      # authlogic does not allow password to be blanked....
+      it "is invalid with password blank" do
+        expect(user3).to_not be_valid
+      end
+
+      it "should be invalid if password and password_confirmation do not match" do
+        user3.password = "123Abcd"
+        user3.password_confirmation = "123acbD"
+        expect(user3).to_not be_valid
+      end
+
+      it "is invalid with greater than 32 characters" do
+        user3.password = "Abc456789012345678901234567890123"
+        user3.password_confirmation = "Abc456789012345678901234567890123"
+        expect(user3).to_not be_valid
+      end
+
+      it "is invalid with less than 6 characters" do
+        user3.password = "Abc45"
+        user3.password_confirmation = "Abc45"
+        expect(user3).to_not be_valid
+      end
+
+      it "should be invalid without at least 1 capital_letter" do
+        user3.password = "abc4567"
+        user3.password_confirmation = "abc4567"
+        expect(user3).to_not be_valid
+      end
+
+      it "should be invalid without at least 1 integer" do
+        user3.password = "abcdefg"
+        user3.password_confirmation = "abcdefg"
+        expect(user3).to_not be_valid
+      end
+
     end
 
     describe "gender validations" do
@@ -111,7 +144,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  xdescribe "basic user gender functionality" do
+  describe "basic user gender functionality" do
     let!(:user) { FactoryBot.build(:user) }
 
     it "should return blank for unspecified" do
@@ -134,7 +167,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  xdescribe "basic age range functionality" do
+  describe "basic age range functionality" do
     let!(:user) { FactoryBot.build(:user) }
 
     user_ages = User::AGES
