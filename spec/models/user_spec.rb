@@ -46,17 +46,19 @@ RSpec.describe User, type: :model do
         expect(user3).to_not be_valid
       end
 
-      it "should be invalid without at least 1 capital_letter" do
-        user3.password = "abc4567"
-        user3.password_confirmation = "abc4567"
-        expect(user3).to_not be_valid
-      end
+      # Disabled for the MVP
+      # it "should be invalid without at least 1 capital_letter" do
+      #   user3.password = "abc4567"
+      #   user3.password_confirmation = "abc4567"
+      #   expect(user3).to_not be_valid
+      # end
 
-      it "should be invalid without at least 1 integer" do
-        user3.password = "abcdefg"
-        user3.password_confirmation = "abcdefg"
-        expect(user3).to_not be_valid
-      end
+      # Disabled for the MVP 
+      # it "should be invalid without at least 1 integer" do
+      #   user3.password = "abcdefg"
+      #   user3.password_confirmation = "abcdefg"
+      #   expect(user3).to_not be_valid
+      # end
 
     end
 
