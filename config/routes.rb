@@ -15,4 +15,7 @@ Rails.application.routes.draw do
   get 'register' => "users#new",           as: :register
   get 'login' => "user_sessions#new",      as: :login
   get 'logout' => "user_sessions#destroy", as: :logout
+
+  # root
+  root :to => 'users#index'
 end
