@@ -13,6 +13,7 @@ const UserRegPageOne = props => {
         content={props.userName}
         type="text"
       />
+      {props.userNameError}
       <Input
         name="email"
         label="Email"
@@ -20,6 +21,7 @@ const UserRegPageOne = props => {
         content={props.email}
         type="text"
       />
+      {props.emailError}
       <Input
         name="password"
         label="Password"
@@ -27,6 +29,7 @@ const UserRegPageOne = props => {
         content={props.password}
         type="password"
       />
+      {props.passwordError}
       <Input
         name="passwordConfirmation"
         label="Password Confirmation"
@@ -34,6 +37,7 @@ const UserRegPageOne = props => {
         content={props.passwordConfirmation}
         type="password"
       />
+      {props.passwordConfirmationError}
       <div className="form-group actions margin-top-10px">
         <button id="user-registration-button-page-one" className="btn btn-block btn-large btn-dark" onClick={props.handleButtonClick} disabled={props.disabled}>
           <span className="text-large">Next Page (Optional)</span>

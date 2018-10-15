@@ -21,6 +21,7 @@ class UserNewFormContainer extends React.Component {
       gender: '',
       currentPage: 1,
       formInvalid: true,
+      registrationErrors: {},
       errors: {}
     }
     this.handleChange = this.handleChange.bind(this);
@@ -109,7 +110,8 @@ class UserNewFormContainer extends React.Component {
        }
      })
      .then(response => response.json())
-     .then(body => {debugger})
+     // .then(body => {debugger})
+     .then(body => this.setState({ registrationErrors: body.errors }))
      .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
@@ -158,7 +160,8 @@ class UserNewFormContainer extends React.Component {
         key != "longitude" &&
         key != "gender" &&
         key != "currentPage" &&
-        key != "formInvalid"
+        key != "formInvalid" &&
+        key != "registrationErrors"
       ) {
         this.validateEntry(key, this.state[key])
       }
@@ -167,7 +170,7 @@ class UserNewFormContainer extends React.Component {
   }
 
   render(){
-    var errorDiv, page;
+    var errorDiv, page, emailError, userNameError, passwordError, passwordConfirmationError;
 
     var errorItems;
     if (Object.keys(this.state.errors).length > 0) {
@@ -175,6 +178,38 @@ class UserNewFormContainer extends React.Component {
         return(<li key={error}>{error}</li>)
       })
       errorDiv = <div className="callout alert">{errorItems}</div>
+    }
+
+    if (this.state.registrationErrors.email) {
+      emailError =
+      this.state.registrationErrors.email.map((error) => {
+        return(
+          <p className="error-text" key={`email ${error}`}>{`${error}`}</p>
+        )
+      })
+    }
+
+    if (this.state.registrationErrors.user_name) {
+      userNameError =
+        <p className="error-text" key='username'>{`User Name ${this.state.registrationErrors.user_name}`}</p>
+    }
+
+    if (this.state.registrationErrors.password) {
+      passwordError =
+      this.state.registrationErrors.password.map((error) => {
+        return(
+          <p className="error-text" key={`password ${error}`}>{`${error}`}</p>
+        )
+      })
+    }
+
+    if (this.state.registrationErrors.password_confirmation) {
+      passwordConfirmationError =
+      this.state.registrationErrors.password_confirmation.map((error) => {
+        return(
+          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+        )
+      })
     }
 
     switch (this.state.currentPage) {
@@ -189,6 +224,10 @@ class UserNewFormContainer extends React.Component {
           handleButtonClick={this.handleNextClick}
           handleBackClick={this.handleBackClick}
           disabled={this.state.formInvalid}
+          emailError={emailError}
+          userNameError={userNameError}
+          passwordError={passwordError}
+          passwordConfirmationError={passwordConfirmationError}
         />
         break;
       case 2:
@@ -215,7 +254,6 @@ class UserNewFormContainer extends React.Component {
       <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
         <h1 className="user-title text-center">User Registration</h1>
 
-        {errorDiv}
         {page}
 
         <div className="form-group actions margin-top-10px">
