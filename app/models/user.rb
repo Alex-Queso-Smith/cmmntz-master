@@ -1,14 +1,10 @@
 class User < ApplicationRecord
   include AuthlogicValidations
-
-  PASSWORD_REGEX = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*/
+  
   GENDERS = [nil, 0, 1, 2]
   AGES = [nil, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
 
   validates :user_name, presence: true, uniqueness: true
-
-  validates :password, format: { :with => PASSWORD_REGEX, :message => "must include one number, one letter"}, :if => :require_password?
-  validates :password, :password_confirmation, length: { in: 6..32 }
 
   validates :gender, numericality: true, inclusion: { in: GENDERS }, unless: Proc.new { |u| u.gender.nil? }
   validates :age_range, numericality: true, inclusion: { in: AGES }, unless: Proc.new { |u| u.age_range.nil? }

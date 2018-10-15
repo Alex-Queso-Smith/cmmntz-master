@@ -1,5 +1,7 @@
 module AuthlogicValidations
   extend ActiveSupport::Concern
+  PASSWORD_REGEX = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*/
+
   included do
     validates :email,
     format: {
@@ -20,9 +22,10 @@ module AuthlogicValidations
     validates :password,
       confirmation: { if: :require_password? },
       length: {
-        in: 6..32,
-        if: :require_password?
-      }
+        in: 6..32
+      },
+      format: { :with => PASSWORD_REGEX, :message => "must include one number, one letter"},
+      if: :require_password?
     validates :password_confirmation,
       length: {
         in: 6..32,
