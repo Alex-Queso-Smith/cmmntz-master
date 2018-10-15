@@ -1,0 +1,10 @@
+#error_messages
+  - if target and target.errors.any?
+    %div{:class => "alert alert-danger alert-dismissible fade in"}
+      %button.close{"data-dismiss" => "alert", :type => "button"}
+        %span{"aria-hidden" => "true"} &times;
+        %span.sr-only Close
+      %h4= "Sorry, I am unable to complete your request due to the following:"
+      %ul
+        - target.errors.full_messages.each do |msg|
+          %li= msg.html_safe

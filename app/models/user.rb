@@ -12,6 +12,7 @@ class User < ApplicationRecord
   validates :longitude, numericality: { greater_than_or_equal_to: -180.00, less_than_or_equal_to: 180.00 }, if: Proc.new { |u| !u.latitude.nil? }
 
   validates_with EmailAddress::ActiveRecordValidator, field: :email
+  validates :email, uniqueness: true
 
   acts_as_authentic do |c|
     c.login_field = :user_name
