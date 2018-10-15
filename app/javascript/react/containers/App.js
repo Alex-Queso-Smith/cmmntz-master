@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
 
 import UserNewFormContainer from './UserNewFormContainer';
 
@@ -12,7 +12,7 @@ class App extends React.Component {
   render(){
     return (
       <Router >
-        <Route path='/users/new' component={UserNewFormContainer} />
+        <Route path='/register' component={UserNewFormContainer} />
       </Router>
     )
   }
