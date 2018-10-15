@@ -111,7 +111,6 @@ class UserNewFormContainer extends React.Component {
      })
      .then(response => response.json())
      .then(body => {
-       debugger
        if (body.errors) {
          this.setState({ registrationErrors: body.errors})
        }
