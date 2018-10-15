@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   ### named routes be here
-  get 'register' => "users#new",           :as => :register
-  get 'login' => "user_sessions#new",      :as => :login
-  get 'logout' => "user_sessions#destroy", :as => :logout
+  get 'register' => "users#new",           as: :register
+  get 'login' => "user_sessions#new",      as: :login
+  get 'logout' => "user_sessions#destroy", as: :logout
 end
