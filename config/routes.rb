@@ -9,4 +9,9 @@ Rails.application.routes.draw do
       resources :user_sessions, only: [:new, :create, :destroy]
     end
   end
+
+  ### named routes be here
+  get 'register' => "users#new",           :as => :register
+  get 'login' => "user_sessions#new",      :as => :login
+  get 'logout' => "user_sessions#destroy", :as => :logout
 end

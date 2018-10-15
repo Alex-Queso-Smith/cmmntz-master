@@ -1,5 +1,6 @@
 class UserSessionsController < ApplicationController
-  skip_before_action *ALL_FILTERS
+  skip_before_action *ALL_FILTERS, only: [:new, :create]
+  before_action :require_no_user, only: [:new, :create]
 
   def new
     redirect_to(root_path) and return if current_user

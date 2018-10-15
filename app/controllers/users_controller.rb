@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  skip_before_action *ALL_FILTERS
-  before_action :require_no_user, :set_user, only: [:show, :edit, :update, :destroy]
+  skip_before_action *ALL_FILTERS, only: [:new, :create]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_no_user, only: [:new, :create]
 
   # GET /users
   # GET /users.json
