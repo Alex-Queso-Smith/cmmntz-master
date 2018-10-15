@@ -1,5 +1,6 @@
 class Api::V1::UserSessionsController < ApplicationController
   skip_before_action *ALL_FILTERS
+  before_action :require_no_user
 
   def new
     redirect_to(root_path) and return if current_user
