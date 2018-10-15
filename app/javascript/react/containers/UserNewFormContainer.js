@@ -90,7 +90,7 @@ class UserNewFormContainer extends React.Component {
       newUser.append("user[gender]", this.state.gender);
 
       this.createUser(newUser);
-      this.handleClear();
+      // this.handleClear();
     }
   }
 
@@ -110,8 +110,11 @@ class UserNewFormContainer extends React.Component {
        }
      })
      .then(response => response.json())
-     // .then(body => {debugger})
-     .then(body => this.setState({ registrationErrors: body.errors }))
+     .then(body => {
+       if (body.errors) {
+         this.setState({ registrationErrors: body.errors})
+       }
+     })
      .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
@@ -184,21 +187,25 @@ class UserNewFormContainer extends React.Component {
       emailError =
       this.state.registrationErrors.email.map((error) => {
         return(
-          <p className="error-text" key={`email ${error}`}>{`${error}`}</p>
+          <p className="error-text" key={`${error}`}>{`${error}`}</p>
         )
       })
     }
 
     if (this.state.registrationErrors.user_name) {
       userNameError =
-        <p className="error-text" key='username'>{`User Name ${this.state.registrationErrors.user_name}`}</p>
+      this.state.registrationErrors.user_name.map((error) => {
+        return(
+          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+        )
+      })
     }
 
     if (this.state.registrationErrors.password) {
       passwordError =
       this.state.registrationErrors.password.map((error) => {
         return(
-          <p className="error-text" key={`password ${error}`}>{`${error}`}</p>
+          <p className="error-text" key={`${error}`}>{`${error}`}</p>
         )
       })
     }
