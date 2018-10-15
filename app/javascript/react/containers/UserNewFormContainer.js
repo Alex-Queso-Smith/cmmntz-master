@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Router } from 'react-router-dom';
 
 import Input from '../components/form/Input';
 import GenderButton from '../components/form/GenderButton';
@@ -40,14 +39,27 @@ class UserNewFormContainer extends React.Component {
       event.target.name != "ageRange" ||
       event.target.name != "latitude" ||
       event.target.name != "longitude" ||
-      event.target.name != "gender" &&
-      this.registrationStatus()
+      event.target.name != "gender"
     ) {
       this.validateEntry(event.target.name, event.target.value)
     }
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+    if (
+      this.state.userName.length != 0 &&
+      this.state.email.length != 0 &&
+      this.state.password != 0 &&
+      this.state.passwordConfirmation != 0
+    ) {
+      this.setState({
+        formInvalid: false,
+        [event.target.name]: event.target.value
+
+      })
+    } else {
+      this.setState({
+        formInvalid: true,
+        [event.target.name]: event.target.value
+      });
+    }
   }
 
   validateEntry(name, fieldValue){
@@ -88,7 +100,7 @@ class UserNewFormContainer extends React.Component {
       body: payload
     })
     .then(response => {
-       if(response.ok){
+       if(response.ok || response.status == 422){
          return response
        } else {
          let errorMessage = `${response.status} (${response.statusText})`,
@@ -97,6 +109,7 @@ class UserNewFormContainer extends React.Component {
        }
      })
      .then(response => response.json())
+     .then(body => {debugger})
      .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
@@ -129,8 +142,10 @@ class UserNewFormContainer extends React.Component {
   }
 
   registrationStatus(){
-    if (validateErrorKeys()) {
+    if (this.validateErrorKeys()) {
       this.setState({ formInvalid: false })
+    } else {
+      this.setState({ formInvalid: true })
     }
   }
 
