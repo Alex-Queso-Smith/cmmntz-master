@@ -43,7 +43,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'authlogic'
 gem 'bootstrap', '~> 4.1.3'
 gem 'jquery-rails'
-gem 'email_address'
 gem 'react-rails'
 
 group :development, :test do
