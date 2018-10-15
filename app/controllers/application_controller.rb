@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def store_location
+    session[:return_to] = request[:REQUEST_URI]
+  end
+
   def current_user_session
     logger.debug "ApplicationController::current_user_session"
     return @current_user_session if defined?(@current_user_session)
