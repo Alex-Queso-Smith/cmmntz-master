@@ -10,7 +10,7 @@ class Api::V1::UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.new(user_session_params)
     if @user_session.save
-      render status: :ok
+      render status: :ok, json: @user_session
     else
       render json: @user_session.errors, status: :unprocessable_entity
     end
