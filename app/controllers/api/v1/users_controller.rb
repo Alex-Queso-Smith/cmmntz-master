@@ -29,7 +29,7 @@ class Api::V1::UsersController < ApiController
     user = User.new(user_params)
 
     if user.save
-      render status: :created, json: @user
+      render json: { message: "Created successfully" }
     else
       render json: { errors: user.errors, status: :unprocessable_entity }
     end
@@ -39,7 +39,7 @@ class Api::V1::UsersController < ApiController
   # PATCH/PUT /users/1.json
   def update
     if user.update(user_params)
-      render status: :ok, location: user
+      render json: { message: "Updated successfully" }
     else
       render json: user.errors, status: :unprocessable_entity
     end
@@ -48,9 +48,7 @@ class Api::V1::UsersController < ApiController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    user.destroy
-
-    render status: :ok
+    render json: { message: "Destroy successfull" } if user.destroy
   end
 
   private
