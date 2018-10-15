@@ -6,7 +6,7 @@ class Api::V1::UsersController < ApiController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    users = User.all
   end
 
   # GET /users/1
@@ -16,7 +16,7 @@ class Api::V1::UsersController < ApiController
 
   # GET /users/new
   def new
-    @user = User.new
+    user = User.new
   end
 
   # GET /users/1/edit
@@ -26,29 +26,29 @@ class Api::V1::UsersController < ApiController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    user = User.new(user_params)
 
-    if @user.save
-      render status: :created, location: @user
+    if user.save
+      render status: :created, location: user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { errors: user.errors, status: :unprocessable_entity }
     end
   end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    if @user.update(user_params)
-      render status: :ok, location: @user
+    if user.update(user_params)
+      render status: :ok, location: user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: user.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
+    user.destroy
 
     render status: :ok
   end
@@ -56,7 +56,7 @@ class Api::V1::UsersController < ApiController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      user = User.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
