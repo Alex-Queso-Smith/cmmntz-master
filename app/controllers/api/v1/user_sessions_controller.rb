@@ -10,7 +10,7 @@ class Api::V1::UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.new(user_session_params)
     if @user_session.save
-      render status: :ok, json: @user_session
+      render json: { message: "Logged in successfully"}
     else
       render json: @user_session.errors, status: :unprocessable_entity
     end
@@ -18,7 +18,7 @@ class Api::V1::UserSessionsController < ApplicationController
 
   def destroy
     current_user_session.destroy
-    render status: :ok
+    render json: { message: "Logged out successfully"}
   end
 
   private
