@@ -1,6 +1,6 @@
 module AuthlogicValidations
   extend ActiveSupport::Concern
-  PASSWORD_REGEX = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*/
+  # PASSWORD_REGEX = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*/
 
   included do
     validates :email,
@@ -24,7 +24,7 @@ module AuthlogicValidations
       length: {
         in: 6..32
       },
-      format: { :with => PASSWORD_REGEX, :message => "must include one number, one lowercase letter, and one uppercase letter"},
+      # format: { :with => PASSWORD_REGEX, :message => "must include one number, one lowercase letter, and one uppercase letter"},
       if: :require_password?
     validates :password_confirmation,
       length: {
