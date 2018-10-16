@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Input from '../../components/form/Input';
-import GenderButton from '../../components/form/GenderButton';
-import AgeRange from '../../components/form/AgeRange';
+import GenderSelector from '../../components/form/GenderSelector';
+import AgeRangeSelector from '../../components/form/AgeRangeSelector';
 import UserRegPageOne from '../../components/form/users/UserRegPageOne';
 import UserRegPageTwo from '../../components/form/users/UserRegPageTwo';
 import UserRegPageThree from '../../components/form/users/UserRegPageThree';

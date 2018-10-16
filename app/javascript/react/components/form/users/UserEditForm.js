@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Input from '../Input';
-import AgeRange from '../AgeRange';
-import GenderButton from '../GenderButton';
+import AgeRangeSelector from '../AgeRangeSelector';
+import GenderSelector from '../GenderSelector';
 
 class UserEditForm extends React.Component {
   constructor(props){
@@ -45,20 +45,19 @@ class UserEditForm extends React.Component {
         </div>
         <div id="reg-optional-1" className="form-group">
           <hr />
-          <AgeRange
+          <AgeRangeSelector
             name="ageRange"
             label="Age Range"
-            handleChange={this.props.handleChange}
+            handleChange={ this.props.handleChange}
             content={this.props.ageRange}
             type="text"
           />
           <hr />
-          <GenderButton
+          <GenderSelector
             name="gender"
             label="Gender"
             handleChange={this.props.handleChange}
             content={this.props.gender}
-            type="text"
           />
           <hr />
           <Input

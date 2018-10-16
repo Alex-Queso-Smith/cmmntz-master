@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Input from '../../components/form/Input';
-import GenderButton from '../../components/form/GenderButton';
-import AgeRange from '../../components/form/AgeRange';
+import GenderSelector from '../../components/form/GenderSelector';
+import AgeRangeSelector from '../../components/form/AgeRangeSelector';
 import UserEditForm from '../../components/form/users/UserEditForm'
 
 class UserEditFormContainer extends React.Component {
@@ -10,6 +10,8 @@ class UserEditFormContainer extends React.Component {
     super(props);
     this.state = {
       userName: '',
+      password: '',
+      passwordConfirmation: '',
       email: '',
       ageRange: '',
       latitude: '',
@@ -61,7 +63,9 @@ class UserEditFormContainer extends React.Component {
     }
     if (
       this.state.userName.length != 0 &&
-      this.state.email.length != 0
+      this.state.email.length != 0 &&
+      this.state.password != 0 &&
+      this.state.passwordConfirmation != 0
     ) {
       this.setState({
         [event.target.name]: event.target.value
@@ -91,6 +95,8 @@ class UserEditFormContainer extends React.Component {
     // if (this.validateErrorKeys()){
       var user = new FormData();
       user.append("user[user_name]", this.state.userName);
+      user.append("user[password]", this.state.password);
+      user.append("user[password_confirmation]", this.state.passwordConfirmation);
       user.append("user[age_range]", this.state.ageRange);
       user.append("user[latitude]", this.state.latitude);
       user.append("user[longitude]", this.state.longitude);
@@ -142,7 +148,7 @@ class UserEditFormContainer extends React.Component {
   }
 
   render(){
-    var errorDiv, page, emailError, userNameError;
+    var errorDiv, page, emailError, userNameError, passwordError, passwordConfirmationError;
 
     var errorItems;
     if (Object.keys(this.state.errors).length > 0) {
@@ -170,6 +176,24 @@ class UserEditFormContainer extends React.Component {
       })
     }
 
+    if (this.state.saveErrors.password) {
+      passwordError =
+      this.state.saveErrors.password.map((error) => {
+        return(
+          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+        )
+      })
+    }
+
+    if (this.state.saveErrors.password_confirmation) {
+      passwordConfirmationError =
+      this.state.saveErrors.password_confirmation.map((error) => {
+        return(
+          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+        )
+      })
+    }
+
     return(
       <form className="form" id="user-edit-form" onSubmit={this.handleSubmit} >
         <h1 className="user-title text-center">Edit Account</h1>
@@ -177,11 +201,15 @@ class UserEditFormContainer extends React.Component {
         <UserEditForm
           handleChange={this.handleChange}
           userName={this.state.userName}
+          password={this.state.password}
+          passwordConfirmation={this.state.passwordConfirmation}
           email={this.state.email}
           handleButtonClick={this.handleNextClick}
           handleBackClick={this.handleBackClick}
           emailError={emailError}
           userNameError={userNameError}
+          passwordError={passwordError}
+          passwordConfirmationError={passwordConfirmationError}
           ageRange={this.state.ageRange}
           gender={this.state.gender}
           latitude={this.state.latitude}

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Input from '../Input';
-import AgeRange from '../AgeRange';
-import GenderButton from '../GenderButton';
+import AgeRangeSelector from '../AgeRangeSelector';
+import GenderSelector from '../GenderSelector';
 
 const UserRegPageTwo = props => {
   return(
@@ -11,7 +11,7 @@ const UserRegPageTwo = props => {
 
       <hr />
 
-      <AgeRange
+      <AgeRangeSelector
         name="ageRange"
         label="Age Range"
         handleChange={props.handleChange}
@@ -19,12 +19,11 @@ const UserRegPageTwo = props => {
         type="text"
       />
       <hr />
-      <GenderButton
+      <GenderSelector
         name="gender"
         label="Gender"
         handleChange={props.handleChange}
         content={props.gender}
-        type="text"
       />
       <hr />
       <Input
