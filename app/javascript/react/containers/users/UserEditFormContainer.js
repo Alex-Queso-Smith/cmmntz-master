@@ -1,13 +1,11 @@
 import React from 'react';
 
-import Input from '../components/form/Input';
-import GenderButton from '../components/form/GenderButton';
-import AgeRange from '../components/form/AgeRange';
-import UserRegPageOne from '../components/form/UserRegPageOne';
-import UserRegPageTwo from '../components/form/UserRegPageTwo';
-import UserRegPageThree from '../components/form/UserRegPageThree';
+import Input from '../../components/form/Input';
+import GenderButton from '../../components/form/GenderButton';
+import AgeRange from '../../components/form/AgeRange';
+import UserEditForm from '../../components/form/users/UserEditForm'
 
-class UserNewFormContainer extends React.Component {
+class UserEditFormContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -219,10 +217,11 @@ class UserNewFormContainer extends React.Component {
       })
     }
 
-    switch (this.state.currentPage) {
-      case 1:
-        page =
-        <UserRegPageOne
+    return(
+      <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
+        <h1 className="user-title text-center">Edit Account</h1>
+
+        <UserEditForm
           handleChange={this.handleChange}
           userName={this.state.userName}
           password={this.state.password}
@@ -235,37 +234,15 @@ class UserNewFormContainer extends React.Component {
           userNameError={userNameError}
           passwordError={passwordError}
           passwordConfirmationError={passwordConfirmationError}
-        />
-        break;
-      case 2:
-        page =
-        <UserRegPageTwo
-          handleChange={this.handleChange}
           ageRange={this.state.ageRange}
           gender={this.state.gender}
           latitude={this.state.latitude}
           longitude={this.state.longitude}
-          handleButtonClick={this.handleNextClick}
-          handleBackClick={this.handleBackClick}
         />
-        break;
-      case 3:
-        page =
-        <UserRegPageThree
-          handleBackClick={this.handleBackClick}
-        />
-      break;
-    }
-
-    return(
-      <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
-        <h1 className="user-title text-center">User Registration</h1>
-
-        {page}
 
         <div className="form-group actions margin-top-10px">
           <button id="user-registration-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit" disabled={this.state.formInvalid}>
-            <span className="text-large">Register</span>
+            <span className="text-large">Update</span>
           </button>
         </div>
       </form>
@@ -273,4 +250,4 @@ class UserNewFormContainer extends React.Component {
   }
 }
 
-export default UserNewFormContainer;
+export default UserEditFormContainer;

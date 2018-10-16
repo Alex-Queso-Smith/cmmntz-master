@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Input from './Input';
+import Input from '../Input';
 
 class UserRegPageOne extends React.Component {
   constructor(props){

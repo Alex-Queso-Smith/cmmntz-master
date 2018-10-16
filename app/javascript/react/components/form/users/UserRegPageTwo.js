@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Input from './Input';
-import AgeRange from './AgeRange';
-import GenderButton from './GenderButton';
+import Input from '../Input';
+import AgeRange from '../AgeRange';
+import GenderButton from '../GenderButton';
 
 const UserRegPageTwo = props => {
   return(
