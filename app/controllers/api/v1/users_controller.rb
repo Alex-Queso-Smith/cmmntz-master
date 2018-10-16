@@ -12,7 +12,7 @@ class Api::V1::UsersController < ApiController
   # GET /users/1
   # GET /users/1.json
   def show
-    render json: @user
+    # render json: @user
   end
 
   # GET /users/new
