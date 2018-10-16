@@ -34,7 +34,7 @@ class UserEditFormContainer extends React.Component {
   }
 
   componentDidMount(){
-    fetch(`/api/v1/users/${this.props.params.id}.json`, {credentials: 'same-origin'})
+    fetch(`/api/v1/users/${this.props.match.params.id}.json`, {credentials: 'same-origin'})
     .then(response => {
        if(response.ok){
          return response
@@ -47,7 +47,12 @@ class UserEditFormContainer extends React.Component {
      .then(response => response.json())
      .then(body => {
        this.setState({
-         userName: body.user_name
+         userName: body.user_name,
+         email: body.email,
+         ageRange: body.age_range,
+         gender: body.gender,
+         latitude: body.latitude,
+         longitude: body.longitude
        })
      })
      .catch(error => console.error(`Error in fetch: ${error.message}`));
