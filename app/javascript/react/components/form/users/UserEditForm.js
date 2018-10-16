@@ -50,24 +50,6 @@ class UserEditForm extends React.Component {
             addClass={emailClass}
           />
           {this.props.emailError}
-          <Input
-            name="password"
-            label="Password"
-            handleChange={this.props.handleChange}
-            content={this.props.password}
-            type="password"
-            addClass={passwordClass}
-          />
-          {this.props.passwordError}
-          <Input
-            name="passwordConfirmation"
-            label="Password Confirmation"
-            handleChange={this.props.handleChange}
-            content={this.props.passwordConfirmation}
-            type="password"
-            addClass={passwordConfirmationClass}
-          />
-          {this.props.passwordConfirmationError}
         </div>
         <div id="reg-optional-1" className="form-group">
           <hr />
