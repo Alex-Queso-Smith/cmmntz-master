@@ -12,7 +12,7 @@ class Api::V1::UsersController < ApiController
   # GET /users/1
   # GET /users/1.json
   def show
-    # render json: @user
+    #render json: @user
   end
 
   # GET /users/new
@@ -27,9 +27,9 @@ class Api::V1::UsersController < ApiController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    user = User.new(user_params)
 
-    if @user.save
+    if user.save
       render json: { message: "Created successfully" }
     else
       render json: { errors: user.errors, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class Api::V1::UsersController < ApiController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    if @user.update(user_params)
+    if user.update(user_params)
       render json: { message: "Updated successfully" }
     else
       render json: user.errors, status: :unprocessable_entity
