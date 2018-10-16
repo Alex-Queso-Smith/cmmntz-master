@@ -17,20 +17,14 @@ class UserEditFormContainer extends React.Component {
       latitude: '',
       longitude: '',
       gender: '',
-      currentPage: 1,
-      formInvalid: true,
-      registrationErrors: {},
+      saveErrors: {},
       errors: {}
     }
     this.handleChange = this.handleChange.bind(this);
-    this.handleClear = this.handleClear.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validateEntry = this.validateEntry.bind(this);
-    this.createUser = this.createUser.bind(this);
-    this.handleNextClick = this.handleNextClick.bind(this);
-    this.handleBackClick = this.handleBackClick.bind(this);
-    this.registrationStatus = this.registrationStatus.bind(this);
     this.validateErrorKeys = this.validateErrorKeys.bind(this);
+    this.saveUser = this.saveUser.bind(this);
   }
 
   componentDidMount(){
@@ -47,12 +41,12 @@ class UserEditFormContainer extends React.Component {
      .then(response => response.json())
      .then(body => {
        this.setState({
-         userName: body.user_name,
-         email: body.email,
-         ageRange: body.age_range,
-         gender: body.gender,
-         latitude: body.latitude,
-         longitude: body.longitude
+         userName: body.user.user_name,
+         email: body.user.email,
+         ageRange: body.user.age_range,
+         gender: body.user.gender,
+         latitude: body.user.latitude,
+         longitude: body.user.longitude
        })
      })
      .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -74,13 +68,10 @@ class UserEditFormContainer extends React.Component {
       this.state.passwordConfirmation != 0
     ) {
       this.setState({
-        formInvalid: false,
         [event.target.name]: event.target.value
-
       })
     } else {
       this.setState({
-        formInvalid: true,
         [event.target.name]: event.target.value
       });
     }
@@ -102,24 +93,23 @@ class UserEditFormContainer extends React.Component {
   handleSubmit(event){
     event.preventDefault();
     if (this.validateErrorKeys()){
-      var newUser = new FormData();
-      newUser.append("user[user_name]", this.state.userName);
-      newUser.append("user[password]", this.state.password);
-      newUser.append("user[password_confirmation]", this.state.passwordConfirmation);
-      newUser.append("user[age_range]", this.state.ageRange);
-      newUser.append("user[latitude]", this.state.latitude);
-      newUser.append("user[longitude]", this.state.longitude);
-      newUser.append("user[email]", this.state.email);
-      newUser.append("user[gender]", this.state.gender);
+      var user = new FormData();
+      user.append("user[user_name]", this.state.userName);
+      user.append("user[password]", this.state.password);
+      user.append("user[password_confirmation]", this.state.passwordConfirmation);
+      user.append("user[age_range]", this.state.ageRange);
+      user.append("user[latitude]", this.state.latitude);
+      user.append("user[longitude]", this.state.longitude);
+      user.append("user[email]", this.state.email);
+      user.append("user[gender]", this.state.gender);
 
-      this.createUser(newUser);
-      // this.handleClear();
+      this.saveUser(user);
     }
   }
 
-  createUser(payload){
-    fetch('/api/v1/users.json', {
-      method: 'POST',
+  saveUser(payload){
+    fetch(`/api/v1/users/${this.props.match.params.id}.json`, {
+      method: 'PATCH',
       credentials: 'same-origin',
       body: payload
     })
@@ -135,46 +125,10 @@ class UserEditFormContainer extends React.Component {
      .then(response => response.json())
      .then(body => {
        if (body.errors) {
-         this.setState({ registrationErrors: body.errors})
+         this.setState({ saveErrors: body.errors})
        }
      })
      .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
-  handleClear(){
-    this.setState({
-      userName: '',
-      password: '',
-      passwordConfirmation: '',
-      email: '',
-      ageRange: '',
-      latitude: '',
-      longitude: '',
-      gender: '',
-      errors: {}
-    })
-  }
-
-  handleNextClick(){
-    if (this.validateErrorKeys()){
-      var current = this.state.currentPage
-      current++
-      this.setState({ currentPage: current })
-    }
-  }
-
-  handleBackClick(){
-    var reverse = this.state.currentPage
-    reverse--
-    this.setState({ currentPage: reverse })
-  }
-
-  registrationStatus(){
-    if (this.validateErrorKeys()) {
-      this.setState({ formInvalid: false })
-    } else {
-      this.setState({ formInvalid: true })
-    }
   }
 
   validateErrorKeys(){
@@ -185,9 +139,7 @@ class UserEditFormContainer extends React.Component {
         key != "latitude" &&
         key != "longitude" &&
         key != "gender" &&
-        key != "currentPage" &&
-        key != "formInvalid" &&
-        key != "registrationErrors"
+        key != "saveErrors"
       ) {
         this.validateEntry(key, this.state[key])
       }
@@ -206,42 +158,42 @@ class UserEditFormContainer extends React.Component {
       errorDiv = <div className="callout alert">{errorItems}</div>
     }
 
-    if (this.state.registrationErrors.email) {
+    if (this.state.saveErrors.email) {
       emailError =
-      this.state.registrationErrors.email.map((error) => {
+      this.state.saveErrors.email.map((error) => {
         return(
           <p className="error-text" key={`${error}`}>{`${error}`}</p>
         )
       })
     }
 
-    if (this.state.registrationErrors.user_name) {
+    if (this.state.saveErrors.user_name) {
       userNameError =
-      this.state.registrationErrors.user_name.map((error) => {
+      this.state.saveErrors.user_name.map((error) => {
         return(
           <p className="error-text" key={`${error}`}>{`${error}`}</p>
         )
       })
     }
 
-    if (this.state.registrationErrors.password) {
+    if (this.state.saveErrors.password) {
       passwordError =
-      this.state.registrationErrors.password.map((error) => {
+      this.state.saveErrors.password.map((error) => {
         return(
           <p className="error-text" key={`${error}`}>{`${error}`}</p>
         )
       })
     }
 
-    if (this.state.registrationErrors.password_confirmation) {
+    if (this.state.saveErrors.password_confirmation) {
       passwordConfirmationError =
-      this.state.registrationErrors.password_confirmation.map((error) => {
+      this.state.saveErrors.password_confirmation.map((error) => {
         return(
           <p className="error-text" key={`${error}`}>{`${error}`}</p>
         )
       })
     }
-debugger
+
     return(
       <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
         <h1 className="user-title text-center">Edit Account</h1>
@@ -254,7 +206,6 @@ debugger
           email={this.state.email}
           handleButtonClick={this.handleNextClick}
           handleBackClick={this.handleBackClick}
-          disabled={this.state.formInvalid}
           emailError={emailError}
           userNameError={userNameError}
           passwordError={passwordError}
@@ -266,7 +217,7 @@ debugger
         />
 
         <div className="form-group actions margin-top-10px">
-          <button id="user-registration-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit" disabled={this.state.formInvalid}>
+          <button id="user-registration-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit">
             <span className="text-large">Update</span>
           </button>
         </div>
