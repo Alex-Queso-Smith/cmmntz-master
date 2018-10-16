@@ -195,7 +195,7 @@ class UserEditFormContainer extends React.Component {
     }
 
     return(
-      <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
+      <form className="form" id="user-edit-form" onSubmit={this.handleSubmit} >
         <h1 className="user-title text-center">Edit Account</h1>
 
         <UserEditForm
