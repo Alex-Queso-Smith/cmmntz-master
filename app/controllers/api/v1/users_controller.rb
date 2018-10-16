@@ -42,7 +42,7 @@ class Api::V1::UsersController < ApiController
     if @user.update(user_params)
       render json: { message: "Updated successfully" }
     else
-      render json: { error: @user.errors, status: :unprocessable_entity}
+      render json: { errors: @user.errors, status: :unprocessable_entity}
     end
   end
 
