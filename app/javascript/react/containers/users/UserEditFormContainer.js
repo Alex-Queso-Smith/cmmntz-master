@@ -52,7 +52,7 @@ class UserEditFormContainer extends React.Component {
          ageRange: body.age_range,
          gender: body.gender,
          latitude: body.latitude,
-         longitude: body.longitude 
+         longitude: body.longitude
        })
      })
      .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -241,7 +241,7 @@ class UserEditFormContainer extends React.Component {
         )
       })
     }
-
+debugger
     return(
       <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
         <h1 className="user-title text-center">Edit Account</h1>
