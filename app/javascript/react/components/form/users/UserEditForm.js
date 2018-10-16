@@ -11,7 +11,7 @@ class UserEditForm extends React.Component {
   }
 
   render(){
-    var userNameClass, emailClass, passwordClass, passwordConfirmationClass;
+    var userNameClass, emailClass
 
     if (this.props.userNameError) {
       userNameClass = "is-invalid"
@@ -19,14 +19,6 @@ class UserEditForm extends React.Component {
 
     if (this.props.emailError) {
       emailClass = "is-invalid"
-    }
-
-    if (this.props.passwordError) {
-      passwordClass = "is-invalid"
-    }
-
-    if (this.props.passwordConfirmationError) {
-      passwordConfirmationClass = "is-invalid"
     }
 
     return(
@@ -53,7 +45,6 @@ class UserEditForm extends React.Component {
         </div>
         <div id="reg-optional-1" className="form-group">
           <hr />
-
           <AgeRange
             name="ageRange"
             label="Age Range"
