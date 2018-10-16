@@ -92,7 +92,7 @@ class UserEditFormContainer extends React.Component {
 
   handleSubmit(event){
     event.preventDefault();
-    if (this.validateErrorKeys()){
+    // if (this.validateErrorKeys()){
       var user = new FormData();
       user.append("user[user_name]", this.state.userName);
       user.append("user[password]", this.state.password);
@@ -104,7 +104,7 @@ class UserEditFormContainer extends React.Component {
       user.append("user[gender]", this.state.gender);
 
       this.saveUser(user);
-    }
+    // }
   }
 
   saveUser(payload){
