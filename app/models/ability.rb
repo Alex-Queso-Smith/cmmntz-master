@@ -1,5 +1,5 @@
 class Ability
-  include CanCanCan::Ability
+  include CanCan::Ability
   attr_accessor :user
 
   def initialize(current_user)
