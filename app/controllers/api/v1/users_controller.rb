@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApiController
+  load_and_authorize_resource
   skip_before_action *ALL_FILTERS, only: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :require_no_user, only: [:new, :create]
