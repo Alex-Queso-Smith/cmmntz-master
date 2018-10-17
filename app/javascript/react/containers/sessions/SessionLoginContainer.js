@@ -19,24 +19,49 @@ class SessionLoginContainer extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.validateErrorKeys = this.validateErrorKeys.bind(this);
     this.setStateWithValidation = this.setStateWithValidation.bind(this);
-
+    this.processLogin = this.processLogin.bind(this);
   }
 
   handleSubmit(event){
     event.preventDefault();
     if (this.validateErrorKeys()) {
-      alert("valid");
-    } else {
-      alert("invalid");
-    }
+      var login = new FormData();
+      login.append("user_session[user_name]", this.state.userName);
+      login.append("user_session[password]", this.state.password);
+      login.append("user_session[remember_me]", this.state.rememberMe);
 
+      this.processLogin(login);
+    }
+  }
+
+  processLogin(payload){
+    fetch('/api/v1/user_sessions.json', {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: payload
+    })
+    .then(response => {
+       if(response.ok || response.status == 422){
+         return response
+       } else {
+         let errorMessage = `${response.status} (${response.statusText})`,
+             error = new Error(errorMessage)
+         throw(error)
+       }
+     })
+     .then(response => response.json())
+     .then(body => {
+       if (body.errors) {
+         this.setState({ loginErrors: body.errors})
+       }
+     })
+     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   handleChange(event){
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-
     if (
       this.state.userName.length != 0 &&
       this.state.password.length != 0
@@ -53,13 +78,14 @@ class SessionLoginContainer extends React.Component {
       [name]: value
     })
   }
-  
+
   validateErrorKeys(){
     Object.keys(this.state).forEach(key => {
       if (
         key != "errors" &&
         key != "loginErrors" &&
-        key != "rememberMe"
+        key != "rememberMe" &&
+        key != "formInvalid"
       ) {
         this.validateEntry(key, this.state[key])
       }

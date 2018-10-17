@@ -37,11 +37,14 @@ class UserNewFormContainer extends React.Component {
   }
 
   handleChange(event){
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
     if (
-      event.target.name != "ageRange" ||
-      event.target.name != "latitude" ||
-      event.target.name != "longitude" ||
-      event.target.name != "gender"
+      name != "ageRange" ||
+      name != "latitude" ||
+      name != "longitude" ||
+      name != "gender"
     ) {
       this.validateEntry(event.target.name, event.target.value)
     }
