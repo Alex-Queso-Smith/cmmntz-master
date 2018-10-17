@@ -8,7 +8,7 @@ class Api::V1::UserSessionsController < ApiController
   end
 
   def create
-    @user_session = UserSession.new(user_session_params)
+    @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       render json: { message: "Logged in successfully" }
     else
@@ -19,11 +19,5 @@ class Api::V1::UserSessionsController < ApiController
   def destroy
     current_user_session.destroy
     render json: { message: "Logged out successfully" }
-  end
-
-  private
-
-  def user_session_params
-    params.require(:user_session).permit(:user_name, :password, :remember_me)
   end
 end
