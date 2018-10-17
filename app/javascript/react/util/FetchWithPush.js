@@ -1,5 +1,3 @@
-import React from 'react'
-
 const FetchWithPush = (object, path, push, method, errors, payload) => {
   return fetch(path, {
     method: method,

@@ -5,6 +5,7 @@ import GenderSelector from '../../components/form/GenderSelector';
 import AgeRangeSelector from '../../components/form/AgeRangeSelector';
 import UserEditForm from '../../components/form/users/UserEditForm';
 import FetchWithPush from '../../util/FetchWithPush';
+import FetchWithPull from '../../util/FetchWithPull';
 
 class UserEditFormContainer extends React.Component {
   state = {
@@ -23,17 +24,7 @@ class UserEditFormContainer extends React.Component {
   handleSubmit = this.handleSubmit.bind(this);
 
   componentDidMount(){
-    fetch(`/api/v1/users/${this.props.match.params.id}.json`, {credentials: 'same-origin'})
-    .then(response => {
-       if(response.ok){
-         return response
-       } else {
-         let errorMessage = `${response.status} (${response.statusText})`,
-             error = new Error(errorMessage)
-         throw(error)
-       }
-     })
-     .then(response => response.json())
+    FetchWithPull(this, `/api/v1/users/${this.props.match.params.id}.json`)
      .then(body => {
        this.setState({
          userName: body.user.user_name,
