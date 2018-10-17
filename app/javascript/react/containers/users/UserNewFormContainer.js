@@ -33,6 +33,7 @@ class UserNewFormContainer extends React.Component {
     this.handleBackClick = this.handleBackClick.bind(this);
     this.registrationStatus = this.registrationStatus.bind(this);
     this.validateErrorKeys = this.validateErrorKeys.bind(this);
+    this.setStateWithValidation = this.setStateWithValidation.bind(this);
   }
 
   handleChange(event){
@@ -47,20 +48,20 @@ class UserNewFormContainer extends React.Component {
     if (
       this.state.userName.length != 0 &&
       this.state.email.length != 0 &&
-      this.state.password != 0 &&
-      this.state.passwordConfirmation != 0
+      this.state.password.length != 0 &&
+      this.state.passwordConfirmation.length != 0
     ) {
-      this.setState({
-        formInvalid: false,
-        [event.target.name]: event.target.value
-
-      })
+      this.setStateWithValidation(false, name, value)
     } else {
-      this.setState({
-        formInvalid: true,
-        [event.target.name]: event.target.value
-      });
+      this.setStateWithValidation(true, name, value)
     }
+  }
+
+  setStateWithValidation(valid, name, value){
+    this.setState({
+      formInvalid: valid,
+      [name]: value
+    })
   }
 
   validateEntry(name, fieldValue){
