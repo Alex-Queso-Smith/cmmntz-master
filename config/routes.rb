@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   resources :comments
   resources :articles
-  resources :users
+  resources :users do
+    member do
+      get :edit_password
+    end
+  end
   resources :user_sessions, only: [:new, :create, :destroy]
 
   namespace :api do
