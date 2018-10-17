@@ -25,17 +25,17 @@ class UserEditFormContainer extends React.Component {
 
   componentDidMount(){
     FetchWithPull(this, `/api/v1/users/${this.props.match.params.id}.json`)
-     .then(body => {
-       this.setState({
-         userName: body.user.user_name,
-         email: body.user.email,
-         ageRange: body.user.age_range,
-         gender: body.user.gender,
-         latitude: body.user.latitude,
-         longitude: body.user.longitude
-       })
+    .then(body => {
+     this.setState({
+       userName: body.user.user_name,
+       email: body.user.email,
+       ageRange: body.user.age_range,
+       gender: body.user.gender,
+       latitude: body.user.latitude,
+       longitude: body.user.longitude
      })
-     .catch(error => console.error(`Error in fetch: ${error.message}`));
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   handleChange(event){
