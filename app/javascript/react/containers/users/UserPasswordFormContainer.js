@@ -69,6 +69,7 @@ class UserPasswordFormContainer extends React.Component {
         )
       })
     }
+    
     return(
       <form className="form" id="password-form" onSubmit={this.handleSubmit}>
         <h1 className="user-title text-center">Edit Password</h1>

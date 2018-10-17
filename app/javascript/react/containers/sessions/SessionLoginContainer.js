@@ -72,6 +72,7 @@ class SessionLoginContainer extends React.Component {
         )
       })
     }
+    
     return(
       <form className="form" id="login-form" onSubmit={this.handleSubmit}>
         <h1 className="user-title text-center">Login</h1>
