@@ -1,7 +1,9 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom'
 
 import Input from '../../components/form/Input';
 import Checkbox from '../../components/form/Checkbox'
+
 
 class SessionLoginContainer extends React.Component {
   constructor(props){
@@ -53,10 +55,12 @@ class SessionLoginContainer extends React.Component {
      .then(body => {
        if (body.errors) {
          this.setState({ loginErrors: body.errors})
+       } else {
+         this.props.history.push('/')
        }
      })
      .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
+   }
 
   handleChange(event){
     const target = event.target;

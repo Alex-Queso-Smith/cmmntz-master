@@ -117,6 +117,8 @@ class UserNewFormContainer extends React.Component {
      .then(body => {
        if (body.errors) {
          this.setState({ registrationErrors: body.errors})
+       } else {
+         this.props.history.push('/')
        }
      })
      .catch(error => console.error(`Error in fetch: ${error.message}`));
