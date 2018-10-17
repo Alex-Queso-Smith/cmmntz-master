@@ -4,16 +4,18 @@ import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
 
 import UserNewFormContainer from './users/UserNewFormContainer';
 import UserEditFormContainer from './users/UserEditFormContainer';
+import UserPasswordFormContainer from './users/UserPasswordFormContainer';
 import SessionLoginContainer from './sessions/SessionLoginContainer';
 
 class App extends React.Component {
-  
+
   render(){
     return (
       <Router>
         <div>
           <Route path='/register' component={UserNewFormContainer} />
           <Route path='/users/:id/edit' component={UserEditFormContainer} />
+          <Route path='/users/:id/edit_password' component={UserPasswordFormContainer} />
           <Route path='/login' component={SessionLoginContainer} />
         </div>
       </Router>
