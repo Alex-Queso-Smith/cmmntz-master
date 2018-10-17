@@ -13,7 +13,7 @@ class App extends React.Component {
   }
   render(){
     return (
-      <Router history={history}>
+      <Router>
         <div>
           <Route path='/register' component={UserNewFormContainer} />
           <Route path='/users/:id/edit' component={UserEditFormContainer} />

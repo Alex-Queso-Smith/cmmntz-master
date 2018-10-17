@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom'
 
 import Input from '../../components/form/Input';
 import Checkbox from '../../components/form/Checkbox'
