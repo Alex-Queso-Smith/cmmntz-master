@@ -108,21 +108,22 @@ class SessionLoginContainer extends React.Component {
 
   render(){
     var userNameClass, passwordClass, userNameError, passwordError;
+    var { loginErrors } = this.state
 
-    if (this.state.loginErrors.user_name) {
+    if (loginErrors.user_name) {
       userNameError =
-      this.state.loginErrors.user_name.map((error) => {
+      loginErrors.user_name.map((error) => {
         return(
-          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+          <p className="error-text" key={`${error}`}>{`User Name ${error}`}</p>
         )
       })
     }
 
-    if (this.state.loginErrors.password) {
+    if (loginErrors.password) {
       passwordError =
-      this.state.loginErrors.password.map((error) => {
+      loginErrors.password.map((error) => {
         return(
-          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+          <p className="error-text" key={`${error}`}>{`Password ${error}`}</p>
         )
       })
     }

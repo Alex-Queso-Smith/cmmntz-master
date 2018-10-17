@@ -18,7 +18,7 @@ class UserEditFormContainer extends React.Component {
     saveErrors: {},
     errors: {}
   }
-  
+
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
   validateEntry = this.validateEntry.bind(this);
@@ -147,47 +147,49 @@ class UserEditFormContainer extends React.Component {
 
   render(){
     var errorDiv, page, emailError, userNameError, passwordError, passwordConfirmationError;
+    var { saveErrors } = this.state
 
-    var errorItems;
-    if (Object.keys(this.state.errors).length > 0) {
-      errorItems = Object.values(this.state.errors).map(error => {
-        return(<li key={error}>{error}</li>)
-      })
-      errorDiv = <div className="callout alert">{errorItems}</div>
-    }
+    // var errorItems;
+    //
+    // if (Object.keys(this.state.errors).length > 0) {
+    //   errorItems = Object.values(this.state.errors).map(error => {
+    //     return(<li key={error}>{error}</li>)
+    //   })
+    //   errorDiv = <div className="callout alert">{errorItems}</div>
+    // }
 
-    if (this.state.saveErrors.email) {
+    if (saveErrors.email) {
       emailError =
-      this.state.saveErrors.email.map((error) => {
+      saveErrors.email.map((error) => {
         return(
-          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+          <p className="error-text" key={`${error}`}>{`Email ${error}`}</p>
         )
       })
     }
 
-    if (this.state.saveErrors.user_name) {
+    if (saveErrors.user_name) {
       userNameError =
-      this.state.saveErrors.user_name.map((error) => {
+      saveErrors.user_name.map((error) => {
         return(
-          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+          <p className="error-text" key={`${error}`}>{`User Name ${error}`}</p>
         )
       })
     }
 
-    if (this.state.saveErrors.password) {
+    if (saveErrors.password) {
       passwordError =
-      this.state.saveErrors.password.map((error) => {
+      saveErrors.password.map((error) => {
         return(
-          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+          <p className="error-text" key={`${error}`}>{`Password ${error}`}</p>
         )
       })
     }
 
-    if (this.state.saveErrors.password_confirmation) {
+    if (saveErrors.password_confirmation) {
       passwordConfirmationError =
-      this.state.saveErrors.password_confirmation.map((error) => {
+      saveErrors.password_confirmation.map((error) => {
         return(
-          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+          <p className="error-text" key={`${error}`}>{`Password Confirmation ${error}`}</p>
         )
       })
     }

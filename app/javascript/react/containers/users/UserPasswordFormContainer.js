@@ -105,21 +105,22 @@ class UserPasswordFormContainer extends React.Component {
 
   render(){
     var passwordClass, passwordError, passwordConfirmationClass, passwordConfirmationError;
+    var { passwordErrors } = this.state
 
-    if (this.state.passwordErrors.password) {
+    if (passwordErrors.password) {
       passwordError =
-      this.state.passwordErrors.password.map((error) => {
+      passwordErrors.password.map((error) => {
         return(
-          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+          <p className="error-text" key={`${error}`}>{`Password ${error}`}</p>
         )
       })
     }
 
-    if (this.state.passwordErrors.password_confirmation) {
+    if (passwordErrors.password_confirmation) {
       passwordConfirmationError =
-      this.state.passwordErrors.password_confirmation.map((error) => {
+      passwordErrors.password_confirmation.map((error) => {
         return(
-          <p className="error-text" key={`${error}`}>{`${error}`}</p>
+          <p className="error-text" key={`${error}`}>{`Password Confirmation ${error}`}</p>
         )
       })
     }
