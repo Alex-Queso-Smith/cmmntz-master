@@ -12,7 +12,7 @@ class Api::V1::UserSessionsController < ApiController
     if @user_session.save
       render json: { message: "Logged in successfully" }
     else
-      render json: @user_session.errors, status: :unprocessable_entity
+      render json: { errors: @user_session.errors, status: :unprocessable_entity }
     end
   end
 
