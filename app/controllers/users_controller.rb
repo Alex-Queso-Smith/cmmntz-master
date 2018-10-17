@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   skip_before_action *ALL_FILTERS, only: [:new, :create]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :edit_password, :update, :destroy]
   before_action :require_no_user, only: [:new, :create]
 
   # GET /users
@@ -23,6 +23,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+  end
+
+  # GET /users/1/edit
+  def edit_password
   end
 
   # POST /users
