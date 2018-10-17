@@ -23,6 +23,8 @@ class SessionLoginContainer extends React.Component {
   }
 
   handleChange(){
+    this.setState({
+      [event.target.userNameClassNname]: event.target.value
 
   }
 
