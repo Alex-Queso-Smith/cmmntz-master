@@ -6,6 +6,7 @@ import AgeRangeSelector from '../../components/form/AgeRangeSelector';
 import UserRegPageOne from '../../components/form/users/UserRegPageOne';
 import UserRegPageTwo from '../../components/form/users/UserRegPageTwo';
 import UserRegPageThree from '../../components/form/users/UserRegPageThree';
+import FetchWithPush from '../../util/FetchWithPush';
 
 class UserNewFormContainer extends React.Component {
   state = {
@@ -24,7 +25,6 @@ class UserNewFormContainer extends React.Component {
 
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
-  createUser = this.createUser.bind(this);
   handleNextClick = this.handleNextClick.bind(this);
   handleBackClick = this.handleBackClick.bind(this);
   setStateWithValidation = this.setStateWithValidation.bind(this);
@@ -66,34 +66,8 @@ class UserNewFormContainer extends React.Component {
       newUser.append("user[email]", this.state.email);
       newUser.append("user[gender]", this.state.gender);
 
-      this.createUser(newUser);
+      FetchWithPush(this, '/api/v1/users.json', '/', 'POST', 'registrationErrors', newUser)
     }
-  }
-
-  createUser(payload){
-    fetch('/api/v1/users.json', {
-      method: 'POST',
-      credentials: 'same-origin',
-      body: payload
-    })
-    .then(response => {
-       if(response.ok || response.status == 422){
-         return response
-       } else {
-         let errorMessage = `${response.status} (${response.statusText})`,
-             error = new Error(errorMessage)
-         throw(error)
-       }
-     })
-     .then(response => response.json())
-     .then(body => {
-       if (body.errors) {
-         this.setState({ registrationErrors: body.errors})
-       } else {
-         this.props.history.push('/')
-       }
-     })
-     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   handleNextClick(){

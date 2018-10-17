@@ -3,7 +3,8 @@ import React from 'react';
 import Input from '../../components/form/Input';
 import GenderSelector from '../../components/form/GenderSelector';
 import AgeRangeSelector from '../../components/form/AgeRangeSelector';
-import UserEditForm from '../../components/form/users/UserEditForm'
+import UserEditForm from '../../components/form/users/UserEditForm';
+import FetchWithPush from '../../util/FetchWithPush';
 
 class UserEditFormContainer extends React.Component {
   state = {
@@ -20,7 +21,6 @@ class UserEditFormContainer extends React.Component {
 
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
-  saveUser = this.saveUser.bind(this);
 
   componentDidMount(){
     fetch(`/api/v1/users/${this.props.match.params.id}.json`, {credentials: 'same-origin'})
@@ -70,32 +70,8 @@ class UserEditFormContainer extends React.Component {
       user.append("user[email]", this.state.email);
       user.append("user[gender]", this.state.gender);
 
-      this.saveUser(user);
+      FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'saveErrors', user)
     }
-  }
-
-  saveUser(payload){
-    fetch(`/api/v1/users/${this.props.match.params.id}.json`, {
-      method: 'PATCH',
-      credentials: 'same-origin',
-      body: payload
-    })
-    .then(response => {
-       if(response.ok || response.status == 422){
-         return response
-       } else {
-         let errorMessage = `${response.status} (${response.statusText})`,
-             error = new Error(errorMessage)
-         throw(error)
-       }
-     })
-     .then(response => response.json())
-     .then(body => {
-       if (body.errors) {
-         this.setState({ saveErrors: body.errors})
-       }
-     })
-     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   render(){
