@@ -8,33 +8,31 @@ import UserRegPageTwo from '../../components/form/users/UserRegPageTwo';
 import UserRegPageThree from '../../components/form/users/UserRegPageThree';
 
 class UserNewFormContainer extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      userName: '',
-      password: '',
-      passwordConfirmation: '',
-      email: '',
-      ageRange: '',
-      latitude: '',
-      longitude: '',
-      gender: '',
-      currentPage: 1,
-      formInvalid: true,
-      registrationErrors: {},
-      errors: {}
-    }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClear = this.handleClear.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateEntry = this.validateEntry.bind(this);
-    this.createUser = this.createUser.bind(this);
-    this.handleNextClick = this.handleNextClick.bind(this);
-    this.handleBackClick = this.handleBackClick.bind(this);
-    this.registrationStatus = this.registrationStatus.bind(this);
-    this.validateErrorKeys = this.validateErrorKeys.bind(this);
-    this.setStateWithValidation = this.setStateWithValidation.bind(this);
+  state = {
+    userName: '',
+    password: '',
+    passwordConfirmation: '',
+    email: '',
+    ageRange: '',
+    latitude: '',
+    longitude: '',
+    gender: '',
+    currentPage: 1,
+    formInvalid: true,
+    registrationErrors: {},
+    errors: {}
   }
+  
+  handleChange = this.handleChange.bind(this);
+  handleClear = this.handleClear.bind(this);
+  handleSubmit = this.handleSubmit.bind(this);
+  validateEntry = this.validateEntry.bind(this);
+  createUser = this.createUser.bind(this);
+  handleNextClick = this.handleNextClick.bind(this);
+  handleBackClick = this.handleBackClick.bind(this);
+  registrationStatus = this.registrationStatus.bind(this);
+  validateErrorKeys = this.validateErrorKeys.bind(this);
+  setStateWithValidation = this.setStateWithValidation.bind(this);
 
   handleChange(event){
     const target = event.target;

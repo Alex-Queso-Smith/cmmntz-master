@@ -5,23 +5,20 @@ import Checkbox from '../../components/form/Checkbox'
 
 
 class SessionLoginContainer extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      userName: '',
-      password: '',
-      rememberMe: false,
-      formInvalid: true,
-      loginErrors: {},
-      errors: {}
-    }
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.validateErrorKeys = this.validateErrorKeys.bind(this);
-    this.setStateWithValidation = this.setStateWithValidation.bind(this);
-    this.processLogin = this.processLogin.bind(this);
+  state = {
+    userName: '',
+    password: '',
+    rememberMe: false,
+    formInvalid: true,
+    loginErrors: {},
+    errors: {}
   }
+
+  handleSubmit = this.handleSubmit.bind(this);
+  handleChange = this.handleChange.bind(this);
+  validateErrorKeys = this.validateErrorKeys.bind(this);
+  setStateWithValidation = this.setStateWithValidation.bind(this);
+  processLogin = this.processLogin.bind(this);
 
   handleSubmit(event){
     event.preventDefault();

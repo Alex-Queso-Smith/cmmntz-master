@@ -7,10 +7,7 @@ import UserEditFormContainer from './users/UserEditFormContainer';
 import SessionLoginContainer from './sessions/SessionLoginContainer';
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {};
-  }
+  
   render(){
     return (
       <Router>

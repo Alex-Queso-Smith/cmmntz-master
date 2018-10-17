@@ -6,26 +6,24 @@ import AgeRangeSelector from '../../components/form/AgeRangeSelector';
 import UserEditForm from '../../components/form/users/UserEditForm'
 
 class UserEditFormContainer extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      userName: '',
-      password: '',
-      passwordConfirmation: '',
-      email: '',
-      ageRange: '',
-      latitude: '',
-      longitude: '',
-      gender: '',
-      saveErrors: {},
-      errors: {}
-    }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateEntry = this.validateEntry.bind(this);
-    this.validateErrorKeys = this.validateErrorKeys.bind(this);
-    this.saveUser = this.saveUser.bind(this);
+  state = {
+    userName: '',
+    password: '',
+    passwordConfirmation: '',
+    email: '',
+    ageRange: '',
+    latitude: '',
+    longitude: '',
+    gender: '',
+    saveErrors: {},
+    errors: {}
   }
+  
+  handleChange = this.handleChange.bind(this);
+  handleSubmit = this.handleSubmit.bind(this);
+  validateEntry = this.validateEntry.bind(this);
+  validateErrorKeys = this.validateErrorKeys.bind(this);
+  saveUser = this.saveUser.bind(this);
 
   componentDidMount(){
     fetch(`/api/v1/users/${this.props.match.params.id}.json`, {credentials: 'same-origin'})

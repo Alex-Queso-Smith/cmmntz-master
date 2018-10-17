@@ -5,10 +5,6 @@ import AgeRangeSelector from '../AgeRangeSelector';
 import GenderSelector from '../GenderSelector';
 
 class UserEditForm extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {}
-  }
 
   render(){
     var userNameClass, emailClass
