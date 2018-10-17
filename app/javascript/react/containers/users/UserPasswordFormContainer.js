@@ -9,19 +9,17 @@ class UserPasswordFormContainer extends React.Component {
     password: '',
     passwordConfirmation: '',
     formInvalid: true,
-    passwordErrors: {},
-    errors: {}
+    passwordErrors: {}
   }
 
   handleSubmit = this.handleSubmit.bind(this);
   handleChange = this.handleChange.bind(this);
-  validateErrorKeys = this.validateErrorKeys.bind(this);
   setStateWithValidation = this.setStateWithValidation.bind(this);
   savePassword = this.savePassword.bind(this);
 
   handleSubmit(event){
     event.preventDefault();
-    if (this.validateErrorKeys()) {
+    if (!this.state.formInvalid) {
       var login = new FormData();
       login.append("user[password]", this.state.password);
       login.append("user[password_confirmation]", this.state.passwordConfirmation);
@@ -75,32 +73,6 @@ class UserPasswordFormContainer extends React.Component {
       formInvalid: valid,
       [name]: value
     })
-  }
-
-  validateErrorKeys(){
-    Object.keys(this.state).forEach(key => {
-      if (
-        key != "errors" &&
-        key != "passwordErrors" &&
-        key != "formInvalid"
-      ) {
-        this.validateEntry(key, this.state[key])
-      }
-    })
-    return Object.keys(this.state.errors).length == 0
-  }
-
-  validateEntry(name, fieldValue){
-    if (fieldValue.trim() === '') {
-      var newError = { [name]: `You must enter a ${name}`};
-      this.setState({ errors: Object.assign(this.state.errors, newError) });
-      return false;
-    } else {
-      var errorState = this.state.errors;
-      delete errorState[name];
-      this.setState({ errors: errorState });
-      return true;
-    }
   }
 
   render(){

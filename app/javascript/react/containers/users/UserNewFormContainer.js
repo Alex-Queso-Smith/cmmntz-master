@@ -19,33 +19,21 @@ class UserNewFormContainer extends React.Component {
     gender: '',
     currentPage: 1,
     formInvalid: true,
-    registrationErrors: {},
-    errors: {}
+    registrationErrors: {}
   }
 
   handleChange = this.handleChange.bind(this);
-  handleClear = this.handleClear.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
-  validateEntry = this.validateEntry.bind(this);
   createUser = this.createUser.bind(this);
   handleNextClick = this.handleNextClick.bind(this);
   handleBackClick = this.handleBackClick.bind(this);
-  registrationStatus = this.registrationStatus.bind(this);
-  validateErrorKeys = this.validateErrorKeys.bind(this);
   setStateWithValidation = this.setStateWithValidation.bind(this);
 
   handleChange(event){
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-    if (
-      name != "ageRange" ||
-      name != "latitude" ||
-      name != "longitude" ||
-      name != "gender"
-    ) {
-      this.validateEntry(event.target.name, event.target.value)
-    }
+
     if (
       this.state.userName.length != 0 &&
       this.state.email.length != 0 &&
@@ -65,22 +53,9 @@ class UserNewFormContainer extends React.Component {
     })
   }
 
-  validateEntry(name, fieldValue){
-    if (fieldValue.trim() === '') {
-      var newError = { [name]: `You must enter a ${name}`};
-      this.setState({ errors: Object.assign(this.state.errors, newError) });
-      return false;
-    } else {
-      var errorState = this.state.errors;
-      delete errorState[name];
-      this.setState({ errors: errorState });
-      return true;
-    }
-  }
-
   handleSubmit(event){
     event.preventDefault();
-    if (this.validateErrorKeys()){
+    if (!this.state.formInvalid){
       var newUser = new FormData();
       newUser.append("user[user_name]", this.state.userName);
       newUser.append("user[password]", this.state.password);
@@ -92,7 +67,6 @@ class UserNewFormContainer extends React.Component {
       newUser.append("user[gender]", this.state.gender);
 
       this.createUser(newUser);
-      // this.handleClear();
     }
   }
 
@@ -122,26 +96,10 @@ class UserNewFormContainer extends React.Component {
      .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleClear(){
-    this.setState({
-      userName: '',
-      password: '',
-      passwordConfirmation: '',
-      email: '',
-      ageRange: '',
-      latitude: '',
-      longitude: '',
-      gender: '',
-      errors: {}
-    })
-  }
-
   handleNextClick(){
-    if (this.validateErrorKeys()){
-      var current = this.state.currentPage
-      current++
-      this.setState({ currentPage: current })
-    }
+    var current = this.state.currentPage
+    current++
+    this.setState({ currentPage: current })
   }
 
   handleBackClick(){
@@ -150,42 +108,9 @@ class UserNewFormContainer extends React.Component {
     this.setState({ currentPage: reverse })
   }
 
-  registrationStatus(){
-    if (this.validateErrorKeys()) {
-      this.setState({ formInvalid: false })
-    } else {
-      this.setState({ formInvalid: true })
-    }
-  }
-
-  validateErrorKeys(){
-    Object.keys(this.state).forEach(key => {
-      if (
-        key != "errors" &&
-        key != "ageRange" &&
-        key != "latitude" &&
-        key != "longitude" &&
-        key != "gender" &&
-        key != "currentPage" &&
-        key != "formInvalid" &&
-        key != "registrationErrors"
-      ) {
-        this.validateEntry(key, this.state[key])
-      }
-    })
-    return Object.keys(this.state.errors).length == 0
-  }
-
   render(){
     var errorDiv, page, emailError, userNameError, passwordError, passwordConfirmationError;
     var { registrationErrors } = this.state
-    // var errorItems;
-    // if (Object.keys(this.state.errors).length > 0) {
-    //   errorItems = Object.values(this.state.errors).map(error => {
-    //     return(<li key={error}>{error}</li>)
-    //   })
-    //   errorDiv = <div className="callout alert">{errorItems}</div>
-    // }
 
     if (registrationErrors.email) {
       emailError =

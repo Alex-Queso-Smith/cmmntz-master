@@ -15,14 +15,11 @@ class UserEditFormContainer extends React.Component {
     latitude: '',
     longitude: '',
     gender: '',
-    saveErrors: {},
-    errors: {}
+    saveErrors: {}
   }
 
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
-  validateEntry = this.validateEntry.bind(this);
-  validateErrorKeys = this.validateErrorKeys.bind(this);
   saveUser = this.saveUser.bind(this);
 
   componentDidMount(){
@@ -51,46 +48,18 @@ class UserEditFormContainer extends React.Component {
   }
 
   handleChange(event){
-    if (
-      event.target.name != "ageRange" ||
-      event.target.name != "latitude" ||
-      event.target.name != "longitude" ||
-      event.target.name != "gender"
-    ) {
-      this.validateEntry(event.target.name, event.target.value)
-    }
-    if (
-      this.state.userName.length != 0 &&
-      this.state.email.length != 0 &&
-      this.state.password != 0 &&
-      this.state.passwordConfirmation != 0
-    ) {
-      this.setState({
-        [event.target.name]: event.target.value
-      })
-    } else {
-      this.setState({
-        [event.target.name]: event.target.value
-      });
-    }
-  }
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
 
-  validateEntry(name, fieldValue){
-    if (fieldValue.trim() === '') {
-      var newError = { [name]: `You must enter a ${name}`};
-      this.setState({ errors: Object.assign(this.state.errors, newError) });
-      return false;
-    } else {
-      var errorState = this.state.errors;
-      delete errorState[name];
-      this.setState({ errors: errorState });
-      return true;
-    }
+    this.setState({
+      [name]: value
+    })
   }
 
   handleSubmit(event){
     event.preventDefault();
-    // if (this.validateErrorKeys()){
+    if (!this.state.formInvalid){
       var user = new FormData();
       user.append("user[user_name]", this.state.userName);
       user.append("user[password]", this.state.password);
@@ -102,7 +71,7 @@ class UserEditFormContainer extends React.Component {
       user.append("user[gender]", this.state.gender);
 
       this.saveUser(user);
-    // }
+    }
   }
 
   saveUser(payload){
@@ -129,34 +98,9 @@ class UserEditFormContainer extends React.Component {
      .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  validateErrorKeys(){
-    Object.keys(this.state).forEach(key => {
-      if (
-        key != "errors" &&
-        key != "ageRange" &&
-        key != "latitude" &&
-        key != "longitude" &&
-        key != "gender" &&
-        key != "saveErrors"
-      ) {
-        this.validateEntry(key, this.state[key])
-      }
-    })
-    return Object.keys(this.state.errors).length == 0
-  }
-
   render(){
     var errorDiv, page, emailError, userNameError, passwordError, passwordConfirmationError;
     var { saveErrors } = this.state
-
-    // var errorItems;
-    //
-    // if (Object.keys(this.state.errors).length > 0) {
-    //   errorItems = Object.values(this.state.errors).map(error => {
-    //     return(<li key={error}>{error}</li>)
-    //   })
-    //   errorDiv = <div className="callout alert">{errorItems}</div>
-    // }
 
     if (saveErrors.email) {
       emailError =
