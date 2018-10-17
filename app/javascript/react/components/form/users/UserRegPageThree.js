@@ -19,7 +19,7 @@ const UserRegPageThree = props => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default UserRegPageThree;

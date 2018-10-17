@@ -15,7 +15,7 @@ const GenderSelector = props => {
         </select>
       </label>
     </div>
-  )
-}
+  );
+};
 
 export default GenderSelector;

@@ -5,22 +5,19 @@ import Checkbox from '../../components/form/Checkbox'
 
 
 class UserPasswordFormContainer extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      password: '',
-      passwordConfirmation: '',
-      formInvalid: true,
-      passwordErrors: {},
-      errors: {}
-    }
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.validateErrorKeys = this.validateErrorKeys.bind(this);
-    this.setStateWithValidation = this.setStateWithValidation.bind(this);
-    this.savePassword = this.savePassword.bind(this);
+  state = {
+    password: '',
+    passwordConfirmation: '',
+    formInvalid: true,
+    passwordErrors: {},
+    errors: {}
   }
+
+  handleSubmit = this.handleSubmit.bind(this);
+  handleChange = this.handleChange.bind(this);
+  validateErrorKeys = this.validateErrorKeys.bind(this);
+  setStateWithValidation = this.setStateWithValidation.bind(this);
+  savePassword = this.savePassword.bind(this);
 
   handleSubmit(event){
     event.preventDefault();
@@ -156,4 +153,5 @@ class UserPasswordFormContainer extends React.Component {
     )
   }
 }
+
 export default UserPasswordFormContainer;

@@ -1,6 +1,7 @@
 import React from 'react';
 
 const AgeRangeSelector = props => {
+
   const ageRanges =[["", "None of your business!"], [15, "15-19"], [20, "20-24"], [25, "25-29"], [30, "30-34"], [35, "35-39"], [40, "40-44"], [45, "45-49"], [50, "50-54"], [55, "55-59"], [60, "60+"]]
 
   var ages = ageRanges.map((age) => {
@@ -20,7 +21,7 @@ const AgeRangeSelector = props => {
         </select>
       </label>
     </div>
-  )
-}
+  );
+};
 
 export default AgeRangeSelector;

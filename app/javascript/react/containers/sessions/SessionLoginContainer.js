@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Input from '../../components/form/Input';
-import Checkbox from '../../components/form/Checkbox'
+import Checkbox from '../../components/form/Checkbox';
 
 
 class SessionLoginContainer extends React.Component {
@@ -161,4 +161,5 @@ class SessionLoginContainer extends React.Component {
     )
   }
 }
+
 export default SessionLoginContainer;
