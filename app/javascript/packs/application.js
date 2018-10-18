@@ -14,18 +14,33 @@ import App from '../react/containers/App';
 import RedBox from 'redbox-react';
 
 document.addEventListener('DOMContentLoaded', () => {
-  let reactElement = document.getElementById('app');
+  let userElement = document.getElementById('app');
 
-  if (reactElement) {
+  if (userElement) {
     if(window.railsEnv && window.railsEnv === 'development'){
       try {
-        render(<App />, reactElement)
+        render(<App />, userElement)
       } catch (e) {
-        render(<RedBox error={e} />, reactElement)
+        render(<RedBox error={e} />, userElement)
       }
     }
     else {
-      render(<App />, reactElement)
+      render(<App />, userElement)
+    }
+  }
+
+  let commentElement = document.getElementById('cf-comments-app')
+
+  if (commentElement) {
+    if(window.railsEnv && window.railsEnv === 'development'){
+      try {
+        render(<CfCommentsApp />, commentElement)
+      } catch (e) {
+        render(<RedBox error={e} />, commentElement)
+      }
+    }
+    else {
+      render(<CfCommentsApp />, commentElement)
     }
   }
 })
