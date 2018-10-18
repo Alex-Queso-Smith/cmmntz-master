@@ -142,8 +142,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    xdescribe "avatar validations" do
-    end
+    # pending "avatar validations"
   end
 
   describe "basic user gender functionality" do
@@ -187,16 +186,26 @@ RSpec.describe User, type: :model do
     end
   end
 
-describe "user_with comments" do
-  before(:each) do
-    @comments_count = 15
-    @user = create(:user_with_comments, comments_count: @comments_count)
+  describe "user_with comments" do
+    before(:each) do
+      @comments_count = 15
+      @user = create(:user_with_comments, comments_count: @comments_count)
+    end
+
+    it "should have #{@comments_count} comments" do
+      expect(@user.comments.size).to eq(@comments_count)
+    end
   end
 
-  it "should have #{@comments_count} comments" do
-    expect(@user.comments.size).to eq(@comments_count)
+  describe "user with comments with votes" do
+    it "should have 50 votes" do
+      comments_count = 5
+      votes_count = 10
+      expected_votes = comments_count * votes_count
+      user = create(:user_with_comments_with_votes, comments_count: comments_count, votes_count: votes_count)
+      total_votes = user.comments.map(&:votes).flatten.size
+      expect(total_votes).to eq(expected_votes)
+    end
   end
-
-end
 
 end
