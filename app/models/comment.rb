@@ -6,7 +6,7 @@ class Comment < ApplicationRecord
 
   before_validation :sanitize_text_and_title
 
-  validates :user_id, :art_id, :art_type, :title, :text, presence: true
+  validates :user_id, :art_id, :art_type, :text, presence: true
 
   validates :title, length: { in: 1..32 }
   validates :text, length: { in: 1..512 }
