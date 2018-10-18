@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
   describe "validation" do
-    let!(:comment1) { FactoryBot.build(:comment) }
+    before(:each) do
+      @comment1 = FactoryBot.build(:comment)
+    end
 
     it "is valid with valid inputs" do
-      expect(comment1).to be_valid
+      expect(@comment1).to be_valid
     end
 
     describe "title validations" do
@@ -49,5 +51,17 @@ Aenean scelerisque, odio ut viverra iaculis, nunc magna placerat sem, eget viver
         expect(comment_text_html.text).to eq(text_sanitized)
       end
     end
+  end
+
+  describe "comment with votes" do
+    before(:each) do
+      @votes_count = 5
+      @comment = create(:comment_with_votes, votes_count: @votes_count)
+    end
+
+    it "should have #{@votes_count} comments" do
+      expect(@comment.votes.size).to eq(@votes_count)
+    end
+
   end
 end
