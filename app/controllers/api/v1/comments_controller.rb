@@ -6,7 +6,7 @@ class Api::V1::CommentsController < ApiController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @comments = Comment.for_art_type_and_id(params(:art_type), params(:art_id))
   end
 
   # GET /comments/1

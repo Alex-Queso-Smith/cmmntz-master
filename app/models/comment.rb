@@ -12,6 +12,9 @@ class Comment < ApplicationRecord
   validates :text, length: { in: 1..512 }
   validate :text_does_not_have_html, :title_does_not_have_html
 
+  ### Scopes
+  scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
+
   private
 
   ### Custom Validations be here
