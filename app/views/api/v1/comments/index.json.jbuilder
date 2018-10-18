@@ -1,4 +1,4 @@
-json.array! @comments do |comment|
+json.comments @comments do |comment|
   json.text comment.text
   json.user do
     json.user_name comment.user.user_name
