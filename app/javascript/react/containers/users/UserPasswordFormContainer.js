@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Input from '../../components/form/Input';
-import Checkbox from '../../components/form/Checkbox'
-
+import Checkbox from '../../components/form/Checkbox';
+import FetchWithPush from '../../util/FetchWithPush';
 
 class UserPasswordFormContainer extends React.Component {
   state = {
@@ -15,44 +15,17 @@ class UserPasswordFormContainer extends React.Component {
   handleSubmit = this.handleSubmit.bind(this);
   handleChange = this.handleChange.bind(this);
   setStateWithValidation = this.setStateWithValidation.bind(this);
-  savePassword = this.savePassword.bind(this);
 
   handleSubmit(event){
     event.preventDefault();
     if (!this.state.formInvalid) {
-      var login = new FormData();
-      login.append("user[password]", this.state.password);
-      login.append("user[password_confirmation]", this.state.passwordConfirmation);
+      var user = new FormData();
+      user.append("user[password]", this.state.password);
+      user.append("user[password_confirmation]", this.state.passwordConfirmation);
 
-      this.savePassword(login);
+      FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'passwordErrors', user)
     }
   }
-
-  savePassword(payload){
-    fetch(`/api/v1/users/${this.props.match.params.id}.json`, {
-      method: 'PATCH',
-      credentials: 'same-origin',
-      body: payload
-    })
-    .then(response => {
-       if(response.ok || response.status == 422){
-         return response
-       } else {
-         let errorMessage = `${response.status} (${response.statusText})`,
-             error = new Error(errorMessage)
-         throw(error)
-       }
-     })
-     .then(response => response.json())
-     .then(body => {
-       if (body.errors) {
-         this.setState({ passwordErrors: body.errors})
-       } else {
-         this.props.history.push('/')
-       }
-     })
-     .catch(error => console.error(`Error in fetch: ${error.message}`));
-   }
 
   handleChange(event){
     const target = event.target;
@@ -96,6 +69,7 @@ class UserPasswordFormContainer extends React.Component {
         )
       })
     }
+    
     return(
       <form className="form" id="password-form" onSubmit={this.handleSubmit}>
         <h1 className="user-title text-center">Edit Password</h1>

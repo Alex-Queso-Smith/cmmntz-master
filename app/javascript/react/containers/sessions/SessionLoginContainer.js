@@ -2,6 +2,7 @@ import React from 'react';
 
 import Input from '../../components/form/Input';
 import Checkbox from '../../components/form/Checkbox';
+import FetchWithPush from '../../util/FetchWithPush';
 
 
 class SessionLoginContainer extends React.Component {
@@ -10,53 +11,24 @@ class SessionLoginContainer extends React.Component {
     password: '',
     rememberMe: false,
     formInvalid: true,
-    loginErrors: {},
-    errors: {}
+    loginErrors: {}
   }
 
   handleSubmit = this.handleSubmit.bind(this);
   handleChange = this.handleChange.bind(this);
-  validateErrorKeys = this.validateErrorKeys.bind(this);
   setStateWithValidation = this.setStateWithValidation.bind(this);
-  processLogin = this.processLogin.bind(this);
 
   handleSubmit(event){
     event.preventDefault();
-    if (this.validateErrorKeys()) {
+    if (!this.state.formInvalid) {
       var login = new FormData();
       login.append("user_session[user_name]", this.state.userName);
       login.append("user_session[password]", this.state.password);
       login.append("user_session[remember_me]", this.state.rememberMe);
 
-      this.processLogin(login);
+      FetchWithPush(this, '/api/v1/user_sessions.json', '/', 'POST', 'loginErrors', login)
     }
   }
-
-  processLogin(payload){
-    fetch('/api/v1/user_sessions.json', {
-      method: 'POST',
-      credentials: 'same-origin',
-      body: payload
-    })
-    .then(response => {
-       if(response.ok || response.status == 422){
-         return response
-       } else {
-         let errorMessage = `${response.status} (${response.statusText})`,
-             error = new Error(errorMessage)
-         throw(error)
-       }
-     })
-     .then(response => response.json())
-     .then(body => {
-       if (body.errors) {
-         this.setState({ loginErrors: body.errors})
-       } else {
-         this.props.history.push('/')
-       }
-     })
-     .catch(error => console.error(`Error in fetch: ${error.message}`));
-   }
 
   handleChange(event){
     const target = event.target;
@@ -77,33 +49,6 @@ class SessionLoginContainer extends React.Component {
       formInvalid: valid,
       [name]: value
     })
-  }
-
-  validateErrorKeys(){
-    Object.keys(this.state).forEach(key => {
-      if (
-        key != "errors" &&
-        key != "loginErrors" &&
-        key != "rememberMe" &&
-        key != "formInvalid"
-      ) {
-        this.validateEntry(key, this.state[key])
-      }
-    })
-    return Object.keys(this.state.errors).length == 0
-  }
-
-  validateEntry(name, fieldValue){
-    if (fieldValue.trim() === '') {
-      var newError = { [name]: `You must enter a ${name}`};
-      this.setState({ errors: Object.assign(this.state.errors, newError) });
-      return false;
-    } else {
-      var errorState = this.state.errors;
-      delete errorState[name];
-      this.setState({ errors: errorState });
-      return true;
-    }
   }
 
   render(){
@@ -127,6 +72,7 @@ class SessionLoginContainer extends React.Component {
         )
       })
     }
+    
     return(
       <form className="form" id="login-form" onSubmit={this.handleSubmit}>
         <h1 className="user-title text-center">Login</h1>
