@@ -9,11 +9,11 @@
 
 import React from 'react';
 import { render } from 'react-dom';
+import RedBox from 'redbox-react';
 
 import App from '../react/App';
 import CfCommentsApp from '../react/CfCommentsApp';
 
-import RedBox from 'redbox-react';
 
 document.addEventListener('DOMContentLoaded', () => {
   let userElement = document.getElementById('app');

@@ -14,7 +14,7 @@ const UserRegPageTwo = props => {
       <AgeRangeSelector
         name="ageRange"
         label="Age Range"
-        handleChange={props.handleChange}
+        onChange={props.onChange}
         content={props.ageRange}
         type="text"
       />
@@ -22,21 +22,21 @@ const UserRegPageTwo = props => {
       <GenderSelector
         name="gender"
         label="Gender"
-        handleChange={props.handleChange}
+        onChange={props.onChange}
         content={props.gender}
       />
       <hr />
       <Input
         name="latitude"
         label="Latitude"
-        handleChange={props.handleChange}
+        onChange={props.onChange}
         content={props.latitude}
         type="text"
       />
       <Input
         name="longitude"
         label="Longitude"
-        handleChange={props.handleChange}
+        onChange={props.onChange}
         content={props.longitude}
         type="text"
       />
