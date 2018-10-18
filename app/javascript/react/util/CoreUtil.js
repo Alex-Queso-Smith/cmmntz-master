@@ -57,9 +57,18 @@ export const SetStateWithValidation = (object, valid, name, value) => {
   })
 }
 
+export const ErrorClassValidation = (error) => {
+  if (error) {
+    return "is-invalid"
+  } else {
+    "valid"
+  }
+}
+
 export default {
   CreateErrorElements,
   FetchWithPull,
   FetchWithPush,
-  SetStateWithValidation
+  SetStateWithValidation,
+  ErrorClassValidation
 }

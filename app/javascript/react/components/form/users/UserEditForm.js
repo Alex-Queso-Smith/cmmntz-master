@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Input from '../Input';
+import { ErrorClassValidation } from '../../../util/CoreUtil';
 import AgeRangeSelector from '../AgeRangeSelector';
 import GenderSelector from '../GenderSelector';
 
@@ -8,13 +9,8 @@ const UserEditForm = props => {
 
   var userNameClass, emailClass
 
-  if (props.userNameError) {
-    userNameClass = "is-invalid"
-  }
-
-  if (props.emailError) {
-    emailClass = "is-invalid"
-  }
+  userNameClass = ErrorClassValidation(props.userNameError);
+  emailClass = ErrorClassValidation(props.emailError);
 
   return(
     <div>

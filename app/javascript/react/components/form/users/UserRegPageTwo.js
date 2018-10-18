@@ -8,9 +8,7 @@ const UserRegPageTwo = props => {
   return(
     <div id="reg-optional-1" className="form-group">
       <h3 className="text-center">Sign-Up Optional Information 1/2 </h3>
-
       <hr />
-
       <AgeRangeSelector
         name="ageRange"
         label="Age Range"

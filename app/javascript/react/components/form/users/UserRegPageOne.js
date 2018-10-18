@@ -1,26 +1,16 @@
 import React from 'react';
 
 import Input from '../Input';
+import { ErrorClassValidation } from '../../../util/CoreUtil';
 
 const UserRegPageOne = props => {
 
   var userNameClass, emailClass, passwordClass, passwordConfirmationClass;
 
-  if (props.userNameError) {
-    userNameClass = "is-invalid"
-  }
-
-  if (props.emailError) {
-    emailClass = "is-invalid"
-  }
-
-  if (props.passwordError) {
-    passwordClass = "is-invalid"
-  }
-
-  if (props.passwordConfirmationError) {
-    passwordConfirmationClass = "is-invalid"
-  }
+  userNameClass = ErrorClassValidation(props.userNameError);
+  emailClass = ErrorClassValidation(props.emailError);
+  passwordClass = ErrorClassValidation(props.passwordError);
+  passwordConfirmationClass = ErrorClassValidation(props.passwordConfirmationError);
 
   return(
     <div id="reg-required" className="form-group">
