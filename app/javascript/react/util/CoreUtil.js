@@ -16,11 +16,14 @@ export const FetchWithPush = (object, path, push, method, errors, payload) => {
      }
    })
    .then(response => response.json())
+   // .then(response => {debugger})
    .then(body => {
      if (body.errors) {
        object.setState({ [errors]: body.errors})
      } else {
-       object.props.history.push('/')
+       if (push != '') {
+         object.props.history.push(push)
+       }
      }
    })
    .catch(error => console.error(`Error in fetch: ${error.message}`));
