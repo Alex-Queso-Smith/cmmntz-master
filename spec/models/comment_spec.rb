@@ -49,6 +49,5 @@ Aenean scelerisque, odio ut viverra iaculis, nunc magna placerat sem, eget viver
         expect(comment_text_html.text).to eq(text_sanitized)
       end
     end
-
   end
 end
