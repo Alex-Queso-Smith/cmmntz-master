@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
 
 import UserNewFormContainer from './containers/users/UserNewFormContainer';
