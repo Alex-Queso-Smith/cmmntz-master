@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :comment do
-    user_id {"ffff67f6f6f6-6f6f6f6f6f6-6f6f6f6f6f6-9f9f9"}
+    association :user, factory: :user, user_name: "Writely"
     art_id {"ffff67f6f6f6-6f6f6f6f6f6-6f6f6f6f6f6-9f9f9"}
     art_type {"article"}
     title { "this is a title" }
