@@ -1,26 +1,12 @@
 class Api::V1::CommentsController < ApiController
   load_and_authorize_resource
 
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_comment, only: [:update, :destroy]
 
   # GET /comments
   # GET /comments.json
   def index
     @comments = Comment.for_art_type_and_id(params(:art_type), params(:art_id))
-  end
-
-  # GET /comments/1
-  # GET /comments/1.json
-  def show
-  end
-
-  # GET /comments/new
-  def new
-    @comment = Comment.new
-  end
-
-  # GET /comments/1/edit
-  def edit
   end
 
   # POST /comments
