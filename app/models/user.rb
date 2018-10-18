@@ -1,8 +1,10 @@
 class User < ApplicationRecord
   include AuthlogicValidations
-  
+
   GENDERS = [nil, 0, 1, 2]
-  AGES = [nil, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
+  AGES = [nil, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\
+
+  has_many :comments
 
   validates :user_name, presence: true, uniqueness: true
 
