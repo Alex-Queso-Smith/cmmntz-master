@@ -6,7 +6,7 @@ const AgeRangeSelector = props => {
 
   var ages = ageRanges.map((age) => {
     return(
-      <option key={age[0]} value={`${age[0]}`}>{age[1]}</option>
+      <option key={age[0]} value={age[0]}>{age[1]}</option>
     )
   })
 

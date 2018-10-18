@@ -28,7 +28,7 @@ const UserRegPageOne = props => {
       <Input
         name="userName"
         label="User Name"
-        handleChange={props.handleChange}
+        onChange={props.onChange}
         content={props.userName}
         type="text"
         addClass={userNameClass}
@@ -37,7 +37,7 @@ const UserRegPageOne = props => {
       <Input
         name="email"
         label="Email"
-        handleChange={props.handleChange}
+        onChange={props.onChange}
         content={props.email}
         type="text"
         addClass={emailClass}
@@ -46,7 +46,7 @@ const UserRegPageOne = props => {
       <Input
         name="password"
         label="Password"
-        handleChange={props.handleChange}
+        onChange={props.onChange}
         content={props.password}
         type="password"
         addClass={passwordClass}
@@ -55,7 +55,7 @@ const UserRegPageOne = props => {
       <Input
         name="passwordConfirmation"
         label="Password Confirmation"
-        handleChange={props.handleChange}
+        onChange={props.onChange}
         content={props.passwordConfirmation}
         type="password"
         addClass={passwordConfirmationClass}
