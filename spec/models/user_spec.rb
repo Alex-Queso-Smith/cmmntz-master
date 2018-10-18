@@ -53,7 +53,7 @@ RSpec.describe User, type: :model do
       #   expect(user3).to_not be_valid
       # end
 
-      # Disabled for the MVP 
+      # Disabled for the MVP
       # it "should be invalid without at least 1 integer" do
       #   user3.password = "abcdefg"
       #   user3.password_confirmation = "abcdefg"
@@ -186,4 +186,17 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+describe "user_with comments" do
+  before(:each) do
+    @comments_count = 15
+    @user = create(:user_with_comments, comments_count: @comments_count)
+  end
+
+  it "should have #{@comments_count} comments" do
+    expect(@user.comments.size).to eq(@comments_count)
+  end
+
+end
+
 end
