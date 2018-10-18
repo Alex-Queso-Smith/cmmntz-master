@@ -6,7 +6,7 @@ import AgeRangeSelector from '../../components/form/AgeRangeSelector';
 import UserRegPageOne from '../../components/form/users/UserRegPageOne';
 import UserRegPageTwo from '../../components/form/users/UserRegPageTwo';
 import UserRegPageThree from '../../components/form/users/UserRegPageThree';
-import { FetchWithPush, CreateErrorElements } from '../../util/CoreUtil';
+import { FetchWithPush, CreateErrorElements, SetStateWithValidation } from '../../util/CoreUtil';
 
 class UserNewFormContainer extends React.Component {
   state = {
@@ -27,7 +27,6 @@ class UserNewFormContainer extends React.Component {
   handleSubmit = this.handleSubmit.bind(this);
   handleNextClick = this.handleNextClick.bind(this);
   handleBackClick = this.handleBackClick.bind(this);
-  setStateWithValidation = this.setStateWithValidation.bind(this);
 
   handleChange(event){
     const target = event.target;
@@ -40,17 +39,10 @@ class UserNewFormContainer extends React.Component {
       this.state.password.length != 0 &&
       this.state.passwordConfirmation.length != 0
     ) {
-      this.setStateWithValidation(false, name, value)
+      SetStateWithValidation(this, false, name, value)
     } else {
-      this.setStateWithValidation(true, name, value)
+      SetStateWithValidation(this, true, name, value)
     }
-  }
-
-  setStateWithValidation(valid, name, value){
-    this.setState({
-      formInvalid: valid,
-      [name]: value
-    })
   }
 
   handleSubmit(event){

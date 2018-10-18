@@ -50,8 +50,16 @@ export const CreateErrorElements = (errors, name) => {
   }
 }
 
+export const SetStateWithValidation = (object, valid, name, value) => {
+  object.setState({
+    formInvalid: valid,
+    [name]: value
+  })
+}
+
 export default {
   CreateErrorElements,
   FetchWithPull,
-  FetchWithPush
+  FetchWithPush,
+  SetStateWithValidation
 }

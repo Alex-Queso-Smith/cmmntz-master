@@ -2,7 +2,7 @@ import React from 'react';
 
 import Input from '../../components/form/Input';
 import Checkbox from '../../components/form/Checkbox';
-import { FetchWithPush, CreateErrorElements } from '../../util/CoreUtil';
+import { FetchWithPush, CreateErrorElements, SetStateWithValidation } from '../../util/CoreUtil';
 
 
 class SessionLoginContainer extends React.Component {
@@ -16,7 +16,6 @@ class SessionLoginContainer extends React.Component {
 
   handleSubmit = this.handleSubmit.bind(this);
   handleChange = this.handleChange.bind(this);
-  setStateWithValidation = this.setStateWithValidation.bind(this);
 
   handleSubmit(event){
     event.preventDefault();
@@ -38,17 +37,10 @@ class SessionLoginContainer extends React.Component {
       this.state.userName.length != 0 &&
       this.state.password.length != 0
     ) {
-      this.setStateWithValidation(false, name, value)
+      SetStateWithValidation(this, false, name, value)
     } else {
-      this.setStateWithValidation(true, name, value)
+      SetStateWithValidation(this, true, name, value)
     }
-  }
-
-  setStateWithValidation(valid, name, value){
-    this.setState({
-      formInvalid: valid,
-      [name]: value
-    })
   }
 
   render(){
