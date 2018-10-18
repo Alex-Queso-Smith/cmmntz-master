@@ -2,6 +2,7 @@ import React from 'react'
 
 import Input from '../../components/form/Input';
 import { SetStateWithValidation, FetchWithPush, CreateErrorElements } from '../../util/CoreUtil.js';
+import Checkbox from '../../components/form/Checkbox';
 
 class CommentsFormContainer extends React.Component {
   state = {
@@ -9,6 +10,7 @@ class CommentsFormContainer extends React.Component {
     artId: '',
     artType: '',
     text: '',
+    anonymous: false,
     formInvalid: true,
     commentFormErrors: {}
   }
@@ -37,6 +39,7 @@ class CommentsFormContainer extends React.Component {
       newComment.append("comment[art_type]", commentRoot.getAttribute('data-art-type'))
       newComment.append("comment[art_id]", commentRoot.getAttribute('data-art-id'))
       newComment.append("comment[text]", this.state.text)
+      newComment.append("comment[anonymous]", this.state.anonymous)
 
       FetchWithPush(this, '/api/v1/comments.json', '', 'POST', 'commentFormErrors', newComment )
       if (Object.keys(this.state.commentFormErrors).length === 0) {
@@ -48,6 +51,7 @@ class CommentsFormContainer extends React.Component {
   handleClear(){
     this.setState({
       text: '',
+      anonymous: false,
       formInvalid: true
     })
   }
@@ -65,6 +69,11 @@ class CommentsFormContainer extends React.Component {
           <label className="text-medium">Comment</label>
           <input value={this.state.text} type="text" name="text" className="form-control" onChange={this.handleChange}/>
           {textError}
+          <Checkbox
+            name="anonymous"
+            onChange={this.handleChange}
+            label="Submit Anonymously"
+          />
           <div className="form-group actions margin-top-10px">
             <button id="comments-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit" disabled={this.state.formInvalid}>
               <span className="text-large">Submit Comment</span>
