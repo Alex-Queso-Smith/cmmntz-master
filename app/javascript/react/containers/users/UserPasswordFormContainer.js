@@ -2,7 +2,7 @@ import React from 'react';
 
 import Input from '../../components/form/Input';
 import Checkbox from '../../components/form/Checkbox';
-import FetchWithPush from '../../util/FetchWithPush';
+import { FetchWithPush, CreateErrorElements } from '../../util/CoreUtil';
 
 class UserPasswordFormContainer extends React.Component {
   state = {
@@ -52,24 +52,9 @@ class UserPasswordFormContainer extends React.Component {
     var passwordClass, passwordError, passwordConfirmationClass, passwordConfirmationError;
     var { passwordErrors } = this.state
 
-    if (passwordErrors.password) {
-      passwordError =
-      passwordErrors.password.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`Password ${error}`}</p>
-        )
-      })
-    }
+    passwordError = CreateErrorElements(passwordErrors.password, "Password")
+    passwordConfirmationError = CreateErrorElements(passwordErrors.password_confirmation, "Password Confirmation")
 
-    if (passwordErrors.password_confirmation) {
-      passwordConfirmationError =
-      passwordErrors.password_confirmation.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`Password Confirmation ${error}`}</p>
-        )
-      })
-    }
-    
     return(
       <form className="form" id="password-form" onSubmit={this.handleSubmit}>
         <h1 className="user-title text-center">Edit Password</h1>

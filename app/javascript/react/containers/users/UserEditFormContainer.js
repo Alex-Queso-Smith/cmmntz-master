@@ -4,8 +4,7 @@ import Input from '../../components/form/Input';
 import GenderSelector from '../../components/form/GenderSelector';
 import AgeRangeSelector from '../../components/form/AgeRangeSelector';
 import UserEditForm from '../../components/form/users/UserEditForm';
-import FetchWithPush from '../../util/FetchWithPush';
-import FetchWithPull from '../../util/FetchWithPull';
+import { FetchWithPush, FetchWithPull, CreateErrorElements } from '../../util/CoreUtil';
 
 class UserEditFormContainer extends React.Component {
   state = {
@@ -69,41 +68,10 @@ class UserEditFormContainer extends React.Component {
     var errorDiv, page, emailError, userNameError, passwordError, passwordConfirmationError;
     var { saveErrors } = this.state
 
-    if (saveErrors.email) {
-      emailError =
-      saveErrors.email.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`Email ${error}`}</p>
-        )
-      })
-    }
-
-    if (saveErrors.user_name) {
-      userNameError =
-      saveErrors.user_name.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`User Name ${error}`}</p>
-        )
-      })
-    }
-
-    if (saveErrors.password) {
-      passwordError =
-      saveErrors.password.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`Password ${error}`}</p>
-        )
-      })
-    }
-
-    if (saveErrors.password_confirmation) {
-      passwordConfirmationError =
-      saveErrors.password_confirmation.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`Password Confirmation ${error}`}</p>
-        )
-      })
-    }
+    emailError = CreateErrorElements(saveErrors.email, "Email")
+    userNameError = CreateErrorElements(saveErrors.user_name, "User Name")
+    passwordError = CreateErrorElements(saveErrors.password, "Password")
+    passwordConfirmationError = CreateErrorElements(saveErrors.password_confirmation, "Password Confirmation")
 
     return(
       <form className="form" id="user-edit-form" onSubmit={this.handleSubmit} >

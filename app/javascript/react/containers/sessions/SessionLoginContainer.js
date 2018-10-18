@@ -2,7 +2,7 @@ import React from 'react';
 
 import Input from '../../components/form/Input';
 import Checkbox from '../../components/form/Checkbox';
-import FetchWithPush from '../../util/FetchWithPush';
+import { FetchWithPush, CreateErrorElements } from '../../util/CoreUtil';
 
 
 class SessionLoginContainer extends React.Component {
@@ -55,24 +55,9 @@ class SessionLoginContainer extends React.Component {
     var userNameClass, passwordClass, userNameError, passwordError;
     var { loginErrors } = this.state
 
-    if (loginErrors.user_name) {
-      userNameError =
-      loginErrors.user_name.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`User Name ${error}`}</p>
-        )
-      })
-    }
+    userNameError = CreateErrorElements(loginErrors.user_name, "User Name")
+    passwordError = CreateErrorElements(loginErrors.password, "Password")
 
-    if (loginErrors.password) {
-      passwordError =
-      loginErrors.password.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`Password ${error}`}</p>
-        )
-      })
-    }
-    
     return(
       <form className="form" id="login-form" onSubmit={this.handleSubmit}>
         <h1 className="user-title text-center">Login</h1>

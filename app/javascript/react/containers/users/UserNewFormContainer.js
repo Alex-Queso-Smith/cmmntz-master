@@ -6,7 +6,7 @@ import AgeRangeSelector from '../../components/form/AgeRangeSelector';
 import UserRegPageOne from '../../components/form/users/UserRegPageOne';
 import UserRegPageTwo from '../../components/form/users/UserRegPageTwo';
 import UserRegPageThree from '../../components/form/users/UserRegPageThree';
-import FetchWithPush from '../../util/FetchWithPush';
+import { FetchWithPush, CreateErrorElements } from '../../util/CoreUtil';
 
 class UserNewFormContainer extends React.Component {
   state = {
@@ -86,41 +86,10 @@ class UserNewFormContainer extends React.Component {
     var errorDiv, page, emailError, userNameError, passwordError, passwordConfirmationError;
     var { registrationErrors } = this.state
 
-    if (registrationErrors.email) {
-      emailError =
-      registrationErrors.email.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`Email ${error}`}</p>
-        )
-      })
-    }
-
-    if (registrationErrors.user_name) {
-      userNameError =
-      registrationErrors.user_name.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`User Name ${error}`}</p>
-        )
-      })
-    }
-
-    if (registrationErrors.password) {
-      passwordError =
-      registrationErrors.password.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`Password ${error}`}</p>
-        )
-      })
-    }
-
-    if (registrationErrors.password_confirmation) {
-      passwordConfirmationError =
-      registrationErrors.password_confirmation.map((error) => {
-        return(
-          <p className="error-text" key={`${error}`}>{`Password Confirmation ${error}`}</p>
-        )
-      })
-    }
+    emailError = CreateErrorElements(registrationErrors.email, "Email")
+    userNameError = CreateErrorElements(registrationErrors.user_name, "User Name")
+    passwordError = CreateErrorElements(registrationErrors.password, "Password")
+    passwordConfirmationError = CreateErrorElements(registrationErrors.password_confirmation, "Password Confirmation")
 
     switch (this.state.currentPage) {
       case 1:
