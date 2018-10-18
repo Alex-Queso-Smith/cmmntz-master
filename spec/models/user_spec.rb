@@ -186,7 +186,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "user_with comments" do
+  describe "user with comments" do
     before(:each) do
       @comments_count = 15
       @user = create(:user_with_comments, comments_count: @comments_count)
