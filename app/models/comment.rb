@@ -1,6 +1,9 @@
 include ActionView::Helpers::SanitizeHelper
 
 class Comment < ApplicationRecord
+  belongs_to :user
+  has_many :votes
+
   before_validation :sanitize_text_and_title
 
   validates :user_id, :art_id, :art_type, :title, :text, presence: true

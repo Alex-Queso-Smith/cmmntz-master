@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_164745) do
+ActiveRecord::Schema.define(version: 2018_10_18_140244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -55,6 +55,16 @@ ActiveRecord::Schema.define(version: 2018_10_15_164745) do
     t.index ["gender"], name: "index_users_on_gender"
     t.index ["latitude", "longitude"], name: "index_users_on_latitude_and_longitude"
     t.index ["user_name"], name: "index_users_on_user_name", unique: true
+  end
+
+  create_table "votes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "user_id"
+    t.string "comment_id"
+    t.string "vote_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_votes_on_comment_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
 end
