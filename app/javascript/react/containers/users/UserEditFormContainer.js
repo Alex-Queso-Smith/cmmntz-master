@@ -42,9 +42,7 @@ class UserEditFormContainer extends React.Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({
-      [name]: value
-    })
+    this.setState({ [name]: value })
   }
 
   handleSubmit(event){
@@ -78,7 +76,7 @@ class UserEditFormContainer extends React.Component {
         <h1 className="user-title text-center">Edit Account</h1>
 
         <UserEditForm
-          handleChange={this.handleChange}
+          onChange={this.handleChange}
           userName={this.state.userName}
           password={this.state.password}
           passwordConfirmation={this.state.passwordConfirmation}

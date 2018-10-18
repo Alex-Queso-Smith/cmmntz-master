@@ -56,7 +56,7 @@ class SessionLoginContainer extends React.Component {
         <Input
           name="userName"
           label="User Name"
-          handleChange={this.handleChange}
+          onChange={this.handleChange}
           content={this.userName}
           type="text"
           addClass={userNameClass}
@@ -65,7 +65,7 @@ class SessionLoginContainer extends React.Component {
         <Input
           name="password"
           label="Password"
-          handleChange={this.handleChange}
+          onChange={this.handleChange}
           content={this.password}
           type="password"
           addClass={passwordClass}
@@ -74,7 +74,7 @@ class SessionLoginContainer extends React.Component {
         <Checkbox
           name="rememberMe"
           label="Remember Me"
-          handleChange={this.handleChange}
+          onChange={this.handleChange}
         />
         <div className="form-group actions margin-top-10px">
           <button id="login-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit" disabled={this.state.formInvalid}>

@@ -10,7 +10,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import App from '../react/containers/App';
+import App from '../react/App';
+import CfCommentsApp from '../react/CfCommentsApp';
+
 import RedBox from 'redbox-react';
 
 document.addEventListener('DOMContentLoaded', () => {

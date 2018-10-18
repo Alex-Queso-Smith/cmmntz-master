@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
 
-import UserNewFormContainer from './users/UserNewFormContainer';
-import UserEditFormContainer from './users/UserEditFormContainer';
-import UserPasswordFormContainer from './users/UserPasswordFormContainer';
-import SessionLoginContainer from './sessions/SessionLoginContainer';
+import UserNewFormContainer from './containers/users/UserNewFormContainer';
+import UserEditFormContainer from './containers/users/UserEditFormContainer';
+import UserPasswordFormContainer from './containers/users/UserPasswordFormContainer';
+import SessionLoginContainer from './containers/sessions/SessionLoginContainer';
 
 class App extends React.Component {
 

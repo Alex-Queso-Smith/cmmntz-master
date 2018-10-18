@@ -16,7 +16,7 @@ const AgeRangeSelector = props => {
         Select Age Range:
         <br />
         <br />
-        <select name={props.name} value={props.content} onChange={props.handleChange}>
+        <select name={props.name} value={props.content} onChange={props.onChange}>
           {ages}
         </select>
       </label>

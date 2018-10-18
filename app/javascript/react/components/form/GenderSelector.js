@@ -7,7 +7,7 @@ const GenderSelector = props => {
         Select Gender:
         <br />
         <br />
-        <select name={props.name} value={props.content} onChange={props.handleChange}>
+        <select name={props.name} value={props.content} onChange={props.onChange}>
           <option value="">None of your business!</option>
           <option value="2">Female</option>
           <option value="1">Other</option>

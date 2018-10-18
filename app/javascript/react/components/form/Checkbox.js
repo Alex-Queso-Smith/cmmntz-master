@@ -6,7 +6,7 @@ const Checkbox = props => {
       <input type="checkbox"
       className="custom-control-input"
       name={props.name}
-      id={props.name} onClick={props.handleChange}
+      id={props.name} onClick={props.onChange}
       autoComplete="off" />
       <label className="custom-control-label text-medium" htmlFor={props.name}>{props.label}</label>
     </div>

@@ -87,7 +87,7 @@ class UserNewFormContainer extends React.Component {
       case 1:
         page =
         <UserRegPageOne
-          handleChange={this.handleChange}
+          onChange={this.handleChange}
           userName={this.state.userName}
           password={this.state.password}
           passwordConfirmation={this.state.passwordConfirmation}
@@ -104,7 +104,7 @@ class UserNewFormContainer extends React.Component {
       case 2:
         page =
         <UserRegPageTwo
-          handleChange={this.handleChange}
+          onChange={this.handleChange}
           ageRange={this.state.ageRange}
           gender={this.state.gender}
           latitude={this.state.latitude}

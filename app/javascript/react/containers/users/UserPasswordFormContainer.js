@@ -30,6 +30,7 @@ class UserPasswordFormContainer extends React.Component {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
+    
     if (
       this.state.password.length != 0 &&
       this.state.passwordConfirmation.length != 0
@@ -53,7 +54,7 @@ class UserPasswordFormContainer extends React.Component {
         <Input
           name="password"
           label="Password"
-          handleChange={this.handleChange}
+          onChange={this.handleChange}
           content={this.passwordConfirmation}
           type="password"
           addClass={passwordClass}
@@ -62,7 +63,7 @@ class UserPasswordFormContainer extends React.Component {
         <Input
           name="passwordConfirmation"
           label="Password Confirmation"
-          handleChange={this.handleChange}
+          onChange={this.handleChange}
           content={this.passwordConfirmation}
           type="password"
           addClass={passwordConfirmationClass}
