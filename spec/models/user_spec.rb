@@ -2,62 +2,58 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe "validation" do
-    let!(:user1) { FactoryBot.build(:user) }
-    let!(:user2) { FactoryBot.build(:user) }
-    let!(:user3) { FactoryBot.build(:user, password: "") }
-    let!(:user4) { FactoryBot.build(:user) }
-    let!(:user5) { FactoryBot.build(:user, gender: 0) }
-    let!(:user6) { FactoryBot.build(:user) }
+    let!(:user) { FactoryBot.build_stubbed(:user) }
 
     it "is valid with valid inputs" do
-      expect(user1).to be_valid
+      expect(user).to be_valid
     end
 
     attrs = %w(user_name password_confirmation)
 
     attrs.each do |att|
       it "is invalid with #{att} blank" do
-        user2.send("#{att}=".to_sym, nil)
-        expect(user2).to_not be_valid
+        user.send("#{att}=".to_sym, nil)
+        expect(user).to_not be_valid
       end
     end
 
     describe "password validations" do
       # authlogic does not allow password to be blanked....
       it "is invalid with password blank" do
-        expect(user3).to_not be_valid
+        user_no_password = FactoryBot.build_stubbed(:user, password: "")
+        expect(user_no_password).to_not be_valid
       end
 
       it "should be invalid if password and password_confirmation do not match" do
-        user3.password = "123Abcd"
-        user3.password_confirmation = "123acbD"
-        expect(user3).to_not be_valid
+        user.password = "123Abcd"
+        user.password_confirmation = "123acbD"
+        expect(user).to_not be_valid
       end
 
       it "is invalid with greater than 32 characters" do
-        user3.password = "Abc456789012345678901234567890123"
-        user3.password_confirmation = "Abc456789012345678901234567890123"
-        expect(user3).to_not be_valid
+        user.password = "Abc456789012345678901234567890123"
+        user.password_confirmation = "Abc456789012345678901234567890123"
+        expect(user).to_not be_valid
       end
 
       it "is invalid with less than 6 characters" do
-        user3.password = "Abc45"
-        user3.password_confirmation = "Abc45"
-        expect(user3).to_not be_valid
+        user.password = "Abc45"
+        user.password_confirmation = "Abc45"
+        expect(user).to_not be_valid
       end
 
       # Disabled for the MVP
       # it "should be invalid without at least 1 capital_letter" do
-      #   user3.password = "abc4567"
-      #   user3.password_confirmation = "abc4567"
-      #   expect(user3).to_not be_valid
+      #   user.password = "abc4567"
+      #   user.password_confirmation = "abc4567"
+      #   expect(user).to_not be_valid
       # end
 
       # Disabled for the MVP
       # it "should be invalid without at least 1 integer" do
-      #   user3.password = "abcdefg"
-      #   user3.password_confirmation = "abcdefg"
-      #   expect(user3).to_not be_valid
+      #   user.password = "abcdefg"
+      #   user.password_confirmation = "abcdefg"
+      #   expect(user).to_not be_valid
       # end
 
     end
@@ -65,8 +61,8 @@ RSpec.describe User, type: :model do
     describe "gender validations" do
       User::GENDERS.each do |x|
         it "gender is valid with correct input #{x}" do
-          user5.gender = x
-          expect(user5).to be_valid
+          user.gender = x
+          expect(user).to be_valid
         end
       end
 
@@ -74,8 +70,8 @@ RSpec.describe User, type: :model do
 
       invalid_gender_array.each do |x|
         it "should be invalid with invalid input #{x} for gender" do
-          user5.gender = x
-          expect(user5).to_not be_valid
+          user.gender = x
+          expect(user).to_not be_valid
         end
       end
     end
@@ -83,8 +79,8 @@ RSpec.describe User, type: :model do
     describe "age validations" do
       User::AGES.each do |x|
         it "should be valid with valid input #{x} for age" do
-          user1.age_range = x
-          expect(user1).to be_valid
+          user.age_range = x
+          expect(user).to be_valid
         end
       end
 
@@ -92,8 +88,8 @@ RSpec.describe User, type: :model do
 
       invalid_age_array.each do |x|
         it "should be invalid with invalid input #{x} for age" do
-          user1.age_range = x
-          expect(user1).to_not be_valid
+          user.age_range = x
+          expect(user).to_not be_valid
         end
       end
     end
@@ -104,41 +100,41 @@ RSpec.describe User, type: :model do
 
       [1, 2, 3].each do |x|
         it "should be valid with set #{x}" do
-          user4.latitude = valid_coordinates["lat#{x}".to_sym]
-          user4.longitude = valid_coordinates["long#{x}".to_sym]
+          user.latitude = valid_coordinates["lat#{x}".to_sym]
+          user.longitude = valid_coordinates["long#{x}".to_sym]
 
-          expect(user4).to be_valid
+          expect(user).to be_valid
         end
       end
 
       it "should be invalid with just lat" do
-        user4.latitude = 123.45
-        user4.longitude = nil
+        user.latitude = 123.45
+        user.longitude = nil
 
-        expect(user4).to_not be_valid
+        expect(user).to_not be_valid
       end
 
       it "should be invalid with just long" do
-        user4.latitude = nil
-        user4.longitude = 123.45
+        user.latitude = nil
+        user.longitude = 123.45
 
-        expect(user4).to_not be_valid
+        expect(user).to_not be_valid
       end
 
       [1, 2, 3].each do |x|
         it "should be invalid with bad coordinates set #{x}" do
-          user4.latitude = invalid_coordinates["lat#{x}".to_sym]
-          user4.longitude = invalid_coordinates["long#{x}".to_sym]
+          user.latitude = invalid_coordinates["lat#{x}".to_sym]
+          user.longitude = invalid_coordinates["long#{x}".to_sym]
 
-          expect(user4).to_not be_valid
+          expect(user).to_not be_valid
         end
       end
     end
 
     describe "email validations" do
       it "should be invalid with invalid email" do
-        user6.email = "invalid"
-        expect(user6).to_not be_valid
+        user.email = "invalid"
+        expect(user).to_not be_valid
       end
     end
 
@@ -146,7 +142,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "basic user gender functionality" do
-    let!(:user) { FactoryBot.build(:user) }
+    let!(:user) { FactoryBot.build_stubbed(:user) }
 
     it "should return blank for unspecified" do
       expect(user.gender_display).to eq("")
@@ -169,7 +165,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "basic age range functionality" do
-    let!(:user) { FactoryBot.build(:user) }
+    let!(:user) { FactoryBot.build_stubbed(:user) }
 
     user_ages = User::AGES
     user_ages.shift
@@ -187,17 +183,15 @@ RSpec.describe User, type: :model do
   end
 
   describe "user with comments" do
-    before(:each) do
-      @comments_count = 15
-      @user = create(:user_with_comments, comments_count: @comments_count)
-    end
-
-    it "should have #{@comments_count} comments" do
-      expect(@user.comments.size).to eq(@comments_count)
+    # testing the factory
+    it "should have 15 comments when asked for 15 comments" do
+      user = create(:user_with_comments, comments_count: 15)
+      expect(user.comments.size).to eq(15)
     end
   end
 
   describe "user with comments with votes" do
+    # testing the factory
     it "should have 50 votes" do
       comments_count = 5
       votes_count = 10
