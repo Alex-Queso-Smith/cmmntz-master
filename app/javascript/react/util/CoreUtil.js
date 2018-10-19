@@ -43,6 +43,24 @@ export const FetchWithPull = (object, path) => {
    .then(response => response.json())
 }
 
+export const FetchWithUpdate = (object, path, method, errors, payload) => {
+  return fetch(path, {
+    method: method,
+    credentials: 'same-origin',
+    body: payload
+  })
+  .then(response => {
+     if(response.ok || response.status == 422){
+       return response
+     } else {
+       let errorMessage = `${response.status} (${response.statusText})`,
+           error = new Error(errorMessage)
+       throw(error)
+     }
+   })
+   .then(response => response.json())
+}
+
 export const CreateErrorElements = (errors, name) => {
   if (errors) {
     return errors.map((error) => {
@@ -73,5 +91,6 @@ export default {
   FetchWithPull,
   FetchWithPush,
   SetStateWithValidation,
-  ErrorClassValidation
+  ErrorClassValidation,
+  FetchWithUpdate
 }
