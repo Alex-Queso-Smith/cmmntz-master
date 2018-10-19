@@ -43,13 +43,13 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     let(:valid_session) { {} }
 
-    describe "GET #index" do
-      it "returns a success response" do
-        User.create! valid_attributes
-        get :index, format: :json, params: {}, session: valid_session
-        expect(response).to be_successful
-      end
-    end
+    # describe "GET #index" do
+    #   it "returns a success response" do
+    #     User.create! valid_attributes
+    #     get :index, format: :json, params: {}, session: valid_session
+    #     expect(response).to be_successful
+    #   end
+    # end
 
     describe "PUT #update" do
       context "with valid params" do
