@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   include AuthlogicValidations
 
-  GENDERS = [nil, 0, 1, 2]
+  GENDERS = [0, 1, 2]
+  DISPLAY_GENDERS = ["male", "other", "female"]
   AGES = [nil, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\
 
   has_many :comments
@@ -27,16 +28,8 @@ class User < ApplicationRecord
   ### re gender
   # display gender
   def gender_display
-    case gender
-    when 0
-      "male"
-    when 1
-      "other"
-    when 2
-      "female"
-    else
-      ""
-    end
+    return "" if gender.nil?
+    DISPLAY_GENDERS[gender.to_i]
   end
 
   ### re age_range

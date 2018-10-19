@@ -54,7 +54,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'database_cleaner'
-  gem 'knapsack'
 end
 
 group :development do
@@ -65,6 +64,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'guard'
+  gem 'guard-rspec'
 end
 
 group :test do
