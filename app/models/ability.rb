@@ -25,5 +25,7 @@ class Ability
     can :read, User # can view other users in list or individual
     can :crud, Comment, {user_id: user.id} # can crud own comments
     can :read, Comment # can view other user's comments in list or individual
+    can :crud, Vote, {user_id: user.id} # can crud own votes
+    can :read, Vote # can view other user's votes in list or individual
   end
 end
