@@ -1,31 +1,9 @@
 class Api::V1::UsersController < ApiController
   load_and_authorize_resource
-  skip_before_action *ALL_FILTERS, only: [:new, :create]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :require_no_user, only: [:new, :create]
+  skip_before_action *ALL_FILTERS, only: [:create]
+  before_action :set_user, only: [:update, :destroy]
+  before_action :require_no_user, only: [:create]
 
-  # GET /users
-  # GET /users.json
-  def index
-    users = User.all
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
-    #render json: @user
-  end
-
-  # GET /users/new
-  def new
-    user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
-  end
-
-  # POST /users
   # POST /users.json
   def create
     @user = User.new(user_params)
@@ -37,7 +15,6 @@ class Api::V1::UsersController < ApiController
     end
   end
 
-  # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
     if @user.update(user_params)
@@ -47,10 +24,9 @@ class Api::V1::UsersController < ApiController
     end
   end
 
-  # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    render json: { message: "Destroy successfull" } if user.destroy
+    render json: { message: "Destroy successfull" } if @user.destroy
   end
 
   private
