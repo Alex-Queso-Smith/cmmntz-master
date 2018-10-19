@@ -5,6 +5,14 @@ FactoryBot.define do
     password { "Abc123456" }
     password_confirmation { "Abc123456" }
 
+    trait :gender_female do
+      gender { 2 }
+    end
+
+    trait :age_range_20 do
+      age_range { 20 }
+    end
+
     factory :user_with_comments do
       transient do
         comments_count { 5 }
