@@ -12,6 +12,7 @@ class CommentsList extends React.Component {
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
+        debugger
         var { user_name, gender, age_range } = comment.user
         var { id, text, created_at } = comment
         var userInfo;
@@ -22,7 +23,7 @@ class CommentsList extends React.Component {
           userInfo = `${comment.user.user_name} - ${comment.user.gender} - ${comment.user.age_range}`
         }
         return(
-          <div className="cf-comment-div" key={text}>
+          <div className="cf-comment-div" key={comment.id}>
             <div className="cf-comment-user" >
               {userInfo}
             </div>
