@@ -13,7 +13,7 @@ class CommentsList extends React.Component {
     if (allComments) {
       commentsArray = allComments.map((comment) => {
         var { user_name, gender, age_range } = comment.user
-        var { text, created_at } = comment
+        var { id, text, created_at } = comment
         var userInfo;
 
         if (user_name == '') {
@@ -32,7 +32,9 @@ class CommentsList extends React.Component {
             <div className="cf-comment-text" >
               {text}
             </div>
-            <VotingContainerBase />
+            <VotingContainerBase
+              commentId={id}
+            />
             <hr />
           </div>
         )

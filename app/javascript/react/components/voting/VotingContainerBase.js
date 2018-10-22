@@ -8,7 +8,7 @@ const VotingContainerBase = props => {
   var voteButtons = voteTypes.map((type) => {
     return(
       <VoteButton
-        key={type[0]}
+        key={`${props.commentId}_${type[0]}`}
         name={type[0]}
         label={type[1]}
         group={type[2]}
