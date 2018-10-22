@@ -40,13 +40,3 @@ class User < ApplicationRecord
     "#{age_range}-#{age_range + 4}"
   end
 end
-# t.string "user_name", null: false
-# t.string "crypted_password"
-# t.string "password_salt"
-# t.string "persistence_token"
-# t.integer "age_range", limit: 2
-# t.point "location"
-# t.string "avatar"
-# t.integer "gender", limit: 2
-# t.datetime "created_at", null: false
-# t.datetime "updated_at", null: false
