@@ -7,14 +7,17 @@ const VotingContainerBase = props => {
       <VoteButton
         name="like"
         display="Like"
+        toggleClass="btn toggled"
       />
       <VoteButton
         name="indifferent"
         display="Indifferent"
+        toggleClass=""
       />
       <VoteButton
         name="dislike"
         display="Dislike"
+        toggleClass=""
       />
     </div>
   );
