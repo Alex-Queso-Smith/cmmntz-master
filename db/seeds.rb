@@ -58,19 +58,19 @@ end
 time = Time.now
 anonymous = [false, true]
 
-  500.times do
-    comment = Comment.create(
-      user: users.sample,
-      art_id: article_one.id,
-      art_type: "article",
-      text: "Lorem ipsum dolor sit amet,
-      ius dicat sanctus saperet ei. Disputando
-      instructior mediocritatem an vim.
-      Dictas nusquam fastidii ius ea, ne duo ocurreret adipiscing constituam,
-      vis at modus summo. Est ne perfecto appellantur ullamcorper,
-      liber saepe noluisse mei an. Commune vivendum usu et. No sit dico tota.",
-      created_at: time,
-      anonymous: anonymous.sample
-    )
-    time += 1.minute
-  end
+500.times do
+  comment = Comment.create(
+    user: users.sample,
+    art_id: article_one.id,
+    art_type: "article",
+    text: "Lorem ipsum dolor sit amet,
+    ius dicat sanctus saperet ei. Disputando
+    instructior mediocritatem an vim.
+    Dictas nusquam fastidii ius ea, ne duo ocurreret adipiscing constituam,
+    vis at modus summo. Est ne perfecto appellantur ullamcorper,
+    liber saepe noluisse mei an. Commune vivendum usu et. No sit dico tota.",
+    created_at: time,
+    anonymous: anonymous.sample
+  )
+  time += 1.minute
+end
