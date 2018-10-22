@@ -15,6 +15,19 @@ class Comment < ApplicationRecord
   ### Scopes
   scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
 
+  ### Class Methods
+
+  # Filter Builder
+  def self.filter_and_sort(article_id, article_type, filter_opts = {}, sort_opts ={})
+    scope = Comment.for_art_type_and_id(article_type, article_id).includes(:user)
+    if sort_opts[:dir] && sort_opts[:dir] == "asc"
+      scope = scope.order("comments.created_at asc")
+    else
+      scope = scope.order("comments.created_at desc")
+    end
+    return scope
+  end
+
   private
 
   ### Custom Validations be here
