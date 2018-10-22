@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { FetchWithPull } from '../../util/CoreUtil';
+import VotingContainerBase from '../../components/voting/VotingContainerBase'
 
 class CommentsList extends React.Component {
   state = {}
@@ -31,6 +32,7 @@ class CommentsList extends React.Component {
             <div className="cf-comment-text" >
               {text}
             </div>
+            <VotingContainerBase />
             <hr />
           </div>
         )
