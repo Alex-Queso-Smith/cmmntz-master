@@ -35,6 +35,7 @@ class CommentsList extends React.Component {
             </div>
             <VotingContainerBase
               commentId={id}
+              commentRoot={this.props.commentRoot}
             />
             <hr />
           </div>

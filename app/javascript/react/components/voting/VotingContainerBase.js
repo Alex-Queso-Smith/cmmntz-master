@@ -1,21 +1,131 @@
 import React from 'react';
+
 import VoteButton from './VoteButton';
+import { FetchBasic, FetchWithPull } from '../../util/CoreUtil';
 
 class VotingContainerBase extends React.Component {
   state = {
-    selectedType: ''
+    selectedBigFive: '',
+    selectedVotes: {
+      top: null,
+      love: null,
+      likeALot: null,
+      like: null,
+      indifferent: null,
+      dislike: null,
+      dislikeALot: null,
+      trash: null,
+      warn: null,
+      smart: null,
+      funny: null,
+      happy: null,
+      shocked: null,
+      sad: null,
+      boring: null,
+      angry: null
+    }
   }
 
-  handleClick = this.handleClick.bind(this);
+  handleClickBigFive = this.handleClickBigFive.bind(this);
+  handleClickOthers = this.handleClickOthers.bind(this);
+  handleUpdate = this.handleUpdate.bind(this);
+  handleUpdate = this.handleUpdate.bind(this);
 
-  handleClick(event){
+  componentDidMount(){
+    // FetchWithPull(this, `/api/v1/`)
+    // .then(response => this.setState({
+    //   selectedVotes: response.votes
+    // }))
+  }
+
+  handlePost(payload){
+    FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
+    .then(body => this.setState({
+      selectedVotes: {
+        [body.vote_type]: body.vote_id
+      }
+    }))
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  handleUpdate(payload, id){
+    FetchBasic(this, `/api/v1/votes/${id}`, payload, 'PATCH')
+    .then(body => this.setState({
+      selectedVotes: {
+        [body.vote_type]: body.vote_id
+      }
+    }))
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  handleClickBigFive(event){
+    const target = event.target;
+    const name = target.name;
+    const bigFive = ['like', 'dislike', 'indifferent', 'likeALot', 'dislikeALot']
+
+    var selectedVotes = this.state.selectedVotes;
+
+    if (bigFive.includes(name)) {
+      if (this.state.selectedBigFive === '') { // if there is no selected big five
+        this.setState({ selectedBigFive: name })
+
+        var newVote = new FormData();
+        var commentRoot = this.props.commentRoot;
+        newVote.append("vote[comment_id]", this.props.commentId)
+        newVote.append("vote[user_id]", commentRoot.getAttribute('data-user-id'))
+        newVote.append("vote[vote_type]", name)
+
+        this.handlePost(newVote)
+      } else if (this.state.selectedBigFive != name) { // if there is a different selected big five
+
+        var vote = new FormData();
+        vote.append("vote[vote_type]", name)
+
+        var voteId = this.state.selectedVotes[this.state.selectedBigFive]
+        var updateVotes = this.state.selectedVotes
+        updateVotes[this.state.selectedBigFive] = null
+
+        this.setState({
+          selectedVotes: updateVotes,
+          selectedBigFive: name
+        })
+        handleUpdate(vote, voteId)
+      } else { // if user clicks on same big five
+
+      }
+    } else {
+      if (this.state.selectedVotes[name] === null) { // user clicks on non big five and is previously unselected
+        var newVote = new FormData();
+        var commentRoot = this.props.commentRoot;
+        newVote.append("vote[comment_id]", this.props.commentId)
+        newVote.append("vote[user_id]", commentRoot.getAttribute('data-user-id'))
+        newVote.append("vote[vote_type]", name)
+
+        this.handlePost(newVote)
+      } else { // user clicks on non big five and is previously selected
+
+      }
+    }
+  }
+
+  handleClickOthers(event){
     const target = event.target;
     const name = target.name;
 
-    this.setState({ selectedType: name })
+    this.setState({ selectedUpdate: name })
+
+    var selectedUpdate = this.state.selectedUpdate;
+    var selectedVotes = this.state.selectedVotes;
+
+    // if (selectedVotes.includes(selectedUpdate)) {
+    //   this.handleUpdate(selectedUpdate)
+    // } else {
+    //   this.handlePost(selectedUpdate)
+    // }
   }
 
   render(){
+    // debugger
     const rowOneVoteTypes = [
       ["top", "Top"],
       ["love", "Love"],
@@ -40,17 +150,30 @@ class VotingContainerBase extends React.Component {
 
     var voteButtonsRowOne = rowOneVoteTypes.map((type) => {
       var toggled = '';
+      var handleClick;
 
-      if (type[0] === this.state.selectedType) {
+      if (
+        type[0] == "top" ||
+        type[0] == "love" ||
+        type[0] == "trash" ||
+        type[0] == "warn"
+      ) {
+        handleClick = this.handleClickOthers
+      } else {
+        handleClick = this.handleClickBigFive
+      }
+
+      if (type[0] === this.state.selectedBigFive) {
         toggled = "btn toggled"
       }
+
       return(
         <VoteButton
           key={`${this.props.commentId}_${type[0]}`}
           name={type[0]}
           label={type[1]}
           toggleClass={toggled}
-          onClick={this.handleClick}
+          onClick={handleClick}
           />
       )
     })
@@ -67,7 +190,7 @@ class VotingContainerBase extends React.Component {
           name={type[0]}
           label={type[1]}
           toggleClass={toggled}
-          onClick={this.handleClick}
+          onClick={this.handleClickOthers}
           />
       )
     })

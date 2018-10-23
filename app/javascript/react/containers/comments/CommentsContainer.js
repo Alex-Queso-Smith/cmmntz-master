@@ -99,6 +99,7 @@ class CommentsContainer extends React.Component {
         <hr />
         <CommentsList
           allComments={comments}
+          commentRoot={commentRoot}
         />
       </div>
     )

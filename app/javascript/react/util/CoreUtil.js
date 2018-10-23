@@ -61,6 +61,24 @@ export const FetchWithUpdate = (object, path, method, errors, payload) => {
    .then(response => response.json())
 }
 
+export const FetchBasic = (object, path, payload, method) => {
+  return fetch(path, {
+    method: method,
+    credentials: 'same-origin',
+    body: payload
+  })
+  .then(response => {
+     if(response.ok){
+       return response
+     } else {
+       let errorMessage = `${response.status} (${response.statusText})`,
+           error = new Error(errorMessage)
+       throw(error)
+     }
+   })
+   .then(response => response.json())
+}
+
 export const CreateErrorElements = (errors, name) => {
   if (errors) {
     return errors.map((error) => {
@@ -92,5 +110,6 @@ export default {
   FetchWithPush,
   SetStateWithValidation,
   ErrorClassValidation,
-  FetchWithUpdate
+  FetchWithUpdate,
+  FetchBasic
 }
