@@ -4,39 +4,37 @@ import VoteButton from './VoteButton';
 import { FetchBasic, FetchWithPull } from '../../util/CoreUtil';
 
 class VotingContainerBase extends React.Component {
-  state = {
-    selectedBigFive: '',
-    selectedVotes: {
-      top: null,
-      love: null,
-      likeALot: null,
-      like: null,
-      indifferent: null,
-      dislike: null,
-      dislikeALot: null,
-      trash: null,
-      warn: null,
-      smart: null,
-      funny: null,
-      happy: null,
-      shocked: null,
-      sad: null,
-      boring: null,
-      angry: null
+  constructor(props){
+    super(props);
+    this.state = {
+      selectedBigFive: '',
+      selectedVotes: this.props.commentVotes
+      // selectedVotes: {
+      // top: null,
+      // love: null,
+      // likeALot: null,
+      // like: null,
+      // indifferent: null,
+      // dislike: null,
+      // dislikeALot: null,
+      // trash: null,
+      // warn: null,
+      // smart: null,
+      // funny: null,
+      // happy: null,
+      // shocked: null,
+      // sad: null,
+      // boring: null,
+      // angry: null
+      // }
     }
+    this.handleClickBigFive = this.handleClickBigFive.bind(this);
+    this.handleClickOthers = this.handleClickOthers.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+
   }
 
-  handleClickBigFive = this.handleClickBigFive.bind(this);
-  handleClickOthers = this.handleClickOthers.bind(this);
-  handleUpdate = this.handleUpdate.bind(this);
-  handleUpdate = this.handleUpdate.bind(this);
-
-  componentDidMount(){
-    // FetchWithPull(this, `/api/v1/`)
-    // .then(response => this.setState({
-    //   selectedVotes: response.votes
-    // }))
-  }
 
   handlePost(payload){
     FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
@@ -125,7 +123,7 @@ class VotingContainerBase extends React.Component {
   }
 
   render(){
-    // debugger
+    debugger
     const rowOneVoteTypes = [
       ["top", "Top"],
       ["love", "Love"],
