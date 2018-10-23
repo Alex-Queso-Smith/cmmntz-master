@@ -8,6 +8,7 @@ json.comments @comments do |comment|
     json.age_range comment_user_age_range(comment)
   end
 
+  json.user_has_voted @current_users_votes ? true : false
   json.current_users_votes do
     Vote::TYPES.each do |type|
       vote = @current_users_votes.detect {|v| v.comment_id == comment.id && v.vote_type == type }
