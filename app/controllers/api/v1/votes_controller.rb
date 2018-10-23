@@ -8,7 +8,7 @@ class Api::V1::VotesController < ApiController
     @vote = Vote.new(vote_params)
 
     if @vote.save
-      render json: { vote_id: @vote.id, message: "Created successfully" }
+      render json: { vote_id: @vote.id, vote_type: @vote.vote_type, message: "Created successfully" }
     else
       render json: { errors: @vote.errors, status: :unprocessable_entity }
     end
@@ -17,7 +17,7 @@ class Api::V1::VotesController < ApiController
   # PATCH/PUT /votes/1.json
   def update
     if @vote.update(vote_params)
-      render json: { vote_id: @vote.id, message: "Updated successfully" }
+      render json: { vote_id: @vote.id, vote_type: @vote.vote_type, message: "Updated successfully" }
     else
       render json: { errors: @vote.errors, status: :unprocessable_entity}
     end
