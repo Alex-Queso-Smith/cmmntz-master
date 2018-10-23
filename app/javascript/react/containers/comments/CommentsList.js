@@ -12,7 +12,6 @@ class CommentsList extends React.Component {
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
-        debugger
         var { user_name, gender, age_range } = comment.user
         var { id, text, created_at } = comment
         var userInfo;
