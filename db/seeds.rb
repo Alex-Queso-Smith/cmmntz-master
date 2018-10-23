@@ -41,8 +41,10 @@ article_one = Article.create(
 
 x = 1
 
+users = []
+
 while x <= 100 do
-  user = User.create(
+  users << User.new(
     user_name: "User#{x}",
     password: "password",
     password_confirmation: "password",
@@ -52,6 +54,7 @@ while x <= 100 do
   )
   x += 1
 end
+User.import users, validate: false
 
 users = User.all
 
@@ -74,12 +77,20 @@ anonymous = [false, true]
   )
 
   rand(20).times do
-    # seed some comments
-    vote = Vote.create(
-      user: (users - [comment.user]).sample,
+    # seed some Votes
+    u = (users - [comment.user]).sample
+    Vote.create(
+      user: u,
       comment: comment,
-      vote_type: Vote::TYPES.sample
+      vote_type: Vote::EXCLUSIVE_VOTES.sample
     )
+    rand(3).times do
+      Vote.create(
+        user: u,
+        comment: comment,
+        vote_type: (Vote::TYPES - Vote::EXCLUSIVE_VOTES).sample
+      )
+    end
   end
   time += 1.minute
 end
