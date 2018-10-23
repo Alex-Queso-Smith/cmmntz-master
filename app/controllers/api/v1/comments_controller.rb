@@ -7,6 +7,7 @@ class Api::V1::CommentsController < ApiController
   # GET /comments.json
   def index
     @comments = Comment.for_art_type_and_id(params[:art_type], params[:art_id]).includes(:user)
+    @current_users_votes = Vote.for_user_and_comment(current_user.id, @comments.map(&:id))
   end
 
   # POST /comments

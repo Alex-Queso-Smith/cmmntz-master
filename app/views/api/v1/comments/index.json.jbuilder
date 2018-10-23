@@ -7,4 +7,11 @@ json.comments @comments do |comment|
     json.gender comment_user_gender(comment)
     json.age_range comment_user_age_range(comment)
   end
+
+  json.current_users_votes do
+     @current_users_votes.select {|v| v.comment_id = comment.id}.each do |vote|
+      json.vote_id vote.id
+      json.vote_type vote.type
+    end
+  end
 end
