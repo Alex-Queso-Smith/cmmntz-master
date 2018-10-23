@@ -10,7 +10,7 @@ json.comments @comments do |comment|
 
   json.current_users_votes do
      @current_users_votes.select {|v| v.comment_id = comment.id}.each do |vote|
-      vote.vote_type.to_sym vote.id
+      json.set! vote.vote_type, vote.id
     end
   end
 end
