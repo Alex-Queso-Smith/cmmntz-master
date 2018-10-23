@@ -49,14 +49,14 @@ RSpec.describe Vote, type: :model do
       # end
 
       it "should not allow a user to cast more than 1 of the same vote for a comment" do
-        vote1 = FactoryBot.create(:vote, comment: comment, user: user, vote_type: "flag")
-        vote2 = FactoryBot.build_stubbed(:vote, comment: comment, user: user, vote_type: "flag")
-        # expect(vote1).to be_valid
+        vote1 = FactoryBot.create(:vote, comment: comment, user: user, vote_type: "warn")
+        vote2 = FactoryBot.build_stubbed(:vote, comment: comment, user: user, vote_type: "warn")
+        expect(vote1).to be_valid
         expect(vote2).to_not be_valid
       end
 
       it "should allow the user to cast multiple votes the are not exclusive not identical" do
-        vote2 = FactoryBot.build_stubbed(:vote, comment: comment, user: user, vote_type: "flag")
+        vote2 = FactoryBot.build_stubbed(:vote, comment: comment, user: user, vote_type: "warn")
         expect(vote2).to be_valid
       end
     end

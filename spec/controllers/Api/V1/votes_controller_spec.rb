@@ -37,6 +37,16 @@ RSpec.describe Api::V1::VotesController, type: :controller do
           post :create, format: :json, params: {vote: valid_attributes}, session: valid_session
           expect(response).to be_successful
         end
+
+        it "includes the vote_id" do
+          post :create, format: :json, params: {vote: valid_attributes}, session: valid_session
+          expect(JSON.parse(response.body)["vote_id"]).to_not eq(nil)
+        end
+
+        it "includes the vote_type" do
+          post :create, format: :json, params: {vote: valid_attributes}, session: valid_session
+          expect(JSON.parse(response.body)["vote_type"]).to eq(valid_attributes[:vote_type])
+        end
       end
 
       context "with invalid params" do
@@ -64,6 +74,18 @@ RSpec.describe Api::V1::VotesController, type: :controller do
           vote = Vote.create! valid_attributes
           put :update, format: :json, params: {id: vote.to_param, vote: valid_attributes}, session: valid_session
           expect(response).to be_successful
+        end
+
+        it "includes the vote_id" do
+          vote = Vote.create! valid_attributes
+          put :update, format: :json, params: {id: vote.to_param, vote: valid_attributes}, session: valid_session
+          expect(JSON.parse(response.body)["vote_id"]).to eq(vote.id)
+        end
+
+        it "includes the vote_type" do
+          vote = Vote.create! valid_attributes
+          put :update, format: :json, params: {id: vote.to_param, vote: valid_attributes}, session: valid_session
+          expect(JSON.parse(response.body)["vote_type"]).to eq(valid_attributes[:vote_type])
         end
       end
 

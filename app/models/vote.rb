@@ -21,4 +21,5 @@ class Vote < ApplicationRecord
     prev_votes = Vote.for_user_and_comment(user_id, comment_id).of_vote_type(EXCLUSIVE_VOTES)
     errors.add(:base) << "can not be from the exclusive group of #{EXCLUSIVE_VOTES}" if prev_votes.any?
   end
+  
 end
