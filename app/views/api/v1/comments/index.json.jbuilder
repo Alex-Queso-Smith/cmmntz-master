@@ -10,8 +10,10 @@ json.comments @comments do |comment|
 
   json.current_users_votes do
      @current_users_votes.select {|v| v.comment_id = comment.id}.each do |vote|
-      json.vote_id vote.id
-      json.vote_type vote.vote_type
+      json.array do
+        json.vote_id vote.id
+        json.vote_type vote.vote_type
+      end
     end
   end
 end
