@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Vote, type: :model do
+  describe "before validations take place " do
+    it "should automatically underscoreize any camelcase vote_types" do
+      vote = FactoryBot.build(:vote, vote_type: "likeALot")
+      vote.valid?
+      expect(vote.vote_type).to eq("like_a_lot")
+    end
+  end
+
   describe "validation" do
     let!(:vote) { FactoryBot.build_stubbed(:vote) }
 
