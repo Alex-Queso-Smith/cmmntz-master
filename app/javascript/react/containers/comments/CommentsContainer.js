@@ -84,6 +84,7 @@ class CommentsContainer extends React.Component {
   }
 
   render(){
+    
     var { commentRoot } = this.props;
     var { comments, text, commentFormErrors } = this.state;
 

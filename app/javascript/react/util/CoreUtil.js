@@ -79,6 +79,24 @@ export const FetchBasic = (object, path, payload, method) => {
    .then(response => response.json())
 }
 
+export const FetchDeleteBasic = (object, path) => {
+  return fetch(path, {
+    method: 'DELETE',
+    credentials: 'same-origin'
+  })
+  .then(response => {
+     if(response.ok){
+       return response
+     } else {
+       let errorMessage = `${response.status} (${response.statusText})`,
+           error = new Error(errorMessage)
+       throw(error)
+     }
+   })
+   .then(response => response.json())
+   .catch(error => console.error(`Error in fetch: ${error.message}`));
+}
+
 export const CreateErrorElements = (errors, name) => {
   if (errors) {
     return errors.map((error) => {
@@ -111,5 +129,6 @@ export default {
   SetStateWithValidation,
   ErrorClassValidation,
   FetchWithUpdate,
-  FetchBasic
+  FetchBasic,
+  FetchDeleteBasic
 }
