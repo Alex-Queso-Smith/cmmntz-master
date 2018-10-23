@@ -16,9 +16,29 @@ class VotingContainerBase extends React.Component {
   }
 
   render(){
-    const voteTypes = [["like", "Like", "exclusive"], ["indifferent", "Indifferent", "exclusive"], ["dislike", "Dislike", "exclusive"]]
+    const rowOneVoteTypes = [
+      ["top", "Top"],
+      ["love", "Love"],
+      ["likeALot", "Like A Lot"],
+      ["like", "Like"],
+      ["indifferent", "Indifferent"],
+      ["dislike", "Dislike"],
+      ["dislikeALot", "Dislike A Lot"],
+      ["trash", "Trash"],
+      ["warn", "Warn"]
+    ]
 
-    var voteButtons = voteTypes.map((type) => {
+    const rowTwoVoteTypes = [
+      ["smart", "Smart"],
+      ["funny", "Funny"],
+      ["happy", "Happy"],
+      ["shocked", "Shocked"],
+      ["sad", "Sad"],
+      ["boring", "Boring"],
+      ["angry", "Angry"]
+    ]
+
+    var voteButtonsRowOne = rowOneVoteTypes.map((type) => {
       var toggled = '';
 
       if (type[0] === this.state.selectedType) {
@@ -29,7 +49,23 @@ class VotingContainerBase extends React.Component {
           key={`${this.props.commentId}_${type[0]}`}
           name={type[0]}
           label={type[1]}
-          group={type[2]}
+          toggleClass={toggled}
+          onClick={this.handleClick}
+          />
+      )
+    })
+
+    var voteButtonsRowTwo = rowTwoVoteTypes.map((type) => {
+      var toggled = '';
+
+      if (type[0] === this.state.selectedType) {
+        toggled = "btn toggled"
+      }
+      return(
+        <VoteButton
+          key={`${this.props.commentId}_${type[0]}`}
+          name={type[0]}
+          label={type[1]}
           toggleClass={toggled}
           onClick={this.handleClick}
           />
@@ -38,7 +74,12 @@ class VotingContainerBase extends React.Component {
 
     return(
       <div className="cf-votes-container margin-top-10px" >
-        {voteButtons}
+        <div className="cf-votes-top-row">
+          {voteButtonsRowOne}
+        </div>
+        <div className="cf-votes-bot-row">
+          {voteButtonsRowTwo}
+        </div>
       </div>
     );
   }

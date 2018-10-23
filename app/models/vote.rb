@@ -1,7 +1,6 @@
 class Vote < ApplicationRecord
-  BASIC_VOTES = ['like', 'indifferent', 'dislike']
-  EXCLUSIVE_VOTES = ['really_like'] + BASIC_VOTES + ['really_dislike']
-  TYPES = ['top'] + Vote::EXCLUSIVE_VOTES + ['flag']
+  EXCLUSIVE_VOTES = ['like_a_lot', 'like', 'indifferent', 'dislike', 'dislike_a_lot']
+  TYPES = ['top'] + Vote::EXCLUSIVE_VOTES + ['trash', 'flag']
 
   belongs_to :user
   belongs_to :comment
