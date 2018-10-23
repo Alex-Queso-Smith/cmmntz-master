@@ -37,6 +37,7 @@ class CommentsList extends React.Component {
               commentId={id}
               commentRoot={this.props.commentRoot}
               commentVotes={comment.current_users_votes}
+              userVoted={comment.user_has_voted}
             />
             <hr />
           </div>

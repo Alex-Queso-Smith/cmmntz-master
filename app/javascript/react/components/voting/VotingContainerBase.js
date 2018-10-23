@@ -9,7 +9,8 @@ class VotingContainerBase extends React.Component {
     super(props);
     this.state = {
       selectedBigFive: '',
-      selectedVotes: this.props.commentVotes
+      selectedVotes: this.props.commentVotes,
+      userVoted: this.props.userVoted
     }
     this.handleClickVote = this.handleClickVote.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
@@ -45,9 +46,15 @@ class VotingContainerBase extends React.Component {
 
   handleClickVote(event){
     VoteClick(this, event)
+    this.setState({ userVoted: true })
   }
 
   render(){
+    const alwaysVisible = [
+      "like",
+      "indifferent",
+      "dislike"
+    ]
 
     const rowOneVoteTypes = [
       ["top", "Top"],
@@ -73,6 +80,13 @@ class VotingContainerBase extends React.Component {
 
     var voteButtonsRowOne = rowOneVoteTypes.map((type) => {
       var toggled = '';
+      var visibility = '';
+
+      if (!this.state.userVoted) {
+        if (!alwaysVisible.includes(type[0])) {
+          visibility = 'visibility-hidden'
+        }
+      }
 
       if (this.state.selectedVotes[type[0]]) {
         toggled = "btn toggled"
@@ -85,16 +99,23 @@ class VotingContainerBase extends React.Component {
           label={type[1]}
           toggleClass={toggled}
           onClick={this.handleClickVote}
+          visibility={visibility}
           />
       )
     })
 
     var voteButtonsRowTwo = rowTwoVoteTypes.map((type) => {
       var toggled = '';
+      var visibility = '';
+
+      if (!this.state.userVoted) {
+        visibility = 'visibility-hidden'
+      }
 
       if (this.state.selectedVotes[type[0]]) {
         toggled = "btn toggled"
       }
+
       return(
         <VoteButton
           key={`${this.props.commentId}_${type[0]}`}
@@ -102,6 +123,7 @@ class VotingContainerBase extends React.Component {
           label={type[1]}
           toggleClass={toggled}
           onClick={this.handleClickVote}
+          visibility={visibility}
           />
       )
     })
