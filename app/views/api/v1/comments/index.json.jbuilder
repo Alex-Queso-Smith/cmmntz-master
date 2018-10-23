@@ -9,8 +9,9 @@ json.comments @comments do |comment|
   end
 
   json.current_users_votes do
-     @current_users_votes.select {|v| v.comment_id = comment.id}.each do |vote|
-      json.set! vote.vote_type, vote.id
+    Vote::TYPE.each do |type|
+      vote = @current_users_votes.detect {|v| v.comment_id == comment.id && v.vote_type == type }
+      json.set! type, (!vote.blank? ? vote.id : nil)
     end
   end
 end
