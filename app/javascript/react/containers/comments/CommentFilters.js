@@ -11,7 +11,11 @@ class CommentFilters extends React.Component {
   handleSubmit = this.handleSubmit.bind(this);
 
   handleChange(event){
-    //stuff here
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({ [name]: value })
   };
 
   handleSubmit(event){
