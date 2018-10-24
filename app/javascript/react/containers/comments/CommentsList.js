@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FetchWithPull } from '../../util/CoreUtil';
+import { FetchDidMount } from '../../util/CoreUtil';
 import VotingContainerBase from '../../components/voting/VotingContainerBase'
 
 class CommentsList extends React.Component {
@@ -13,7 +13,7 @@ class CommentsList extends React.Component {
     if (allComments) {
       commentsArray = allComments.map((comment) => {
         var { user_name, gender, age_range } = comment.user
-        var { text, created_at } = comment
+        var { id, text, created_at } = comment
         var userInfo;
 
         if (user_name == '') {
@@ -22,7 +22,7 @@ class CommentsList extends React.Component {
           userInfo = `${comment.user.user_name} - ${comment.user.gender} - ${comment.user.age_range}`
         }
         return(
-          <div className="cf-comment-div" key={text}>
+          <div className="cf-comment-div" key={id}>
             <div className="cf-comment-user" >
               {userInfo}
             </div>
@@ -32,7 +32,12 @@ class CommentsList extends React.Component {
             <div className="cf-comment-text" >
               {text}
             </div>
-            <VotingContainerBase />
+            <VotingContainerBase
+              commentId={id}
+              commentRoot={this.props.commentRoot}
+              commentVotes={comment.current_users_votes}
+              userVoted={comment.user_has_voted}
+            />
             <hr />
           </div>
         )

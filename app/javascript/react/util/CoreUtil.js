@@ -16,7 +16,6 @@ export const FetchWithPush = (object, path, push, method, errors, payload) => {
      }
    })
    .then(response => response.json())
-   // .then(response => {debugger})
    .then(body => {
      if (body.errors) {
        object.setState({ [errors]: body.errors})
@@ -29,7 +28,7 @@ export const FetchWithPush = (object, path, push, method, errors, payload) => {
    .catch(error => console.error(`Error in fetch: ${error.message}`));
 }
 
-export const FetchWithPull = (object, path) => {
+export const FetchDidMount = (object, path) => {
   return fetch(path, { credentials: 'same-origin' })
   .then(response => {
      if(response.ok){
@@ -61,6 +60,42 @@ export const FetchWithUpdate = (object, path, method, errors, payload) => {
    .then(response => response.json())
 }
 
+export const FetchBasic = (object, path, payload, method) => {
+  return fetch(path, {
+    method: method,
+    credentials: 'same-origin',
+    body: payload
+  })
+  .then(response => {
+     if(response.ok){
+       return response
+     } else {
+       let errorMessage = `${response.status} (${response.statusText})`,
+           error = new Error(errorMessage)
+       throw(error)
+     }
+   })
+   .then(response => response.json())
+}
+
+export const FetchDeleteBasic = (object, path) => {
+  return fetch(path, {
+    method: 'DELETE',
+    credentials: 'same-origin'
+  })
+  .then(response => {
+     if(response.ok){
+       return response
+     } else {
+       let errorMessage = `${response.status} (${response.statusText})`,
+           error = new Error(errorMessage)
+       throw(error)
+     }
+   })
+   .then(response => response.json())
+   .catch(error => console.error(`Error in fetch: ${error.message}`));
+}
+
 export const CreateErrorElements = (errors, name) => {
   if (errors) {
     return errors.map((error) => {
@@ -88,9 +123,11 @@ export const ErrorClassValidation = (error) => {
 
 export default {
   CreateErrorElements,
-  FetchWithPull,
+  FetchDidMount,
   FetchWithPush,
   SetStateWithValidation,
   ErrorClassValidation,
-  FetchWithUpdate
+  FetchWithUpdate,
+  FetchBasic,
+  FetchDeleteBasic
 }
