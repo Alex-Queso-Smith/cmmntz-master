@@ -3,7 +3,7 @@ import React from 'react';
 import CommentsFormContainer from './CommentsFormContainer';
 import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
-import { FetchDidMount, SetStateWithValidation, FetchWithUpdate, FetchBasic, Timeout } from '../../util/CoreUtil';
+import { FetchDidMount, SetStateWithValidation, FetchWithUpdate, FetchBasic } from '../../util/CoreUtil';
 
 
 class CommentsContainer extends React.Component {
@@ -82,14 +82,6 @@ class CommentsContainer extends React.Component {
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
-
-
-  delayClick(event){
-    event.preventDefault();
-    Timeout.clear('percentage-fetch')
-    Timeout.set('percentage-fetch', this.log, 2000)
   }
 
   render(){
