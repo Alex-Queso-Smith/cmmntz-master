@@ -16,7 +16,10 @@ class CommentFilters extends React.Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({ [name]: value })
+    this.setState({
+      [name]: value,
+      page: 1
+    })
   };
 
   handleSubmit(event){
