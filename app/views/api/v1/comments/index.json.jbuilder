@@ -1,4 +1,4 @@
-json.total_comments @comments.size
+json.total_comments @comments.total_entries
 json.comments @comments do |comment|
   json.id comment.id
   json.text comment.text

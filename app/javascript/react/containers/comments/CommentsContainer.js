@@ -85,6 +85,10 @@ class CommentsContainer extends React.Component {
           handleSubmit={this.handleSubmit}
         />
         <hr />
+        <CommentFilters
+
+        />
+        <hr />
         <CommentsList
           allComments={comments}
           commentRoot={commentRoot}
