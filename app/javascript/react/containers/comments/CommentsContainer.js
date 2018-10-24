@@ -2,7 +2,7 @@ import React from 'react';
 
 import CommentsFormContainer from './CommentsFormContainer';
 import CommentsList from './CommentsList';
-import { FetchDidMount, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
+import { FetchDidMount, SetStateWithValidation, FetchWithUpdate, Timeout } from '../../util/CoreUtil';
 
 
 class CommentsContainer extends React.Component {
@@ -15,6 +15,7 @@ class CommentsContainer extends React.Component {
   }
 
   handleSubmit = this.handleSubmit.bind(this);
+  delayClick = this.delayClick.bind(this);
 
   componentDidMount(){
     var commentRoot = this.props.commentRoot
@@ -62,16 +63,10 @@ class CommentsContainer extends React.Component {
     }
   }
 
-  handleClear(){
-    this.setState({
-      text: '',
-      anonymous: false,
-      formInvalid: true
-    })
-  }
-
-  delayClick(){
-    setTimeout(console.log('howdy'), 3000)
+  delayClick(event){
+    event.preventDefault();
+    Timeout.clear('percentage-fetch')
+    Timeout.set('percentage-fetch', this.log, 2000)
   }
 
   render(){
@@ -84,6 +79,7 @@ class CommentsContainer extends React.Component {
         <div>
           {totalComments} comments for this article
         </div>
+        <button onClick={this.delayClick} >delay</button>
         <CommentsFormContainer
           commentRoot={commentRoot}
           handleSubmit={this.handleSubmit}
