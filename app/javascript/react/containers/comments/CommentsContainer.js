@@ -6,7 +6,7 @@ import { FetchWithPull, SetStateWithValidation, FetchWithUpdate } from '../../ut
 
 class CommentsContainer extends React.Component {
   state = {
-    total_comments: 0,
+    totalComments: 0,
     comments: [],
     userId: '',
     artId: '',
@@ -30,7 +30,7 @@ class CommentsContainer extends React.Component {
     .then(body => {
      this.setState({
        comments: body.comments,
-       total_comments: body.total_comments
+       totalComments: body.total_comments
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -68,7 +68,12 @@ class CommentsContainer extends React.Component {
         if (body.errors) {
           this.setState({ [errors]: body.errors})
         } else {
-          this.setState({ comments: body.comments })
+          var x = this.state.totalComments + 1
+          this.setState({
+            comments: body.comments,
+            totalComments: x
+
+          })
         }
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -90,12 +95,12 @@ class CommentsContainer extends React.Component {
   render(){
 
     var { commentRoot } = this.props;
-    var { total_comments, comments, text, commentFormErrors } = this.state;
+    var { totalComments, comments, text, commentFormErrors } = this.state;
 
     return(
       <div>
         <div>
-          {total_comments} comments for this article
+          {totalComments} comments for this article
         </div>
         <CommentsFormContainer
           commentRoot={commentRoot}
