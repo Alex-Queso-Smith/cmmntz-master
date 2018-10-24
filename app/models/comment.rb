@@ -3,6 +3,7 @@ include ActionView::Helpers::SanitizeHelper
 class Comment < ApplicationRecord
   belongs_to :user
   has_many :votes
+  has_many :comment_interactions
 
   before_validation :sanitize_text_and_title
 

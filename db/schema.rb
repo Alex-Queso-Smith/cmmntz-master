@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_18_140244) do
+ActiveRecord::Schema.define(version: 2018_10_24_140611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -25,6 +25,14 @@ ActiveRecord::Schema.define(version: 2018_10_18_140244) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "comment_interactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "comment_id"
+    t.string "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "comment_id"], name: "index_comment_interactions_on_user_id_and_comment_id"
+  end
+
   create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "user_id"
     t.string "art_id"
@@ -34,7 +42,9 @@ ActiveRecord::Schema.define(version: 2018_10_18_140244) do
     t.boolean "anonymous"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "interactions_count", default: 0
     t.index ["art_id", "art_type"], name: "index_comments_on_art_id_and_art_type"
+    t.index ["interactions_count"], name: "index_comments_on_interactions_count"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 

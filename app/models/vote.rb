@@ -12,6 +12,8 @@ class Vote < ApplicationRecord
   validates :vote_type, uniqueness: { scope: [:user_id, :comment_id, :vote_type]}
   # validate :vote_is_unique_from_exclusve_group
 
+  after_create_commit :add_comment_interaction_for_comment_and_user!
+
   scope :for_user_and_comment, lambda {|user_id, comment_id| where(user_id: user_id, comment_id: comment_id)}
   scope :of_vote_type, lambda {|vote_type| where(vote_type: vote_type)}
 
@@ -30,6 +32,12 @@ class Vote < ApplicationRecord
   def normalize_vote_type
     return unless !vote_type.blank?
     self.vote_type = vote_type.underscore
+  end
+
+  ### Postprocessors
+
+  def add_comment_interaction_for_comment_and_user!
+    CommentInteraction.create_for_user_and_comment(self.user_id, self.comment_id)
   end
 
 end

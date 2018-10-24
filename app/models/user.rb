@@ -6,6 +6,8 @@ class User < ApplicationRecord
   AGES = [nil, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\
 
   has_many :comments
+  has_many :votes
+  has_many :comment_interactions
 
   validates :user_name, presence: true, uniqueness: true
 
