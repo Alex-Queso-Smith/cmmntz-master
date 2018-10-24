@@ -6,7 +6,7 @@ class Api::V1::CommentsController < ApiController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.paginate(page: 1, per_page: 30).filter_and_sort(params[:art_id], params[:art_type])
+    @comments = Comment.page(1).filter_and_sort(params[:art_id], params[:art_type])
     @current_users_votes = Vote.for_user_and_comment(current_user.id, @comments.map(&:id))
   end
 

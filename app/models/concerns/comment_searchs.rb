@@ -2,8 +2,7 @@ module CommentSearch
   extend ActiveSupport::Concern
 
   included do
-    # for pagination
-    self.per_page = 20
+    self.per_page = 30
   end
 
   class << self
