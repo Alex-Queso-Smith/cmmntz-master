@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :update, :destroy]
       resources :user_sessions, only: [:new, :create, :destroy]
       resources :comments, only: [:index, :create, :update, :destroy]
+      resources :comment_filters, only: [:create]
       resources :votes, only: [:create, :update, :destroy]
     end
   end
