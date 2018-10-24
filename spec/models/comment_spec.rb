@@ -33,7 +33,7 @@ RSpec.describe Comment, type: :model do
     describe "text validations" do
       let!(:comment) { FactoryBot.build_stubbed(:comment)}
 
-      it "must be less than 512 characters" do
+      it "must be less than 3000 characters" do
         comment.text = "Vivamus eget urna accumsan, lobortis velit ac, porta ante. Ut ac nunc luctus, bibendum sapien in, consequat mauris. Nullam lobortis posuere gravida. Quisque efficitur ligula eget ex dapibus congue. Proin gravida gravida ante et tincidunt. Aliquam posuere dignissim pellentesque. Aliquam erat volutpat. Curabitur facilisis est eget facilisis accumsan. Sed consequat urna lorem, eu tincidunt risus tempor eget. Duis sit amet ipsum in velit fringilla efficitur id non lorem. Nam vitae ligula rutrum, molestie lacus in, rhoncus ipsum.
 
   Aenean scelerisque, odio ut viverra iaculis, nunc magna placerat sem, eget viverra massa urna id lorem. Vivamus dignissim felis lacus, eu cursus ex congue at. Vivamus vitae dolor dui. Cras volutpat ante dolor, id facilisis erat lacinia id. Ut rhoncus nunc vel erat feugiat, ut blandit nibh euismod. Pellentesque orci eros, posuere ut tristique ac, mattis quis justo. Nunc finibus ipsum nec est euismod interdum. Vivamus imperdiet ipsum nec pulvinar venenatis. Fusce sed feugiat nisi, eget auctor sapien. Sed eget ipsum nec urna porttitor tristique ac nec mi. Praesent porttitor pellentesque eleifend."
