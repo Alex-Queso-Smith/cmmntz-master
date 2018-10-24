@@ -2,7 +2,7 @@ import React from 'react';
 
 import VoteButton from './VoteButton';
 import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
-import { VoteClick } from '../../util/VoteUtil';
+import { VoteClick, ImageSelected, ImageDeselected } from '../../util/VoteUtil';
 
 class VotingContainerBase extends React.Component {
   constructor(props){
@@ -79,18 +79,21 @@ class VotingContainerBase extends React.Component {
     ]
 
     const rowTwoVoteTypes = [
+      ["blank1", "blank1"],
       ["smart", "Smart"],
       ["funny", "Funny"],
       ["happy", "Happy"],
       ["shocked", "Shocked"],
       ["sad", "Sad"],
       ["boring", "Boring"],
-      ["angry", "Angry"]
+      ["angry", "Angry"],
+      ["blank2", "blank2"]
     ]
 
     var voteButtonsRowOne = rowOneVoteTypes.map((type) => {
-      var toggled = '';
+      // var toggled = '';
       var visibility = '';
+      var image;
 
       if (!this.state.userVoted) {
         if (!alwaysVisible.includes(type[0])) {
@@ -99,7 +102,9 @@ class VotingContainerBase extends React.Component {
       }
 
       if (this.state.selectedVotes[type[0]]) {
-        toggled = "btn toggled"
+        image = ImageSelected(type[0])
+      } else {
+        image = ImageDeselected(type[0])
       }
 
       return(
@@ -107,23 +112,27 @@ class VotingContainerBase extends React.Component {
           key={`${this.props.commentId}_${type[0]}`}
           name={type[0]}
           label={type[1]}
-          toggleClass={toggled}
           onClick={this.handleClickVote}
           visibility={visibility}
+          percentage='50'
+          image={image}
           />
       )
     })
 
     var voteButtonsRowTwo = rowTwoVoteTypes.map((type) => {
-      var toggled = '';
+      // var toggled = '';
       var visibility = '';
-
-      if (!this.state.userVoted) {
+      var image;
+      
+      if (!this.state.userVoted || type[0].includes('blank')) {
         visibility = 'visibility-hidden'
       }
 
       if (this.state.selectedVotes[type[0]]) {
-        toggled = "btn toggled"
+        image = ImageSelected(type[0])
+      } else {
+        image = ImageDeselected(type[0])
       }
 
       return(
@@ -131,19 +140,19 @@ class VotingContainerBase extends React.Component {
           key={`${this.props.commentId}_${type[0]}`}
           name={type[0]}
           label={type[1]}
-          toggleClass={toggled}
           onClick={this.handleClickVote}
           visibility={visibility}
+          image={image}
           />
       )
     })
 
     return(
-      <div className="cf-votes-container margin-top-10px" >
-        <div className="cf-votes-top-row">
+      <div className="cf-votes-container margin-top-10px container" >
+        <div className="cf-votes-top-row row">
           {voteButtonsRowOne}
         </div>
-        <div className="cf-votes-bot-row">
+        <div className="cf-votes-bot-row row">
           {voteButtonsRowTwo}
         </div>
       </div>

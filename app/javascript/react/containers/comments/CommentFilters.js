@@ -20,7 +20,6 @@ class CommentFilters extends React.Component {
       [name]: value,
       page: 1
     })
-
   };
 
   handleFilterSubmit(event){
@@ -30,10 +29,7 @@ class CommentFilters extends React.Component {
       var {sortOrder, page} = this.state;
       this.props.handleSubmit(event, sortOrder, page);
     }.bind(this), 1)
-
   }
-
-
 
   render(){
     var sortOrder = this.state.sortOrder
@@ -48,6 +44,6 @@ class CommentFilters extends React.Component {
       </div>
     )
   }
-
 };
+
 export default CommentFilters
