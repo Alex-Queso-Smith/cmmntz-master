@@ -39,12 +39,12 @@ article_one = Article.create(
   text: "Lorem ipsum dolor sit amet, ius dicat sanctus saperet ei. Disputando instructior mediocritatem an vim. Dictas nusquam fastidii ius ea, ne duo ocurreret adipiscing constituam, vis at modus summo. Est ne perfecto appellantur ullamcorper, liber saepe noluisse mei an. Commune vivendum usu et. No sit dico tota.",
 )
 
-users = []
-
 x = 1
 
-while x <= 10 do
-  users << User.create(
+users = []
+
+while x <= 100 do
+  users << User.new(
     user_name: "User#{x}",
     password: "password",
     password_confirmation: "password",
@@ -54,6 +54,9 @@ while x <= 10 do
   )
   x += 1
 end
+User.import users, validate: false
+
+users = User.all
 
 time = Time.now
 anonymous = [false, true]
@@ -72,5 +75,22 @@ anonymous = [false, true]
     created_at: time,
     anonymous: anonymous.sample
   )
+
+  rand(20).times do
+    # seed some Votes
+    u = (users - [comment.user]).sample
+    Vote.create(
+      user: u,
+      comment: comment,
+      vote_type: Vote::EXCLUSIVE_VOTES.sample
+    )
+    rand(3).times do
+      Vote.create(
+        user: u,
+        comment: comment,
+        vote_type: (Vote::TYPES - Vote::EXCLUSIVE_VOTES).sample
+      )
+    end
+  end
   time += 1.minute
 end
