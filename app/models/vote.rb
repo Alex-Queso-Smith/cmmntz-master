@@ -24,6 +24,7 @@ class Vote < ApplicationRecord
   def vote_is_unique_from_exclusve_group
     return true unless EXCLUSIVE_VOTES.include?(vote_type)
     prev_votes = Vote.for_user_and_comment(user_id, comment_id).of_vote_type(EXCLUSIVE_VOTES)
+    prev_votes = prev_votes.where.not(id: id) if id
     errors.add(:base) << "can not be from the exclusive group of #{EXCLUSIVE_VOTES.join(', ')}" if prev_votes.any?
   end
 
