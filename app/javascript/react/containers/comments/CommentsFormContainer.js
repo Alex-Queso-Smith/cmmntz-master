@@ -1,27 +1,70 @@
 import React from 'react'
 
 import Input from '../../components/form/Input';
-import { CreateErrorElements } from '../../util/CoreUtil.js';
+import { CreateErrorElements, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil.js';
 import Checkbox from '../../components/form/Checkbox';
 
 class CommentsFormContainer extends React.Component {
-  state = {}
+  state = {
+    text: '',
+    anonymous: false,
+    formInvalid: true,
+    commentFormErrors: {}
+  }
+
+  handleChange = this.handleChange.bind(this);
+  handleFormSubmit = this.handleFormSubmit.bind(this);
+  handleClear = this.handleClear.bind(this);
+
+  handleChange(event){
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    if (this.state.text.length != 0) {
+      SetStateWithValidation(this, false, name, value)
+    } else {
+      SetStateWithValidation(this, true, name, value)
+    }
+  }
+
+  handleFormSubmit(event){
+    var { text, anonymous, formInvalid } = this.state
+
+    this.props.handleSubmit(event, text, anonymous, formInvalid)
+    this.handleClear();
+  }
+
+  handleClear(){
+    this.setState({
+      text: '',
+      anonymous: false,
+      formInvalid: true
+    })
+  }
 
   render(){
-    var { commentRoot, onChange, handleSubmit, formInvalid, text, commentFormErrors } = this.props
+    var { commentFormErrors, text, formInvalid } = this.state
     var textError;
 
-    textError = CreateErrorElements(commentFormErrors.text, "Comment text")
+    if (commentFormErrors.text) {
+      textError = CreateErrorElements(commentFormErrors.text, "Comment text")
+    }
 
     return(
       <div>
-        <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={handleSubmit} >
-          <label className="text-medium">Comment</label>
-          <input value={text} type="text" name="text" className="form-control" onChange={onChange}/>
+        <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit} >
+          <Input
+            name='text'
+            label='Comment'
+            addClass=''
+            content={text}
+            onChange={this.handleChange}
+          />
           {textError}
           <Checkbox
             name="anonymous"
-            onChange={onChange}
+            onChange={this.handleChange}
             label="Submit Anonymously"
           />
           <div className="form-group actions margin-top-10px">
