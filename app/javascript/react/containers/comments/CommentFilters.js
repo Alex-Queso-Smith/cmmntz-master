@@ -9,7 +9,7 @@ class CommentFilters extends React.Component {
   }
 
   handleChange = this.handleChange.bind(this);
-  handleSubmit = this.handleSubmit.bind(this);
+  handleFilterSubmit = this.handleFilterSubmit.bind(this)
 
   handleChange(event){
     const target = event.target;
@@ -22,9 +22,12 @@ class CommentFilters extends React.Component {
     })
   };
 
-  handleSubmit(event){
-    //stuff here
-  };
+  handleFilterSubmit(event){
+    this.handleChange(event)
+    this.props.handleSubmit(event, this.state.sortOrder, this.state.page);
+  }
+
+
 
   render(){
     var sortOrder = this.state.sortOrder
@@ -34,7 +37,7 @@ class CommentFilters extends React.Component {
         <SortSelect
           name="sortOrder"
           content={this.state.sortOrder}
-          onChange={this.handleChange}
+          onChange={this.handleFilterSubmit}
         />
       </div>
     )

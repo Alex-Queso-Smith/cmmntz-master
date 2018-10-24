@@ -8,8 +8,8 @@ const SortSelect = props => {
         <br />
         <br />
         <select name={props.name} value={props.content} onChange={props.onChange}>
-          <option value="desc">Newest - Oldest</option>
-          <option value="asc">Oldest - Newest</option>
+          <option value="desc">desc</option>
+          <option value="asc">asc</option>
         </select>
       </label>
     </div>
