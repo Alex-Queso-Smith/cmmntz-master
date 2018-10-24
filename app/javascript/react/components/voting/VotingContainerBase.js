@@ -2,7 +2,7 @@ import React from 'react';
 
 import VoteButton from './VoteButton';
 import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
-import { VoteClick, ImageSelected, ImageDeselected } from '../../util/VoteUtil';
+import { VoteClick, ImageSelector } from '../../util/VoteUtil';
 
 class VotingContainerBase extends React.Component {
   constructor(props){
@@ -91,7 +91,6 @@ class VotingContainerBase extends React.Component {
     ]
 
     var voteButtonsRowOne = rowOneVoteTypes.map((type) => {
-      // var toggled = '';
       var visibility = '';
       var image;
 
@@ -102,9 +101,9 @@ class VotingContainerBase extends React.Component {
       }
 
       if (this.state.selectedVotes[type[0]]) {
-        image = ImageSelected(type[0])
+        image = ImageSelector(type[0], 'Selected')
       } else {
-        image = ImageDeselected(type[0])
+        image = ImageSelector(type[0], 'Unselected')
       }
 
       return(
@@ -121,18 +120,17 @@ class VotingContainerBase extends React.Component {
     })
 
     var voteButtonsRowTwo = rowTwoVoteTypes.map((type) => {
-      // var toggled = '';
       var visibility = '';
       var image;
-      
+
       if (!this.state.userVoted || type[0].includes('blank')) {
         visibility = 'visibility-hidden'
       }
 
       if (this.state.selectedVotes[type[0]]) {
-        image = ImageSelected(type[0])
+        image = ImageSelector(type[0], 'Selected')
       } else {
-        image = ImageDeselected(type[0])
+        image = ImageSelector(type[0], 'Unselected')
       }
 
       return(

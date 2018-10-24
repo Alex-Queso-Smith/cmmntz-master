@@ -73,126 +73,15 @@ export const VoteClick = (object, event) => {
   }
 }
 
-export const ImageSelected = (type) => {
-
-  var image = '';
-
-  switch (type) {
-    case 'like':
-      image = '/assets/04.Like.fifty_percent.Selected.1f44d.bmp'
-      break;
-    case 'like_a_lot':
-      image = '/assets/03.LikeALot.forty-seven_percent.Selected.1f44d.bmp'
-      break;
-    case 'indifferent':
-      image = '/assets/05.Indifferent.fifty_percent.Modified.Selected.1f91b.bmp'
-      break;
-    case 'dislike':
-      image = '/assets/06.Dislike.fifty_percent.Selected.1f44e.bmp'
-      break;
-    case 'dislike_a_lot':
-      image = '/assets/07.DislikeALot.fort-seven_percent.Selected.1f44e.bmp'
-      break;
-    case 'top':
-      image = '/assets/02.Top.fifty_percent.Modified.Selected.1f3d4.bmp'
-      break;
-    case 'love':
-      image = '/assets/04.Like.fifty_percent.Selected.1f44d.bmp'
-      break;
-    case 'trash':
-      image = '/assets/08.Trash.fifty_percent.Selected.1f5d1.bmp'
-      break;
-    case 'warn':
-      image = '/assets/09.Warn.fifty_percent.Selected.1f6a9.bmp'
-      break;
-    case 'smart':
-      image = '/assets/10.Smart.Fifty_Percent.Selected.1f914.bmp'
-      break;
-    case 'funny':
-      image = '/assets/11.Funny.fifty_percent.Selected.1f602.bmp'
-      break;
-    case 'happy':
-      image = '/assets/12.Happy.fifty_percent.Selected.1f642.bmp'
-      break;
-    case 'shocked':
-      image = '/assets/13.Shocked.fifty_percent.Selected.1f62f.bmp'
-      break;
-    case 'sad':
-      image = '/assets/14.Sad.fifty_percent.Selected.2639.bmp'
-      break;
-    case 'boring':
-      image = '/assets/15.Boring.fifty_percent.Selected.1f634.bmp'
-      break;
-    case 'angry':
-      image = '/assets/16.Angry.fifty_percent.Selected.1f620.bmp'
-      break;
-    default:
-      image = ''
+export const ImageSelector = (type, state) => {
+  if (type === "blank1" || type === 'blank2') {
+    return ''
+  } else {
+    return `/assets/${type}.${state}.bmp`
   }
-  return image
-}
-
-export const ImageDeselected = (type) => {
-
-  var image = '';
-
-  switch (type) {
-    case 'like':
-      image = '/assets/04.Like.fifty_percent.Unselected.1f44d.bmp'
-      break;
-    case 'like_a_lot':
-      image = '/assets/03.LikeALot.forty-seven_percent.Unselected.1f44d.bmp'
-      break;
-    case 'indifferent':
-      image = '/assets/05.Indifferent.fifty_percent.Modified.Unselected.1f91b.bmp'
-      break;
-    case 'dislike':
-      image = '/assets/06.Dislike.fifty_percent.Unselected.1f44e.bmp'
-      break;
-    case 'dislike_a_lot':
-      image = '/assets/07.DislikeALot.fort-seven_percent.Unselected.1f44e.bmp'
-      break;
-    case 'top':
-      image = '/assets/02.Top.fifty_percent.Modified.Unselected.1f3d4.bmp'
-      break;
-    case 'love':
-      image = '/assets/04.Like.fifty_percent.Unselected.1f44d.bmp'
-      break;
-    case 'trash':
-      image = '/assets/08.Trash.fifty_percent.Unselected.1f5d1.bmp'
-      break;
-    case 'warn':
-      image = '/assets/09.Warn.fifty_percent.Unselected.1f6a9.bmp'
-      break;
-    case 'smart':
-      image = '/assets/10.Smart.Fifty_Percent.Unselected.1f914.bmp'
-      break;
-    case 'funny':
-      image = '/assets/11.Funny.fifty_percent.Unselected.1f602.bmp'
-      break;
-    case 'happy':
-      image = '/assets/12.Happy.fifty_percent.Unselected.1f642.bmp'
-      break;
-    case 'shocked':
-      image = '/assets/13.Shocked.fifty_percent.Unselected.1f62f.bmp'
-      break;
-    case 'sad':
-      image = '/assets/14.Sad.fifty_percent.Unselected.2639.bmp'
-      break;
-    case 'boring':
-      image = '/assets/15.Boring.fifty_percent.Unselected.1f634.bmp'
-      break;
-    case 'angry':
-      image = '/assets/16.Angry.fifty_percent.Unselected.1f620.bmp'
-      break;
-    default:
-      image = ''
-  }
-  return image
 }
 
 export default {
   VoteClick,
-  ImageSelected,
-  ImageDeselected
+  ImageSelector
 }

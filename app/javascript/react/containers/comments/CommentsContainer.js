@@ -65,7 +65,6 @@ class CommentsContainer extends React.Component {
   }
 
   handleFilterSubmit(event, sortOrder, page){
-    event.preventDefault();
     var search = new FormData();
     var commentRoot = this.props.commentRoot
     search.append("art_type", commentRoot.getAttribute('data-art-type'))
