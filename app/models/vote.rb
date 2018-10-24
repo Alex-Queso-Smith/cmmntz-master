@@ -10,7 +10,7 @@ class Vote < ApplicationRecord
 
   validates :vote_type, presence: true, inclusion: { in: TYPES }
   validates :vote_type, uniqueness: { scope: [:user_id, :comment_id, :vote_type]}
-  # validate :vote_is_unique_from_exclusve_group
+  validate :vote_is_unique_from_exclusve_group
 
   after_create_commit :add_comment_interaction_for_comment_and_user!
 
@@ -24,7 +24,7 @@ class Vote < ApplicationRecord
   def vote_is_unique_from_exclusve_group
     return true unless EXCLUSIVE_VOTES.include?(vote_type)
     prev_votes = Vote.for_user_and_comment(user_id, comment_id).of_vote_type(EXCLUSIVE_VOTES)
-    errors.add(:base) << "can not be from the exclusive group of #{EXCLUSIVE_VOTES}" if prev_votes.any?
+    errors.add(:base) << "can not be from the exclusive group of #{EXCLUSIVE_VOTES.join(', ')}" if prev_votes.any?
   end
 
   ### Preprocessors
