@@ -18,6 +18,16 @@ class VotingContainerBase extends React.Component {
     this.handleDestroy = this.handleDestroy.bind(this);
   }
 
+  componentDidMount(){
+    const bigFive = ["like", "like_a_lot", "indifferent", "dislike", "dislike_a_lot"]
+
+    Object.keys(this.props.commentVotes).forEach((key) => {
+      if (bigFive.includes(key) && this.props.commentVotes[key] != null) {
+        this.setState({ selectedBigFive: key })
+      }
+    })
+  }
+
   handlePost(payload){
     FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
     .then(body => {
