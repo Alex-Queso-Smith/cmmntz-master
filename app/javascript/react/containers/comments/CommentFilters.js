@@ -20,13 +20,17 @@ class CommentFilters extends React.Component {
       [name]: value,
       page: 1
     })
-    debugger
+
   };
 
   handleFilterSubmit(event){
     this.handleChange(event)
-    debugger
-    this.props.handleSubmit(event, this.state.sortOrder, this.state.page);
+
+    setTimeout(function() { //Start the timer
+      var {sortOrder, page} = this.state;
+      this.props.handleSubmit(event, sortOrder, page);
+    }.bind(this), 1)
+
   }
 
 
