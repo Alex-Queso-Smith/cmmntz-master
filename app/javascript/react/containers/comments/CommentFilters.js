@@ -4,7 +4,8 @@ import SortSelect from '../../components/filters/SortSelect'
 
 class CommentFilters extends React.Component {
   state = {
-    sortOrder: 'desc'
+    sortOrder: 'desc',
+    page: 1
   }
 
   handleChange = this.handleChange.bind(this);
