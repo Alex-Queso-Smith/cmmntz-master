@@ -69,4 +69,29 @@ RSpec.describe Vote, type: :model do
       end
     end
   end
+
+  describe "after create commit" do
+    let!(:comment) { FactoryBot.create(:comment) }
+    let!(:user) { FactoryBot.create(:user) }
+
+    context "if the user has not interacted with the comment before" do
+      it "should increment the interactions_count on comment" do
+        expected_interactions_count = comment.interactions_count + 1
+        vote = FactoryBot.create(:vote, comment: comment, user: user, vote_type: "like")
+        comment.reload
+        expect(comment.interactions_count).to eq(expected_interactions_count)
+      end
+    end
+
+    context "if the user has interacted with the comment before" do
+      it "should not increment the interactions_count on comment" do
+        vote1 = FactoryBot.create(:vote, comment: comment, user: user, vote_type: "like")
+        comment.reload
+        expected_interactions_count = comment.interactions_count
+        vote2 = FactoryBot.create(:vote, comment: comment, user: user, vote_type: "trash")
+        comment.reload
+        expect(comment.interactions_count).to eq(expected_interactions_count)
+      end
+    end
+  end
 end
