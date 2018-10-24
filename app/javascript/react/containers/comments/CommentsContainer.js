@@ -2,6 +2,7 @@ import React from 'react';
 
 import CommentsFormContainer from './CommentsFormContainer';
 import CommentsList from './CommentsList';
+import CommentFilters from './CommentFilters';
 import { FetchDidMount, SetStateWithValidation, FetchWithUpdate, Timeout } from '../../util/CoreUtil';
 
 
