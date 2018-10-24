@@ -19,6 +19,7 @@ class CommentsContainer extends React.Component {
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
   handleClear = this.handleClear.bind(this);
+  delayClick = this.delayClick.bind(this);
 
   componentDidMount(){
     var commentRoot = this.props.commentRoot
@@ -83,12 +84,17 @@ class CommentsContainer extends React.Component {
     })
   }
 
+  delayClick(){
+    setTimeout(console.log('howdy'), 3000)
+  }
+
   render(){
     var { commentRoot } = this.props;
     var { comments, text, commentFormErrors } = this.state;
 
     return(
       <div>
+        <button onClick={this.delayClick}>delay</button>
         <CommentsFormContainer
           commentRoot={commentRoot}
           onChange={this.handleChange}
