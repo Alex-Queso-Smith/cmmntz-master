@@ -1,7 +1,7 @@
 import React from 'react';
 
 import VoteButton from './VoteButton';
-import { FetchBasic, FetchWithPull, FetchDeleteBasic } from '../../util/CoreUtil';
+import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
 import { VoteClick } from '../../util/VoteUtil';
 
 class VotingContainerBase extends React.Component {

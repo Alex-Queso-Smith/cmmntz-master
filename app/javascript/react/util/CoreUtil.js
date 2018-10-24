@@ -16,7 +16,6 @@ export const FetchWithPush = (object, path, push, method, errors, payload) => {
      }
    })
    .then(response => response.json())
-   // .then(response => {debugger})
    .then(body => {
      if (body.errors) {
        object.setState({ [errors]: body.errors})
@@ -29,7 +28,7 @@ export const FetchWithPush = (object, path, push, method, errors, payload) => {
    .catch(error => console.error(`Error in fetch: ${error.message}`));
 }
 
-export const FetchWithPull = (object, path) => {
+export const FetchDidMount = (object, path) => {
   return fetch(path, { credentials: 'same-origin' })
   .then(response => {
      if(response.ok){
@@ -124,7 +123,7 @@ export const ErrorClassValidation = (error) => {
 
 export default {
   CreateErrorElements,
-  FetchWithPull,
+  FetchDidMount,
   FetchWithPush,
   SetStateWithValidation,
   ErrorClassValidation,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FetchWithPull } from '../../util/CoreUtil';
+import { FetchDidMount } from '../../util/CoreUtil';
 import VotingContainerBase from '../../components/voting/VotingContainerBase'
 
 class CommentsList extends React.Component {

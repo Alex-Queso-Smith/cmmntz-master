@@ -2,7 +2,7 @@ import React from 'react';
 
 import CommentsFormContainer from './CommentsFormContainer';
 import CommentsList from './CommentsList';
-import { FetchWithPull, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
+import { FetchDidMount, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
 
 
 class CommentsContainer extends React.Component {
@@ -21,7 +21,7 @@ class CommentsContainer extends React.Component {
     var artType = commentRoot.getAttribute('data-art-type')
     var artId = commentRoot.getAttribute('data-art-id')
 
-    FetchWithPull(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`)
+    FetchDidMount(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`)
     .then(body => {
      this.setState({
        comments: body.comments,
