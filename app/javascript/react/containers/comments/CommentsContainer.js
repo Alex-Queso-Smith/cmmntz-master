@@ -17,7 +17,6 @@ class CommentsContainer extends React.Component {
 
   handleFormSubmit = this.handleFormSubmit.bind(this);
   handleFilterSubmit = this.handleFilterSubmit.bind(this);
-  delayClick = this.delayClick.bind(this);
 
   componentDidMount(){
     var commentRoot = this.props.commentRoot
