@@ -2,6 +2,7 @@ import React from 'react';
 
 import CommentsFormContainer from './CommentsFormContainer';
 import CommentsList from './CommentsList';
+import CommentFilters from './CommentFilters'
 import { FetchDidMount, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
 
 
@@ -75,6 +76,10 @@ class CommentsContainer extends React.Component {
         <CommentsFormContainer
           commentRoot={commentRoot}
           handleSubmit={this.handleSubmit}
+        />
+        <hr />
+        <CommentFilters
+
         />
         <hr />
         <CommentsList
