@@ -9,7 +9,7 @@ class Comment < ApplicationRecord
   validates :user_id, :art_id, :art_type, :text, presence: true
 
   validates :title, length: { in: 1..32 }, if: Proc.new {|c| !c.title.nil?}
-  validates :text, length: { in: 1..512 }
+  validates :text, length: { in: 1..3000 }
   validate :text_does_not_have_html, :title_does_not_have_html
 
   ### Scopes
