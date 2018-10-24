@@ -3,13 +3,14 @@ include ActionView::Helpers::SanitizeHelper
 class Comment < ApplicationRecord
   belongs_to :user
   has_many :votes
+  has_many :comment_interactions
 
   before_validation :sanitize_text_and_title
 
   validates :user_id, :art_id, :art_type, :text, presence: true
 
   validates :title, length: { in: 1..32 }, if: Proc.new {|c| !c.title.nil?}
-  validates :text, length: { in: 1..512 }
+  validates :text, length: { in: 1..3000 }
   validate :text_does_not_have_html, :title_does_not_have_html
 
   ### Scopes
