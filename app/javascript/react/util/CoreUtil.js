@@ -42,7 +42,7 @@ export const FetchDidMount = (object, path) => {
    .then(response => response.json())
 }
 
-export const FetchWithUpdate = (object, path, method, errors, payload) => {
+export const FetchWithUpdate = (object, path, method, payload) => {
   return fetch(path, {
     method: method,
     credentials: 'same-origin',
