@@ -3,7 +3,7 @@ class Api::V1::CommentFiltersController < ApiController
   def create
     page = params[:page] || 1
     search = params[:search] || {}
-    @comments = Comment.filter_and_sort(params[:art_id], params[:art_type], search, page)
+    @comments = CommentVoteTabulation.filter_and_sort(params[:art_id], params[:art_type], search, page)
     @current_users_votes = Vote.for_user_and_comment(current_user.id, @comments.map(&:id))
     @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comments.map(&:id))
   end
