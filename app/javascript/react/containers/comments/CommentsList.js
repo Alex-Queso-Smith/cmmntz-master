@@ -34,7 +34,7 @@ class CommentsList extends React.Component {
             </div>
             <div className="cf-comment-length">
               Comment Length:
-              <img src={image} />
+              <img src={image} height="20px" width="20px"/>
             </div>
             <div className="cf-comment-text" >
               {text}
