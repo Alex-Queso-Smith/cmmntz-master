@@ -1,7 +1,8 @@
 import React from 'react'
 
 import Input from '../../components/form/Input';
-import { CreateErrorElements, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil.js';
+import { CreateErrorElements, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
+import { Timeout } from '../../util/CommentUtil';
 import Checkbox from '../../components/form/Checkbox';
 
 class CommentsFormContainer extends React.Component {
@@ -45,7 +46,7 @@ class CommentsFormContainer extends React.Component {
 
   render(){
     var { commentFormErrors, text, formInvalid } = this.state
-    var textError;
+    var textError, timer;
 
     if (commentFormErrors.text) {
       textError = CreateErrorElements(commentFormErrors.text, "Comment text")

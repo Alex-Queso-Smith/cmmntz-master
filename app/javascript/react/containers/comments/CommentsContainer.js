@@ -5,7 +5,6 @@ import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
 import { FetchDidMount, SetStateWithValidation, FetchWithUpdate, FetchBasic } from '../../util/CoreUtil';
 
-
 class CommentsContainer extends React.Component {
   state = {
     totalComments: 0,
@@ -85,7 +84,7 @@ class CommentsContainer extends React.Component {
   render(){
 
     var { commentRoot } = this.props;
-    var { totalComments, comments } = this.state;
+    var { totalComments, comments} = this.state;
 
     return(
       <div>
@@ -105,6 +104,7 @@ class CommentsContainer extends React.Component {
         <CommentsList
           allComments={comments}
           commentRoot={commentRoot}
+          handleDelayClick={this.handleDelayClick}
         />
       </div>
     )

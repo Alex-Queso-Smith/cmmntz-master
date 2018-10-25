@@ -1,5 +1,29 @@
 import React from 'react';
 
+export const CommentLengthSorter = (text) => {
+  var length = text.length
+  var image;
+  switch (true) {
+    case (length <= 250):
+      image = '/assets/1.png'
+      break;
+    case (length <= 500):
+      image = '/assets/2.png'
+      break;
+    case (length <= 750):
+      image = '/assets/3.png'
+      break;
+    case (length <= 1000):
+      image = '/assets/4.png'
+      break;
+    case (length > 1000):
+      image = '/assets/5.png'
+      break;
+  }
+
+  return image
+}
+
 export const Timeout = (() => {
   const keyId = {}
   const complete = {}
@@ -9,7 +33,7 @@ export const Timeout = (() => {
   //
   // returns a function allowing you to test if it has executed
   const set = (...args) => {
-    let key, func, ms;
+    let key, func, ms
 
     if (args.length == 3)
       [key, func, ms] = args
@@ -52,33 +76,7 @@ export const Timeout = (() => {
   }
 })()
 
-export const CommentLengthSorter = (text) => {
-  var length = text.length
-  var image;
-  switch (true) {
-    case (length <= 250):
-      image = '/assets/1.png'
-      break;
-    case (length <= 500):
-      image = '/assets/2.png'
-      break;
-    case (length <= 750):
-      image = '/assets/3.png'
-      break;
-    case (length <= 1000):
-      image = '/assets/4.png'
-      break;
-    case (length > 1000):
-      image = '/assets/5.png'
-      break;
-  }
-  
-  return image
-}
-
-
-
 export default {
-  Timeout,
-  CommentLengthSorter
+  CommentLengthSorter,
+  Timeout
 }

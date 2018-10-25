@@ -93,7 +93,6 @@ export const FetchDeleteBasic = (object, path) => {
      }
    })
    .then(response => response.json())
-   .catch(error => console.error(`Error in fetch: ${error.message}`));
 }
 
 export const CreateErrorElements = (errors, name) => {

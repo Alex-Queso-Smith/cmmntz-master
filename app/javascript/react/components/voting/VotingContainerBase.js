@@ -3,6 +3,7 @@ import React from 'react';
 import VoteButton from './VoteButton';
 import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
 import { VoteClick, ImageSelector } from '../../util/VoteUtil';
+import { Timeout } from '../../util/CommentUtil';
 
 class VotingContainerBase extends React.Component {
   constructor(props){
@@ -10,7 +11,9 @@ class VotingContainerBase extends React.Component {
     this.state = {
       selectedBigFive: '',
       selectedVotes: this.props.commentVotes,
-      userVoted: this.props.userVoted
+      votePercents: this.props.votePercents,
+      userVoted: this.props.userVoted,
+      percentShow: this.props.userVoted
     }
     this.handleClickVote = this.handleClickVote.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
@@ -34,7 +37,10 @@ class VotingContainerBase extends React.Component {
       var updateVotes = this.state.selectedVotes
       updateVotes[body.vote_type] = body.vote_id
 
-      this.setState({ selectedVotes: updateVotes })
+      this.setState({
+        selectedVotes: updateVotes,
+        votePercents: body.vote_percents
+      })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -45,18 +51,30 @@ class VotingContainerBase extends React.Component {
       var updateVotes = this.props.commentVotes
       updateVotes[body.vote_type] = body.vote_id
 
-      this.setState({ selectedVotes: updateVotes })
+      this.setState({
+        selectedVotes: updateVotes,
+        votePercents: body.vote_percents
+      })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   handleDestroy(id){
     FetchDeleteBasic(this, `/api/v1/votes/${id}.json`)
+    .then(body => {
+      this.setState({ votePercents: body.vote_percents })
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   handleClickVote(event){
     VoteClick(this, event)
     this.setState({ userVoted: true })
+    var percentShowSet = () => {
+      this.setState({ percentShow: true })
+    }
+    Timeout.clear('timer')
+    Timeout.set('timer', percentShowSet, 3000)
   }
 
   render(){
@@ -92,14 +110,22 @@ class VotingContainerBase extends React.Component {
 
     var voteButtonsRowOne = rowOneVoteTypes.map((type) => {
       var visibility = '';
-      var image;
+      var image, percentage;
 
-      if (!this.state.userVoted) {
+      if ( // show percentage if user has voted
+        this.state.userVoted &&
+        this.state.percentShow
+      ) {
+        percentage = `%${this.state.votePercents[type[0]]}`
+      }
+
+      if (!this.state.userVoted) { // hide all but big three if user has not voted
         if (!alwaysVisible.includes(type[0])) {
           visibility = 'visibility-hidden'
         }
       }
 
+      // select image for button based on type
       if (this.state.selectedVotes[type[0]]) {
         image = ImageSelector(type[0], 'Selected')
       } else {
@@ -113,7 +139,7 @@ class VotingContainerBase extends React.Component {
           label={type[1]}
           onClick={this.handleClickVote}
           visibility={visibility}
-          percentage='50'
+          percentage={percentage}
           image={image}
           />
       )
@@ -121,12 +147,25 @@ class VotingContainerBase extends React.Component {
 
     var voteButtonsRowTwo = rowTwoVoteTypes.map((type) => {
       var visibility = '';
-      var image;
+      var image, percentage;
 
-      if (!this.state.userVoted || type[0].includes('blank')) {
+      if ( // show percentage if user has voted and div is not blank
+        this.state.userVoted &&
+        type[0] != "blank1" &&
+        type[0] != "blank2" &&
+        this.state.percentShow
+      ) {
+        percentage = `%${this.state.votePercents[type[0]]}`
+      }
+
+      if ( // hide all but big three if user has not voted
+        !this.state.userVoted ||
+        type[0].includes('blank')
+      ) {
         visibility = 'visibility-hidden'
       }
 
+      // select image for button based on type
       if (this.state.selectedVotes[type[0]]) {
         image = ImageSelector(type[0], 'Selected')
       } else {
@@ -140,11 +179,12 @@ class VotingContainerBase extends React.Component {
           label={type[1]}
           onClick={this.handleClickVote}
           visibility={visibility}
+          percentage={percentage}
           image={image}
           />
       )
     })
-
+// debugger
     return(
       <div className="cf-votes-container margin-top-10px container" >
         <div className="cf-votes-top-row row">
