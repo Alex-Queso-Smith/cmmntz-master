@@ -5,6 +5,7 @@ class Vote < ApplicationRecord
 
   belongs_to :user
   belongs_to :comment
+  belongs_to :comment_vote_tabulation, primary_key: 'id'
 
   before_validation :normalize_vote_type
 
