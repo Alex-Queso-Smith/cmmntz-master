@@ -9,8 +9,8 @@ module CommentSearchs
     def self.filter_and_sort(article_id, article_type, filter_opts = {}, page)
       scope = for_art_type_and_id(article_type, article_id).includes(:user)
       dir = filter_opts[:sort_dir] ? filter_opts[:sort_dir] : "desc"
-
-      scope = scope.order(created_at: dir.to_sym)
+      sort_type = filter_opts[:sort_type] ? filter_opts[:sort_type] : "created_at"
+      scope = scope.order(sort_type.to_sym => dir.to_sym)
       scope = scope.page(page)
       return scope
     end

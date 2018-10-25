@@ -64,13 +64,14 @@ class CommentsContainer extends React.Component {
     }
   }
 
-  handleFilterSubmit(event, sortDir, page){
+  handleFilterSubmit(event, sortDir, sortType, page){
     var search = new FormData();
     var commentRoot = this.props.commentRoot
     search.append("art_type", commentRoot.getAttribute('data-art-type'))
     search.append("art_id", commentRoot.getAttribute('data-art-id'))
     search.append("page", page);
     search.append("search[sort_dir]", sortDir);
+    search.append("search[sort_type]", sortType);
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
     .then(body => {

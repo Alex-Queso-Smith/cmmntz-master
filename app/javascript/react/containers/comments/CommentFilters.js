@@ -14,8 +14,18 @@ class CommentFilters extends React.Component {
   handleFilterSubmit = this.handleFilterSubmit.bind(this)
 
   handleChange(event){
+    event.preventDefault();
     const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
+
+    var value;
+    if (target.type === "checkbox") {
+      value = target.checked
+    } else if (target.getAttribute('data-value')) {
+      value = target.getAttribute('data-value')
+    } else {
+      value = target.value
+    };
+
     const name = target.name;
 
     this.setState({
@@ -28,8 +38,8 @@ class CommentFilters extends React.Component {
     this.handleChange(event)
 
     setTimeout(function() { //Start the timer
-      var {sortDir, page} = this.state;
-      this.props.handleSubmit(event, sortDir, page);
+      var {sortDir, page, sortType } = this.state;
+      this.props.handleSubmit(event, sortDir, sortType, page);
     }.bind(this), 1)
   }
 
@@ -37,29 +47,28 @@ class CommentFilters extends React.Component {
     var { sortDir, sortType } = this.state
 
     var sortTypes = [
-      ["top", "Top"],
-      ["love", "Love"],
-      ["like", "Like"],
-      ["smart", "Smart"],
-      ["funny", "Funny"],
-      ["created_at", "Date"],
-      ["length", "Length"]
+      ["top_count", "top"],
+      ["love_count", "love"],
+      ["like_count", "like"],
+      ["smart_count", "smart"],
+      ["funny_count", "funny"],
+      ["created_at", "created_at"],
+      ["comment_length", "length"]
     ]
 
     var sortButtons = sortTypes.map((type) => {
       var image;
 
       if (sortType == type[0]) {
-        image = ImageSelector(type[0], 'Selected')
+        image = ImageSelector(type[1], 'Selected')
       } else {
-        image = ImageSelector(type[0], 'Unselected')
+        image = ImageSelector(type[1], 'Unselected')
       }
 
       return(
         <SortButton
-          key={`filter_${type[0]}`}
-          name={type[0]}
-          label={type[1]}
+          key={`filter_${type[1]}`}
+          value={type[0]}
           onClick={this.handleFilterSubmit}
           image={image}
           />
