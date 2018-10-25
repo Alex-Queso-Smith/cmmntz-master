@@ -1,3 +1,7 @@
+import React from 'react';
+
+import VoteButton from '../components/voting/VoteButton';
+
 export const VoteClick = (object, event) => {
 
   const target = event.target;
@@ -81,7 +85,119 @@ export const ImageSelector = (type, state) => {
   }
 }
 
+export const AlwaysVisible = [
+  "like",
+  "indifferent",
+  "dislike"
+]
+
+export const RowOneVoteTypes = [
+  ["top", "Top"],
+  ["love", "Love"],
+  ["like_a_lot", "Like A Lot"],
+  ["like", "Like"],
+  ["indifferent", "Indifferent"],
+  ["dislike", "Dislike"],
+  ["dislike_a_lot", "Dislike A Lot"],
+  ["trash", "Trash"],
+  ["warn", "Warn"]
+]
+
+export const RowTwoVoteTypes = [
+  ["blank1", "blank1"],
+  ["smart", "Smart"],
+  ["funny", "Funny"],
+  ["happy", "Happy"],
+  ["shocked", "Shocked"],
+  ["sad", "Sad"],
+  ["boring", "Boring"],
+  ["angry", "Angry"],
+  ["blank2", "blank2"]
+]
+
+export const RowOneVoteButtons = (object) => {
+  return RowOneVoteTypes.map((type) => {
+    var visibility, image, percentage;
+    var { userVoted, percentShow, votePercents, selectedVotes } = object.state
+
+    if ( userVoted && percentShow ) {
+      percentage = `%${votePercents[type[0]]}`
+    }
+
+    if (!userVoted) {
+      if (!AlwaysVisible.includes(type[0])) {
+        visibility = 'visibility-hidden'
+      }
+    }
+
+    if (selectedVotes[type[0]]) {
+      image = ImageSelector(type[0], 'Selected')
+    } else {
+      image = ImageSelector(type[0], 'Unselected')
+    }
+
+    return(
+      <VoteButton
+        key={`${object.props.commentId}_${type[0]}`}
+        name={type[0]}
+        label={type[1]}
+        onClick={object.handleClickVote}
+        visibility={visibility}
+        percentage={percentage}
+        image={image}
+        />
+    )
+  })
+}
+
+export const RowTwoVoteButtons = (object) => {
+  return RowTwoVoteTypes.map((type) => {
+    var visibility, image, percentage;
+    var { userVoted, percentShow, votePercents, selectedVotes } = object.state
+
+    if ( // show percentage if user has voted and div is not blank
+      userVoted &&
+      type[0] != "blank1" &&
+      type[0] != "blank2" &&
+      percentShow
+    ) {
+      percentage = `%${votePercents[type[0]]}`
+    }
+
+    if ( // hide all but big three if user has not voted
+      !userVoted ||
+      type[0].includes('blank')
+    ) {
+      visibility = 'visibility-hidden'
+    }
+
+    // select image for button based on type
+    if (selectedVotes[type[0]]) {
+      image = ImageSelector(type[0], 'Selected')
+    } else {
+      image = ImageSelector(type[0], 'Unselected')
+    }
+
+    return(
+      <VoteButton
+        key={`${object.props.commentId}_${type[0]}`}
+        name={type[0]}
+        label={type[1]}
+        onClick={object.handleClickVote}
+        visibility={visibility}
+        percentage={percentage}
+        image={image}
+        />
+    )
+  })
+}
+
 export default {
   VoteClick,
-  ImageSelector
+  ImageSelector,
+  RowOneVoteTypes,
+  RowTwoVoteTypes,
+  AlwaysVisible,
+  RowOneVoteButtons,
+  RowTwoVoteButtons
 }

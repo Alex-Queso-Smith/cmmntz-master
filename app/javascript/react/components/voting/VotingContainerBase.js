@@ -2,7 +2,7 @@ import React from 'react';
 
 import VoteButton from './VoteButton';
 import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
-import { VoteClick, ImageSelector } from '../../util/VoteUtil';
+import { VoteClick, ImageSelector, RowOneVoteButtons, RowTwoVoteButtons } from '../../util/VoteUtil';
 import { Timeout } from '../../util/CommentUtil';
 
 class VotingContainerBase extends React.Component {
@@ -22,10 +22,10 @@ class VotingContainerBase extends React.Component {
   }
 
   componentDidMount(){
-    const bigFive = ["like", "like_a_lot", "indifferent", "dislike", "dislike_a_lot"]
+    const BigFive = ["like", "like_a_lot", "indifferent", "dislike", "dislike_a_lot"]
 
     Object.keys(this.props.commentVotes).forEach((key) => {
-      if (bigFive.includes(key) && this.props.commentVotes[key] != null) {
+      if (BigFive.includes(key) && this.props.commentVotes[key] != null) {
         this.setState({ selectedBigFive: key })
       }
     })
@@ -78,113 +78,9 @@ class VotingContainerBase extends React.Component {
   }
 
   render(){
-    const alwaysVisible = [
-      "like",
-      "indifferent",
-      "dislike"
-    ]
+    var voteButtonsRowOne = RowOneVoteButtons(this)
+    var voteButtonsRowTwo = RowTwoVoteButtons(this)
 
-    const rowOneVoteTypes = [
-      ["top", "Top"],
-      ["love", "Love"],
-      ["like_a_lot", "Like A Lot"],
-      ["like", "Like"],
-      ["indifferent", "Indifferent"],
-      ["dislike", "Dislike"],
-      ["dislike_a_lot", "Dislike A Lot"],
-      ["trash", "Trash"],
-      ["warn", "Warn"]
-    ]
-
-    const rowTwoVoteTypes = [
-      ["blank1", "blank1"],
-      ["smart", "Smart"],
-      ["funny", "Funny"],
-      ["happy", "Happy"],
-      ["shocked", "Shocked"],
-      ["sad", "Sad"],
-      ["boring", "Boring"],
-      ["angry", "Angry"],
-      ["blank2", "blank2"]
-    ]
-
-    var voteButtonsRowOne = rowOneVoteTypes.map((type) => {
-      var visibility = '';
-      var image, percentage;
-
-      if ( // show percentage if user has voted
-        this.state.userVoted &&
-        this.state.percentShow
-      ) {
-        percentage = `%${this.state.votePercents[type[0]]}`
-      }
-
-      if (!this.state.userVoted) { // hide all but big three if user has not voted
-        if (!alwaysVisible.includes(type[0])) {
-          visibility = 'visibility-hidden'
-        }
-      }
-
-      // select image for button based on type
-      if (this.state.selectedVotes[type[0]]) {
-        image = ImageSelector(type[0], 'Selected')
-      } else {
-        image = ImageSelector(type[0], 'Unselected')
-      }
-
-      return(
-        <VoteButton
-          key={`${this.props.commentId}_${type[0]}`}
-          name={type[0]}
-          label={type[1]}
-          onClick={this.handleClickVote}
-          visibility={visibility}
-          percentage={percentage}
-          image={image}
-          />
-      )
-    })
-
-    var voteButtonsRowTwo = rowTwoVoteTypes.map((type) => {
-      var visibility = '';
-      var image, percentage;
-
-      if ( // show percentage if user has voted and div is not blank
-        this.state.userVoted &&
-        type[0] != "blank1" &&
-        type[0] != "blank2" &&
-        this.state.percentShow
-      ) {
-        percentage = `%${this.state.votePercents[type[0]]}`
-      }
-
-      if ( // hide all but big three if user has not voted
-        !this.state.userVoted ||
-        type[0].includes('blank')
-      ) {
-        visibility = 'visibility-hidden'
-      }
-
-      // select image for button based on type
-      if (this.state.selectedVotes[type[0]]) {
-        image = ImageSelector(type[0], 'Selected')
-      } else {
-        image = ImageSelector(type[0], 'Unselected')
-      }
-
-      return(
-        <VoteButton
-          key={`${this.props.commentId}_${type[0]}`}
-          name={type[0]}
-          label={type[1]}
-          onClick={this.handleClickVote}
-          visibility={visibility}
-          percentage={percentage}
-          image={image}
-          />
-      )
-    })
-// debugger
     return(
       <div className="cf-votes-container margin-top-10px container" >
         <div className="cf-votes-top-row row">

@@ -11,7 +11,8 @@ class CommentsContainer extends React.Component {
     comments: [],
     userId: '',
     artId: '',
-    artType: ''
+    artType: '',
+    commentFormErrors: []
   }
 
   handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -47,10 +48,10 @@ class CommentsContainer extends React.Component {
       var artType = commentRoot.getAttribute('data-art-type')
       var artId = commentRoot.getAttribute('data-art-id')
 
-      FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', 'commentFormErrors', newComment )
+      FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
       .then(body => {
         if (body.errors) {
-          this.setState({ [errors]: body.errors})
+          this.setState({ commentFormErrors: body.errors})
         } else {
           var x = this.state.totalComments + 1
           this.setState({
@@ -84,7 +85,7 @@ class CommentsContainer extends React.Component {
   render(){
 
     var { commentRoot } = this.props;
-    var { totalComments, comments} = this.state;
+    var { totalComments, comments, commentFormErrors} = this.state;
 
     return(
       <div>
@@ -94,6 +95,7 @@ class CommentsContainer extends React.Component {
         <CommentsFormContainer
           commentRoot={commentRoot}
           handleSubmit={this.handleFormSubmit}
+          commentFormErrors={commentFormErrors}
         />
         <hr />
         <CommentFilters
