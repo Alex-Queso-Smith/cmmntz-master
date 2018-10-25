@@ -1,8 +1,8 @@
 # set the number of rando-users we want in this pass
-num_users = 100
+num_users = 500
 
 # set the number of articles we want in this pass
-num_articles = 2
+num_articles = 30
 time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
 puts "Starting process at #{Time.now}"
