@@ -1,19 +1,27 @@
 import React from 'react';
 
-const SortSelect = props => {
+export const SortDir = props => {
   return(
-    <div className="form-group">
-      <label className="text-medium">
-        Sort:
-        <br />
-        <br />
-        <select name={props.name} value={props.content} onChange={props.onChange}>
-          <option value="desc">Newest</option>
-          <option value="asc">Oldest</option>
-        </select>
-      </label>
+    <div className="col-sm">
+      <select name="sortDir" value={props.content} onChange={props.onChange}>
+        <option value="desc">Desc</option>
+        <option value="asc">Asc</option>
+      </select>
     </div>
   );
 };
 
-export default SortSelect;
+export const SortButton = props => {
+  return(
+    <div className="col-sm">
+      <button name={props.name} className={`sort-btn sort-${props.name} ${props.visibility}`} onClick={props.onClick}>
+        <img name={props.name} src={props.image} />
+      </button>
+    </div>
+  )
+};
+
+export default {
+  SortDir,
+  SortButton
+};
