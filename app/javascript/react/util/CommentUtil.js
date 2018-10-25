@@ -52,8 +52,8 @@ export const Timeout = (() => {
   }
 })()
 
-export const CommentLengthSorter = (comment) => {
-  var length = comment.length
+export const CommentLengthSorter = (text) => {
+  var length = text.length
   var image;
   switch (true) {
     case (length <= 250):
@@ -72,6 +72,7 @@ export const CommentLengthSorter = (comment) => {
       image = '/assets/5.png'
       break;
   }
+  
   return image
 }
 

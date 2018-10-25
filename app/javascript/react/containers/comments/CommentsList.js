@@ -16,8 +16,8 @@ class CommentsList extends React.Component {
         var { user_name, gender, age_range } = comment.user
         var { id, text, created_at } = comment
         var userInfo, commentLength;
-        var image = CommentLengthSorter(comment)
-debugger
+        var image = CommentLengthSorter(comment.text)
+
         if (user_name == '') {
           userInfo = "Anonymous"
         } else {
