@@ -85,3 +85,4 @@ gem 'activerecord-import'
 
 # add pagination
 gem 'will_paginate'
+gem 'scenic'

@@ -1,10 +1,9 @@
 class CreateComments < ActiveRecord::Migration[5.2]
   def change
     create_table :comments, id: :uuid do |t|
-      t.string :user_id
-      t.string :art_id
+      t.uuid :user_id
+      t.uuid :art_id
       t.string :art_type
-      t.string :title
       t.text :text
       t.boolean :anonymous
 
