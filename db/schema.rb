@@ -20,22 +20,22 @@ ActiveRecord::Schema.define(version: 2018_10_24_140611) do
     t.string "title"
     t.text "text"
     t.string "author_name"
-    t.string "author_id"
+    t.uuid "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "comment_interactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "comment_id"
-    t.string "user_id"
+    t.uuid "comment_id"
+    t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "comment_id"], name: "index_comment_interactions_on_user_id_and_comment_id"
   end
 
   create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "user_id"
-    t.string "art_id"
+    t.uuid "user_id"
+    t.uuid "art_id"
     t.string "art_type"
     t.string "title"
     t.text "text"
@@ -68,8 +68,8 @@ ActiveRecord::Schema.define(version: 2018_10_24_140611) do
   end
 
   create_table "votes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "user_id"
-    t.string "comment_id"
+    t.uuid "user_id"
+    t.uuid "comment_id"
     t.string "vote_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
