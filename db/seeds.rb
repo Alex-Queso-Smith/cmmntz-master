@@ -1,8 +1,8 @@
 # set the number of rando-users we want in this pass
-num_users = 500
+num_users = 100
 
 # set the number of articles we want in this pass
-num_articles = 30
+num_articles = 1
 time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
 puts "Starting process at #{Time.now}"
@@ -103,7 +103,7 @@ num_articles.times do
     end
     time += rand(5).minutes
 
-    x+=1
+    iter+=1
   end
 end
 time_end = Process.clock_gettime(Process::CLOCK_MONOTONIC)
