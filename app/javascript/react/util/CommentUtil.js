@@ -53,21 +53,26 @@ export const Timeout = (() => {
 })()
 
 export const CommentLengthSorter = (comment) => {
-  var result;
-
-  if (comment.length <= 250) {
-    result = 1
-  } else if (comment.length >= 251 && comment.length <= 500) {
-    result = 2
-  } else if (comment.length >= 501 && comment.length <= 750) {
-    result = 3
-  } else if (comment.length >= 751 && comment.length <= 1000) {
-    result = 4
-  } else {
-    result = 5
+  var length = comment.length
+  var image;
+  switch (true) {
+    case (length <= 250):
+      image = '/assets/1.png'
+      break;
+    case (length <= 500):
+      image = '/assets/2.png'
+      break;
+    case (length <= 750):
+      image = '/assets/3.png'
+      break;
+    case (length <= 1000):
+      image = '/assets/4.png'
+      break;
+    case (length > 1000):
+      image = '/assets/5.png'
+      break;
   }
-
-  return result
+  return image
 }
 
 

@@ -15,29 +15,9 @@ class CommentsList extends React.Component {
       commentsArray = allComments.map((comment) => {
         var { user_name, gender, age_range } = comment.user
         var { id, text, created_at } = comment
-        var userInfo;
-        var commentLength;
-
-        switch (CommentLengthSorter(comment.text)) {
-          case 1:
-            commentLength = "0-250"
-            break;
-          case 2:
-            commentLength = "251-500"
-            break;
-          case 3:
-            commentLength = "501-750"
-            break;
-          case 4:
-            commentLength = "751-1000"
-            break;
-          case 5:
-            commentLength = "1000-3000"
-            break;
-          default:
-            commentLength = ''
-        }
-
+        var userInfo, commentLength;
+        var image = CommentLengthSorter(comment)
+debugger
         if (user_name == '') {
           userInfo = "Anonymous"
         } else {
@@ -53,7 +33,8 @@ class CommentsList extends React.Component {
               {created_at}
             </div>
             <div className="cf-comment-length">
-              Comment Length: {commentLength}
+              Comment Length:
+              <img src={image} />
             </div>
             <div className="cf-comment-text" >
               {text}
