@@ -70,22 +70,22 @@ class CommentsFormContainer extends React.Component {
               <VoteButton
                 name="top"
                 visibility="margin-top-10px"
-                image={'/assets/top.Selected.bmp'}
+                image={'/assets/top.Selected.png'}
               />
               <VoteButton
                 name="top"
                 visibility="margin-top-10px"
-                image={'/assets/top.Selected.bmp'}
+                image={'/assets/top.Selected.png'}
               />
               <VoteButton
                 name="top"
                 visibility="margin-top-10px"
-                image={'/assets/top.Selected.bmp'}
+                image={'/assets/top.Selected.png'}
               />
               <VoteButton
                 name="top"
                 visibility="margin-top-10px"
-                image={'/assets/top.Selected.bmp'}
+                image={'/assets/top.Selected.png'}
               />
             </div>
           </div>

@@ -81,7 +81,7 @@ export const ImageSelector = (type, state) => {
   if (type === "blank1" || type === 'blank2') {
     return ''
   } else {
-    return `/assets/${type}.${state}.bmp`
+    return `/assets/${type}.${state}.png`
   }
 }
 
