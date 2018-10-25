@@ -6,7 +6,7 @@ class Comment < ApplicationRecord
 
   before_validation :sanitize_text
 
-  validates :user_id, :art_id, :art_type, :text, presence: true
+  validates :user_id, :text, presence: true
 
   validates :text, length: { in: 1..3000 }
   validate :text_does_not_have_html

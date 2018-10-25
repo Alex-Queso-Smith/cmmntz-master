@@ -9,27 +9,6 @@ RSpec.describe Comment, type: :model do
       end
     end
 
-    describe "title validations" do
-      let!(:comment) { FactoryBot.build_stubbed(:comment) }
-
-      it "must be less than 32 characters" do
-        comment.title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac finibus dolor. Mauris ut tempor metus. Sed scelerisque velit erat. Morbi dolor leo, tristique at vestibulum ac, sodales nec lacus. Cras eu varius ex, quis cursus urna."
-        expect(comment).to_not be_valid
-      end
-
-      # it "must be at least 1 character" do
-      #   @comment.title = ""
-      #   expect(comment_no_title).to_not be_valid
-      # end
-
-      it "should sanitize from tags" do
-        comment.title = "<p>text<p>"
-        title_sanitized = sanitize(comment.title, tags: [])
-        comment.valid?
-        expect(comment.title).to eq(title_sanitized)
-      end
-    end
-
     describe "text validations" do
       let!(:comment) { FactoryBot.build_stubbed(:comment)}
 
