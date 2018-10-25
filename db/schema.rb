@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
               WHEN ((votes.vote_type)::text = 'angry'::text) THEN 1
               ELSE 0
           END) AS angry_count,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -175,7 +176,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS top_percent,
+          END)::numeric(5,4) AS top_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -183,7 +185,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS love_percent,
+          END)::numeric(5,4) AS love_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -191,7 +194,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS like_a_lot_percent,
+          END)::numeric(5,4) AS like_a_lot_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -199,7 +203,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS like_percent,
+          END)::numeric(5,4) AS like_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -207,7 +212,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS indifferent_percent,
+          END)::numeric(5,4) AS indifferent_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -215,7 +221,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS dislike_percent,
+          END)::numeric(5,4) AS dislike_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -223,7 +230,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS dislike_a_lot_percent,
+          END)::numeric(5,4) AS dislike_a_lot_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -231,7 +239,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS trash_percent,
+          END)::numeric(5,4) AS trash_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -239,7 +248,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS warn_percent,
+          END)::numeric(5,4) AS warn_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -247,7 +257,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS smart_percent,
+          END)::numeric(5,4) AS smart_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -255,7 +266,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS funny_percent,
+          END)::numeric(5,4) AS funny_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -263,7 +275,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS happy_percent,
+          END)::numeric(5,4) AS happy_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -271,7 +284,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS shocked_percent,
+          END)::numeric(5,4) AS shocked_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -279,7 +293,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS sad_percent,
+          END)::numeric(5,4) AS sad_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -287,7 +302,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS boring_percent,
+          END)::numeric(5,4) AS boring_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN ((sum(
               CASE
@@ -295,7 +311,8 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric / (comments.interactions_count)::numeric)
               ELSE (0)::numeric
-          END AS angry_percent,
+          END)::numeric(5,4) AS angry_percent,
+      (
           CASE
               WHEN (comments.interactions_count > 0) THEN (((((((sum(
               CASE
@@ -319,7 +336,7 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
                   ELSE 0
               END))::numeric * (1)::numeric)) / ((2 * comments.interactions_count))::numeric)
               ELSE (0)::numeric
-          END AS like_score
+          END)::numeric(5,4) AS like_score
      FROM (comments
        LEFT JOIN votes ON ((votes.comment_id = comments.id)))
     GROUP BY comments.id;
