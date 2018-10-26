@@ -2,6 +2,7 @@ import React from 'react'
 
 import { SortDir, SortButton } from '../../components/filters/SortSelect'
 import { ImageSelector } from '../../util/VoteUtil';
+import { SortButtons, FilterButtonsRowOne, FilterButtonsRowTwo } from '../../util/FilterUtil'
 
 class CommentFilters extends React.Component {
   state = {
@@ -80,106 +81,10 @@ class CommentFilters extends React.Component {
   }
 
   render(){
-    var { sortDir, sortType } = this.state
 
-    var sortTypes = [
-      ["top_count", "top"],
-      ["love_count", "love"],
-      ["like_score", "like"],
-      ["smart_count", "smart"],
-      ["funny_count", "funny"],
-      ["created_at", "created_at"],
-      ["comment_length", "length"]
-    ]
-
-    var sortButtons = sortTypes.map((type) => {
-      var image;
-
-      if (sortType == type[0]) {
-        image = ImageSelector(type[1], 'Selected')
-      } else {
-        image = ImageSelector(type[1], 'Unselected')
-      }
-
-      return(
-        <SortButton
-          key={`sort_${type[1]}`}
-          value={type[0]}
-          onClick={this.handleFilterSubmit}
-          image={image}
-          visibility=''
-          />
-      )
-    })
-
-    var rowOneFilterTypes = [
-      ["top", "Top"],
-      ["love", "Love"],
-      ["like_a_lot", "Like A Lot"],
-      ["like", "Like"],
-      ["indifferent", "Indifferent"],
-      ["dislike", "Dislike"],
-      ["dislike_a_lot", "Dislike A Lot"],
-      ["trash", "Trash"],
-      ["warn", "Warn"]
-    ]
-
-    var rowTwoFilterTypes = [
-      ["blank1", "blank1"],
-      ["smart", "Smart"],
-      ["funny", "Funny"],
-      ["happy", "Happy"],
-      ["shocked", "Shocked"],
-      ["sad", "Sad"],
-      ["boring", "Boring"],
-      ["angry", "Angry"],
-      ["blank2", "blank2"]
-    ]
-
-    var filterButtonsRowOne = rowOneFilterTypes.map((type) => {
-      var image;
-
-      if (this.state.filterList.includes(`${type[0]}_percent`)) {
-        image = ImageSelector(type[0], 'Selected')
-      } else {
-        image = ImageSelector(type[0], 'Unselected')
-      }
-      return(
-        <SortButton
-          key={`filter_${type[1]}`}
-          value={`${type[0]}_percent`}
-          onClick={this.handleFilterClick}
-          image={image}
-          visibility=''
-          />
-      )
-    })
-
-    var filterButtonsRowTwo = rowTwoFilterTypes.map((type) => {
-      var image, visibility;
-
-      if (type[0] == "blank1" || type[0] == "blank2"){
-        visibility = "visibility-hidden"
-      }
-
-      if (this.state.filterList.includes(`${type[0]}_percent`)) {
-        image = ImageSelector(type[0], 'Selected')
-      } else {
-        image = ImageSelector(type[0], 'Unselected')
-      }
-
-      return(
-        <SortButton
-          key={`filter_${type[1]}`}
-          value={`${type[0]}_percent`}
-          onClick={this.handleFilterClick}
-          image={image}
-          visibility={visibility}
-          />
-      )
-    })
-
-
+    var sortButtons = SortButtons(this)
+    var filterButtonsRowOne = FilterButtonsRowOne(this)
+    var filterButtonsRowTwo = FilterButtonsRowTwo(this)
     return(
       <div className="cf-filter-block">
         <h4>Sort</h4>
