@@ -38,11 +38,8 @@ class CommentsFormContainer extends React.Component {
     const name = target.name;
 
     var updateSelfVotes = this.state.selfVotes
-    var vote = {
-      user_id: this.props.commentRoot.getAttribute('data-user-id'),
-      vote_type: name
-    }
-    updateSelfVotes.push(vote)
+    updateSelfVotes.push(name)
+
     this.setState({ selfVotes: updateSelfVotes })
   }
 
