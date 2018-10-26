@@ -39,7 +39,7 @@ const UserEditForm = props => {
         <AgeRangeSelector
           name="ageRange"
           label="Age Range"
-          onChange={ props.handleChange}
+          onChange={props.handleChange}
           content={props.ageRange}
           type="text"
         />
