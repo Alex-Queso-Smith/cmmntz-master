@@ -8,6 +8,7 @@ class CommentsList extends React.Component {
   state = {}
 
   render(){
+
     var commentsArray;
     var { allComments, percentShow, handleDelayClick } = this.props
 
