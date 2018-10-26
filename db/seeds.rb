@@ -64,7 +64,8 @@ num_articles.times do
   article_one = Article.create(
     title: "Demo Article #{iter}",
     text: RANDOM_TEXT.sample,
-    created_at: time
+    created_at: time,
+    updated_at: time
   )
 
   time += rand(100..1000)
@@ -79,6 +80,7 @@ num_articles.times do
       art_type: "article",
       text: RANDOM_TEXT.sample,
       created_at: time,
+      updated_at: time,
       anonymous: [false, true].sample
     )
 

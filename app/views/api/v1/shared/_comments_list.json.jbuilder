@@ -3,6 +3,7 @@ json.comments comments do |comment|
   json.id comment.id
   json.text comment.text
   json.created_at display_date(comment.created_at)
+  json.edit_date display_date(last_edit_date(comment))
   json.user do
     json.user_name comment_user_user_name(comment)
     json.gender comment_user_gender(comment)
