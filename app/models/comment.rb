@@ -2,7 +2,6 @@ include ActionView::Helpers::SanitizeHelper
 class Comment < ApplicationRecord
   belongs_to :user
   has_many :votes
-  accepts_nested_attributes_for :votes
   has_many :comment_interactions
 
   before_validation :sanitize_text
@@ -12,6 +11,7 @@ class Comment < ApplicationRecord
   validates :text, length: { in: 1..3000 }
   validate :text_does_not_have_html
 
+  accepts_nested_attributes_for :votes
   private
 
   ### Custom Validations be here
