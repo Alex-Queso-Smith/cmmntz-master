@@ -33,7 +33,7 @@ class CommentsContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleFormSubmit(event, text, anonymous, formInvalid){
+  handleFormSubmit(event, text, anonymous, formInvalid, selfVotes = []){
     event.preventDefault();
     if (!formInvalid) {
       var newComment = new FormData();
@@ -43,6 +43,7 @@ class CommentsContainer extends React.Component {
       newComment.append("comment[art_id]", commentRoot.getAttribute('data-art-id'))
       newComment.append("comment[text]", text)
       newComment.append("comment[anonymous]", anonymous)
+      newComment.append("comment[votes_attributes]", selfVotes)
 
       var commentRoot = this.props.commentRoot
       var artType = commentRoot.getAttribute('data-art-type')

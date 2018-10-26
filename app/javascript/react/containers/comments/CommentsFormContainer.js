@@ -18,6 +18,7 @@ class CommentsFormContainer extends React.Component {
   handleChange = this.handleChange.bind(this);
   handleFormSubmit = this.handleFormSubmit.bind(this);
   handleClear = this.handleClear.bind(this);
+  handleSelfVoteClick = this.handleSelfVoteClick.bind(this);
 
   handleChange(event){
     const target = event.target;
@@ -31,10 +32,24 @@ class CommentsFormContainer extends React.Component {
     }
   }
 
-  handleFormSubmit(event){
-    var { text, anonymous, formInvalid } = this.state
+  handleSelfVoteClick(event){
+    event.preventDefault();
+    const target = event.target;
+    const name = target.name;
 
-    this.props.handleSubmit(event, text, anonymous, formInvalid)
+    var updateSelfVotes = this.state.selfVotes
+    var vote = {
+      user_id: this.props.commentRoot.getAttribute('data-user-id'),
+      vote_type: name
+    }
+    updateSelfVotes.push(vote)
+    this.setState({ selfVotes: updateSelfVotes })
+  }
+
+  handleFormSubmit(event){
+    var { text, anonymous, formInvalid, selfVotes } = this.state
+
+    this.props.handleSubmit(event, text, anonymous, formInvalid, selfVotes)
     this.handleClear();
   }
 
@@ -42,7 +57,8 @@ class CommentsFormContainer extends React.Component {
     this.setState({
       text: '',
       anonymous: false,
-      formInvalid: true
+      formInvalid: true,
+      selfVotes: []
     })
   }
 
@@ -63,6 +79,7 @@ class CommentsFormContainer extends React.Component {
               className="form-control margin-top-10px textarea col-sm-10"
               name="text"
               placeholder="Type your comment here"
+              value={this.state.text}
               onChange={ this.handleChange }
               rows={8}
               />
@@ -71,21 +88,25 @@ class CommentsFormContainer extends React.Component {
                 name="top"
                 visibility="margin-top-10px"
                 image={'/assets/top.Selected.bmp'}
+                onClick={this.handleSelfVoteClick}
               />
               <VoteButton
-                name="top"
+                name="like_a_lot"
                 visibility="margin-top-10px"
-                image={'/assets/top.Selected.bmp'}
+                image={'/assets/like_a_lot.Selected.bmp'}
+                onClick={this.handleSelfVoteClick}
               />
               <VoteButton
-                name="top"
+                name="smart"
                 visibility="margin-top-10px"
-                image={'/assets/top.Selected.bmp'}
+                image={'/assets/smart.Selected.bmp'}
+                onClick={this.handleSelfVoteClick}
               />
               <VoteButton
-                name="top"
+                name="funny"
                 visibility="margin-top-10px"
-                image={'/assets/top.Selected.bmp'}
+                image={'/assets/funny.Selected.bmp'}
+                onClick={this.handleSelfVoteClick}
               />
             </div>
           </div>

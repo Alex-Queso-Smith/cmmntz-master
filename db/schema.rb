@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_24_140611) do
+ActiveRecord::Schema.define(version: 2018_10_25_171705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -75,5 +75,271 @@ ActiveRecord::Schema.define(version: 2018_10_24_140611) do
     t.index ["comment_id"], name: "index_votes_on_comment_id"
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
+
+
+  create_view "comment_vote_tabulations",  sql_definition: <<-SQL
+      SELECT comments.id,
+      comments.user_id,
+      comments.art_id,
+      comments.art_type,
+      comments.text,
+      comments.anonymous,
+      comments.created_at,
+      comments.updated_at,
+      comments.interactions_count,
+      char_length(comments.text) AS comment_length,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'top'::text) THEN 1
+              ELSE 0
+          END) AS top_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'love'::text) THEN 1
+              ELSE 0
+          END) AS love_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'like_a_lot'::text) THEN 1
+              ELSE 0
+          END) AS like_a_lot_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'like'::text) THEN 1
+              ELSE 0
+          END) AS like_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'indifferent'::text) THEN 1
+              ELSE 0
+          END) AS indifferent_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'dislike'::text) THEN 1
+              ELSE 0
+          END) AS dislike_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'dislike_a_lot'::text) THEN 1
+              ELSE 0
+          END) AS dislike_a_lot_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'trash'::text) THEN 1
+              ELSE 0
+          END) AS trash_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'warn'::text) THEN 1
+              ELSE 0
+          END) AS warn_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'smart'::text) THEN 1
+              ELSE 0
+          END) AS smart_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'funny'::text) THEN 1
+              ELSE 0
+          END) AS funny_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'happy'::text) THEN 1
+              ELSE 0
+          END) AS happy_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'shocked'::text) THEN 1
+              ELSE 0
+          END) AS shocked_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'sad'::text) THEN 1
+              ELSE 0
+          END) AS sad_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'boring'::text) THEN 1
+              ELSE 0
+          END) AS boring_count,
+      sum(
+          CASE
+              WHEN ((votes.vote_type)::text = 'angry'::text) THEN 1
+              ELSE 0
+          END) AS angry_count,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'top'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS top_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'love'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS love_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'like_a_lot'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS like_a_lot_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'like'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS like_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'indifferent'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS indifferent_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'dislike'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS dislike_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'dislike_a_lot'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS dislike_a_lot_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'trash'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS trash_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'warn'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS warn_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'smart'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS smart_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'funny'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS funny_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'happy'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS happy_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'shocked'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS shocked_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'sad'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS sad_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'boring'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS boring_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'angry'::text) THEN 1
+                  ELSE 0
+              END))::numeric / (comments.interactions_count)::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS angry_percent,
+      (
+          CASE
+              WHEN (comments.interactions_count > 0) THEN (((((((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'like_a_lot'::text) THEN 1
+                  ELSE 0
+              END))::numeric * (2)::numeric) + ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'like'::text) THEN 1
+                  ELSE 0
+              END))::numeric * (1)::numeric)) + ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'indifferent'::text) THEN 1
+                  ELSE 0
+              END))::numeric * (0)::numeric)) - ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'dislike'::text) THEN 1
+                  ELSE 0
+              END))::numeric * 0.5)) - ((sum(
+              CASE
+                  WHEN ((votes.vote_type)::text = 'dislike_a_lot'::text) THEN 1
+                  ELSE 0
+              END))::numeric * (1)::numeric)) / ((2 * comments.interactions_count))::numeric)
+              ELSE (0)::numeric
+          END)::numeric(5,4) AS like_score
+     FROM (comments
+       LEFT JOIN votes ON ((votes.comment_id = comments.id)))
+    GROUP BY comments.id;
+  SQL
 
 end
