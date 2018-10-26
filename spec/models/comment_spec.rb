@@ -42,19 +42,33 @@ RSpec.describe Comment, type: :model do
   end
 
   describe "parsing self-votes when provided" do
+    let!(:comment) { FactoryBot.build(:comment) }
     it "should behave as normal when not provided votes" do
-      comment = FactoryBot.build(:comment)
       expect{ comment.save }.to change(Comment, :count).by(1)
     end
 
     it "should create its votes" do
-      comment = FactoryBot.build(:comment, vote_types: "top,like_a_lot,smart,funny")
+      comment.vote_types = "top,like_a_lot,smart,funny"
       expect{ comment.save }.to change(Vote, :count).by(4)
     end
 
     it "should ignore bad vote types when provided while still creating valid ones" do
-      comment = FactoryBot.build(:comment, vote_types: "top,booyah,smart,foo,bar")
+      comment.vote_types = "top,booyah,smart,foo,bar"
       expect{ comment.save }.to change(Vote, :count).by(2)
+    end
+
+    it "should create a comment_interaction with valid votes" do
+      comment.vote_types = "top,like_a_lot,smart,funny"
+      expect{ comment.save }.to change(CommentInteraction, :count).by(1)
+    end
+
+    it "should not create a comment_interaction with invalid votes" do
+      comment.vote_types = "foo,bar,ya,da"
+      expect{ comment.save }.to change(CommentInteraction, :count).by(0)
+    end
+
+    it "should not create a comment_interaction with no votes" do
+      expect{ comment.save }.to change(CommentInteraction, :count).by(0)
     end
   end
 end
