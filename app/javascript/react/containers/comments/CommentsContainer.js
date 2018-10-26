@@ -54,6 +54,7 @@ class CommentsContainer extends React.Component {
         if (body.errors) {
           this.setState({ commentFormErrors: body.errors})
         } else {
+
           var x = this.state.totalComments + 1
           this.setState({
             comments: body.comments,
