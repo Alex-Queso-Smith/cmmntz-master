@@ -89,8 +89,7 @@ class CommentFilters extends React.Component {
           />
       )
     })
-
-    var sortImage = ImageSelector(this.state.sortDir, 'Selected')
+  
 
     return(
       <div className="cf-filter-block">
@@ -100,7 +99,7 @@ class CommentFilters extends React.Component {
           <SortDir
             value={this.state.sortDir}
             onClick={this.handleSortDirClick}
-            image={sortImage}
+            image={ImageSelector(this.state.sortDir, 'Selected')}
           />
         </div>
 
