@@ -40,5 +40,7 @@ class Comment < ApplicationRecord
       v = self.votes.build(user_id: user_id, vote_type: vote)
       vote_list << v if v.valid?
     end
+
+    Vote.import vote_list
   end
 end
