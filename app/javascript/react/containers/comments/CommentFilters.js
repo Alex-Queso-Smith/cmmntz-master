@@ -139,7 +139,7 @@ class CommentFilters extends React.Component {
     var filterButtonsRowOne = rowOneFilterTypes.map((type) => {
       var image;
 
-      if (this.state.filterList.includes(`${type[0]}_count`)) {
+      if (this.state.filterList.includes(`${type[0]}_percent`)) {
         image = ImageSelector(type[0], 'Selected')
       } else {
         image = ImageSelector(type[0], 'Unselected')
@@ -147,7 +147,7 @@ class CommentFilters extends React.Component {
       return(
         <SortButton
           key={`filter_${type[1]}`}
-          value={`${type[0]}_count`}
+          value={`${type[0]}_percent`}
           onClick={this.handleFilterClick}
           image={image}
           visibility=''
@@ -162,7 +162,7 @@ class CommentFilters extends React.Component {
         visibility = "visibility-hidden"
       }
 
-      if (this.state.filterList.includes(`${type[0]}_count`)) {
+      if (this.state.filterList.includes(`${type[0]}_percent`)) {
         image = ImageSelector(type[0], 'Selected')
       } else {
         image = ImageSelector(type[0], 'Unselected')
@@ -171,7 +171,7 @@ class CommentFilters extends React.Component {
       return(
         <SortButton
           key={`filter_${type[1]}`}
-          value={`${type[0]}_count`}
+          value={`${type[0]}_percent`}
           onClick={this.handleFilterClick}
           image={image}
           visibility={visibility}
