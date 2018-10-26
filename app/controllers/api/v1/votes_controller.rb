@@ -6,7 +6,7 @@ class Api::V1::VotesController < ApiController
   # POST /votes.json
   def create
     @vote = Vote.new(vote_params)
-
+    
     if @vote.save
       render "api/v1/votes/all_returns"
     else

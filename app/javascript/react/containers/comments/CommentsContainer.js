@@ -43,7 +43,7 @@ class CommentsContainer extends React.Component {
       newComment.append("comment[art_id]", commentRoot.getAttribute('data-art-id'))
       newComment.append("comment[text]", text)
       newComment.append("comment[anonymous]", anonymous)
-      newComment.append("comment[votes_types]", selfVotes.join(','))
+      newComment.append("comment[vote_types]", selfVotes.join(','))
 
       var commentRoot = this.props.commentRoot
       var artType = commentRoot.getAttribute('data-art-type')
