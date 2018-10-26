@@ -3,6 +3,7 @@ import React from 'react';
 import { FetchDidMount } from '../../util/CoreUtil';
 import { CommentLengthSorter } from '../../util/CommentUtil';
 import VotingContainerBase from '../../components/voting/VotingContainerBase'
+import Comment from '../../components/comments/Comment';
 
 class CommentsList extends React.Component {
   state = {}
@@ -14,7 +15,7 @@ class CommentsList extends React.Component {
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
-        var { user_name, gender, age_range } = comment.user
+        var { user_name, gender, age_range, user_id } = comment.user
         var { id, text, created_at } = comment
         var userInfo, commentLength;
         var image = CommentLengthSorter(comment.text)
@@ -27,19 +28,15 @@ class CommentsList extends React.Component {
 
         return(
           <div className="cf-comment-div" key={id}>
-            <div className="cf-comment-user" >
-              {userInfo}
-            </div>
-            <div className="cf-comment-at" >
-              {created_at}
-            </div>
-            <div className="cf-comment-length">
-              Comment Length:
-              <img src={image} height="20px" width="20px"/>
-            </div>
-            <div className="cf-comment-text" >
-              {text}
-            </div>
+            <Comment
+              commentUserId={user_id}
+              commentId={id}
+              userInfo={userInfo}
+              createdAt={created_at}
+              image={image}
+              text={text}
+              userId={this.props.commentRoot.getAttribute('data-user-id')}
+            />
             <VotingContainerBase
               commentId={id}
               commentRoot={this.props.commentRoot}
