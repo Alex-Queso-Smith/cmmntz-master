@@ -40,4 +40,13 @@ RSpec.describe Comment, type: :model do
       expect(comment.votes.size).to eq(5)
     end
   end
+
+  describe "parsing self-votes " do
+    it "should behave as normal when not provided votes"
+
+    it "should parse its votes when provided"
+    
+    it "should ignore bad vote types when provided"
+
+  end
 end

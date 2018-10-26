@@ -47,10 +47,6 @@ class Api::V1::CommentsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-<<<<<<< HEAD
       params.require(:comment).permit(:user_id, :art_id, :art_type, :text, :anonymous, :vote_types)
-=======
-      params.require(:comment).permit(:user_id, :art_id, :art_type, :text, :anonymous, votes_attributes:[:vote_type, :user_id])
->>>>>>> 3b67470fa46c408e4cac6ed2b163ea8be4fb5855
     end
 end
