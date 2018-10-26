@@ -17,6 +17,7 @@ class Comment < ApplicationRecord
 
   private
 
+
   ### Custom Validations be here
 
   def text_does_not_have_html
@@ -33,7 +34,7 @@ class Comment < ApplicationRecord
   ### Postprocessors
 
   def parse_and_create_votes
-    # "type1,type2..typex"
+    return if vote_types.blank?
     vote_list = []
     vote_types.split(',').each do |vote|
       v = self.votes.build(user_id: user_id, vote_type: vote)
