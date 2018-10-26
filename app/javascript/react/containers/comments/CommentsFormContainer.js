@@ -3,6 +3,7 @@ import React from 'react'
 import Input from '../../components/form/Input';
 import { CreateErrorElements, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
 import { Timeout } from '../../util/CommentUtil';
+import { ImageSelector } from '../../util/VoteUtil';
 import Checkbox from '../../components/form/Checkbox';
 import VoteButton from '../../components/voting/VoteButton';
 import Textarea from 'react-expanding-textarea'
@@ -38,9 +39,13 @@ class CommentsFormContainer extends React.Component {
     const name = target.name;
 
     var updateSelfVotes = this.state.selfVotes
-    updateSelfVotes.push(name)
-
-    this.setState({ selfVotes: updateSelfVotes })
+    if (updateSelfVotes.includes(name)) {
+      updateSelfVotes = updateSelfVotes.filter(input => input != name)
+      this.setState({ selfVotes: updateSelfVotes })
+    } else {
+      updateSelfVotes.push(name)
+      this.setState({ selfVotes: updateSelfVotes })
+    }
   }
 
   handleFormSubmit(event){
@@ -60,12 +65,35 @@ class CommentsFormContainer extends React.Component {
   }
 
   render(){
-    var { text, formInvalid } = this.state
+    const SelfVoteButtonTypes = ["top", "like_a_lot", "smart", "funny"]
+
+    var { commentFormErrors } = this.props
+    var { text, formInvalid, selfVotes } = this.state
     var textError, timer;
 
-    if (this.props.commentFormErrors.text) {
-      textError = CreateErrorElements(this.props.commentFormErrors.text, "Comment text")
+    if (commentFormErrors.text) {
+      textError = CreateErrorElements(commentFormErrors.text, "Comment text")
     }
+
+    var selfVoteButtons =
+      SelfVoteButtonTypes.map((type) => {
+        var image;
+        if (selfVotes.includes(type)) {
+          image = ImageSelector(type, "Selected")
+        } else {
+          image = ImageSelector(type, "Unselected")
+        }
+
+        return(
+          <VoteButton
+            key={type}
+            name={type}
+            visibility={"margin-top-10px"}
+            image={image}
+            onClick={this.handleSelfVoteClick}
+          />
+        )
+      })
 
     return(
       <div className="container">
@@ -81,30 +109,7 @@ class CommentsFormContainer extends React.Component {
               rows={8}
               />
             <div className="col-sm-2">
-              <VoteButton
-                name="top"
-                visibility="margin-top-10px"
-                image={'/assets/top.Selected.png'}
-                onClick={this.handleSelfVoteClick}
-              />
-              <VoteButton
-                name="like_a_lot"
-                visibility="margin-top-10px"
-                image={'/assets/like_a_lot.Selected.png'}
-                onClick={this.handleSelfVoteClick}
-              />
-              <VoteButton
-                name="smart"
-                visibility="margin-top-10px"
-                image={'/assets/smart.Selected.png'}
-                onClick={this.handleSelfVoteClick}
-              />
-              <VoteButton
-                name="funny"
-                visibility="margin-top-10px"
-                image={'/assets/funny.Selected.png'}
-                onClick={this.handleSelfVoteClick}
-              />
+              {selfVoteButtons}
             </div>
           </div>
           {textError}
