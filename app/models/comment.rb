@@ -40,7 +40,10 @@ class Comment < ApplicationRecord
       v = self.votes.build(user_id: user_id, vote_type: vote)
       vote_list << v if v.valid?
     end
-
-    Vote.import vote_list
+    
+    if vote_list.any?
+      Vote.import vote_list
+      self.comment_interactions.create!(user_id: user_id)
+    end
   end
 end
