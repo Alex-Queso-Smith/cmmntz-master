@@ -3,6 +3,10 @@ class Api::V1::UsersController < ApiController
   skip_before_action *ALL_FILTERS, only: [:create]
   before_action :set_user, only: [:update, :destroy]
   before_action :require_no_user, only: [:create]
+  # GET /users.json
+  def show
+    #code
+  end
 
   # POST /users.json
   def create

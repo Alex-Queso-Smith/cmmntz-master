@@ -64,7 +64,7 @@ class CommentFilters extends React.Component {
     var sortTypes = [
       ["top_count", "top"],
       ["love_count", "love"],
-      ["like_count", "like"],
+      ["like_score", "like"],
       ["smart_count", "smart"],
       ["funny_count", "funny"],
       ["created_at", "created_at"],
@@ -89,7 +89,7 @@ class CommentFilters extends React.Component {
           />
       )
     })
-  
+
 
     return(
       <div className="cf-filter-block">
