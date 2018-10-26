@@ -13,7 +13,7 @@ export const SortDir = props => {
 export const SortButton = props => {
   return(
     <div className="col-sm">
-      <button name="sortType" data-value={props.value} className={`sort-btn sort-${props.name}`} onClick={props.onClick}>
+      <button name="sortType" data-value={props.value} className={`sort-btn sort-${props.name} ${props.visibility}`} onClick={props.onClick}>
         <img name="sortType" data-value={props.value} src={props.image} />
       </button>
     </div>
