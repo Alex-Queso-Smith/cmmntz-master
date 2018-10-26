@@ -15,7 +15,7 @@ class Api::V1::CommentsController < ApiController
   # POST /comments.json
   def create
     @comment = Comment.new(comment_params)
-    
+
     if @comment.save
       redirect_to api_v1_comments_path(art_type: comment_params[:art_type], art_id: comment_params[:art_id] )
     else
@@ -27,7 +27,7 @@ class Api::V1::CommentsController < ApiController
   # PATCH/PUT /comments/1.json
   def update
     if @comment.update(comment_params)
-      redirect_to api_v1_comments_path(art_type: comment_params[:art_type], art_id: comment_params[:art_id] )
+      render json: { message: "Update Successful" }
     else
       render json: { errors: @comment.errors, status: :unprocessable_entity}
     end
