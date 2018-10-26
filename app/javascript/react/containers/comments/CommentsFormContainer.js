@@ -87,25 +87,25 @@ class CommentsFormContainer extends React.Component {
               <VoteButton
                 name="top"
                 visibility="margin-top-10px"
-                image={'/assets/top.Selected.bmp'}
+                image={'/assets/top.Selected.png'}
                 onClick={this.handleSelfVoteClick}
               />
               <VoteButton
                 name="like_a_lot"
                 visibility="margin-top-10px"
-                image={'/assets/like_a_lot.Selected.bmp'}
+                image={'/assets/like_a_lot.Selected.png'}
                 onClick={this.handleSelfVoteClick}
               />
               <VoteButton
                 name="smart"
                 visibility="margin-top-10px"
-                image={'/assets/smart.Selected.bmp'}
+                image={'/assets/smart.Selected.png'}
                 onClick={this.handleSelfVoteClick}
               />
               <VoteButton
                 name="funny"
                 visibility="margin-top-10px"
-                image={'/assets/funny.Selected.bmp'}
+                image={'/assets/funny.Selected.png'}
                 onClick={this.handleSelfVoteClick}
               />
             </div>
