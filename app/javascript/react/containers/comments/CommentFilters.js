@@ -11,7 +11,8 @@ class CommentFilters extends React.Component {
   }
 
   handleChange = this.handleChange.bind(this);
-  handleFilterSubmit = this.handleFilterSubmit.bind(this)
+  handleFilterSubmit = this.handleFilterSubmit.bind(this);
+  handleSortDirClick = this.handleSortDirClick.bind(this);
 
   handleChange(event){
     event.preventDefault();
@@ -36,6 +37,20 @@ class CommentFilters extends React.Component {
 
   handleFilterSubmit(event){
     this.handleChange(event)
+
+    setTimeout(function() { //Start the timer
+      var {sortDir, page, sortType } = this.state;
+      this.props.handleSubmit(event, sortDir, sortType, page);
+    }.bind(this), 1)
+  }
+
+  handleSortDirClick(event){
+    event.preventDefault();
+    var value = (this.state.sortDir == "asc") ? "desc" : "asc"
+    this.setState({
+      sortDir: value,
+      page: 1
+    })
 
     setTimeout(function() { //Start the timer
       var {sortDir, page, sortType } = this.state;
@@ -75,14 +90,17 @@ class CommentFilters extends React.Component {
       )
     })
 
+    var sortImage = ImageSelector(this.state.sortDir, 'Selected')
+
     return(
       <div className="cf-filter-block">
         <h4>Filters</h4>
         <div className="row">
           {sortButtons}
           <SortDir
-            content={this.state.sortDir}
-            onChange={this.handleFilterSubmit}
+            value={this.state.sortDir}
+            onClick={this.handleSortDirClick}
+            image={sortImage}
           />
         </div>
 
