@@ -8,7 +8,8 @@ class Comment extends React.Component {
     super(props);
       this.state = {
         edit: false,
-        text: this.props.text
+        text: this.props.text,
+        edited: this.props.editDate
       }
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -25,7 +26,7 @@ class Comment extends React.Component {
     event.preventDefault();
     this.setState({
       edit: false,
-      text: this.props.text
+      text: this.state.text
     })
   }
 
@@ -40,19 +41,32 @@ class Comment extends React.Component {
     newText.append("comment[text]", this.state.text)
 
     FetchBasic(this, `/api/v1/comments/${this.props.commentId}.json`, newText, 'PATCH')
+    .then(resp => {
+      this.setState({
+        edit: false,
+        text: resp.comment.text,
+        edited: resp.comment.edit_date
+      })
+    })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
-    this.setState({ edit: false })
   }
 
   render(){
     var { userInfo, createdAt, image, userId, commentUserId } = this.props
-    var textBox, editButton, cancelButton;
+    var textBox, editButton, cancelButton, lastEdited;
 
     if (this.state.edit && userId === commentUserId) {
       editButton = <button onClick={this.handleEditSubmit}>Edit Comment</button>
       cancelButton = <button onClick={this.handleCancelClick}>Cancel Edit</button>
     } else if (userId === commentUserId) {
       editButton = <button onClick={this.handleEditClick}>Edit Comment</button>
+    }
+
+    if (this.state.edited.length != 0) {
+      lastEdited =
+      <div className="cf-comment-edit">
+        Last Edited: {this.state.edited}
+      </div>
     }
 
     if (this.state.edit) {
@@ -74,8 +88,9 @@ class Comment extends React.Component {
           {userInfo}
         </div>
         <div className="cf-comment-at" >
-          {createdAt}
+          Posted: {createdAt}
         </div>
+          {lastEdited}
         <div className="cf-comment-length">
           Comment Length:
           <img src={image} height="20px" width="20px"/>
