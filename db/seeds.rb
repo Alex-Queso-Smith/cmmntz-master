@@ -2,7 +2,7 @@
 num_users = 100
 
 # set the number of articles we want in this pass
-num_articles = 1
+num_articles = 2
 time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
 puts "Starting process at #{Time.now}"
@@ -96,7 +96,7 @@ num_articles.times do
           text: RANDOM_TEXT.sample,
           created_at: time,
           updated_at: time,
-          anonymous: [false, true].sample
+          anonymous: [false, true].sample,
           parent_id: comment.id
         )
       end
