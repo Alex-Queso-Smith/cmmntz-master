@@ -35,6 +35,7 @@ class Vote < ApplicationRecord
 
   def deal_with_duplicate_top_votes
     return unless comment
+    return unless vote_type == "top"
 
     all_thread_comment_ids = Comment.select(:id).for_art_type_and_id(comment.art_type, comment.art_id).map(&:id)
     top_votes_for_user = Vote.for_user_and_comment(user_id, all_thread_comment_ids).of_vote_type('top')
