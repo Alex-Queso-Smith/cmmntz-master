@@ -71,4 +71,26 @@ RSpec.describe Comment, type: :model do
       expect{ comment.save }.to change(CommentInteraction, :count).by(0)
     end
   end
+
+  describe "replies " do
+    let!(:comment) { FactoryBot.create(:comment) }
+    let!(:comment_with_replies) { FactoryBot.create(:comment_with_replies, replies_count: 4) }
+
+    context "when it is a parent" do
+      it "should return [] when it has no replies" do
+        expect(comment.replies).to eq([])
+      end
+
+      it "should return its replies" do
+        expect(comment_with_replies.replies.size).to eq(4)
+      end
+    end
+
+    context "when it is a reply" do
+      it "should return its parent" do
+        reply1 = comment_with_replies.replies.first
+        expect(reply1.parent_id).to eq(comment_with_replies.id)
+      end
+    end
+  end
 end
