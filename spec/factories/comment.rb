@@ -14,5 +14,14 @@ FactoryBot.define do
         create_list(:vote, evaluator.votes_count, comment: comment)
       end
     end
+
+    factory :comment_with_replies do
+      transient do
+        replies_count { 3 }
+      end
+      after(:create) do |comment, evaluator|
+        create_list(:comment, evaluator.replies_count, parent: comment)
+      end
+    end
   end
 end
