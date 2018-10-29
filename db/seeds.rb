@@ -96,7 +96,7 @@ num_articles.times do
           text: RANDOM_TEXT.sample,
           created_at: time,
           updated_at: time,
-          anonymous: [false, true].sample
+          anonymous: [false, true].sample,
           parent_id: comment.id
         )
       end
