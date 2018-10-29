@@ -37,11 +37,9 @@ class VotingContainerBase extends React.Component {
 
       if (body.errors) {
         var message = body.errors[1]
-        // prompt user
         var r = confirm(message);
 
         if (r == true) {
-          // alert("Ok Clicked")
           payload.append("vote[force]", true)
           this.handlePost(payload)
         }

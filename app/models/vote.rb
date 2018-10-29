@@ -50,8 +50,9 @@ class Vote < ApplicationRecord
     end
 
     if top_votes_for_user.any?
-      text = top_votes_for_user.first.comment.text
-      errors.add(:base) << "You have already voted the following as top:\n\n #{text}\nWould you like to change your top vote for this thread?"
+      c = top_votes_for_user.first.comment
+      errors.add(:base) << "You have already voted the following as top:\n\n #{c.text}\nWould you like to change your top vote for this thread?"
+      errors.add(:base) << c.id
     end
   end
 
