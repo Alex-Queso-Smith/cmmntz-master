@@ -17,6 +17,8 @@ class Comment < ApplicationRecord
 
   after_create_commit :parse_and_create_votes
 
+  scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
+
   private
 
 
