@@ -11,19 +11,19 @@ class CommentsList extends React.Component {
   render(){
 
     var commentsArray;
-    var { allComments, percentShow, handleDelayClick } = this.props
+    var { allComments, percentShow, handleDelayClick, commentRoot } = this.props
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
         var { user_name, gender, age_range, user_id} = comment.user
-        var { id, text, created_at, edit_date } = comment
+        var { id, text, created_at, edit_date, replies, vote_percents, current_users_votes, user_has_voted } = comment
         var userInfo, commentLength;
-        var image = CommentLengthSorter(comment.text)
+        var lengthImage = CommentLengthSorter(text)
 
         if (user_name == '') {
           userInfo = "Anonymous"
         } else {
-          userInfo = `${comment.user.user_name} - ${comment.user.gender} - ${comment.user.age_range}`
+          userInfo = `${user_name} - ${gender} - ${age_range}`
         }
 
         return(
@@ -34,16 +34,19 @@ class CommentsList extends React.Component {
               commentId={id}
               userInfo={userInfo}
               createdAt={created_at}
-              image={image}
+              lengthImage={lengthImage}
               text={text}
-              userId={this.props.commentRoot.getAttribute('data-user-id')}
+              replies={replies}
+              artId={commentRoot.getAttribute('data-art-id')}
+              currentUserId={commentRoot.getAttribute('data-user-id')}
+              artType={commentRoot.getAttribute('data-art-type')}
             />
             <VotingContainerBase
               commentId={id}
-              commentRoot={this.props.commentRoot}
-              commentVotes={comment.current_users_votes}
-              votePercents={comment.vote_percents}
-              userVoted={comment.user_has_voted}
+              commentRoot={commentRoot}
+              commentVotes={current_users_votes}
+              votePercents={vote_percents}
+              userVoted={user_has_voted}
               handleDelayClick={handleDelayClick}
             />
             <hr />
