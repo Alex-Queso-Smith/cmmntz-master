@@ -6,11 +6,11 @@ class Api::V1::VotesController < ApiController
   # POST /votes.json
   def create
     @vote = Vote.new(vote_params)
-    
+
     if @vote.save
       render "api/v1/votes/all_returns"
     else
-      render json: { errors: @vote.errors, status: :unprocessable_entity }
+      render json: { errors: @vote.errors.full_messages, status: :unprocessable_entity }
     end
   end
 
@@ -19,7 +19,7 @@ class Api::V1::VotesController < ApiController
     if @vote.update(vote_params)
       render "api/v1/votes/all_returns"
     else
-      render json: { errors: @vote.errors, status: :unprocessable_entity}
+      render json: { errors: @vote.errors.full_messages, status: :unprocessable_entity}
     end
   end
 
@@ -38,6 +38,6 @@ class Api::V1::VotesController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def vote_params
-      params.require(:vote).permit(:user_id, :comment_id, :vote_type)
+      params.require(:vote).permit(:user_id, :comment_id, :vote_type, :force)
     end
 end

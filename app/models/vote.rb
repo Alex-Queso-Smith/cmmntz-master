@@ -43,14 +43,16 @@ class Vote < ApplicationRecord
     # if force flag passed or user is owner of prev comment:
     # delete prev top votes for user for thread
     comments_owned_by = top_votes_for_user.map(&:comment).flatten.map(&:user_id)
-    if self.force == true || (comments_owned_by.any? && comments_owned_by.first == user_id)
+    if (self.force == true || self.force == 'true') || (comments_owned_by.any? && comments_owned_by.first == user_id)
       top_votes_for_user.destroy_all
 
       return
     end
 
-    # puts "i have passed the force block"
-    errors.add(:base) << "can not vote top on more than one comment in a thread" if top_votes_for_user.any?
+    if top_votes_for_user.any?
+      text = top_votes_for_user.first.comment.text
+      errors.add(:base) << "You have already voted the following as top:\n\n #{text}\nWould you like to change your top vote for this thread?"
+    end
   end
 
   ### Preprocessors
