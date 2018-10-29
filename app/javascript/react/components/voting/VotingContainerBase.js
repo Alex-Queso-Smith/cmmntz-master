@@ -53,7 +53,7 @@ class VotingContainerBase extends React.Component {
           votePercents: body.vote_percents
         })
         if (body.old_top_id){
-          this.props.handleTopChange()
+          this.props.handleTopChange(body.old_top_id)
         }
       }
     })
