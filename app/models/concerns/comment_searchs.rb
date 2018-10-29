@@ -8,7 +8,7 @@ module CommentSearchs
     scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
 
     def self.filter_and_sort(article_id, article_type, filter_opts = {}, page)
-      scope = for_art_type_and_id(article_type, article_id).includes(:user)
+      scope = for_art_type_and_id(article_type, article_id).includes(:user, replies: [:user])
 
       if filter_opts[:filter_list]
         filter_opts[:filter_list].split(",").each do |item|
