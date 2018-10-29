@@ -71,7 +71,7 @@ num_articles.times do
   time += rand(100..1000)
 
   # generate a random number of comments
-  num_comments = rand(30..600)
+  num_comments = rand(30..75)
   puts "generating #{num_comments} comments"
   num_comments.times do
     comment = Comment.create(
@@ -83,6 +83,24 @@ num_articles.times do
       updated_at: time,
       anonymous: [false, true].sample
     )
+
+    #generate random number of replies
+    num_replies = rand(-7..5)
+    if num_replies > 0
+      puts "generating #{num_replies} replies"
+      num_replies.times do
+        Comment.create(
+          user: users.sample,
+          art_id: article_one.id,
+          art_type: "article",
+          text: RANDOM_TEXT.sample,
+          created_at: time,
+          updated_at: time,
+          anonymous: [false, true].sample
+          parent_id: comment.id
+        )
+      end
+    end
 
     # generate a random number of votes
     num_votes = rand(50)
