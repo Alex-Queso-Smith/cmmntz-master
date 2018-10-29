@@ -3,7 +3,7 @@ class Vote < ApplicationRecord
   EXCLUSIVE_VOTES = ['like_a_lot', 'like', 'indifferent', 'dislike', 'dislike_a_lot']
   TYPES = ['top', 'love'] + Vote::EXCLUSIVE_VOTES + ['trash', 'warn', 'smart', 'funny', 'happy', 'shocked', 'sad', 'boring', 'angry']
 
-  attr_accessor :force
+  attr_accessor :force, :old_top_id
 
 
   belongs_to :user

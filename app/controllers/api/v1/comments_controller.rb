@@ -11,6 +11,12 @@ class Api::V1::CommentsController < ApiController
     @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comments.map(&:id))
   end
 
+  def show
+    @comment = CommentVoteTabulation.where(id: params[:id]).first
+    @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
+    @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
+  end
+
   # POST /comments
   # POST /comments.json
   def create

@@ -3,7 +3,7 @@ import React from 'react';
 import CommentsFormContainer from './CommentsFormContainer';
 import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
-import { FetchDidMount, SetStateWithValidation, FetchWithUpdate, FetchBasic } from '../../util/CoreUtil';
+import { FetchDidMount, SetStateWithValidation, FetchWithUpdate, FetchBasic, FetchIndividual } from '../../util/CoreUtil';
 
 class CommentsContainer extends React.Component {
   state = {
@@ -17,6 +17,24 @@ class CommentsContainer extends React.Component {
 
   handleFormSubmit = this.handleFormSubmit.bind(this);
   handleFilterSubmit = this.handleFilterSubmit.bind(this);
+  handleTopChange = this.handleTopChange.bind(this);
+
+  handleTopChange(oldTopCommentId){
+    if (this.state.comments.find( c => c.id === oldTopCommentId)) {
+      // replace comment with updated version
+      FetchIndividual(this, `/api/v1/comments/${oldTopCommentId}.json`, "GET")
+      .then(body => {
+        var updatedComments = this.state.comments
+        var comment = updatedComments.find( c => c.id === oldTopCommentId);
+
+        comment.current_users_votes.top = null;
+        comment.vote_percents.top = body.comment.vote_percents.top;
+        // debugger
+        this.setState({ comments: updatedComments })
+      })
+
+    }
+  }
 
   componentDidMount(){
     var commentRoot = this.props.commentRoot
@@ -110,6 +128,7 @@ class CommentsContainer extends React.Component {
           allComments={comments}
           commentRoot={commentRoot}
           handleDelayClick={this.handleDelayClick}
+          handleTopChange={this.handleTopChange}
         />
       </div>
     )

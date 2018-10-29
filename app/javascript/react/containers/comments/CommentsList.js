@@ -11,7 +11,7 @@ class CommentsList extends React.Component {
   render(){
 
     var commentsArray;
-    var { allComments, percentShow, handleDelayClick } = this.props
+    var { allComments, percentShow, handleDelayClick, handleTopChange } = this.props
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
@@ -45,6 +45,7 @@ class CommentsList extends React.Component {
               votePercents={comment.vote_percents}
               userVoted={comment.user_has_voted}
               handleDelayClick={handleDelayClick}
+              handleTopChange={handleTopChange}
             />
             <hr />
           </div>
