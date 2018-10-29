@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_29_134526) do
+ActiveRecord::Schema.define(version: 2018_10_29_134804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2018_10_29_134526) do
       comments.created_at,
       comments.updated_at,
       comments.interactions_count,
+      comments.parent_id,
       char_length(comments.text) AS comment_length,
       sum(
           CASE
@@ -341,6 +342,7 @@ ActiveRecord::Schema.define(version: 2018_10_29_134526) do
           END)::numeric(5,4) AS like_score
      FROM (comments
        LEFT JOIN votes ON ((votes.comment_id = comments.id)))
+    WHERE (comments.parent_id IS NULL)
     GROUP BY comments.id;
   SQL
 
