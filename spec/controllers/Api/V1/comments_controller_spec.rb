@@ -32,6 +32,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
       end
     end
 
+
     describe "POST #create" do
       context "with valid params" do
         it "creates a new Comment" do
@@ -40,10 +41,11 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
           }.to change(Comment, :count).by(1)
         end
 
-        it "redirects to the inxdex" do
+        it "redirects to the index" do
           post :create, format: :json, params: {comment: valid_attributes}, session: valid_session
-          expect(response).to redirect_to(api_v1_comments_url(art_id: Comment.last.art_id, art_type: "article"))
+          expect(response).to redirect_to(api_v1_comments_url(art_id: valid_attributes[:art_id], art_type: valid_attributes[:art_type]))
         end
+
       end
 
       context "with invalid params" do
@@ -67,10 +69,10 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
           expect(comment.text).to eq(new_attributes[:text])
         end
 
-        it "redirects to the index" do
+        it "returns a success response" do
           comment = Comment.create! valid_attributes
           put :update, format: :json, params: {id: comment.to_param, comment: valid_attributes}, session: valid_session
-          expect(response).to redirect_to(api_v1_comments_url(art_id: comment.art_id, art_type: "article"))
+          expect(response).to be_successful
         end
       end
 

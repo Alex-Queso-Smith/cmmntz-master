@@ -3,7 +3,7 @@ class Vote < ApplicationRecord
   EXCLUSIVE_VOTES = ['like_a_lot', 'like', 'indifferent', 'dislike', 'dislike_a_lot']
   TYPES = ['top', 'love'] + Vote::EXCLUSIVE_VOTES + ['trash', 'warn', 'smart', 'funny', 'happy', 'shocked', 'sad', 'boring', 'angry']
 
-  attr_accessor :force
+  attr_accessor :force, :old_top_id
 
 
   belongs_to :user
@@ -35,6 +35,7 @@ class Vote < ApplicationRecord
 
   def deal_with_duplicate_top_votes
     return unless comment
+    return unless vote_type == "top"
 
     all_thread_comment_ids = Comment.select(:id).for_art_type_and_id(comment.art_type, comment.art_id).map(&:id)
     top_votes_for_user = Vote.for_user_and_comment(user_id, all_thread_comment_ids).of_vote_type('top')
@@ -42,14 +43,17 @@ class Vote < ApplicationRecord
     # if force flag passed or user is owner of prev comment:
     # delete prev top votes for user for thread
     comments_owned_by = top_votes_for_user.map(&:comment).flatten.map(&:user_id)
-    if self.force == true || (comments_owned_by.any? && comments_owned_by.first == user_id)
+    if (self.force == true || self.force == 'true') || (comments_owned_by.any? && comments_owned_by.first == user_id)
       top_votes_for_user.destroy_all
 
       return
     end
 
-    # puts "i have passed the force block"
-    errors.add(:base) << "can not vote top on more than one comment in a thread" if top_votes_for_user.any?
+    if top_votes_for_user.any?
+      c = top_votes_for_user.first.comment
+      errors.add(:base) << "You have already voted the following as top:\n\n #{c.text}\nWould you like to change your top vote for this thread?"
+      errors.add(:base) << c.id
+    end
   end
 
   ### Preprocessors
