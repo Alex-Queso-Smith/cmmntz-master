@@ -40,8 +40,10 @@ class VotingContainerBase extends React.Component {
         var r = confirm(message);
 
         if (r == true) {
+          var old_top_id = body.errors[3]
           payload.append("vote[force]", true)
-          payload.append("vote[old_top_id]", this.props.handleTopChange(body.errors[3]))
+          payload.append("vote[old_top_id]",old_top_id )
+          // debugger
           this.handlePost(payload)
         }
       } else {
@@ -52,6 +54,7 @@ class VotingContainerBase extends React.Component {
           selectedVotes: updateVotes,
           votePercents: body.vote_percents
         })
+        
         if (body.old_top_id){
           this.props.handleTopChange(body.old_top_id)
         }

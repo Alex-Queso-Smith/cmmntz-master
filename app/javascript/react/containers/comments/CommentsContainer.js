@@ -20,20 +20,23 @@ class CommentsContainer extends React.Component {
   handleTopChange = this.handleTopChange.bind(this);
 
   handleTopChange(oldTopCommentId){
-    if (this.state.comments.find( c => c.id === oldTopCommentId)) {
-      // replace comment with updated version
-      FetchIndividual(this, `/api/v1/comments/${oldTopCommentId}.json`, "GET")
-      .then(body => {
-        var updatedComments = this.state.comments
-        var comment = updatedComments.find( c => c.id === oldTopCommentId);
+    setTimeout(function() { //Start the timer
+      if (this.state.comments.find( c => c.id === oldTopCommentId)) {
+        // replace comment with updated version
+        FetchIndividual(this, `/api/v1/comments/${oldTopCommentId}.json`, "GET")
+        .then(body => {
+          var updatedComments = this.state.comments
+          var comment = updatedComments.find( c => c.id === oldTopCommentId);
 
-        comment.current_users_votes.top = null;
-        comment.vote_percents.top = body.comment.vote_percents.top;
-        // debugger
-        this.setState({ comments: updatedComments })
-      })
+          comment.current_users_votes.top = null;
+          comment.vote_percents.top = body.comment.vote_percents.top;
 
-    }
+          // debugger
+          this.setState({ comments: updatedComments });
+        })
+
+      }
+    }.bind(this), 50)
   }
 
   componentDidMount(){
