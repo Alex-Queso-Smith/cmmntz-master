@@ -2,7 +2,7 @@ import React from 'react';
 
 const Checkbox = props => {
   return(
-    <div className="custom-control custom-checkbox margin-top-10px">
+    <div className={`custom-control custom-checkbox margin-top-10px ${props.className}`}>
       <input type="checkbox"
       className="custom-control-input"
       name={props.name}

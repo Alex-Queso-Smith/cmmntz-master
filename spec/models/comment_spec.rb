@@ -9,27 +9,6 @@ RSpec.describe Comment, type: :model do
       end
     end
 
-    describe "title validations" do
-      let!(:comment) { FactoryBot.build_stubbed(:comment) }
-
-      it "must be less than 32 characters" do
-        comment.title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac finibus dolor. Mauris ut tempor metus. Sed scelerisque velit erat. Morbi dolor leo, tristique at vestibulum ac, sodales nec lacus. Cras eu varius ex, quis cursus urna."
-        expect(comment).to_not be_valid
-      end
-
-      # it "must be at least 1 character" do
-      #   @comment.title = ""
-      #   expect(comment_no_title).to_not be_valid
-      # end
-
-      it "should sanitize from tags" do
-        comment.title = "<p>text<p>"
-        title_sanitized = sanitize(comment.title, tags: [])
-        comment.valid?
-        expect(comment.title).to eq(title_sanitized)
-      end
-    end
-
     describe "text validations" do
       let!(:comment) { FactoryBot.build_stubbed(:comment)}
 
@@ -59,6 +38,37 @@ RSpec.describe Comment, type: :model do
     it "should have 5 votes when requested to have 5 votes" do
       comment = create(:comment_with_votes, votes_count: 5)
       expect(comment.votes.size).to eq(5)
+    end
+  end
+
+  describe "parsing self-votes when provided" do
+    let!(:comment) { FactoryBot.build(:comment) }
+    it "should behave as normal when not provided votes" do
+      expect{ comment.save }.to change(Comment, :count).by(1)
+    end
+
+    it "should create its votes" do
+      comment.vote_types = "top,like_a_lot,smart,funny"
+      expect{ comment.save }.to change(Vote, :count).by(4)
+    end
+
+    it "should ignore bad vote types when provided while still creating valid ones" do
+      comment.vote_types = "top,booyah,smart,foo,bar"
+      expect{ comment.save }.to change(Vote, :count).by(2)
+    end
+
+    it "should create a comment_interaction with valid votes" do
+      comment.vote_types = "top,like_a_lot,smart,funny"
+      expect{ comment.save }.to change(CommentInteraction, :count).by(1)
+    end
+
+    it "should not create a comment_interaction with invalid votes" do
+      comment.vote_types = "foo,bar,ya,da"
+      expect{ comment.save }.to change(CommentInteraction, :count).by(0)
+    end
+
+    it "should not create a comment_interaction with no votes" do
+      expect{ comment.save }.to change(CommentInteraction, :count).by(0)
     end
   end
 end

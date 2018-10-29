@@ -2,7 +2,8 @@ import React from 'react';
 
 import VoteButton from './VoteButton';
 import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
-import { VoteClick } from '../../util/VoteUtil';
+import { VoteClick, ImageSelector, RowOneVoteButtons, RowTwoVoteButtons } from '../../util/VoteUtil';
+import { Timeout } from '../../util/CommentUtil';
 
 class VotingContainerBase extends React.Component {
   constructor(props){
@@ -10,12 +11,24 @@ class VotingContainerBase extends React.Component {
     this.state = {
       selectedBigFive: '',
       selectedVotes: this.props.commentVotes,
-      userVoted: this.props.userVoted
+      votePercents: this.props.votePercents,
+      userVoted: this.props.userVoted,
+      percentShow: this.props.userVoted
     }
     this.handleClickVote = this.handleClickVote.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
+  }
+
+  componentDidMount(){
+    const BigFive = ["like", "like_a_lot", "indifferent", "dislike", "dislike_a_lot"]
+
+    Object.keys(this.props.commentVotes).forEach((key) => {
+      if (BigFive.includes(key) && this.props.commentVotes[key] != null) {
+        this.setState({ selectedBigFive: key })
+      }
+    })
   }
 
   handlePost(payload){
@@ -24,7 +37,10 @@ class VotingContainerBase extends React.Component {
       var updateVotes = this.state.selectedVotes
       updateVotes[body.vote_type] = body.vote_id
 
-      this.setState({ selectedVotes: updateVotes })
+      this.setState({
+        selectedVotes: updateVotes,
+        votePercents: body.vote_percents
+      })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -35,105 +51,42 @@ class VotingContainerBase extends React.Component {
       var updateVotes = this.props.commentVotes
       updateVotes[body.vote_type] = body.vote_id
 
-      this.setState({ selectedVotes: updateVotes })
+      this.setState({
+        selectedVotes: updateVotes,
+        votePercents: body.vote_percents
+      })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   handleDestroy(id){
     FetchDeleteBasic(this, `/api/v1/votes/${id}.json`)
+    .then(body => {
+      this.setState({ votePercents: body.vote_percents })
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   handleClickVote(event){
     VoteClick(this, event)
     this.setState({ userVoted: true })
+    var percentShowSet = () => {
+      this.setState({ percentShow: true })
+    }
+    Timeout.clear('timer')
+    Timeout.set('timer', percentShowSet, 3000)
   }
 
   render(){
-    const alwaysVisible = [
-      "like",
-      "indifferent",
-      "dislike"
-    ]
-
-    const rowOneVoteTypes = [
-      ["top", "Top"],
-      ["love", "Love"],
-      ["like_a_lot", "Like A Lot"],
-      ["like", "Like"],
-      ["indifferent", "Indifferent"],
-      ["dislike", "Dislike"],
-      ["dislike_a_lot", "Dislike A Lot"],
-      ["trash", "Trash"],
-      ["warn", "Warn"]
-    ]
-
-    const rowTwoVoteTypes = [
-      ["smart", "Smart"],
-      ["funny", "Funny"],
-      ["happy", "Happy"],
-      ["shocked", "Shocked"],
-      ["sad", "Sad"],
-      ["boring", "Boring"],
-      ["angry", "Angry"]
-    ]
-
-    var voteButtonsRowOne = rowOneVoteTypes.map((type) => {
-      var toggled = '';
-      var visibility = '';
-
-      if (!this.state.userVoted) {
-        if (!alwaysVisible.includes(type[0])) {
-          visibility = 'visibility-hidden'
-        }
-      }
-
-      if (this.state.selectedVotes[type[0]]) {
-        toggled = "btn toggled"
-      }
-
-      return(
-        <VoteButton
-          key={`${this.props.commentId}_${type[0]}`}
-          name={type[0]}
-          label={type[1]}
-          toggleClass={toggled}
-          onClick={this.handleClickVote}
-          visibility={visibility}
-          />
-      )
-    })
-
-    var voteButtonsRowTwo = rowTwoVoteTypes.map((type) => {
-      var toggled = '';
-      var visibility = '';
-
-      if (!this.state.userVoted) {
-        visibility = 'visibility-hidden'
-      }
-
-      if (this.state.selectedVotes[type[0]]) {
-        toggled = "btn toggled"
-      }
-
-      return(
-        <VoteButton
-          key={`${this.props.commentId}_${type[0]}`}
-          name={type[0]}
-          label={type[1]}
-          toggleClass={toggled}
-          onClick={this.handleClickVote}
-          visibility={visibility}
-          />
-      )
-    })
+    var voteButtonsRowOne = RowOneVoteButtons(this)
+    var voteButtonsRowTwo = RowTwoVoteButtons(this)
 
     return(
-      <div className="cf-votes-container margin-top-10px" >
-        <div className="cf-votes-top-row">
+      <div className="cf-votes-container margin-top-10px container" >
+        <div className="cf-votes-top-row row">
           {voteButtonsRowOne}
         </div>
-        <div className="cf-votes-bot-row">
+        <div className="cf-votes-bot-row row">
           {voteButtonsRowTwo}
         </div>
       </div>

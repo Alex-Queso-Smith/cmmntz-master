@@ -7334,6 +7334,11 @@ react-dom@^16.5.2:
     prop-types "^15.6.2"
     schedule "^0.5.0"
 
+react-expanding-textarea@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-expanding-textarea/-/react-expanding-textarea-0.2.0.tgz#da860e1b8ae98def9c50be7db8905dc8c7c59a0e"
+  integrity sha512-SvUnXCdg+PmXPFzZwXdi7cZq+rY4oWywUmBGqS7n4ds5xAY+ctm4eqmeR86f2buZ3s1tmgyHf8fJbZ+nSABoPg==
+
 react-router-dom@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.3.1.tgz#4c2619fc24c4fa87c9fd18f4fb4a43fe63fbd5c6"

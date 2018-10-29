@@ -82,3 +82,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # allow for mass import data, saves in inserts for optimal loads
 gem 'activerecord-import'
+
+# add pagination
+gem 'will_paginate'
+gem 'scenic'

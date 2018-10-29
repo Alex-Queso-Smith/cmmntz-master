@@ -1,78 +1,203 @@
+import React from 'react';
+
+import VoteButton from '../components/voting/VoteButton';
+
 export const VoteClick = (object, event) => {
 
-    const target = event.target;
-    const name = target.name;
-    const bigFive = ['like', 'dislike', 'indifferent', 'like_a_lot', 'dislike_a_lot']
+  const target = event.target;
+  const name = target.name;
+  const bigFive = ['like', 'dislike', 'indifferent', 'like_a_lot', 'dislike_a_lot']
 
-    var selectedVotes = object.state.selectedVotes;
+  var selectedVotes = object.state.selectedVotes;
 
-    if (bigFive.includes(name)) {
-      if (object.state.selectedBigFive === '') { // if there is no selected big five
+  if (bigFive.includes(name)) {
+    if (object.state.selectedBigFive === '') { // if there is no selected big five
 
-        object.setState({ selectedBigFive: name })
+      object.setState({ selectedBigFive: name })
 
-        var newVote = new FormData();
-        var commentRoot = object.props.commentRoot;
+      var newVote = new FormData();
+      var commentRoot = object.props.commentRoot;
 
-        newVote.append("vote[comment_id]", object.props.commentId)
-        newVote.append("vote[user_id]", commentRoot.getAttribute('data-user-id'))
-        newVote.append("vote[vote_type]", name)
+      newVote.append("vote[comment_id]", object.props.commentId)
+      newVote.append("vote[user_id]", commentRoot.getAttribute('data-user-id'))
+      newVote.append("vote[vote_type]", name)
 
-        object.handlePost(newVote)
+      object.handlePost(newVote)
 
-      } else if (object.state.selectedBigFive != name) { // if there is a different selected big five
+    } else if (object.state.selectedBigFive != name) { // if there is a different selected big five
 
-        var vote = new FormData();
-        vote.append("vote[vote_type]", name)
+      var vote = new FormData();
+      vote.append("vote[vote_type]", name)
 
-        var voteId = object.state.selectedVotes[object.state.selectedBigFive]
-        var updateVotes = object.state.selectedVotes
-        updateVotes[object.state.selectedBigFive] = null
+      var voteId = object.state.selectedVotes[object.state.selectedBigFive]
+      var updateVotes = object.state.selectedVotes
+      updateVotes[object.state.selectedBigFive] = null
+      updateVotes[name] = voteId
 
-        object.setState({
-          selectedVotes: updateVotes,
-          selectedBigFive: name
-        })
-        object.handleUpdate(vote, voteId)
+      object.setState({
+        selectedVotes: updateVotes,
+        selectedBigFive: name
+      })
+      object.handleUpdate(vote, voteId)
 
-      } else { // if user clicks on same big five
+    } else { // if user clicks on same big five
 
-        var voteId = object.state.selectedVotes[object.state.selectedBigFive]
-        var updateVotes = object.state.selectedVotes
-        updateVotes[object.state.selectedBigFive] = null
+      var voteId = object.state.selectedVotes[object.state.selectedBigFive]
+      var updateVotes = object.state.selectedVotes
+      updateVotes[object.state.selectedBigFive] = null
 
-        object.setState({
-          selectedVotes: updateVotes,
-          selectedBigFive: ''
-        })
+      object.setState({
+        selectedVotes: updateVotes,
+        selectedBigFive: ''
+      })
 
-        object.handleDestroy(voteId)
-      }
-    } else {
-      if (!object.state.selectedVotes[name]) { // user clicks on non big five and is previously unselected
+      object.handleDestroy(voteId)
+    }
+  } else {
+    if (!object.state.selectedVotes[name]) { // user clicks on non big five and is previously unselected
 
-        var newVote = new FormData();
-        var commentRoot = object.props.commentRoot;
+      var newVote = new FormData();
+      var commentRoot = object.props.commentRoot;
 
-        newVote.append("vote[comment_id]", object.props.commentId)
-        newVote.append("vote[user_id]", commentRoot.getAttribute('data-user-id'))
-        newVote.append("vote[vote_type]", name)
+      newVote.append("vote[comment_id]", object.props.commentId)
+      newVote.append("vote[user_id]", commentRoot.getAttribute('data-user-id'))
+      newVote.append("vote[vote_type]", name)
 
-        object.handlePost(newVote)
+      object.handlePost(newVote)
 
-      } else { // user clicks on non big five and is previously selected
+    } else { // user clicks on non big five and is previously selected
 
-        var voteId = object.state.selectedVotes[name]
-        var updateVotes = object.state.selectedVotes
-        updateVotes[name] = null
-        
-        object.setState({ selectedVotes: updateVotes })
-        object.handleDestroy(voteId)
+      var voteId = object.state.selectedVotes[name]
+      var updateVotes = object.state.selectedVotes
+      updateVotes[name] = null
+
+      object.setState({ selectedVotes: updateVotes })
+      object.handleDestroy(voteId)
+    }
+  }
+}
+
+export const ImageSelector = (type, state) => {
+  if (type === "blank1" || type === 'blank2') {
+    return ''
+  } else {
+    return `/assets/${type}.${state}.png`
+  }
+}
+
+export const AlwaysVisible = [
+  "like",
+  "indifferent",
+  "dislike"
+]
+
+export const RowOneVoteTypes = [
+  ["top", "Top"],
+  ["love", "Love"],
+  ["like_a_lot", "Like A Lot"],
+  ["like", "Like"],
+  ["indifferent", "Indifferent"],
+  ["dislike", "Dislike"],
+  ["dislike_a_lot", "Dislike A Lot"],
+  ["trash", "Trash"],
+  ["warn", "Warn"]
+]
+
+export const RowTwoVoteTypes = [
+  ["blank1", "blank1"],
+  ["smart", "Smart"],
+  ["funny", "Funny"],
+  ["happy", "Happy"],
+  ["shocked", "Shocked"],
+  ["sad", "Sad"],
+  ["boring", "Boring"],
+  ["angry", "Angry"],
+  ["blank2", "blank2"]
+]
+
+export const RowOneVoteButtons = (object) => {
+  return RowOneVoteTypes.map((type) => {
+    var visibility, image, percentage;
+    var { userVoted, percentShow, votePercents, selectedVotes } = object.state
+
+    if ( userVoted && percentShow ) {
+      percentage = `%${votePercents[type[0]]}`
+    }
+
+    if (!userVoted) {
+      if (!AlwaysVisible.includes(type[0])) {
+        visibility = 'visibility-hidden'
       }
     }
 
+    if (selectedVotes[type[0]]) {
+      image = ImageSelector(type[0], 'Selected')
+    } else {
+      image = ImageSelector(type[0], 'Unselected')
+    }
+
+    return(
+      <VoteButton
+        key={`${object.props.commentId}_${type[0]}`}
+        name={type[0]}
+        label={type[1]}
+        onClick={object.handleClickVote}
+        visibility={visibility}
+        percentage={percentage}
+        image={image}
+        />
+    )
+  })
+}
+
+export const RowTwoVoteButtons = (object) => {
+  return RowTwoVoteTypes.map((type) => {
+    var visibility, image, percentage;
+    var { userVoted, percentShow, votePercents, selectedVotes } = object.state
+
+    if ( // show percentage if user has voted and div is not blank
+      userVoted &&
+      type[0] != "blank1" &&
+      type[0] != "blank2" &&
+      percentShow
+    ) {
+      percentage = `%${votePercents[type[0]]}`
+    }
+
+    if ( // hide all but big three if user has not voted
+      !userVoted ||
+      type[0].includes('blank')
+    ) {
+      visibility = 'visibility-hidden'
+    }
+
+    // select image for button based on type
+    if (selectedVotes[type[0]]) {
+      image = ImageSelector(type[0], 'Selected')
+    } else {
+      image = ImageSelector(type[0], 'Unselected')
+    }
+
+    return(
+      <VoteButton
+        key={`${object.props.commentId}_${type[0]}`}
+        name={type[0]}
+        label={type[1]}
+        onClick={object.handleClickVote}
+        visibility={visibility}
+        percentage={percentage}
+        image={image}
+        />
+    )
+  })
 }
 
 export default {
-  VoteClick
+  VoteClick,
+  ImageSelector,
+  RowOneVoteTypes,
+  RowTwoVoteTypes,
+  AlwaysVisible,
+  RowOneVoteButtons,
+  RowTwoVoteButtons
 }

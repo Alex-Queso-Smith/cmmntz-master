@@ -18,7 +18,7 @@ const UserEditForm = props => {
         <Input
           name="userName"
           label="User Name"
-          handleChange={props.handleChange}
+          onChange={props.onChange}
           content={props.userName}
           type="text"
           addClass={userNameClass}
@@ -27,7 +27,7 @@ const UserEditForm = props => {
         <Input
           name="email"
           label="Email"
-          handleChange={props.handleChange}
+          onChange={props.onChange}
           content={props.email}
           type="text"
           addClass={emailClass}
@@ -39,7 +39,7 @@ const UserEditForm = props => {
         <AgeRangeSelector
           name="ageRange"
           label="Age Range"
-          handleChange={ props.handleChange}
+          onChange={props.onChange}
           content={props.ageRange}
           type="text"
         />
@@ -47,21 +47,21 @@ const UserEditForm = props => {
         <GenderSelector
           name="gender"
           label="Gender"
-          handleChange={props.handleChange}
+          onChange={props.onChange}
           content={props.gender}
         />
         <hr />
         <Input
           name="latitude"
           label="Latitude"
-          handleChange={props.handleChange}
+          onChange={props.onChange}
           content={props.latitude}
           type="text"
         />
         <Input
           name="longitude"
           label="Longitude"
-          handleChange={props.handleChange}
+          onChange={props.onChange}
           content={props.longitude}
           type="text"
         />

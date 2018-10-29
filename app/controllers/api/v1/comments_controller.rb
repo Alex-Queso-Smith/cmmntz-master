@@ -6,8 +6,9 @@ class Api::V1::CommentsController < ApiController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.for_art_type_and_id(params[:art_type], params[:art_id]).includes(:user)
+    @comments = CommentVoteTabulation.filter_and_sort(params[:art_id], params[:art_type], {}, 1)
     @current_users_votes = Vote.for_user_and_comment(current_user.id, @comments.map(&:id))
+    @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comments.map(&:id))
   end
 
   # POST /comments
@@ -26,7 +27,11 @@ class Api::V1::CommentsController < ApiController
   # PATCH/PUT /comments/1.json
   def update
     if @comment.update(comment_params)
-      redirect_to api_v1_comments_path(art_type: comment_params[:art_type], art_id: comment_params[:art_id] )
+      @comment = CommentVoteTabulation.find(@comment.id)
+      @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
+      @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
+
+      render "api/v1/comments/show"
     else
       render json: { errors: @comment.errors, status: :unprocessable_entity}
     end
@@ -46,6 +51,6 @@ class Api::V1::CommentsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:user_id, :art_id, :art_type, :text, :anonymous)
+      params.require(:comment).permit(:user_id, :art_id, :art_type, :text, :anonymous, :vote_types)
     end
 end

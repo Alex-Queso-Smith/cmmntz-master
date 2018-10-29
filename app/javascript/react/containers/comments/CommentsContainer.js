@@ -2,8 +2,8 @@ import React from 'react';
 
 import CommentsFormContainer from './CommentsFormContainer';
 import CommentsList from './CommentsList';
-import { FetchDidMount, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
-
+import CommentFilters from './CommentFilters';
+import { FetchDidMount, SetStateWithValidation, FetchWithUpdate, FetchBasic } from '../../util/CoreUtil';
 
 class CommentsContainer extends React.Component {
   state = {
@@ -11,10 +11,12 @@ class CommentsContainer extends React.Component {
     comments: [],
     userId: '',
     artId: '',
-    artType: ''
+    artType: '',
+    commentFormErrors: []
   }
 
-  handleSubmit = this.handleSubmit.bind(this);
+  handleFormSubmit = this.handleFormSubmit.bind(this);
+  handleFilterSubmit = this.handleFilterSubmit.bind(this);
 
   componentDidMount(){
     var commentRoot = this.props.commentRoot
@@ -31,7 +33,7 @@ class CommentsContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleSubmit(event, text, anonymous, formInvalid){
+  handleFormSubmit(event, text, anonymous, formInvalid, selfVotes = []){
     event.preventDefault();
     if (!formInvalid) {
       var newComment = new FormData();
@@ -41,15 +43,16 @@ class CommentsContainer extends React.Component {
       newComment.append("comment[art_id]", commentRoot.getAttribute('data-art-id'))
       newComment.append("comment[text]", text)
       newComment.append("comment[anonymous]", anonymous)
+      newComment.append("comment[vote_types]", selfVotes.join(','))
 
       var commentRoot = this.props.commentRoot
       var artType = commentRoot.getAttribute('data-art-type')
       var artId = commentRoot.getAttribute('data-art-id')
 
-      FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', 'commentFormErrors', newComment )
+      FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
       .then(body => {
         if (body.errors) {
-          this.setState({ [errors]: body.errors})
+          this.setState({ commentFormErrors: body.errors})
         } else {
           var x = this.state.totalComments + 1
           this.setState({
@@ -62,10 +65,30 @@ class CommentsContainer extends React.Component {
     }
   }
 
+  handleFilterSubmit(event, sortDir, sortType, filterList, page){
+    var search = new FormData();
+    var commentRoot = this.props.commentRoot
+    search.append("art_type", commentRoot.getAttribute('data-art-type'))
+    search.append("art_id", commentRoot.getAttribute('data-art-id'))
+    search.append("page", page);
+    search.append("search[sort_dir]", sortDir);
+    search.append("search[sort_type]", sortType);
+    search.append("search[filter_list]", filterList.join());
+
+    FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
+    .then(body => {
+      this.setState({
+        comments: body.comments,
+        totalComments: body.total_comments
+      })
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
   render(){
 
     var { commentRoot } = this.props;
-    var { totalComments, comments } = this.state;
+    var { totalComments, comments, commentFormErrors} = this.state;
 
     return(
       <div>
@@ -74,12 +97,19 @@ class CommentsContainer extends React.Component {
         </div>
         <CommentsFormContainer
           commentRoot={commentRoot}
-          handleSubmit={this.handleSubmit}
+          handleSubmit={this.handleFormSubmit}
+          commentFormErrors={commentFormErrors}
+        />
+        <hr />
+        <CommentFilters
+          commentRoot={commentRoot}
+          handleSubmit={this.handleFilterSubmit}
         />
         <hr />
         <CommentsList
           allComments={comments}
           commentRoot={commentRoot}
+          handleDelayClick={this.handleDelayClick}
         />
       </div>
     )

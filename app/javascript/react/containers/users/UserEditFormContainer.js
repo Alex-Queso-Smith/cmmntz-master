@@ -38,6 +38,7 @@ class UserEditFormContainer extends React.Component {
   }
 
   handleChange(event){
+    event.preventDefault();
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;

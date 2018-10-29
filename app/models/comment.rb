@@ -1,22 +1,22 @@
 include ActionView::Helpers::SanitizeHelper
-
 class Comment < ApplicationRecord
+  attr_accessor :vote_types
+
   belongs_to :user
   has_many :votes
   has_many :comment_interactions
 
-  before_validation :sanitize_text_and_title
+  before_validation :sanitize_text
 
-  validates :user_id, :art_id, :art_type, :text, presence: true
+  validates :user_id, :text, presence: true
 
-  validates :title, length: { in: 1..32 }, if: Proc.new {|c| !c.title.nil?}
   validates :text, length: { in: 1..3000 }
-  validate :text_does_not_have_html, :title_does_not_have_html
+  validate :text_does_not_have_html
 
-  ### Scopes
-  scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
+  after_create_commit :parse_and_create_votes
 
   private
+
 
   ### Custom Validations be here
 
@@ -25,15 +25,25 @@ class Comment < ApplicationRecord
     errors[:text] << "HTML is not allowed in text" if strip_tags(text_hold) != text
   end
 
-  def title_does_not_have_html
-    title_hold = title
-    errors[:text] << "HTML is not allowed in text" if strip_tags(title_hold) != title
-  end
-
   ### before_validations actions
 
-  def sanitize_text_and_title
+  def sanitize_text
     self.text = sanitize(text, tags: []) unless text.blank?
-    self.title = sanitize(title, tags: []) unless title.blank?
+  end
+
+  ### Postprocessors
+
+  def parse_and_create_votes
+    return if vote_types.blank?
+    vote_list = []
+    vote_types.split(',').each do |vote|
+      v = self.votes.build(user_id: user_id, vote_type: vote)
+      vote_list << v if v.valid?
+    end
+    
+    if vote_list.any?
+      Vote.import vote_list
+      self.comment_interactions.create!(user_id: user_id)
+    end
   end
 end

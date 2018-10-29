@@ -1,11 +1,14 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# set the number of rando-users we want in this pass
+num_users = 100
 
+# set the number of articles we want in this pass
+num_articles = 1
+time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+puts "Starting process at #{Time.now}"
+
+# generate staff accounts
+puts "generating staff accounts"
 jesse = User.create(
   user_name: "Jesse",
   email: "J@gmail.com",
@@ -34,16 +37,11 @@ aj = User.create(
   password_confirmation: "password"
 )
 
-article_one = Article.create(
-  title: "Demo Article",
-  text: "Lorem ipsum dolor sit amet, ius dicat sanctus saperet ei. Disputando instructior mediocritatem an vim. Dictas nusquam fastidii ius ea, ne duo ocurreret adipiscing constituam, vis at modus summo. Est ne perfecto appellantur ullamcorper, liber saepe noluisse mei an. Commune vivendum usu et. No sit dico tota.",
-)
-
+# generate random users
+puts "generating #{num_users} users"
 x = 1
-
 users = []
-
-while x <= 100 do
+while x <= num_users do
   users << User.new(
     user_name: "User#{x}",
     password: "password",
@@ -55,42 +53,63 @@ while x <= 100 do
   x += 1
 end
 User.import users, validate: false
-
 users = User.all
 
-time = Time.now
-anonymous = [false, true]
-
-500.times do
-  comment = Comment.create(
-    user: users.sample,
-    art_id: article_one.id,
-    art_type: "article",
-    text: "Lorem ipsum dolor sit amet,
-    ius dicat sanctus saperet ei. Disputando
-    instructior mediocritatem an vim.
-    Dictas nusquam fastidii ius ea, ne duo ocurreret adipiscing constituam,
-    vis at modus summo. Est ne perfecto appellantur ullamcorper,
-    liber saepe noluisse mei an. Commune vivendum usu et. No sit dico tota.",
+# generate desired number of articles
+puts "generating #{num_articles} articles"
+iter = 1
+num_articles.times do
+  puts "article #{iter}"
+  time = Time.now - rand(150000..10000000)
+  article_one = Article.create(
+    title: "Demo Article #{iter}",
+    text: RANDOM_TEXT.sample,
     created_at: time,
-    anonymous: anonymous.sample
+    updated_at: time
   )
 
-  rand(20).times do
-    # seed some Votes
-    u = (users - [comment.user]).sample
-    Vote.create(
-      user: u,
-      comment: comment,
-      vote_type: Vote::EXCLUSIVE_VOTES.sample
+  time += rand(100..1000)
+
+  # generate a random number of comments
+  num_comments = rand(30..600)
+  puts "generating #{num_comments} comments"
+  num_comments.times do
+    comment = Comment.create(
+      user: users.sample,
+      art_id: article_one.id,
+      art_type: "article",
+      text: RANDOM_TEXT.sample,
+      created_at: time,
+      updated_at: time,
+      anonymous: [false, true].sample
     )
-    rand(3).times do
+
+    # generate a random number of votes
+    num_votes = rand(50)
+    puts "generating #{num_votes} votes"
+    num_votes.times do
+      # seed some Votes
+      u = (users - [comment.user]).sample
       Vote.create(
         user: u,
         comment: comment,
-        vote_type: (Vote::TYPES - Vote::EXCLUSIVE_VOTES).sample
+        vote_type: Vote::EXCLUSIVE_VOTES.sample
       )
+      rand(3).times do
+        Vote.create(
+          user: u,
+          comment: comment,
+          vote_type: (Vote::TYPES - Vote::EXCLUSIVE_VOTES).sample
+        )
+      end
     end
+    time += rand(5).minutes
+
+    iter+=1
   end
-  time += 1.minute
 end
+time_end = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+puts "Finishing process at #{Time.now}"
+
+elapsed_time = (time_end - time_start)/60
+puts "Total Time: #{elapsed_time} minutes"
