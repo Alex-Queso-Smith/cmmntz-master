@@ -24,12 +24,26 @@ class CommentsContainer extends React.Component {
   handleFormSubmit = this.handleFormSubmit.bind(this);
   handleFilterSubmit = this.handleFilterSubmit.bind(this);
   handleTopChange = this.handleTopChange.bind(this);
+  handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
 
   handleChange = this.handleChange.bind(this);
   handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
   handleSortDirClick = this.handleSortDirClick.bind(this);
   handleFilterClick = this.handleFilterClick.bind(this);
   submitterMan = this.submitterMan.bind(this);
+
+  handleLoadMoreClick(event){
+    var opts = this.state.sortOpts
+    opts.page += 1
+
+    this.setState({
+      sortOpts: opts
+    })
+
+    setTimeout(function() { //Start the timer
+      this.handleFilterSubmit();
+    }.bind(this), 1)
+  }
 
   handleTopChange(oldTopCommentId){
     setTimeout(function() { //Start the timer
@@ -87,9 +101,17 @@ class CommentsContainer extends React.Component {
         if (body.errors) {
           this.setState({ commentFormErrors: body.errors})
         } else {
-          var x = this.state.totalComments + 1
+
+          var append = this.state.sortOpts.page > 1
+          var newComments;
+          if (append) {
+            newComments = this.state.comments.concat(body.comments)
+          } else {
+            newComments = body.comments
+          }
+
           this.setState({
-            comments: body.comments,
+            comments: newComments,
             totalComments: x
           })
         }
@@ -111,8 +133,16 @@ class CommentsContainer extends React.Component {
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
     .then(body => {
+      var append = this.state.sortOpts.page > 1
+      var newComments;
+      if (append) {
+        newComments = this.state.comments.concat(body.comments)
+      } else {
+        newComments = body.comments
+      }
+
       this.setState({
-        comments: body.comments,
+        comments: newComments,
         totalComments: body.total_comments
       })
     })
@@ -183,6 +213,7 @@ class CommentsContainer extends React.Component {
     }
     var opts = this.state.sortOpts
     opts.filterList = updatedFilters
+    opts.page = 1
 
     this.setState({
       sortOpts: opts
@@ -221,7 +252,7 @@ class CommentsContainer extends React.Component {
           handleTopChange={this.handleTopChange}
         />
 
-        <button>Load More</button>
+      <button onClick={this.handleLoadMoreClick}>Load More</button>
       </div>
     )
   }
