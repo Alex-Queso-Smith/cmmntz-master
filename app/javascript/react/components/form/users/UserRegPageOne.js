@@ -2,7 +2,6 @@ import React from 'react';
 
 import Input from '../Input';
 import { ErrorClassValidation } from '../../../util/CoreUtil';
-import AgeSlider from '../AgeSlider';
 
 const UserRegPageOne = props => {
 
@@ -15,10 +14,7 @@ const UserRegPageOne = props => {
 
   return(
     <div id="reg-required" className="form-group">
-      <h3 className="text-center">Sign-Up Required Information </h3>
-      <AgeSlider
-
-        />
+      <h3 className="text-center">Sign-Up Required Information</h3>
       <Input
         name="userName"
         label="User Name"

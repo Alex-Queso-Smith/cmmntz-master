@@ -17,13 +17,13 @@ class CommentsList extends React.Component {
       commentsArray = allComments.map((comment) => {
         var { user_name, gender, age_range, user_id} = comment.user
         var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted } = comment
-        var userInfo, commentLength;
+        var userName, commentLength;
         var lengthImage = CommentLengthSorter(text)
 
         if (user_name == '') {
-          userInfo = "Anonymous"
+          userName = "Anonymous"
         } else {
-          userInfo = `${user_name} - ${gender} - ${age_range}`
+          userName = `${user_name}`
         }
 
         return(
@@ -32,7 +32,8 @@ class CommentsList extends React.Component {
               edited={edited}
               commentUserId={user_id}
               commentId={id}
-              userInfo={userInfo}
+              userName={userName}
+              userInfo={comment.user}
               createdAt={created_at}
               lengthImage={lengthImage}
               text={text}

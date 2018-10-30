@@ -18,7 +18,8 @@ class Comment extends React.Component {
         replies: this.props.replies,
         replyText: '',
         replyErrors: {},
-        showReplies: false
+        showReplies: false,
+        userTileHover: false
       }
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -28,6 +29,11 @@ class Comment extends React.Component {
     this.handleReplyClick = this.handleReplyClick.bind(this);
     this.handleCancelReply = this.handleCancelReply.bind(this);
     this.handleShowReplyToggle = this.handleShowReplyToggle.bind(this);
+    this.onUserHover = this.onUserHover.bind(this);
+  }
+
+  onUserHover(){
+    this.setState({ userTileHover: !this.state.userTileHover })
   }
 
   handleShowReplyToggle(){
@@ -113,9 +119,9 @@ class Comment extends React.Component {
   }
 
   render(){
-    var { userInfo, createdAt, lengthImage, currentUserId, commentUserId, artId } = this.props
+    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, userInfo } = this.props
     var { replies, edit, edited, text, reply, replyText, showReplies } = this.state
-    var textBox, editButton, cancelButton, lastEdited, commentReplies, replyField, replyButton, cancelReplyButton;
+    var textBox, editButton, cancelButton, lastEdited, commentReplies, replyField, replyButton, cancelReplyButton, userTile;
 
     if (reply) {
       replyField =
@@ -202,19 +208,42 @@ class Comment extends React.Component {
       textBox = text
     }
 
+    if (!this.state.userTileHover) {
+      userTile =
+      <div className="cf-comment-user-meta" onMouseEnter={this.onUserHover} onMouseLeave={this.onUserHover}>
+        <div className="cf-comment-user-avatar">
+          <span className="avatar-helper"></span>
+          <span className="avatar-image">[avatar here]</span>
+        </div>
+        <div className="cf-comment-user-name" >
+          {userName}
+        </div>
+      </div>
+    } else {
+      userTile =
+      <div className="cf-comment-user-meta" onMouseEnter={this.onUserHover} onMouseLeave={this.onUserHover}>
+        <div className="cf-comment-user-avatar">
+          <span className="avatar-helper"></span>
+        </div>
+        <div className="cf-comment-user-data" >
+          <div>
+            {`${userInfo.user_name}`}
+          </div>
+          <div>
+            {`${userInfo.gender}`}
+          </div>
+          <div>
+            {`${userInfo.age_range}`}
+          </div>
+        </div>
+      </div>
+    }
+
     return(
       <div className="cf-comment">
         <div className="cf-comment-wrapper">
 
-          <div className="cf-comment-user-meta">
-            <div className="cf-comment-user-avatar">
-              <span className="avatar-helper"></span>
-              <span className="avatar-image">[avatar here]</span>
-            </div>
-            <div className="cf-comment-user-name" >
-              {userInfo}
-            </div>
-          </div>
+          {userTile}
 
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta">
