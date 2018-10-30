@@ -1,6 +1,4 @@
-// Place all the styles related to the comments controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$grayline: #D3D3D3;
 
 .cf-comment {
 
@@ -21,7 +19,7 @@
         top: 0;
         left: 0;
 
-        border: 1px solid #D3D3D3;
+        border: 1px solid $grayline;
         border-radius: 50%;
         height: 90%;
         width: 100%;
@@ -67,7 +65,7 @@
       }
 
       .cf-comment-text {
-        border: 1px solid #D3D3D3;
+        border: 1px solid $grayline;
         border-radius: 10px;
         min-height: 35px;
         padding: 15px;
@@ -79,9 +77,10 @@
 }
 
 .cf-comment-replies-wrapper {
-  margin-left: 15px;
+  margin-left: 20px;
 
-  .cf-comment-replies-wrapper {
-    margin-left: 15px;
+  .cf-comment-replies {
+    border-left: 1px solid $grayline;
+    padding: 20px;
   }
 }
