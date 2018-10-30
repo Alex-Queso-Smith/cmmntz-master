@@ -1,7 +1,7 @@
 json.id comment.id
 json.text comment.text
-json.created_at display_date(comment.created_at)
-json.edit_date display_date(last_edit_date(comment))
+json.created_at display_time_ago(comment.created_at)
+json.edited has_been_edited(comment)
 json.user do
   json.user_id comment.user.id
   json.user_name comment_user_user_name(comment)

@@ -16,7 +16,7 @@ class CommentsList extends React.Component {
     if (allComments) {
       commentsArray = allComments.map((comment) => {
         var { user_name, gender, age_range, user_id} = comment.user
-        var { id, text, created_at, edit_date, replies, vote_percents, current_users_votes, user_has_voted } = comment
+        var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted } = comment
         var userInfo, commentLength;
         var lengthImage = CommentLengthSorter(text)
 
@@ -29,7 +29,7 @@ class CommentsList extends React.Component {
         return(
           <div className="cf-comment-div" key={id}>
             <Comment
-              editDate={edit_date}
+              edited={edited}
               commentUserId={user_id}
               commentId={id}
               userInfo={userInfo}

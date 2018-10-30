@@ -14,7 +14,7 @@ class Comment extends React.Component {
         replyAnonymous: false,
         updateId: null,
         text: this.props.text,
-        edited: this.props.editDate,
+        edited: this.props.edited,
         replies: this.props.replies,
         replyText: '',
         replyErrors: {}
@@ -56,7 +56,7 @@ class Comment extends React.Component {
       this.setState({
         edit: false,
         text: resp.comment.text,
-        edited: resp.comment.edit_date
+        edited: resp.comment.edited
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -160,7 +160,7 @@ class Comment extends React.Component {
     if (edited) {
       lastEdited =
       <div className="cf-comment-edit">
-        Last Edited: {edited}
+        Comment has been Edited
       </div>
     }
 
