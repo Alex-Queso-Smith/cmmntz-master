@@ -204,31 +204,40 @@ class Comment extends React.Component {
 
     return(
       <div className="cf-comment">
-        <div className="cf-comment-user-meta">
-          <div className="cf-comment-user" >
-            {userInfo}
+        <div className="cf-comment-wrapper">
+
+          <div className="cf-comment-user-meta">
+            <div className="cf-comment-user-avatar">
+            </div>
+            <div className="cf-comment-user-name" >
+              {userInfo}
+            </div>
+          </div>
+
+          <div className="cf-comment-w-meta">
+            <div className="cf-comment-comment-meta">
+              <div className="cf-comment-length">
+                Comment Length:
+                <img src={lengthImage} height="20px" width="20px"/>
+              </div>
+              <div className="cf-comment-at" >
+                Posted: {createdAt}
+              </div>
+            </div>
+
+            <div className="cf-comment-text" >
+              {textBox}
+            </div>
+            {lastEdited}
+            <div>
+              {editButton}
+              {cancelButton}
+            </div>
           </div>
         </div>
-
-        <div className="cf-comment-comment-meta">
-          <div className="cf-comment-at" >
-            Posted: {createdAt}
-          </div>
-          {lastEdited}
-          <div className="cf-comment-length">
-            Comment Length:
-            <img src={lengthImage} height="20px" width="20px"/>
-          </div>
+        <div className="cf-comment-voting">
+          Voting to move here
         </div>
-
-        <div className="cf-comment-text" >
-          {textBox}
-        </div>
-        <div>
-          {editButton}
-          {cancelButton}
-        </div>
-
         {commentRepliesWrapper}
 
         <div className="cf-comment-reply-field  margin-top-10px">

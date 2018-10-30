@@ -2,15 +2,52 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.cf-comment {}
+.cf-comment {
 
-.cf-comment .cf-comment-text {
-  border: 2px solid black;
-  border-radius: 25px;
-  min-height: 20px;
-  padding:
+  .cf-comment-wrapper {
+    border-bottom: 1px solid #D3D3D3;
+    position: relative;
+    width: 100%;
+    min-height: 150px;
+
+
+    .cf-comment-user-meta {
+      width: 15%;
+      min-height: 200px;
+      float: left;
+    }
+
+    .cf-comment-w-meta {
+      width: 85%;
+      min-height: 200px;
+      margin-left: 15%;
+
+      .cf-comment-comment-meta {
+        height: 15px;
+      }
+      .cf-comment-comment-meta .cf-comment-at {
+        float: right;
+      }
+      .cf-comment-comment-meta .cf-comment-length {
+        float: left;
+      }
+
+      .cf-comment-text {
+        border: 1px solid #D3D3D3;
+        border-radius: 10px;
+        min-height: 35px;
+        padding: 15px;
+        margin: 10px 0 10px 0,
+      }
+    }
+    .cf-comment-voting {}
+  }
 }
 
-.cf-comment-replies {
-  margin-left: 20px;
+.cf-comment-replies-wrapper {
+  margin-left: 15px;
+
+  .cf-comment-replies-wrapper {
+    margin-left: 15px;
+  }
 }
