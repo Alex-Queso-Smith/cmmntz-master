@@ -18,7 +18,7 @@ class Comment extends React.Component {
         replies: this.props.replies,
         replyText: '',
         replyErrors: {},
-        showReplies: true
+        showReplies: false
       }
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -208,6 +208,8 @@ class Comment extends React.Component {
 
           <div className="cf-comment-user-meta">
             <div className="cf-comment-user-avatar">
+              <span className="avatar-helper"></span>
+              <span className="avatar-image">[avatar here]</span>
             </div>
             <div className="cf-comment-user-name" >
               {userInfo}
@@ -221,7 +223,7 @@ class Comment extends React.Component {
                 <img src={lengthImage} height="20px" width="20px"/>
               </div>
               <div className="cf-comment-at" >
-                Posted: {createdAt}
+                {createdAt}
               </div>
             </div>
 

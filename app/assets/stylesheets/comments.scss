@@ -5,22 +5,56 @@
 .cf-comment {
 
   .cf-comment-wrapper {
-    border-bottom: 1px solid #D3D3D3;
     position: relative;
     width: 100%;
     min-height: 150px;
 
 
     .cf-comment-user-meta {
+      position: relative;
       width: 15%;
       min-height: 200px;
       float: left;
+
+      .cf-comment-user-avatar {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        border: 1px solid #D3D3D3;
+        border-radius: 50%;
+        height: 90%;
+        width: 100%;
+        white-space: nowrap;
+        text-align: center; margin: 1em 0;
+
+        .avatar-helper {
+          display: inline-block;
+          height: 100%;
+          vertical-align: middle;
+        }
+
+        .avatar-image {
+          height: 100%;
+          width: 100%;
+          border-radius: 50%;
+          vertical-align: middle;
+        }
+      }
+      .cf-comment-user-name {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 10%;
+        width: 100%;
+        text-align: center; margin: 1em 0;
+      }
     }
 
     .cf-comment-w-meta {
-      width: 85%;
+      width: 83%;
       min-height: 200px;
-      margin-left: 15%;
+      margin-left: 17%;
 
       .cf-comment-comment-meta {
         height: 15px;

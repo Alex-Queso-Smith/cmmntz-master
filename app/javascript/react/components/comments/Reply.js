@@ -14,16 +14,18 @@ const Reply = props => {
       <div className="cf-comment-wrapper">
         <div className="cf-comment-user-meta">
           <div className="cf-comment-user-avatar">
+            <span className="avatar-helper"></span>
+            <span className="avatar-image">[avatar here]</span>
           </div>
           <div className="cf-comment-user-name">
-            User: {userInfo}
+            {userInfo}
           </div>
         </div>
 
         <div className="cf-comment-w-meta">
           <div className="cf-comment-comment-meta">
             <div className="cf-comment-at" >
-              Posted: {props.posted}
+              {props.posted}
             </div>
           </div>
           <div className="cf-comment-text" >
