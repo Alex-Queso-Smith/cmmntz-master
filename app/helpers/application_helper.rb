@@ -44,7 +44,7 @@ module ApplicationHelper
 
   def has_been_edited object
     return false unless object.respond_to?(:updated_at) && object.respond_to?(:created_at)
-    object.created_at != object.updated_at ? true : false
+    object.created_at != object.updated_at
   end
 
 end

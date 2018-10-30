@@ -17,7 +17,8 @@ class Comment extends React.Component {
         edited: this.props.edited,
         replies: this.props.replies,
         replyText: '',
-        replyErrors: {}
+        replyErrors: {},
+        showReplies: false
       }
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,6 +27,13 @@ class Comment extends React.Component {
     this.handleReplySubmit = this.handleReplySubmit.bind(this);
     this.handleReplyClick = this.handleReplyClick.bind(this);
     this.handleCancelReply = this.handleCancelReply.bind(this);
+    this.handleShowReplyToggle = this.handleShowReplyToggle.bind(this);
+  }
+
+  handleShowReplyToggle(){
+    this.setState({
+      showReplies: !this.state.showReplies
+    })
   }
 
   handleEditClick(){
@@ -106,7 +114,7 @@ class Comment extends React.Component {
 
   render(){
     var { userInfo, createdAt, lengthImage, currentUserId, commentUserId, artId } = this.props
-    var { replies, edit, edited, text, reply, replyText } = this.state
+    var { replies, edit, edited, text, reply, replyText, showReplies } = this.state
     var textBox, editButton, cancelButton, lastEdited, commentReplies, replyField, replyButton, cancelReplyButton;
 
     if (reply) {
@@ -137,7 +145,8 @@ class Comment extends React.Component {
       <button onClick={this.handleReplyClick}>Reply</button>
     }
 
-    if (replies) {
+    if (replies && showReplies) {
+
       commentReplies = replies.map((reply) => {
         return(
           <Reply
@@ -148,6 +157,22 @@ class Comment extends React.Component {
           />
         )
       })
+    }
+
+    var commentRepliesWrapper;
+    if (replies.length > 0){ // will alway show without the explicit len check
+      var buttonText = showReplies ? "Hide" : "Show"
+      commentRepliesWrapper =
+      <div className="cf-comment-replies-wrapper">
+        <span className="cf-replies-count">
+          There are {replies.length} replies to this comment
+        </span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button onClick={this.handleShowReplyToggle}>{buttonText}</button>
+        <div className="cf-comment-replies">
+          {commentReplies}
+        </div>
+      </div>
     }
 
     if (edit && currentUserId === commentUserId) {
@@ -206,9 +231,9 @@ class Comment extends React.Component {
         <div className="cf-comment-reply-field">
           {replyField}
         </div>
-        <div className="cf-comment-replies">
-          {commentReplies}
-        </div>
+
+        {commentRepliesWrapper}
+
       </div>
     )
   }

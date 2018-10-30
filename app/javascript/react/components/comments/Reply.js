@@ -18,7 +18,7 @@ const Reply = props => {
         Posted: {props.posted}
       </div>
       <div>
-        Reply: {props.reply}
+        {props.reply}
       </div>
     </div>
   )
