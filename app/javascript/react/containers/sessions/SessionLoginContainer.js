@@ -77,7 +77,7 @@ class SessionLoginContainer extends React.Component {
           onChange={this.handleChange}
         />
         <div className="form-group actions margin-top-10px">
-          <button id="login-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit" disabled={this.state.formInvalid}>
+          <button id="login-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit" disabled={this.state.formInvalid}>
             <span className="text-large">Login</span>
           </button>
         </div>

@@ -120,7 +120,7 @@ class CommentsFormContainer extends React.Component {
             className="row"
           />
           <div className="form-group actions margin-top-10px row">
-            <button id="comments-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit" disabled={formInvalid}>
+            <button id="comments-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit" disabled={formInvalid}>
               <span className="text-large">Submit Comment</span>
             </button>
           </div>

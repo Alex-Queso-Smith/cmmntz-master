@@ -135,14 +135,14 @@ class Comment extends React.Component {
           />
       </div>
       replyButton =
-        <button onClick={this.handleReplySubmit}>
+        <button className="btn btn-primary btn-sm" onClick={this.handleReplySubmit}>
           Submit Reply
         </button>
       cancelReplyButton =
-      <button onClick={this.handleCancelReply}>Cancel Reply</button>
+      <button className="btn btn-light btn-sm" onClick={this.handleCancelReply}>Cancel Reply</button>
     } else {
       replyButton =
-      <button onClick={this.handleReplyClick}>Reply</button>
+      <button className="btn btn-primary btn-sm" onClick={this.handleReplyClick}>Reply</button>
     }
 
     if (replies && showReplies) {
@@ -168,7 +168,7 @@ class Comment extends React.Component {
           There are {replies.length} replies to this comment
         </span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button onClick={this.handleShowReplyToggle}>{buttonText}</button>
+        <button className="btn btn-primary btn-sm " onClick={this.handleShowReplyToggle}>{buttonText}</button>
         <div className="cf-comment-replies">
           {commentReplies}
         </div>
@@ -176,10 +176,10 @@ class Comment extends React.Component {
     }
 
     if (edit && currentUserId === commentUserId) {
-      editButton = <button onClick={this.handleEditSubmit}>Edit Comment</button>
-      cancelButton = <button onClick={this.handleCancelClick}>Cancel Edit</button>
+      editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
+      cancelButton = <button className="btn btn-light btn-sm" onClick={this.handleCancelClick}>Cancel Edit</button>
     } else if (currentUserId === commentUserId) {
-      editButton = <button onClick={this.handleEditClick}>Edit Comment</button>
+      editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditClick}>Edit Comment</button>
     }
 
     if (edited) {

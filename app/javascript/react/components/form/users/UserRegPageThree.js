@@ -12,7 +12,7 @@ const UserRegPageThree = props => {
       </div>
       <input type="hidden"/>
       <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-back-three" className="btn btn-block btn-large btn-dark" onClick={props.handleBackClick}>
+        <button id="user-registration-button-back-three" className="btn btn-block btn-large btn-primary" onClick={props.handleBackClick}>
           <span className="text-large">Back</span>
         </button>
       </div>

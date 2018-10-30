@@ -12,12 +12,38 @@ class CommentsContainer extends React.Component {
     userId: '',
     artId: '',
     artType: '',
-    commentFormErrors: []
+    commentFormErrors: [],
+    sortOpts: {
+      sortDir: 'desc',
+      sortType: 'created_at',
+      filterList: [],
+      page: 1
+    }
   }
 
   handleFormSubmit = this.handleFormSubmit.bind(this);
   handleFilterSubmit = this.handleFilterSubmit.bind(this);
   handleTopChange = this.handleTopChange.bind(this);
+  handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
+
+  handleChange = this.handleChange.bind(this);
+  handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
+  handleSortDirClick = this.handleSortDirClick.bind(this);
+  handleFilterClick = this.handleFilterClick.bind(this);
+  submitterMan = this.submitterMan.bind(this);
+
+  handleLoadMoreClick(event){
+    var opts = this.state.sortOpts
+    opts.page += 1
+
+    this.setState({
+      sortOpts: opts
+    })
+
+    setTimeout(function() { //Start the timer
+      this.handleFilterSubmit();
+    }.bind(this), 1)
+  }
 
   handleTopChange(oldTopCommentId){
     setTimeout(function() { //Start the timer
@@ -54,6 +80,7 @@ class CommentsContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  // repetetive with handleFilterSubmit
   handleFormSubmit(event, text, anonymous, formInvalid, selfVotes = []){
     event.preventDefault();
     if (!formInvalid) {
@@ -75,9 +102,17 @@ class CommentsContainer extends React.Component {
         if (body.errors) {
           this.setState({ commentFormErrors: body.errors})
         } else {
-          var x = this.state.totalComments + 1
+
+          var append = this.state.sortOpts.page > 1
+          var newComments;
+          if (append) {
+            newComments = this.state.comments.concat(body.comments)
+          } else {
+            newComments = body.comments
+          }
+
           this.setState({
-            comments: body.comments,
+            comments: newComments,
             totalComments: x
           })
         }
@@ -86,9 +121,11 @@ class CommentsContainer extends React.Component {
     }
   }
 
-  handleFilterSubmit(event, sortDir, sortType, filterList, page){
+  // repetetive with handleFormSubmit
+  handleFilterSubmit(){
     var search = new FormData();
     var commentRoot = this.props.commentRoot
+    var {sortDir, page, sortType, filterList } = this.state.sortOpts;
     search.append("art_type", commentRoot.getAttribute('data-art-type'))
     search.append("art_id", commentRoot.getAttribute('data-art-id'))
     search.append("page", page);
@@ -98,12 +135,92 @@ class CommentsContainer extends React.Component {
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
     .then(body => {
+      var append = this.state.sortOpts.page > 1
+      var newComments;
+      if (append) {
+        newComments = this.state.comments.concat(body.comments)
+      } else {
+        newComments = body.comments
+      }
+
       this.setState({
-        comments: body.comments,
+        comments: newComments,
         totalComments: body.total_comments
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  handleChange(event){
+    event.preventDefault();
+    const target = event.target;
+
+    var value;
+    if (target.type === "checkbox") {
+      value = target.checked
+    } else if (target.getAttribute('data-value')) {
+      value = target.getAttribute('data-value')
+    } else {
+      value = target.value
+    };
+
+    const name = target.name;
+    var opts = this.state.sortOpts
+    opts[name] = value
+    opts.page = 1
+
+    this.setState({
+      sortOpts: opts
+    })
+  };
+
+  handleFilterSubmitMan(event){
+    this.handleChange(event)
+
+    this.submitterMan(event)
+  }
+
+  handleSortDirClick(event){
+    event.preventDefault();
+    var value = (this.state.sortOpts.sortDir == "asc") ? "desc" : "asc"
+
+    var opts = this.state.sortOpts
+    opts.sortDir = value
+    opts.page = 1
+
+    this.setState({
+      sortOpts: opts
+    })
+
+    this.submitterMan(event)
+  }
+
+  submitterMan(event){
+    setTimeout(function() { //Start the timer
+      this.handleFilterSubmit();
+    }.bind(this), 1)
+  }
+
+  handleFilterClick(event){
+    event.preventDefault();
+    const target = event.target;
+    const name = target.getAttribute('data-value');
+
+    var updatedFilters = this.state.sortOpts.filterList
+
+    if (updatedFilters.includes(name)){
+      updatedFilters = updatedFilters.filter(v => v != name)
+    } else {
+      updatedFilters.push(name)
+    }
+    var opts = this.state.sortOpts
+    opts.filterList = updatedFilters
+    opts.page = 1
+
+    this.setState({
+      sortOpts: opts
+    })
+    this.submitterMan(event)
   }
 
   render(){
@@ -123,8 +240,11 @@ class CommentsContainer extends React.Component {
         />
         <hr />
         <CommentFilters
-          commentRoot={commentRoot}
-          handleSubmit={this.handleFilterSubmit}
+          sortOpts={this.state.sortOpts}
+          handleFilterSubmit={this.handleFilterSubmitMan}
+          handleSortDirClick={this.handleSortDirClick}
+          handleFilterClick={this.handleFilterClick}
+
         />
         <hr />
         <CommentsList
@@ -133,6 +253,8 @@ class CommentsContainer extends React.Component {
           handleDelayClick={this.handleDelayClick}
           handleTopChange={this.handleTopChange}
         />
+
+      <button className="btn btn-block btn-large btn-primary" onClick={this.handleLoadMoreClick}>Load More</button>
       </div>
     )
   }
