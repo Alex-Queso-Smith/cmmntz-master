@@ -3,6 +3,7 @@ import React from 'react';
 import Input from '../Input';
 import { ErrorClassValidation } from '../../../util/CoreUtil';
 import AgeRangeSelector from '../AgeRangeSelector';
+import AgeSlider from '../AgeSlider';
 import GenderSelector from '../GenderSelector';
 
 const UserEditForm = props => {
@@ -36,12 +37,11 @@ const UserEditForm = props => {
       </div>
       <div id="reg-optional-1" className="form-group">
         <hr />
-        <AgeRangeSelector
+        <AgeSlider
           name="ageRange"
           label="Age Range"
-          onChange={props.onChange}
-          content={props.ageRange}
-          type="text"
+          onChange={props.handleSliderChange}
+          value={props.ageRange}
         />
         <hr />
         <GenderSelector

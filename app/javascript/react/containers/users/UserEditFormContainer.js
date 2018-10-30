@@ -1,8 +1,5 @@
 import React from 'react';
 
-import Input from '../../components/form/Input';
-import GenderSelector from '../../components/form/GenderSelector';
-import AgeRangeSelector from '../../components/form/AgeRangeSelector';
 import UserEditForm from '../../components/form/users/UserEditForm';
 import { FetchWithPush, FetchDidMount, CreateErrorElements } from '../../util/CoreUtil';
 
@@ -21,6 +18,16 @@ class UserEditFormContainer extends React.Component {
 
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
+  handleSliderChange = this.handleSliderChange.bind(this);
+
+  handleSliderChange(event){
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value
+    })
+  }
 
   componentDidMount(){
     FetchDidMount(this, `/api/v1/users/${this.props.match.params.id}.json`)
@@ -78,12 +85,14 @@ class UserEditFormContainer extends React.Component {
 
         <UserEditForm
           onChange={this.handleChange}
+          handleSliderChange={this.handleSliderChange}
           userName={this.state.userName}
           password={this.state.password}
           passwordConfirmation={this.state.passwordConfirmation}
           email={this.state.email}
           handleButtonClick={this.handleNextClick}
           handleBackClick={this.handleBackClick}
+          handleChange={this.handleChange}
           emailError={emailError}
           userNameError={userNameError}
           passwordError={passwordError}
