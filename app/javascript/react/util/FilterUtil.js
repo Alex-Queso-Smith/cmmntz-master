@@ -16,7 +16,7 @@ export const SortTypes = [
 
 
 export const SortButtons = (object) => {
-  var { sortDir, sortType } = object.state
+  var { sortDir, sortType } = object.props.sortOpts
   return SortTypes.map((type) => {
     var image;
 
@@ -30,7 +30,7 @@ export const SortButtons = (object) => {
       <SortButton
         key={`sort_${type[1]}`}
         value={type[0]}
-        onClick={object.handleFilterSubmit}
+        onClick={object.props.handleFilterSubmit}
         image={image}
         visibility=''
         />
@@ -54,7 +54,7 @@ export const FilterButtonsRowOne = (object) => {
   return RowOneFilterTypes.map((type) => {
     var image;
 
-    if (object.state.filterList.includes(`${type[0]}_percent`)) {
+    if (object.props.sortOpts.filterList.includes(`${type[0]}_percent`)) {
       image = ImageSelector(type[0], 'Selected')
     } else {
       image = ImageSelector(type[0], 'Unselected')
@@ -63,7 +63,7 @@ export const FilterButtonsRowOne = (object) => {
       <SortButton
         key={`filter_${type[1]}`}
         value={`${type[0]}_percent`}
-        onClick={object.handleFilterClick}
+        onClick={object.props.handleFilterClick}
         image={image}
         visibility=''
         />
@@ -90,7 +90,7 @@ export const FilterButtonsRowTwo = (object) => {
       visibility = "visibility-hidden"
     }
 
-    if (object.state.filterList.includes(`${type[0]}_percent`)) {
+    if (object.props.sortOpts.filterList.includes(`${type[0]}_percent`)) {
       image = ImageSelector(type[0], 'Selected')
     } else {
       image = ImageSelector(type[0], 'Unselected')
@@ -100,7 +100,7 @@ export const FilterButtonsRowTwo = (object) => {
       <SortButton
         key={`filter_${type[1]}`}
         value={`${type[0]}_percent`}
-        onClick={object.handleFilterClick}
+        onClick={object.props.handleFilterClick}
         image={image}
         visibility={visibility}
         />

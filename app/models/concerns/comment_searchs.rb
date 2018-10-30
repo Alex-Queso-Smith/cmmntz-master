@@ -3,7 +3,7 @@ module CommentSearchs
 
   included do
     FILTER_PERCENT = '.2000'
-    self.per_page = 10
+    self.per_page = 3
 
     scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
 
