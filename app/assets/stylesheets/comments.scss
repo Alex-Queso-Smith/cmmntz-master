@@ -58,12 +58,12 @@
 
       .cf-comment-comment-meta {
         height: 15px;
-      }
-      .cf-comment-comment-meta .cf-comment-at {
-        float: right;
-      }
-      .cf-comment-comment-meta .cf-comment-length {
-        float: left;
+        .cf-comment-at {
+          float: right;
+        }
+        .cf-comment-length {
+          float: left;
+        }
       }
 
       .cf-comment-text {

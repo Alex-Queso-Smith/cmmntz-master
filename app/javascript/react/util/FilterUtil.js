@@ -13,8 +13,6 @@ export const SortTypes = [
   ["comment_length", "length"]
 ]
 
-
-
 export const SortButtons = (object) => {
   var { sortDir, sortType } = object.state
   return SortTypes.map((type) => {
