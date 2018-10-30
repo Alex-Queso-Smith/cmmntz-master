@@ -106,7 +106,7 @@ class CommentsFormContainer extends React.Component {
               placeholder="Type your comment here"
               value={this.state.text}
               onChange={ this.handleChange }
-              rows={8}
+              rows={7}
               />
             <div className="col-sm-2">
               {selfVoteButtons}

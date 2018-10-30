@@ -150,7 +150,7 @@ class Comment extends React.Component {
       replyButton =
       <button className="btn btn-primary btn-sm" onClick={this.handleReplyClick}>Reply</button>
     }
-
+    var repliesContainer;
     if (replies && showReplies) {
 
       commentReplies = replies.map((reply) => {
@@ -163,7 +163,13 @@ class Comment extends React.Component {
           />
         )
       })
+      repliesContainer =
+      <div className="cf-comment-replies">
+        {commentReplies}
+      </div>
     }
+
+
 
     var commentRepliesWrapper;
     if (replies.length > 0){ // will alway show without the explicit len check
@@ -175,9 +181,7 @@ class Comment extends React.Component {
         </span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <button className="btn btn-primary btn-sm " onClick={this.handleShowReplyToggle}>{buttonText}</button>
-        <div className="cf-comment-replies">
-          {commentReplies}
-        </div>
+        {repliesContainer}
       </div>
     }
 
