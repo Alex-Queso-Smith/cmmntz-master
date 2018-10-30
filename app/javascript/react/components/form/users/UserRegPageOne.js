@@ -2,7 +2,7 @@ import React from 'react';
 
 import Input from '../Input';
 import { ErrorClassValidation } from '../../../util/CoreUtil';
-import AgeSlider from '../AgeSlider';
+// import AgeSlider from '../AgeSlider';
 
 const UserRegPageOne = props => {
 
