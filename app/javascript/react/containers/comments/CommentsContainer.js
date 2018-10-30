@@ -254,7 +254,7 @@ class CommentsContainer extends React.Component {
           handleTopChange={this.handleTopChange}
         />
 
-      <button onClick={this.handleLoadMoreClick}>Load More</button>
+      <button className="btn btn-block btn-large btn-primary" onClick={this.handleLoadMoreClick}>Load More</button>
       </div>
     )
   }

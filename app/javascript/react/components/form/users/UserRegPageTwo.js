@@ -43,12 +43,12 @@ const UserRegPageTwo = props => {
         <label className="custom-control-label text-medium" htmlFor='location-opt-out' >None of Your Business</label>
       </div>
       <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-page-two" className="btn btn-block btn-large btn-dark" onClick={props.handleButtonClick} >
+        <button id="user-registration-button-page-two" className="btn btn-block btn-large btn-primary" onClick={props.handleButtonClick} >
           <span className="text-large">Next Page (Optional)</span>
         </button>
       </div>
       <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-back-two" className="btn btn-block btn-large btn-dark" onClick={props.handleBackClick}>
+        <button id="user-registration-button-back-two" className="btn btn-block btn-large btn-primary" onClick={props.handleBackClick}>
           <span className="text-large">Back</span>
         </button>
       </div>

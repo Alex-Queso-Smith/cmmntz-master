@@ -52,7 +52,7 @@ const UserRegPageOne = props => {
       />
       {props.passwordConfirmationError}
       <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-page-one" className="btn btn-block btn-large btn-dark" onClick={props.handleButtonClick} disabled={props.disabled}>
+        <button id="user-registration-button-page-one" className="btn btn-block btn-large btn-primary" onClick={props.handleButtonClick} disabled={props.disabled}>
           <span className="text-large">Next Page (Optional)</span>
         </button>
       </div>
