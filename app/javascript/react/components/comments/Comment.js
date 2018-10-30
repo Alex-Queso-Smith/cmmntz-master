@@ -121,7 +121,7 @@ class Comment extends React.Component {
   render(){
     var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, userInfo } = this.props
     var { replies, edit, edited, text, reply, replyText, showReplies } = this.state
-    var textBox, editButton, cancelButton, lastEdited, commentReplies, replyField, replyButton, cancelReplyButton, userTile;
+    var textBox, editButton, cancelButton, lastEdited, commentReplies, commentRepliesWrapper, replyField, replyButton, cancelReplyButton, userTile, repliesContainer;
 
     if (reply) {
       replyField =
@@ -150,7 +150,7 @@ class Comment extends React.Component {
       replyButton =
       <button className="btn btn-primary btn-sm" onClick={this.handleReplyClick}>Reply</button>
     }
-    var repliesContainer;
+
     if (replies && showReplies) {
 
       commentReplies = replies.map((reply) => {
@@ -169,9 +169,6 @@ class Comment extends React.Component {
       </div>
     }
 
-
-
-    var commentRepliesWrapper;
     if (replies.length > 0){ // will alway show without the explicit len check
       var buttonText = showReplies ? "Hide" : "Show"
       commentRepliesWrapper =
@@ -201,15 +198,18 @@ class Comment extends React.Component {
 
     if (edit) {
       textBox =
-      <Textarea
-      maxLength="3000"
-      className="form-control margin-top-10px textarea col-sm-10"
-      name="text"
-      value={text}
-      onChange={ this.handleChange }
-      />
+        <Textarea
+        maxLength="3000"
+        className="form-control margin-top-10px textarea col-sm-10 cf-comment-text-area-edit"
+        name="text"
+        value={text}
+        onChange={ this.handleChange }
+        />
     } else {
-      textBox = text
+      textBox =
+      <div className="cf-comment-text" >
+        {text}
+      </div>
     }
 
     if (!this.state.userTileHover) {
@@ -260,9 +260,9 @@ class Comment extends React.Component {
               </div>
             </div>
 
-            <div className="cf-comment-text" >
-              {textBox}
-            </div>
+
+            {textBox}
+
             {lastEdited}
             <div>
               {editButton}

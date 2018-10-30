@@ -113,7 +113,7 @@ class CommentsContainer extends React.Component {
 
           this.setState({
             comments: newComments,
-            totalComments: x
+            totalComments: body.total_comments
           })
         }
       })

@@ -1,4 +1,5 @@
 $grayline: #D3D3D3;
+$bootstrap-blue: #0069D9;
 
 .cf-comment {
 
@@ -69,7 +70,7 @@ $grayline: #D3D3D3;
         border-radius: 10px;
         min-height: 35px;
         padding: 15px;
-        margin: 10px 0 10px 0,
+        margin: 10px 0 10px 0;
       }
     }
     .cf-comment-voting {}
@@ -93,4 +94,10 @@ $grayline: #D3D3D3;
   width: 100%;
   text-align: center;
   margin-bottom: 7em;
+}
+
+.cf-comment-text-area-edit {
+  padding: 15px;
+  margin: 10px 0 10px 0;
+  border: 1px solid $bootstrap-blue;
 }
