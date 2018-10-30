@@ -80,6 +80,7 @@ class CommentsContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  // repetetive with handleFilterSubmit
   handleFormSubmit(event, text, anonymous, formInvalid, selfVotes = []){
     event.preventDefault();
     if (!formInvalid) {
@@ -120,6 +121,7 @@ class CommentsContainer extends React.Component {
     }
   }
 
+  // repetetive with handleFormSubmit
   handleFilterSubmit(){
     var search = new FormData();
     var commentRoot = this.props.commentRoot
