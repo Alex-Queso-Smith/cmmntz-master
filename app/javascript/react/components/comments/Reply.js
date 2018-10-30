@@ -10,14 +10,19 @@ const Reply = props => {
   }
 
   return(
-    <div className="cf-comment-reply margin-top-10px">
-      <div>
-        User: {userInfo}
+    <div className="cf-comment cf-comment-reply margin-top-10px">
+      <div className="cf-comment-user-meta">
+        <div className="cf-comment-user">
+          User: {userInfo}
+        </div>
       </div>
-      <div>
-        Posted: {props.posted}
+
+      <div className="cf-comment-comment-meta">
+        <div className="cf-comment-at" >
+          Posted: {props.posted}
+        </div>
       </div>
-      <div>
+      <div className="cf-comment-text" >
         {props.reply}
       </div>
     </div>

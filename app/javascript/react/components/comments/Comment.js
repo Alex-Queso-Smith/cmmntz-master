@@ -18,7 +18,7 @@ class Comment extends React.Component {
         replies: this.props.replies,
         replyText: '',
         replyErrors: {},
-        showReplies: false
+        showReplies: true
       }
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -203,37 +203,41 @@ class Comment extends React.Component {
     }
 
     return(
-      <div className="">
-        <div className="cf-comment-user" >
-          {userInfo}
+      <div className="cf-comment">
+        <div className="cf-comment-user-meta">
+          <div className="cf-comment-user" >
+            {userInfo}
+          </div>
         </div>
-        <div className="cf-comment-at" >
-          Posted: {createdAt}
-        </div>
+
+        <div className="cf-comment-comment-meta">
+          <div className="cf-comment-at" >
+            Posted: {createdAt}
+          </div>
           {lastEdited}
-        <div className="cf-comment-length">
-          Comment Length:
-          <img src={lengthImage} height="20px" width="20px"/>
+          <div className="cf-comment-length">
+            Comment Length:
+            <img src={lengthImage} height="20px" width="20px"/>
+          </div>
         </div>
+
         <div className="cf-comment-text" >
           {textBox}
         </div>
         <div>
           {editButton}
-        </div>
-        <div>
           {cancelButton}
-        </div>
-        <div>
-          {replyButton}
-          {cancelReplyButton}
-        </div>
-        <div className="cf-comment-reply-field">
-          {replyField}
         </div>
 
         {commentRepliesWrapper}
 
+        <div className="cf-comment-reply-field  margin-top-10px">
+          {replyField}
+          <div>
+            {replyButton}
+            {cancelReplyButton}
+          </div>
+        </div>
       </div>
     )
   }
