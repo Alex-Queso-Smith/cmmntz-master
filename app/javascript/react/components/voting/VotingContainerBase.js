@@ -49,7 +49,7 @@ class VotingContainerBase extends React.Component {
       } else {
         var updateVotes = this.state.selectedVotes
         updateVotes[body.vote_type] = body.vote_id
-
+        
         this.setState({
           selectedVotes: updateVotes,
           votePercents: body.vote_percents

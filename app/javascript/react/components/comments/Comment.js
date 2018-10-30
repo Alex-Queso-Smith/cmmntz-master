@@ -14,10 +14,11 @@ class Comment extends React.Component {
         replyAnonymous: false,
         updateId: null,
         text: this.props.text,
-        edited: this.props.editDate,
+        edited: this.props.edited,
         replies: this.props.replies,
         replyText: '',
-        replyErrors: {}
+        replyErrors: {},
+        showReplies: false
       }
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,6 +27,13 @@ class Comment extends React.Component {
     this.handleReplySubmit = this.handleReplySubmit.bind(this);
     this.handleReplyClick = this.handleReplyClick.bind(this);
     this.handleCancelReply = this.handleCancelReply.bind(this);
+    this.handleShowReplyToggle = this.handleShowReplyToggle.bind(this);
+  }
+
+  handleShowReplyToggle(){
+    this.setState({
+      showReplies: !this.state.showReplies
+    })
   }
 
   handleEditClick(){
@@ -56,7 +64,7 @@ class Comment extends React.Component {
       this.setState({
         edit: false,
         text: resp.comment.text,
-        edited: resp.comment.edit_date
+        edited: resp.comment.edited
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -106,7 +114,7 @@ class Comment extends React.Component {
 
   render(){
     var { userInfo, createdAt, lengthImage, currentUserId, commentUserId, artId } = this.props
-    var { replies, edit, edited, text, reply, replyText } = this.state
+    var { replies, edit, edited, text, reply, replyText, showReplies } = this.state
     var textBox, editButton, cancelButton, lastEdited, commentReplies, replyField, replyButton, cancelReplyButton;
 
     if (reply) {
@@ -137,7 +145,8 @@ class Comment extends React.Component {
       <button onClick={this.handleReplyClick}>Reply</button>
     }
 
-    if (replies) {
+    if (replies && showReplies) {
+
       commentReplies = replies.map((reply) => {
         return(
           <Reply
@@ -150,6 +159,22 @@ class Comment extends React.Component {
       })
     }
 
+    var commentRepliesWrapper;
+    if (replies.length > 0){ // will alway show without the explicit len check
+      var buttonText = showReplies ? "Hide" : "Show"
+      commentRepliesWrapper =
+      <div className="cf-comment-replies-wrapper">
+        <span className="cf-replies-count">
+          There are {replies.length} replies to this comment
+        </span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button onClick={this.handleShowReplyToggle}>{buttonText}</button>
+        <div className="cf-comment-replies">
+          {commentReplies}
+        </div>
+      </div>
+    }
+
     if (edit && currentUserId === commentUserId) {
       editButton = <button onClick={this.handleEditSubmit}>Edit Comment</button>
       cancelButton = <button onClick={this.handleCancelClick}>Cancel Edit</button>
@@ -160,7 +185,7 @@ class Comment extends React.Component {
     if (edited) {
       lastEdited =
       <div className="cf-comment-edit">
-        Last Edited: {edited}
+        Comment has been Edited
       </div>
     }
 
@@ -178,36 +203,51 @@ class Comment extends React.Component {
     }
 
     return(
-      <div className="">
-        <div className="cf-comment-user" >
-          {userInfo}
+      <div className="cf-comment">
+        <div className="cf-comment-wrapper">
+
+          <div className="cf-comment-user-meta">
+            <div className="cf-comment-user-avatar">
+              <span className="avatar-helper"></span>
+              <span className="avatar-image">[avatar here]</span>
+            </div>
+            <div className="cf-comment-user-name" >
+              {userInfo}
+            </div>
+          </div>
+
+          <div className="cf-comment-w-meta">
+            <div className="cf-comment-comment-meta">
+              <div className="cf-comment-length">
+                Comment Length:
+                <img src={lengthImage} height="20px" width="20px"/>
+              </div>
+              <div className="cf-comment-at" >
+                {createdAt}
+              </div>
+            </div>
+
+            <div className="cf-comment-text" >
+              {textBox}
+            </div>
+            {lastEdited}
+            <div>
+              {editButton}
+              {cancelButton}
+            </div>
+          </div>
         </div>
-        <div className="cf-comment-at" >
-          Posted: {createdAt}
+        <div className="cf-comment-voting">
+          Voting to move here
         </div>
-          {lastEdited}
-        <div className="cf-comment-length">
-          Comment Length:
-          <img src={lengthImage} height="20px" width="20px"/>
-        </div>
-        <div className="cf-comment-text" >
-          {textBox}
-        </div>
-        <div>
-          {editButton}
-        </div>
-        <div>
-          {cancelButton}
-        </div>
-        <div>
-          {replyButton}
-          {cancelReplyButton}
-        </div>
-        <div className="cf-comment-reply-field">
+        {commentRepliesWrapper}
+
+        <div className="cf-comment-reply-field  margin-top-10px">
           {replyField}
-        </div>
-        <div className="cf-comment-replies">
-          {commentReplies}
+          <div>
+            {replyButton}
+            {cancelReplyButton}
+          </div>
         </div>
       </div>
     )
