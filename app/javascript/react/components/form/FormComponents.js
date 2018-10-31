@@ -92,18 +92,23 @@ export const Checkbox = props => {
 
 export const GenderSelector = props => {
   return(
-    <div className="form-group">
-      <label className="text-medium">
-        Select Gender:
-        <br />
-        <br />
-        <select name={props.name} value={props.content} onChange={props.onChange}>
-          <option value="">None of your business!</option>
-          <option value="2">Female</option>
-          <option value="1">Other</option>
-          <option value="0">Male</option>
-        </select>
-      </label>
+    <div id="gender-selector">
+      <div className={`col-sm ${props.className}`}>
+          <img className="gender-btn gender-none" onClick={props.onChange} name="gender" src="/assets/gender-none.png" />
+          <div>None of your Biz!</div>
+      </div>
+      <div className={`col-sm ${props.className}`}>
+          <img className="gender-btn gender-female" onClick={props.onChange} name="gender" src="/assets/gender-female.png" />
+          <div>Female</div>
+      </div>
+      <div className={`col-sm ${props.className}`}>
+          <img className="gender-btn gender-other" onClick={props.onChange} name="gender" src="/assets/gender-other.png" />
+          <div>Other</div>
+      </div>
+      <div className={`col-sm ${props.className}`}>
+          <img className="gender-btn gender-male" onClick={props.onChange} name="gender" src="/assets/gender-none.png" />
+          <div>Male</div>
+      </div>
     </div>
   );
 };
