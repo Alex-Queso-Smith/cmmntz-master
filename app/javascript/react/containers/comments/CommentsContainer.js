@@ -59,9 +59,7 @@ class CommentsContainer extends React.Component {
           comment.current_users_votes.top = null;
           comment.vote_percents.top = body.comment.vote_percents.top;
 
-          // debugger
           this.setState({ comments: updatedComments });
-          debugger
         })
 
       }
@@ -109,7 +107,6 @@ class CommentsContainer extends React.Component {
     FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
     .then(body => {
       if (body.errors) {
-        // debugger
         var voteErrors = body.errors["votes.base"]
         if (voteErrors){
           var message = voteErrors[1]
