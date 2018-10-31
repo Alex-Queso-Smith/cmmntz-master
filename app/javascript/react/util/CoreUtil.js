@@ -112,6 +112,25 @@ export const FetchDeleteBasic = (object, path) => {
    .then(response => response.json())
 }
 
+export const FetchDeleteBasicWithPush = (object, path, push) => {
+  return fetch(path, {
+    method: 'DELETE',
+    credentials: 'same-origin'
+  })
+  .then(response => {
+     if(response.ok){
+       if (push != '') {
+         object.props.history.push(push)
+       }
+     } else {
+       let errorMessage = `${response.status} (${response.statusText})`,
+           error = new Error(errorMessage)
+       throw(error)
+     }
+   })
+   .then(response => response.json())
+}
+
 export const CreateErrorElements = (errors, name) => {
   if (errors) {
     return errors.map((error) => {
@@ -145,5 +164,6 @@ export default {
   ErrorClassValidation,
   FetchWithUpdate,
   FetchBasic,
-  FetchDeleteBasic
+  FetchDeleteBasic,
+  FetchDeleteBasicWithPush
 }

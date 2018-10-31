@@ -16,13 +16,6 @@ jesse = User.create(
   password_confirmation: "password"
 )
 
-matt = User.create(
-  user_name: "Matt",
-  email: "M@gmail.com",
-  password: "password",
-  password_confirmation: "password"
-)
-
 alex = User.create(
   user_name: "Alex",
   email: "A@gmail.com",

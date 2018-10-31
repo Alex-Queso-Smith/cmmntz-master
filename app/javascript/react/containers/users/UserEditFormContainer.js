@@ -1,7 +1,7 @@
 import React from 'react';
 
 import UserEditForm from '../../components/form/users/UserEditForm';
-import { FetchWithPush, FetchDidMount, CreateErrorElements } from '../../util/CoreUtil';
+import { FetchWithPush, FetchDidMount, CreateErrorElements, FetchDeleteBasicWithPush } from '../../util/CoreUtil';
 
 class UserEditFormContainer extends React.Component {
   state = {
@@ -19,6 +19,18 @@ class UserEditFormContainer extends React.Component {
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
   handleSliderChange = this.handleSliderChange.bind(this);
+  handleDeleteAccountClick = this.handleDeleteAccountClick.bind(this);
+
+  handleDeleteAccountClick(event){
+    event.preventDefault();
+    var confirm1 = confirm("Are you sure you wish to delete your account?");
+    if (confirm1 == true) {
+      var confirm2 = confirm("Are you REALLY certain that you wish to delete your account?\n\nOnce you do this, there is no going back.");
+      if (confirm2){
+        FetchDeleteBasicWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/login')
+      }
+    }
+  }
 
   handleSliderChange(event){
     const target = event.target;
@@ -107,6 +119,14 @@ class UserEditFormContainer extends React.Component {
           <button id="user-registration-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit">
             <span className="text-large">Update</span>
           </button>
+        </div>
+        <hr />
+        <div id="delete-account">
+          <h3>Delete my account</h3>
+          <p className="warning-text">Warning: Deleting your account is irreversible. Once you delete your accounts, all of your comments and interactions will become anonymous.</p>
+          <p className="warning-text">Do not click the button unless you are certain.</p>
+          <button onClick={this.handleDeleteAccountClick}  className="btn btn-danger btn-large btn-block">Delete Account</button>
+
         </div>
       </form>
     )

@@ -4,3 +4,22 @@ $breakpoint-tablet: 768px;
     position: relative;
   }
 }
+
+
+#delete-account {
+  margin: 50px 0 20px 0;
+  padding: 20px 10% 20px 10%;
+  border-radius: 20px;
+  border: 2px solid red;
+
+  color: red;
+
+  h3 {
+    width: 100%;
+    text-align: center;
+  }
+
+  .warning-text {
+
+  }
+}
