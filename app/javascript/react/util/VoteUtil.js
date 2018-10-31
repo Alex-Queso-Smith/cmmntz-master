@@ -1,6 +1,7 @@
 import React from 'react';
 
-import VoteButton from '../components/voting/VoteButton';
+import VoteButtonRowOne from '../components/voting/VoteButtonRowOne';
+import VoteButtonRowTwo from '../components/voting/VoteButtonRowTwo';
 
 export const VoteClick = (object, event) => {
 
@@ -137,8 +138,9 @@ export const RowOneVoteButtons = (object) => {
     }
 
     return(
-      <VoteButton
+      <VoteButtonRowOne
         key={`${object.props.commentId}_${type[0]}`}
+        className={'margin-top-bottom-10px'}
         name={type[0]}
         label={type[1]}
         onClick={object.handleClickVote}
@@ -179,8 +181,9 @@ export const RowTwoVoteButtons = (object) => {
     }
 
     return(
-      <VoteButton
+      <VoteButtonRowTwo
         key={`${object.props.commentId}_${type[0]}`}
+        className={'margin-top-bottom-10px'}
         name={type[0]}
         label={type[1]}
         onClick={object.handleClickVote}

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import VoteButton from './VoteButton';
 import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
 import { VoteClick, ImageSelector, RowOneVoteButtons, RowTwoVoteButtons } from '../../util/VoteUtil';
 import { Timeout } from '../../util/CommentUtil';
