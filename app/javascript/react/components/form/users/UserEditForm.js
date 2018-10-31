@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Input from '../Input';
+import { Input } from '../FormComponents';
 import { ErrorClassValidation } from '../../../util/CoreUtil';
 import { AgeRangeSelector, AgeSlider, GenderSelector } from '../FormComponents';
 import UserThemeSelector from '../UserThemeSelector';
