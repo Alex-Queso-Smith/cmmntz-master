@@ -101,6 +101,8 @@ class UserEditFormContainer extends React.Component {
       user.append("user[longitude]", this.state.longitude);
       user.append("user[email]", this.state.email);
       user.append("user[gender]", this.state.gender);
+      user.append("user[font]", this.state.font);
+      user.append("user[color_theme]", this.state.colorTheme);
 
       FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'saveErrors', user)
     }
