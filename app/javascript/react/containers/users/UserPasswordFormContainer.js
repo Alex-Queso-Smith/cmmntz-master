@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Input from '../../components/form/Input';
-import Checkbox from '../../components/form/Checkbox';
+import { Input, Checkbox } from '../../components/form/FormComponents';
 import { FetchWithPush, CreateErrorElements, SetStateWithValidation } from '../../util/CoreUtil';
 
 class UserPasswordFormContainer extends React.Component {
@@ -30,7 +29,7 @@ class UserPasswordFormContainer extends React.Component {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-    
+
     if (
       this.state.password.length != 0 &&
       this.state.passwordConfirmation.length != 0

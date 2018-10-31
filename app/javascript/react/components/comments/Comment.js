@@ -2,7 +2,7 @@ import React from 'react';
 import Textarea from 'react-expanding-textarea'
 
 import { FetchBasic, FetchWithUpdate } from '../../util/CoreUtil';
-import Checkbox from '../form/Checkbox';
+import { Checkbox } from '../form/FormComponents';
 import Reply from './Reply';
 
 class Comment extends React.Component {
