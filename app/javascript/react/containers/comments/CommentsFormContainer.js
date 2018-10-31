@@ -50,8 +50,7 @@ class CommentsFormContainer extends React.Component {
   handleFormSubmit(event){
     var { text, anonymous, formInvalid, selfVotes } = this.state
 
-    this.props.handleSubmit(event, text, anonymous, formInvalid, selfVotes)
-    this.handleClear();
+    this.props.handleSubmit(event, text, anonymous, formInvalid, selfVotes, this.handleClear)
   }
 
   handleClear(){

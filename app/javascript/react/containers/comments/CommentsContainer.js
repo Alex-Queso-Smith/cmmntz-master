@@ -12,7 +12,7 @@ class CommentsContainer extends React.Component {
     userId: '',
     artId: '',
     artType: '',
-    commentFormErrors: [],
+    commentFormErrors: {},
     sortOpts: {
       sortDir: 'desc',
       sortType: 'created_at',
@@ -22,6 +22,7 @@ class CommentsContainer extends React.Component {
   }
 
   handleFormSubmit = this.handleFormSubmit.bind(this);
+  commentFormSubmitter = this.commentFormSubmitter.bind(this);
   handleFilterSubmit = this.handleFilterSubmit.bind(this);
   handleTopChange = this.handleTopChange.bind(this);
   handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
@@ -46,6 +47,7 @@ class CommentsContainer extends React.Component {
   }
 
   handleTopChange(oldTopCommentId){
+
     setTimeout(function() { //Start the timer
       if (this.state.comments.find( c => c.id === oldTopCommentId)) {
         // replace comment with updated version
@@ -59,6 +61,7 @@ class CommentsContainer extends React.Component {
 
           // debugger
           this.setState({ comments: updatedComments });
+          debugger
         })
 
       }
@@ -81,7 +84,7 @@ class CommentsContainer extends React.Component {
   }
 
   // repetetive with handleFilterSubmit
-  handleFormSubmit(event, text, anonymous, formInvalid, selfVotes = [], clear){
+  handleFormSubmit(event, text, anonymous, formInvalid, selfVotes = [], handleClear){
     event.preventDefault();
     if (!formInvalid) {
       var newComment = new FormData();
@@ -93,32 +96,56 @@ class CommentsContainer extends React.Component {
       newComment.append("comment[anonymous]", anonymous)
       newComment.append("comment[vote_types]", selfVotes.join(','))
 
-      var commentRoot = this.props.commentRoot
-      var artType = commentRoot.getAttribute('data-art-type')
-      var artId = commentRoot.getAttribute('data-art-id')
+      this.commentFormSubmitter(newComment, handleClear)
 
-      FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
-      .then(body => {
-        if (body.errors) {
-          this.setState({ commentFormErrors: body.errors})
-        } else {
-
-          var append = this.state.sortOpts.page > 1
-          var newComments;
-          if (append) {
-            newComments = this.state.comments.concat(body.comments)
-          } else {
-            newComments = body.comments
-          }
-
-          this.setState({
-            comments: newComments,
-            totalComments: body.total_comments
-          })
-        }
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
     }
+  }
+
+  commentFormSubmitter(newComment, handleClear) {
+    var commentRoot = this.props.commentRoot
+    var artType = commentRoot.getAttribute('data-art-type')
+    var artId = commentRoot.getAttribute('data-art-id')
+
+    FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
+    .then(body => {
+      if (body.errors) {
+        // debugger
+        var voteErrors = body.errors["votes.base"]
+        if (voteErrors){
+          var message = voteErrors[1]
+          var r = confirm(message);
+
+          if (r == true) {
+            var old_top_id = voteErrors[3]
+            newComment.append("comment[force]", "true")
+            newComment.append("comment[old_top_id]", old_top_id )
+
+            this.commentFormSubmitter(newComment, handleClear)
+          }
+        }
+        this.setState({ commentFormErrors: body.errors})
+      } else {
+        handleClear
+        var append = this.state.sortOpts.page > 1
+        var newComments;
+        if (append) {
+          newComments = this.state.comments.concat(body.comments)
+        } else {
+          newComments = body.comments
+        }
+
+
+        this.setState({
+          comments: newComments,
+          totalComments: body.total_comments
+        })
+
+        if (body.old_top_id){
+          this.handleTopChange(body.old_top_id)
+        }
+      }
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   // repetetive with handleFormSubmit
