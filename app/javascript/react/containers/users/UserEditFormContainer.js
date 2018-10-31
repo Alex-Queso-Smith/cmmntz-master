@@ -13,6 +13,8 @@ class UserEditFormContainer extends React.Component {
     latitude: '',
     longitude: '',
     gender: '',
+    font: '',
+    colorTheme: '',
     saveErrors: {}
   }
 
@@ -20,6 +22,20 @@ class UserEditFormContainer extends React.Component {
   handleSubmit = this.handleSubmit.bind(this);
   handleSliderChange = this.handleSliderChange.bind(this);
   handleDeleteAccountClick = this.handleDeleteAccountClick.bind(this);
+  handleThemeSelectorChange = this.handleThemeSelectorChange.bind(this);
+
+  handleThemeSelectorChange(event){
+    event.preventDefault();
+
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value
+    })
+
+
+  }
 
   handleDeleteAccountClick(event){
     event.preventDefault();
@@ -50,7 +66,9 @@ class UserEditFormContainer extends React.Component {
        ageRange: body.user.age_range,
        gender: body.user.gender,
        latitude: body.user.latitude,
-       longitude: body.user.longitude
+       longitude: body.user.longitude,
+       font: body.user.font,
+       colorTheme: body.user.color_theme
      })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -98,6 +116,7 @@ class UserEditFormContainer extends React.Component {
         <UserEditForm
           onChange={this.handleChange}
           handleSliderChange={this.handleSliderChange}
+          handleThemeSelectorChange={this.handleThemeSelectorChange}
           userName={this.state.userName}
           password={this.state.password}
           passwordConfirmation={this.state.passwordConfirmation}
@@ -113,6 +132,8 @@ class UserEditFormContainer extends React.Component {
           gender={this.state.gender}
           latitude={this.state.latitude}
           longitude={this.state.longitude}
+          font={this.state.font}
+          colorTheme={this.state.colorTheme}
         />
 
         <div className="form-group actions margin-top-10px">
