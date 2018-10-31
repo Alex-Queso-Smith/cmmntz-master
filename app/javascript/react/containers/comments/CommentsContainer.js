@@ -125,7 +125,6 @@ class CommentsContainer extends React.Component {
         }
         this.setState({ commentFormErrors: body.errors})
       } else {
-        handleClear
         var append = this.state.sortOpts.page > 1
         var newComments;
         if (append) {
@@ -143,6 +142,7 @@ class CommentsContainer extends React.Component {
         if (body.old_top_id){
           this.handleTopChange(body.old_top_id)
         }
+        handleClear()
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));

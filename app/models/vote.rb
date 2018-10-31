@@ -46,7 +46,7 @@ class Vote < ApplicationRecord
     comments_owned_by = top_votes_for_user.map(&:comment).flatten.map(&:user_id)
 
     if (self.force == true || self.force == 'true') || (comments_owned_by.any? && comments_owned_by.first == user_id)
-      self.old_top_id = top_votes_for_user.first.comment.id
+      self.old_top_id = top_votes_for_user.first.comment.id if top_votes_for_user.first
       top_votes_for_user.destroy_all
 
       return
