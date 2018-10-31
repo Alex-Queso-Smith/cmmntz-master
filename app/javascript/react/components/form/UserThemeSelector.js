@@ -7,7 +7,7 @@ const UserThemeSelector = props => {
         Select Theme:
         <br />
         <br />
-        <select name={props.name} value={props.colorTheme} onChange={props.onChange}>
+        <select name="colorTheme" value={props.colorTheme} onChange={props.onChange}>
           <option value="light">Light</option>
           <option value="dark">Dark</option>
         </select>
@@ -17,7 +17,7 @@ const UserThemeSelector = props => {
         Select Font:
         <br />
         <br />
-        <select name={props.name} value={props.font} onChange={props.onChange}>
+        <select name="font" value={props.font} onChange={props.onChange}>
           <option value="serif">Serif</option>
           <option value="sans-serif">Sans-Serif</option>
         </select>
