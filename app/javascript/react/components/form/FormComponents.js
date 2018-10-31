@@ -105,7 +105,7 @@ export const GenderSelector = props => {
       <GenderButton
         key={`gender-${gender[1]}`}
         translucency={translucency}
-        onchange={props.onChange}
+        onChange={props.onChange}
         imageName={gender[1]}
         label={gender[2]}
         value={gender[0]}
@@ -126,7 +126,7 @@ export const GenderSelector = props => {
 const GenderButton = props => {
   return(
     <div className={`col-sm`}>
-      <img className={`gender-btn gender-none ${props.translucency}`} value={props.value} onClick={props.onChange} name="gender" src={`/assets/gender-${props.imageName}.png`} />
+      <img className={`gender-btn gender-none ${props.translucency}`} onClick={props.onChange} name="gender" src={`/assets/gender-${props.imageName}.png`} />
       <div>{props.label}</div>
     </div>
   );
