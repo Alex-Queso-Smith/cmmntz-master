@@ -1,5 +1,6 @@
 class CommentVoteTabulation < ApplicationRecord
   self.primary_key = "id"
+  include CommentBase
   include CommentSearchs
 
   belongs_to :user

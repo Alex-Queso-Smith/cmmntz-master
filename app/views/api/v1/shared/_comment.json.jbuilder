@@ -3,7 +3,7 @@ json.text comment.text
 json.created_at display_time_ago(comment.created_at)
 json.edited has_been_edited(comment)
 json.user do
-  json.user_id comment.user.id
+  json.user_id comment.user_id
   json.user_name comment_user_user_name(comment)
   json.gender comment_user_gender(comment)
   json.age_range comment_user_age_range(comment)

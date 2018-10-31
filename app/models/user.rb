@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :comment_interactions
   has_many :comment_vote_tabulation, primary_key: 'id'
 
-  validates :user_name, presence: true, uniqueness: true
+  validates :user_name, presence: true, uniqueness: { case_sensitive: false }
 
   validates :gender, numericality: true, inclusion: { in: GENDERS }, unless: Proc.new { |u| u.gender.nil? }
   validates :age_range, numericality: true, inclusion: { in: AGES }, unless: Proc.new { |u| u.age_range.nil? }
