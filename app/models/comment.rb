@@ -2,7 +2,7 @@ include ActionView::Helpers::SanitizeHelper
 class Comment < ApplicationRecord
   include CommentBase
 
-  attr_accessor :vote_types, :force
+  attr_accessor :vote_types, :force, :old_top_id
 
   belongs_to :user
   belongs_to :parent, class_name: 'Comment', optional: true
@@ -45,6 +45,5 @@ class Comment < ApplicationRecord
       next unless Vote::TYPES.include?(vote)
       self.votes.build(user_id: user_id, vote_type: vote, force: force)
     end
-
   end
 end

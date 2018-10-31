@@ -71,7 +71,7 @@ RSpec.describe Comment, type: :model do
       expect{ comment.save }.to change(CommentInteraction, :count).by(0)
     end
 
-    context "top votes" do
+    context "top votes not self owned previous comment" do
       let!(:comment2) { FactoryBot.create(:comment, art_id: comment.art_id) }
       let!(:prev_top_vote) { FactoryBot.create(:vote, comment: comment2, user: comment.user, vote_type: "top") }
 
@@ -80,9 +80,19 @@ RSpec.describe Comment, type: :model do
         expect(comment).to_not be_valid
       end
 
-      it "should  allow a duplicate top vote in the same thread with force" do
+      it "should allow a top vote in the same thread with force" do
         comment.vote_types = "top"
         comment.force = true
+        expect(comment).to be_valid
+      end
+    end
+
+    context "top votes self owned previous comment" do
+      let!(:comment2) { FactoryBot.create(:comment, art_id: comment.art_id, user: comment.user) }
+      let!(:prev_top_vote) { FactoryBot.create(:vote, comment: comment2, user: comment.user, vote_type: "top") }
+
+      it "should allow a top vote in the same thread without force" do
+        comment.vote_types = "top"
         expect(comment).to be_valid
       end
     end
