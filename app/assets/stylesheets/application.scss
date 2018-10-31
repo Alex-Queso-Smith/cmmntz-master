@@ -1,14 +1,58 @@
 @import "bootstrap";
 @import "/\*";
 
+$light-base: #fff;
+$light: #fff;
+$light-grayline: #D3D3D3;
+
+$dark-base: #7A7A7A;
+$dark: #7A7A7A;
+$dark-grayline: #D3D3D3;
+
 .visibility-hidden {
   visibility: hidden;
 }
 
-.light {}
+.serif {
+  font-family: "Times New Roman", Times, serif;
 
-.dark {}
+  p {
+    font-family: "Times New Roman", Times, serif;
+  }
+}
 
-.serif {}
+.sans-serif {
+  font-family: "Comic Sans MS", cursive, sans-serif;
 
-.sans-serif {}
+  p {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+  }
+}
+
+.light {
+  background: $light-base;
+
+  div, p {
+    background-color: $light;
+    color: #000;
+  }
+
+  .bordered {
+    border: 1px solid $light-grayline;
+    border-radius: 10px;
+  }
+}
+
+.dark {
+  background-color: $dark-base;
+
+  div, p {
+    background-color: $dark;
+    color: #fff;
+  }
+
+  .bordered {
+    border: 1px solid $dark-grayline;
+    border-radius: 10px;
+  }
+}

@@ -18,13 +18,15 @@ const UserThemeSelector = props => {
         <br />
         <br />
         <select name="font" value={props.font} onChange={props.onChange}>
-          <option value="serif">Serif</option>
-          <option value="sans-serif">Sans-Serif</option>
+          <option value="serif" className="serif">Serif</option>
+          <option value="sans-serif" className="sand-serif">Sans-Serif</option>
         </select>
       </label>
 
-      <div id="theme-selector-demo" className={`${props.colorTheme} ${props.font}`}>
-        {props.font}||{props.colorTheme}
+      <div id="theme-selector-demo-wrapper" className={`bordered ${props.colorTheme} ${props.font}`}>
+        <div className="bordered">
+          AaBbCc
+        </div>
       </div>
     </div>
   );
