@@ -47,7 +47,7 @@ const UserEditForm = props => {
           name="gender"
           label="Gender"
           onChange={props.onChange}
-          content={props.gender}
+          value={props.gender}
         />
         <hr />
         <Input

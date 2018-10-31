@@ -91,24 +91,43 @@ export const Checkbox = props => {
 };
 
 export const GenderSelector = props => {
+  var translucency = "translucent";
+  var genders = [
+    ["", "none", "None of your Biz!"],
+    ["0", "female", "Female"],
+    ["1", "other", "Other"],
+    ["2", "male", "Male"]
+  ];
+
+  var genderButtons = genders.map((gender) => {
+    var translucency = props.value == gender[0] ? "" : "translucent"
+    return(
+      <GenderButton
+        key={`gender-${gender[1]}`}
+        translucency={translucency}
+        onchange={props.onChange}
+        imageName={gender[1]}
+        label={gender[2]}
+        value={gender[0]}
+      />
+    )
+  })
+
   return(
-    <div id="gender-selector">
-      <div className={`col-sm ${props.className}`}>
-          <img className="gender-btn gender-none" onClick={props.onChange} name="gender" src="/assets/gender-none.png" />
-          <div>None of your Biz!</div>
+    <div>
+      <label className="text-large">Gender</label>
+      <div id="gender-selector" className="row margin-top-bottom-10px">
+        {genderButtons}
       </div>
-      <div className={`col-sm ${props.className}`}>
-          <img className="gender-btn gender-female" onClick={props.onChange} name="gender" src="/assets/gender-female.png" />
-          <div>Female</div>
-      </div>
-      <div className={`col-sm ${props.className}`}>
-          <img className="gender-btn gender-other" onClick={props.onChange} name="gender" src="/assets/gender-other.png" />
-          <div>Other</div>
-      </div>
-      <div className={`col-sm ${props.className}`}>
-          <img className="gender-btn gender-male" onClick={props.onChange} name="gender" src="/assets/gender-none.png" />
-          <div>Male</div>
-      </div>
+    </div>
+  );
+};
+
+const GenderButton = props => {
+  return(
+    <div className={`col-sm`}>
+      <img className={`gender-btn gender-none ${props.translucency}`} value={props.value} onClick={props.onChange} name="gender" src={`/assets/gender-${props.imageName}.png`} />
+      <div>{props.label}</div>
     </div>
   );
 };
