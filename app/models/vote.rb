@@ -7,7 +7,7 @@ class Vote < ApplicationRecord
 
 
   belongs_to :user
-  
+
   belongs_to :comment
   belongs_to :comment_vote_tabulation, primary_key: 'id', foreign_key: 'comment_id', optional: true
 
@@ -44,7 +44,9 @@ class Vote < ApplicationRecord
     # if force flag passed or user is owner of prev comment:
     # delete prev top votes for user for thread
     comments_owned_by = top_votes_for_user.map(&:comment).flatten.map(&:user_id)
+
     if (self.force == true || self.force == 'true') || (comments_owned_by.any? && comments_owned_by.first == user_id)
+      self.old_top_id = top_votes_for_user.first.comment.id
       top_votes_for_user.destroy_all
 
       return

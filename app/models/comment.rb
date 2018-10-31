@@ -37,13 +37,16 @@ class Comment < ApplicationRecord
     self.text = sanitize(text, tags: []) unless text.blank?
   end
 
-  ### Postprocessors
+  ### Preprocessors
 
   def parse_and_build_votes
     return if vote_types.blank?
     vote_types.split(',').each do |vote|
       next unless Vote::TYPES.include?(vote)
-      self.votes.build(user_id: user_id, vote_type: vote, force: force)
+      v = self.votes.build(user_id: user_id, vote_type: vote, force: force)
+      v.valid?
     end
+
+    self.old_top_id = votes.map(&:old_top_id).first if votes.map(&:old_top_id).any?
   end
 end

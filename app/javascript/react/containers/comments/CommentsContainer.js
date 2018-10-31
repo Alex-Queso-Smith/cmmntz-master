@@ -132,11 +132,15 @@ class CommentsContainer extends React.Component {
           newComments = body.comments
         }
 
+
         this.setState({
           comments: newComments,
           totalComments: body.total_comments
         })
-
+        // debugger
+        if (body.old_top_id){
+          this.props.handleTopChange(body.old_top_id)
+        }
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
