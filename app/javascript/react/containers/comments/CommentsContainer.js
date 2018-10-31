@@ -47,6 +47,7 @@ class CommentsContainer extends React.Component {
   }
 
   handleTopChange(oldTopCommentId){
+
     setTimeout(function() { //Start the timer
       if (this.state.comments.find( c => c.id === oldTopCommentId)) {
         // replace comment with updated version
@@ -60,6 +61,7 @@ class CommentsContainer extends React.Component {
 
           // debugger
           this.setState({ comments: updatedComments });
+          debugger
         })
 
       }
@@ -137,9 +139,9 @@ class CommentsContainer extends React.Component {
           comments: newComments,
           totalComments: body.total_comments
         })
-        // debugger
+
         if (body.old_top_id){
-          this.props.handleTopChange(body.old_top_id)
+          this.handleTopChange(body.old_top_id)
         }
       }
     })
