@@ -1,5 +1,7 @@
 include ActionView::Helpers::SanitizeHelper
 class Comment < ApplicationRecord
+  include CommentBase
+
   attr_accessor :vote_types
 
   belongs_to :user

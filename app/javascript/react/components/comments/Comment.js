@@ -100,7 +100,7 @@ class Comment extends React.Component {
     newReply.append("comment[art_id]", artId)
     newReply.append("comment[art_type]", artType)
     newReply.append("comment[user_id]", currentUserId)
-    newReply.append("comment[anonymous]", anonymous)
+    newReply.append("comment[anonymous]", replyAnonymous)
     newReply.append("comment[parent_id]", commentId)
 
     FetchWithUpdate(this, `/api/v1/comments.json`, 'POST', newReply)
