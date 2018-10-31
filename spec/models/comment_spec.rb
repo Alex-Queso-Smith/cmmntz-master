@@ -70,6 +70,22 @@ RSpec.describe Comment, type: :model do
     it "should not create a comment_interaction with no votes" do
       expect{ comment.save }.to change(CommentInteraction, :count).by(0)
     end
+
+    context "top votes" do
+      let!(:comment2) { FactoryBot.create(:comment, art_id: comment.art_id) }
+      let!(:prev_top_vote) { FactoryBot.create(:vote, comment: comment2, user: comment.user, vote_type: "top") }
+
+      it "should not allow a duplicate top vote in the same thread without force" do
+        comment.vote_types = "top"
+        expect(comment).to_not be_valid
+      end
+
+      it "should  allow a duplicate top vote in the same thread with force" do
+        comment.vote_types = "top"
+        comment.force = true
+        expect(comment).to be_valid
+      end
+    end
   end
 
   describe "replies " do
