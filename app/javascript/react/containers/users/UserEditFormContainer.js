@@ -50,8 +50,14 @@ class UserEditFormContainer extends React.Component {
 
   handleSliderChange(event){
     const target = event.target;
-    const value = target.value;
+    var value = target.value;
     const name = target.name;
+
+    if (value === "15") {
+      value = "13"
+    } else if (value === "10") {
+      value = ""
+    }
     this.setState({
       [name]: value
     })
