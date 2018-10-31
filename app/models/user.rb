@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   include AuthlogicValidations
 
+  # tmp until vster is installed
+  attr_accessor :font, :color_theme
+
   GENDERS = [0, 1, 2]
   DISPLAY_GENDERS = ["male", "other", "female"]
   AGES = [nil, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\

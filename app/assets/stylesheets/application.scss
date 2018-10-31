@@ -1,45 +1,62 @@
 @import "bootstrap";
 @import "/\*";
 
+$light-base: #fff;
+$light: #fff;
+$light-grayline: #D3D3D3;
+
+$dark-base: #7A7A7A;
+$dark: #7A7A7A;
+$dark-grayline: #D3D3D3;
+
+.clear {
+  clear: both;
+}
+
 .visibility-hidden {
   visibility: hidden;
 }
 
+.serif {
+  font-family: "Times New Roman", Times, serif;
 
-.slidecontainer {
-    width: 100%;
+  p {
+    font-family: "Times New Roman", Times, serif;
+  }
 }
 
-.slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 15px;
-    border-radius: 5px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
+.sans-serif {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+
+  p {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+  }
 }
 
-.slider:hover {
-    opacity: 1;
+.light {
+  background: $light-base;
+
+  div, p {
+    background-color: $light;
+    color: #000;
+  }
+
+  .bordered {
+    border: 1px solid $light-grayline;
+    border-radius: 10px;
+  }
 }
 
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #4CAF50;
-    cursor: pointer;
-}
+.dark {
+  background-color: $dark-base;
 
-.slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #4CAF50;
-    cursor: pointer;
+  div, p {
+    background-color: $dark;
+    color: #fff;
+  }
+
+  .bordered {
+    border: 1px solid $dark-grayline;
+    border-radius: 10px;
+  }
 }

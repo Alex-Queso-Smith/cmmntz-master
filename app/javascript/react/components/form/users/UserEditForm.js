@@ -3,6 +3,7 @@ import React from 'react';
 import Input from '../Input';
 import { ErrorClassValidation } from '../../../util/CoreUtil';
 import { AgeRangeSelector, AgeSlider, GenderSelector } from '../FormComponents';
+import UserThemeSelector from '../UserThemeSelector';
 
 const UserEditForm = props => {
 
@@ -67,6 +68,13 @@ const UserEditForm = props => {
           <input type="checkbox" className="custom-control-input" id='location-opt-out' autoComplete="off" />
           <label className="custom-control-label text-medium" htmlFor='location-opt-out' >None of Your Business</label>
         </div>
+
+        <hr />
+        <UserThemeSelector
+          onChange={props.handleThemeSelectorChange}
+          font={props.font}
+          colorTheme={props.colorTheme}
+        />
       </div>
       <div id="reg-optional-2" className="form-group ">
         <hr />
