@@ -2,9 +2,7 @@ import React from 'react';
 
 import Input from '../Input';
 import { ErrorClassValidation } from '../../../util/CoreUtil';
-import AgeRangeSelector from '../AgeRangeSelector';
-import AgeSlider from '../AgeSlider';
-import GenderSelector from '../GenderSelector';
+import { AgeRangeSelector, AgeSlider, GenderSelector } from '../FormComponents';
 import UserThemeSelector from '../UserThemeSelector';
 
 const UserEditForm = props => {

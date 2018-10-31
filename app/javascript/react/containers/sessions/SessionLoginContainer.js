@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Input from '../../components/form/Input';
-import Checkbox from '../../components/form/Checkbox';
+import { Input, Checkbox } from '../../components/form/FormComponents';
 import { FetchWithPush, CreateErrorElements, SetStateWithValidation } from '../../util/CoreUtil';
 
 

@@ -1,11 +1,6 @@
 import React from 'react';
 
-import Input from '../../components/form/Input';
-import GenderSelector from '../../components/form/GenderSelector';
-import AgeRangeSelector from '../../components/form/AgeRangeSelector';
-import UserRegPageOne from '../../components/form/users/UserRegPageOne';
-import UserRegPageTwo from '../../components/form/users/UserRegPageTwo';
-import UserRegPageThree from '../../components/form/users/UserRegPageThree';
+import { UserRegPageOne, UserRegPageTwo, UserRegPageThree } from '../../components/form/users/UserRegPages';
 import { FetchWithPush, CreateErrorElements, SetStateWithValidation } from '../../util/CoreUtil';
 
 class UserNewFormContainer extends React.Component {
@@ -27,6 +22,7 @@ class UserNewFormContainer extends React.Component {
   handleSubmit = this.handleSubmit.bind(this);
   handleNextClick = this.handleNextClick.bind(this);
   handleBackClick = this.handleBackClick.bind(this);
+  handleSliderChange = this.handleSliderChange.bind(this);
 
   handleChange(event){
     const target = event.target;
@@ -43,6 +39,21 @@ class UserNewFormContainer extends React.Component {
     } else {
       SetStateWithValidation(this, true, name, value)
     }
+  }
+
+  handleSliderChange(event){
+    const target = event.target;
+    var value = target.value;
+    const name = target.name;
+
+    if (value === "15") {
+      value = "13"
+    } else if (value === "10") {
+      value = ""
+    }
+    this.setState({
+      [name]: value
+    })
   }
 
   handleSubmit(event){
@@ -105,6 +116,7 @@ class UserNewFormContainer extends React.Component {
         page =
         <UserRegPageTwo
           onChange={this.handleChange}
+          handleSliderChange={this.handleSliderChange}
           ageRange={this.state.ageRange}
           gender={this.state.gender}
           latitude={this.state.latitude}

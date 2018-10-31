@@ -1,12 +1,11 @@
 import React from 'react'
+import Textarea from 'react-expanding-textarea'
 
-import Input from '../../components/form/Input';
+import { Input, Checkbox } from '../../components/form/FormComponents';
+import VoteButton from '../../components/voting/VoteButton';
 import { CreateErrorElements, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
 import { Timeout } from '../../util/CommentUtil';
 import { ImageSelector } from '../../util/VoteUtil';
-import Checkbox from '../../components/form/Checkbox';
-import VoteButton from '../../components/voting/VoteButton';
-import Textarea from 'react-expanding-textarea'
 
 class CommentsFormContainer extends React.Component {
   state = {
