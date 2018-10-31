@@ -5,6 +5,7 @@ import { ErrorClassValidation } from '../../../util/CoreUtil';
 import AgeRangeSelector from '../AgeRangeSelector';
 import AgeSlider from '../AgeSlider';
 import GenderSelector from '../GenderSelector';
+import Checkbox from '../Checkbox';
 
 const UserEditForm = props => {
 
