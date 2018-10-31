@@ -1,6 +1,5 @@
 import React from 'react';
 
-import VoteButton from './VoteButton';
 import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
 import { VoteClick, ImageSelector, RowOneVoteButtons, RowTwoVoteButtons } from '../../util/VoteUtil';
 import { Timeout } from '../../util/CommentUtil';
@@ -43,13 +42,13 @@ class VotingContainerBase extends React.Component {
           var old_top_id = body.errors[3]
           payload.append("vote[force]", true)
           payload.append("vote[old_top_id]",old_top_id )
-  
+
           this.handlePost(payload)
         }
       } else {
         var updateVotes = this.state.selectedVotes
         updateVotes[body.vote_type] = body.vote_id
-        
+
         this.setState({
           selectedVotes: updateVotes,
           votePercents: body.vote_percents

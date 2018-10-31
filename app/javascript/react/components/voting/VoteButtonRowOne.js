@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-const VoteButton = props => {
+const VoteButtonRowOne = props => {
   return(
-    <div className="col-sm">
+    <div className={`col-sm ${props.className}`}>
       <div>{props.percentage}</div>
         <img className={`vote-btn vote-${props.name} ${props.visibility}`} onClick={props.onClick} name={props.name} src={props.image} />
     </div>
   )
 };
 
-export default VoteButton
+export default VoteButtonRowOne;

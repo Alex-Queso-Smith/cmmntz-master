@@ -81,7 +81,7 @@ class CommentsContainer extends React.Component {
   }
 
   // repetetive with handleFilterSubmit
-  handleFormSubmit(event, text, anonymous, formInvalid, selfVotes = []){
+  handleFormSubmit(event, text, anonymous, formInvalid, selfVotes = [], clear){
     event.preventDefault();
     if (!formInvalid) {
       var newComment = new FormData();

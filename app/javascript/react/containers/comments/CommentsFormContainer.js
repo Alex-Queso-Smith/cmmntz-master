@@ -2,7 +2,7 @@ import React from 'react'
 import Textarea from 'react-expanding-textarea'
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
-import VoteButton from '../../components/voting/VoteButton';
+import VoteButtonRowOne from '../../components/voting/VoteButtonRowOne';
 import { CreateErrorElements, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
 import { Timeout } from '../../util/CommentUtil';
 import { ImageSelector } from '../../util/VoteUtil';
@@ -84,7 +84,7 @@ class CommentsFormContainer extends React.Component {
         }
 
         return(
-          <VoteButton
+          <VoteButtonRowOne
             key={type}
             name={type}
             visibility={"margin-top-10px"}
