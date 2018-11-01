@@ -23,6 +23,7 @@ class UserEditFormContainer extends React.Component {
   handleSliderChange = this.handleSliderChange.bind(this);
   handleDeleteAccountClick = this.handleDeleteAccountClick.bind(this);
   handleThemeSelectorChange = this.handleThemeSelectorChange.bind(this);
+  handleGenderChange = this.handleGenderChange.bind(this);
 
   handleThemeSelectorChange(event){
     event.preventDefault();
@@ -85,8 +86,14 @@ class UserEditFormContainer extends React.Component {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-    debugger
     this.setState({ [name]: value })
+  }
+
+  handleGenderChange(event){
+    event.preventDefault();
+    const target = event.target;
+    const value = target.name;
+    this.setState({ gender: value })
   }
 
   handleSubmit(event){
@@ -125,6 +132,7 @@ class UserEditFormContainer extends React.Component {
           onChange={this.handleChange}
           handleSliderChange={this.handleSliderChange}
           handleThemeSelectorChange={this.handleThemeSelectorChange}
+          handleGenderChange={this.handleGenderChange}
           userName={this.state.userName}
           password={this.state.password}
           passwordConfirmation={this.state.passwordConfirmation}
