@@ -1,14 +1,18 @@
 class User < ApplicationRecord
   include AuthlogicValidations
 
+  # avatar settings v-attrs
   vstr 'avatar', {
     base_image: :string,
     fg_color: :string,
     bg_color: :string
   }
 
-  # tmp until vster is installed
-  attr_accessor :font, :color_theme
+  # general settings v-attrs
+  vstr 'settings', {
+    color_theme: :string,
+    font: :string
+  }
 
   GENDERS = [0, 1, 2]
   DISPLAY_GENDERS = ["male", "other", "female"]

@@ -9,7 +9,8 @@ module VirtualStore
       self.class_eval do
         delegate attr.to_sym, :to => loc.to_sym, :allow_nil => true
       end
-
+      
+      # add setter
       case type
       when "bool"
         define_method "#{attr}=" do |val|
