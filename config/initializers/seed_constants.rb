@@ -1,4 +1,5 @@
 AVATARS = [
+  "",
   "boxing-glove",
   "burger",
   "butterfly",
