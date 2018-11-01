@@ -1,6 +1,12 @@
 class User < ApplicationRecord
   include AuthlogicValidations
 
+  vstr 'avatar', {
+    base_image: :string,
+    fg_color: :string,
+    bg_color: :string
+  }
+
   # tmp until vster is installed
   attr_accessor :font, :color_theme
 
