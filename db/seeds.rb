@@ -13,21 +13,24 @@ jesse = User.create(
   user_name: "Jesse",
   email: "J@gmail.com",
   password: "password",
-  password_confirmation: "password"
+  password_confirmation: "password",
+  base_image: AVATARS.sample
 )
 
 alex = User.create(
   user_name: "Alex",
   email: "A@gmail.com",
   password: "password",
-  password_confirmation: "password"
+  password_confirmation: "password",
+  base_image: AVATARS.sample
 )
 
 aj = User.create(
   user_name: "AJ",
   email: "AJ@gmail.com",
   password: "password",
-  password_confirmation: "password"
+  password_confirmation: "password",
+  base_image: AVATARS.sample
 )
 
 # generate random users
@@ -41,7 +44,8 @@ while x <= num_users do
     password_confirmation: "password",
     email: "User#{x}@gmail.com",
     age_range: User::AGES.sample,
-    gender: User::GENDERS.sample
+    gender: User::GENDERS.sample,
+    base_image: AVATARS.sample
   )
   x += 1
 end
