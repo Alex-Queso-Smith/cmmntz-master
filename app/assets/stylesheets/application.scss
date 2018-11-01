@@ -28,6 +28,10 @@ $dark-grayline: #D3D3D3;
   width: 100%;
 }
 
+.cf-modal-locked {
+  overflow: hidden;
+}
+
 .serif {
   font-family: "Times New Roman", Times, serif;
 
@@ -48,7 +52,7 @@ $dark-grayline: #D3D3D3;
   background: $light-base;
 
   div, p {
-    background-color: $light;
+    // background-color: $light;
     color: #000;
   }
 

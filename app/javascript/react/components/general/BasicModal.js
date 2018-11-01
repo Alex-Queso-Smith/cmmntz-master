@@ -14,10 +14,12 @@ class BasicModal extends React.Component {
 
     showModal(){
       this.setState({ show: true });
+      document.body.classList.add("cf-modal-locked");
     }
 
     hideModal(){
       this.setState({ show: false });
+      document.body.classList.remove("cf-modal-locked");
     }
 
     render() {
