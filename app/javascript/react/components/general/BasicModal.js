@@ -21,16 +21,21 @@ class BasicModal extends React.Component {
     }
 
     render() {
+      var modalWindow;
+      if (this.state.show) {
+        modalWindow =
+        <Modal
+          show={this.state.show}
+          handleClose={this.hideModal}
+          modalTitle={this.props.modalTitle}
+        >
+          {this.props.children}
+        </Modal>
+      }
 
       return(
         <div>
-          <Modal
-            show={this.state.show}
-            handleClose={this.hideModal}
-            modalTitle={this.props.modalTitle}
-          >
-            {this.props.children}
-          </Modal>
+          {modalWindow}
           <button onClick={this.showModal} className="btn btn-light">
             {this.props.modalButtonText}
           </button>
