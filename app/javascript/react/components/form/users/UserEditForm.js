@@ -46,7 +46,7 @@ const UserEditForm = props => {
         <GenderSelector
           name="gender"
           label="Gender"
-          onChange={props.onChange}
+          onChange={props.handleGenderChange}
           value={props.gender}
         />
         <hr />

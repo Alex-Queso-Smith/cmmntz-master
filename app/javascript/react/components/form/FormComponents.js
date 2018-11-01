@@ -102,7 +102,12 @@ export const GenderSelector = props => {
   ];
 
   var genderButtons = genders.map((gender) => {
-    var translucency = props.value == gender[0] ? "" : "translucent"
+    var translucency;
+    if (gender[0] == "") {
+      translucency = props.value.length == 0 ? "" : "translucent"
+    } else {
+      translucency = parseInt(props.value) === parseInt(gender[0]) ? "" : "translucent"
+    }
     return(
       <GenderButton
         key={`gender-${gender[1]}`}
@@ -110,7 +115,7 @@ export const GenderSelector = props => {
         onChange={props.onChange}
         imageName={gender[1]}
         label={gender[2]}
-        value={gender[0]}
+        name={gender[0]}
       />
     )
   })
@@ -128,7 +133,7 @@ export const GenderSelector = props => {
 const GenderButton = props => {
   return(
     <div className={`col-sm`}>
-      <img className={`gender-btn gender-none ${props.translucency}`} onClick={props.onChange} name="gender" src={`/assets/gender-${props.imageName}.png`} />
+      <img className={`gender-btn gender-none ${props.translucency}`} onClick={props.onChange} name={props.name} src={`/assets/gender-${props.imageName}.png`} />
       <div>{props.label}</div>
     </div>
   );
