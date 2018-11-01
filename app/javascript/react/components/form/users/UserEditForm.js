@@ -7,10 +7,18 @@ import UserThemeSelector from '../UserThemeSelector';
 
 const UserEditForm = props => {
 
-  var userNameClass, emailClass
+  var userNameClass, emailClass, selectedAvatar;
 
   userNameClass = ErrorClassValidation(props.userNameError);
   emailClass = ErrorClassValidation(props.emailError);
+
+  if (props.avatar) {
+    selectedAvatar =
+    <div className="text-center">
+      <h5>Selected Avatar</h5>
+      <img src={props.avatar} />
+    </div>
+  }
 
   return(
     <div>
@@ -79,10 +87,11 @@ const UserEditForm = props => {
       <div id="reg-optional-2" className="form-group ">
         <hr />
         <div className="form-group margin-top-10px">
-          <label className="text-large" htmlFor="avatar">Choose Your Avatar</label>
+          <label className="text-large text-center" htmlFor="avatar">Choose Your Avatar</label>
           <br />
+          {selectedAvatar}
           <Carousel
-            onChange={props.onChange}
+            onChange={props.handleAvatarClick}
             />
         </div>
         <input type="hidden"/>

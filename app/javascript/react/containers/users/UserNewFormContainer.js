@@ -14,6 +14,7 @@ class UserNewFormContainer extends React.Component {
     latitude: '',
     longitude: '',
     gender: '',
+    avatar: '',
     currentPage: 1,
     formInvalid: true,
     registrationErrors: {}
@@ -24,6 +25,7 @@ class UserNewFormContainer extends React.Component {
   handleNextClick = this.handleNextClick.bind(this);
   handleBackClick = this.handleBackClick.bind(this);
   handleSliderChange = this.handleSliderChange.bind(this);
+  handleAvatarClick = this.handleAvatarClick.bind(this);
 
   handleChange(event){
     const target = event.target;
@@ -40,6 +42,14 @@ class UserNewFormContainer extends React.Component {
     } else {
       SetStateWithValidation(this, true, name, value)
     }
+  }
+
+  handleAvatarClick(event){
+    event.preventDefault();
+
+    const target = event.target;
+    const value = target.name;
+    this.setState({ avatar: value })
   }
 
   handleSliderChange(event){
@@ -69,6 +79,7 @@ class UserNewFormContainer extends React.Component {
       newUser.append("user[longitude]", this.state.longitude);
       newUser.append("user[email]", this.state.email);
       newUser.append("user[gender]", this.state.gender);
+      newUser.append("user[base_image]", this.state.base_image)
 
       FetchWithPush(this, '/api/v1/users.json', '/', 'POST', 'registrationErrors', newUser)
     }

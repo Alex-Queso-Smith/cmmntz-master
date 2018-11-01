@@ -25,6 +25,7 @@ class UserEditFormContainer extends React.Component {
   handleDeleteAccountClick = this.handleDeleteAccountClick.bind(this);
   handleThemeSelectorChange = this.handleThemeSelectorChange.bind(this);
   handleGenderChange = this.handleGenderChange.bind(this);
+  handleAvatarClick = this.handleAvatarClick.bind(this);
 
   handleThemeSelectorChange(event){
     event.preventDefault();
@@ -66,16 +67,19 @@ class UserEditFormContainer extends React.Component {
   componentDidMount(){
     FetchDidMount(this, `/api/v1/users/${this.props.match.params.id}.json`)
     .then(body => {
-     this.setState({
-       userName: body.user.user_name,
-       email: body.user.email,
-       ageRange: body.user.age_range,
-       gender: body.user.gender,
-       latitude: body.user.latitude,
-       longitude: body.user.longitude,
-       font: body.user.font,
-       colorTheme: body.user.color_theme
-     })
+      var user = body.user
+
+      this.setState({
+        userName: user.user_name,
+        email: user.email,
+        ageRange: user.age_range,
+        gender: user.gender,
+        latitude: user.latitude,
+        longitude: user.longitude,
+        font: user.font,
+        colorTheme: user.color_theme,
+        avatar: user.avatar_image
+      })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -95,6 +99,14 @@ class UserEditFormContainer extends React.Component {
     this.setState({ gender: value })
   }
 
+  handleAvatarClick(event){
+    event.preventDefault();
+
+    const target = event.target;
+    const value = target.name;
+    this.setState({ avatar: value })
+  }
+
   handleSubmit(event){
     event.preventDefault();
     if (!this.state.formInvalid){
@@ -109,6 +121,7 @@ class UserEditFormContainer extends React.Component {
       user.append("user[gender]", this.state.gender);
       user.append("user[font]", this.state.font);
       user.append("user[color_theme]", this.state.colorTheme);
+      user.append("user[base_image]", this.state.avatar);
 
       FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'saveErrors', user)
     }
@@ -132,10 +145,11 @@ class UserEditFormContainer extends React.Component {
           handleSliderChange={this.handleSliderChange}
           handleThemeSelectorChange={this.handleThemeSelectorChange}
           handleGenderChange={this.handleGenderChange}
-          userName={this.state.userName}
-          password={this.state.password}
-          passwordConfirmation={this.state.passwordConfirmation}
-          email={this.state.email}
+          handleAvatarClick={this.handleAvatarClick}
+          userName={userName}
+          password={password}
+          passwordConfirmation={passwordConfirmation}
+          email={email}
           handleButtonClick={this.handleNextClick}
           handleBackClick={this.handleBackClick}
           handleChange={this.handleChange}

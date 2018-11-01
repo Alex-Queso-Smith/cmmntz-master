@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Input } from '../FormComponents';
 import { ErrorClassValidation } from '../../../util/CoreUtil';
-import { AgeSlider, GenderSelector} from '../FormComponents';
+import { AgeSlider, GenderSelector, NukaCarousel as Carousel } from '../FormComponents';
 
 export const UserRegPageOne = props => {
 
@@ -121,7 +121,9 @@ export const UserRegPageThree = props => {
       <div className="form-group margin-top-10px">
         <label className="text-large" htmlFor="avatar">Avatar</label>
         <br />
-        Coming Soon
+        <Carousel
+          
+        />
       </div>
       <input type="hidden"/>
       <div className="form-group actions margin-top-10px">

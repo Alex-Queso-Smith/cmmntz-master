@@ -156,42 +156,43 @@ export const RadioButton = props => {
   );
 };
 
+export const Avatars = [
+  "boxing-glove",
+  "burger",
+  "butterfly",
+  "deer",
+  "female-superhero-0",
+  "male-superhero-0",
+  "female-superhero-1",
+  "male-superhero-1",
+  "female-superhero-2",
+  "male-superhero-2",
+  "female-superhero-3",
+  "male-superhero-3",
+  "female-wizard-0",
+  "male-wizard-0",
+  "female-wizard-1",
+  "male-wizard-1",
+  "female-wizard-2",
+  "male-wizard-2",
+  "fox",
+  "french-fries",
+  "gi",
+  "gorilla",
+  "hotdog",
+  "mouse",
+  "snail",
+  "male-zombie",
+  "female-zombie",
+  "taco",
+  "whale"
+]
+
 export const NukaCarousel = props => {
-  const Avatars = [
-    "boxing-glove",
-    "burger",
-    "butterfly",
-    "deer",
-    "female-superhero-0",
-    "male-superhero-0",
-    "female-superhero-1",
-    "male-superhero-1",
-    "female-superhero-2",
-    "male-superhero-2",
-    "female-superhero-3",
-    "male-superhero-3",
-    "female-wizard-0",
-    "male-wizard-0",
-    "female-wizard-1",
-    "male-wizard-1",
-    "female-wizard-2",
-    "male-wizard-2",
-    "fox",
-    "french-fries",
-    "gi",
-    "gorilla",
-    "hotdog",
-    "mouse",
-    "snail",
-    "male-zombie",
-    "female-zombie",
-    "taco",
-    "whale"
-  ]
 
   var avatarImages = Avatars.map((a) => {
     return(
-      <img onClick={props.onChange} name='avatar' value={`/assets/avatar-${a}`} key ={a} src={`/assets/avatar-${a}`} />
+      <img onClick={props.onChange} name={`/assets/avatar-${a}`} key ={a} src={`/assets/avatar-${a}`} />
     )
   })
 
@@ -208,5 +209,6 @@ export default {
   GenderSelector,
   Input,
   RadioButton,
-  NukaCarousel
+  NukaCarousel,
+  Avatars
 }
