@@ -77,8 +77,8 @@ export const UserRegPageTwo = props => {
       <GenderSelector
         name="gender"
         label="Gender"
-        onChange={props.onChange}
-        content={props.gender}
+        onChange={props.handleGenderChange}
+        value={props.gender}
       />
       <hr />
       <Input
@@ -114,15 +114,24 @@ export const UserRegPageTwo = props => {
 };
 
 export const UserRegPageThree = props => {
+  var selectedAvatar;
+  if (props.avatar) {
+    selectedAvatar =
+    <div className="text-center">
+      <img src={props.avatar} />
+    </div>
+  }
+
   return(
     <div id="reg-optional-2" className="form-group ">
       <h3 className="text-center">Sign-Up Optional Information 2/2 </h3>
       <hr />
       <div className="form-group margin-top-10px">
-        <label className="text-large" htmlFor="avatar">Avatar</label>
+        <label className="text-large text-center" htmlFor="avatar">Avatar</label>
+        {selectedAvatar}
         <br />
         <Carousel
-          
+          onChange={props.handleAvatarClick}
         />
       </div>
       <input type="hidden"/>
