@@ -213,11 +213,15 @@ class Comment extends React.Component {
     }
 
     if (!this.state.userTileHover) {
+      var avatarImage = '/assets/avatar-default';
+      if (this.props.userInfo.base_image) {
+        avatarImage = this.props.userInfo.base_image
+      }
       userTile =
       <div className="cf-comment-user-meta" onMouseEnter={this.onUserHover} onMouseLeave={this.onUserHover}>
         <div className="cf-comment-user-avatar">
           <span className="avatar-helper"></span>
-          <span className="avatar-image">[avatar here]</span>
+          <img className="avatar-image" src={avatarImage} />
         </div>
         <div className="cf-comment-user-name" >
           {userName}
