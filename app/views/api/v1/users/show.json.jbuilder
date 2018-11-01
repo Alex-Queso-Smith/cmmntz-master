@@ -8,4 +8,5 @@ json.user do
   json.font @user.font || "serif"
   json.avatar_image @user.base_image || ""
   json.color_theme @user.color_theme || "light"
+  json.base_image @user.base_image
 end
