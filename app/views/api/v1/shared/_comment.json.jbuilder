@@ -7,6 +7,7 @@ json.user do
   json.user_name comment_user_user_name(comment)
   json.gender comment_user_gender(comment)
   json.age_range comment_user_age_range(comment)
+  json.base_image comment_user_base_image(comment)
 end
 
 if comment.parent_id.nil?
