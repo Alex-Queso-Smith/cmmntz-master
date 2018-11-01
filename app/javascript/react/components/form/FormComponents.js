@@ -100,7 +100,12 @@ export const GenderSelector = props => {
   ];
 
   var genderButtons = genders.map((gender) => {
-    var translucency = props.value == gender[0] ? "" : "translucent"
+    var translucency;
+    if (gender[0] == "") {
+      translucency = props.value.length == 0 ? "" : "translucent"
+    } else {
+      translucency = parseInt(props.value) === parseInt(gender[0]) ? "" : "translucent"
+    }
     return(
       <GenderButton
         key={`gender-${gender[1]}`}
