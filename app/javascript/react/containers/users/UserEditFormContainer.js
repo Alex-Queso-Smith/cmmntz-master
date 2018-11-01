@@ -15,6 +15,7 @@ class UserEditFormContainer extends React.Component {
     gender: '',
     font: '',
     colorTheme: '',
+    avatar: '',
     saveErrors: {}
   }
 
@@ -33,8 +34,6 @@ class UserEditFormContainer extends React.Component {
     this.setState({
       [name]: value
     })
-
-
   }
 
   handleDeleteAccountClick(event){
@@ -85,7 +84,9 @@ class UserEditFormContainer extends React.Component {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-    debugger
+    console.log(target)
+    console.log(name)
+    console.log(value)
     this.setState({ [name]: value })
   }
 
@@ -110,7 +111,7 @@ class UserEditFormContainer extends React.Component {
 
   render(){
     var errorDiv, page, emailError, userNameError, passwordError, passwordConfirmationError;
-    var { saveErrors } = this.state
+    var { saveErrors, userName, password, passwordConfirmation, ageRange, gender, latitude, longitude, font, colorTheme, avatar, email } = this.state
 
     emailError = CreateErrorElements(saveErrors.email, "Email")
     userNameError = CreateErrorElements(saveErrors.user_name, "User Name")
@@ -125,10 +126,10 @@ class UserEditFormContainer extends React.Component {
           onChange={this.handleChange}
           handleSliderChange={this.handleSliderChange}
           handleThemeSelectorChange={this.handleThemeSelectorChange}
-          userName={this.state.userName}
-          password={this.state.password}
-          passwordConfirmation={this.state.passwordConfirmation}
-          email={this.state.email}
+          userName={userName}
+          password={password}
+          passwordConfirmation={passwordConfirmation}
+          email={email}
           handleButtonClick={this.handleNextClick}
           handleBackClick={this.handleBackClick}
           handleChange={this.handleChange}
@@ -136,12 +137,13 @@ class UserEditFormContainer extends React.Component {
           userNameError={userNameError}
           passwordError={passwordError}
           passwordConfirmationError={passwordConfirmationError}
-          ageRange={this.state.ageRange}
-          gender={this.state.gender}
-          latitude={this.state.latitude}
-          longitude={this.state.longitude}
-          font={this.state.font}
-          colorTheme={this.state.colorTheme}
+          ageRange={ageRange}
+          gender={gender}
+          latitude={latitude}
+          longitude={longitude}
+          font={font}
+          avatar={avatar}
+          colorTheme={colorTheme}
         />
 
         <div className="form-group actions margin-top-10px">

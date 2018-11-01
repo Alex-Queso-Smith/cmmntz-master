@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Input } from '../FormComponents';
 import { ErrorClassValidation } from '../../../util/CoreUtil';
-import { AgeSlider, GenderSelector } from '../FormComponents';
+import { AgeSlider, GenderSelector} from '../FormComponents';
 
 export const UserRegPageOne = props => {
 
@@ -12,6 +12,7 @@ export const UserRegPageOne = props => {
   emailClass = ErrorClassValidation(props.emailError);
   passwordClass = ErrorClassValidation(props.passwordError);
   passwordConfirmationClass = ErrorClassValidation(props.passwordConfirmationError);
+
 
   return(
     <div id="reg-required" className="form-group">

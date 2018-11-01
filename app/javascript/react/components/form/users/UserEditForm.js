@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Input } from '../FormComponents';
+import { Input, NukaCarousel as Carousel } from '../FormComponents';
 import { ErrorClassValidation } from '../../../util/CoreUtil';
 import { AgeRangeSelector, AgeSlider, GenderSelector } from '../FormComponents';
 import UserThemeSelector from '../UserThemeSelector';
@@ -79,9 +79,11 @@ const UserEditForm = props => {
       <div id="reg-optional-2" className="form-group ">
         <hr />
         <div className="form-group margin-top-10px">
-          <label className="text-large" htmlFor="avatar">Avatar</label>
+          <label className="text-large" htmlFor="avatar">Choose Your Avatar</label>
           <br />
-          Coming Soon
+          <Carousel
+            onChange={props.onChange}
+            />
         </div>
         <input type="hidden"/>
       </div>
