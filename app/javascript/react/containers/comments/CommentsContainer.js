@@ -4,6 +4,7 @@ import CommentsFormContainer from './CommentsFormContainer';
 import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
 import { FetchDidMount, SetStateWithValidation, FetchWithUpdate, FetchBasic, FetchIndividual } from '../../util/CoreUtil';
+import BasicModal from '../../components/general/BasicModal'
 
 class CommentsContainer extends React.Component {
   state = {
@@ -254,6 +255,9 @@ class CommentsContainer extends React.Component {
 
     return(
       <div>
+        <BasicModal
+          modalButtonText="Commenting Etiquette"
+        />
         <div>
           {totalComments} comments for this article
         </div>
