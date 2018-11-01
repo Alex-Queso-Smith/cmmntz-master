@@ -38,6 +38,8 @@ $bootstrap-blue: #0069D9;
           width: 100%;
           border-radius: 50%;
           vertical-align: middle;
+          // this may be the key to getting the avatar the way the user wants
+          // filter: brightness(0.5) sepia(1) saturate(10000%) hue-rotate(120deg);
         }
       }
       .cf-comment-user-name {
