@@ -193,7 +193,7 @@ export const NukaCarousel = props => {
 
   var avatarImages = Avatars.map((a) => {
     return(
-      <img onClick={props.onChange} name={`/assets/avatar-${a}`} key ={a} src={`/assets/avatar-${a}`} />
+      <img onClick={props.onChange} name={`${a}`} key ={a} src={`/assets/avatar-${a}`} />
     )
   })
 

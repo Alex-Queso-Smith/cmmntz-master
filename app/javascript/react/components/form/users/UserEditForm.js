@@ -16,7 +16,7 @@ const UserEditForm = props => {
     selectedAvatar =
     <div className="text-center">
       <h5>Selected Avatar</h5>
-      <img src={props.avatar} />
+      <img src={`/assets/avatar-${props.avatar}`} />
     </div>
   }
 

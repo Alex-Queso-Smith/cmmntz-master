@@ -118,7 +118,7 @@ export const UserRegPageThree = props => {
   if (props.avatar) {
     selectedAvatar =
     <div className="text-center">
-      <img src={props.avatar} />
+      <img src={`/assets/avatar-${props.avatar}`} />
     </div>
   }
 
