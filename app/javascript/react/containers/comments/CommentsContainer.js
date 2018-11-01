@@ -8,6 +8,10 @@ import BasicModal from '../../components/general/BasicModal'
 
 class CommentsContainer extends React.Component {
   state = {
+    userSettings: {
+      font: 'serif',
+      colorTheme: 'light'
+    },
     totalComments: 0,
     comments: [],
     userId: '',
@@ -65,6 +69,23 @@ class CommentsContainer extends React.Component {
 
       }
     }.bind(this), 50)
+  }
+
+  componentWillMount(){
+    var commentRoot = this.props.commentRoot
+    var userId = commentRoot.getAttribute('data-user-id')
+    if (userId.length > 0){
+      FetchDidMount(this, `/api/v1/users/${userId}.json`)
+      .then(body => {
+        var oldUserSettings = this.state.userSettings
+        oldUserSettings.font = body.user.font;
+        oldUserSettings.colorTheme = body.user.color_theme
+        this.setState({
+          userSettings: oldUserSettings
+        })
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
   }
 
   componentDidMount(){
@@ -251,10 +272,10 @@ class CommentsContainer extends React.Component {
   render(){
 
     var { commentRoot } = this.props;
-    var { totalComments, comments, commentFormErrors} = this.state;
+    var { totalComments, comments, commentFormErrors, userSettings} = this.state;
 
     return(
-      <div>
+      <div className={`cf-comments-main ${userSettings.font} ${userSettings.colorTheme}`}>
         <BasicModal
           modalButtonText="Commenting Etiquette"
           modalTitle="Commenting Etiquette"
