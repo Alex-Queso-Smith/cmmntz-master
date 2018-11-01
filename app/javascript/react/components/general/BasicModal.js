@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from './Modal'
 
 class BasicModal extends React.Component {
   constructor(props){
@@ -23,6 +24,13 @@ class BasicModal extends React.Component {
 
       return(
         <div>
+          <Modal
+            show={this.state.show}
+            handleClose={this.hideModal}
+            modalTitle={this.props.modalTitle}
+          >
+            {this.props.children}
+          </Modal>
           <button onClick={this.showModal} className="btn btn-light">
             {this.props.modalButtonText}
           </button>
