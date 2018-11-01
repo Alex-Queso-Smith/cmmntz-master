@@ -26,6 +26,14 @@ class UserNewFormContainer extends React.Component {
   handleBackClick = this.handleBackClick.bind(this);
   handleSliderChange = this.handleSliderChange.bind(this);
   handleAvatarClick = this.handleAvatarClick.bind(this);
+  handleGenderChange = this.handleGenderChange.bind(this);
+
+  handleGenderChange(event){
+    event.preventDefault();
+    const target = event.target;
+    const value = target.name;
+    this.setState({ gender: value })
+  }
 
   handleChange(event){
     const target = event.target;
@@ -79,7 +87,7 @@ class UserNewFormContainer extends React.Component {
       newUser.append("user[longitude]", this.state.longitude);
       newUser.append("user[email]", this.state.email);
       newUser.append("user[gender]", this.state.gender);
-      newUser.append("user[base_image]", this.state.base_image)
+      newUser.append("user[base_image]", this.state.avatar)
 
       FetchWithPush(this, '/api/v1/users.json', '/', 'POST', 'registrationErrors', newUser)
     }
@@ -129,6 +137,7 @@ class UserNewFormContainer extends React.Component {
         <UserRegPageTwo
           onChange={this.handleChange}
           handleSliderChange={this.handleSliderChange}
+          handleGenderChange={this.handleGenderChange}
           ageRange={this.state.ageRange}
           gender={this.state.gender}
           latitude={this.state.latitude}
@@ -141,6 +150,8 @@ class UserNewFormContainer extends React.Component {
         page =
         <UserRegPageThree
           handleBackClick={this.handleBackClick}
+          handleAvatarClick={this.handleAvatarClick}
+          avatar={this.state.avatar}
         />
       break;
     }

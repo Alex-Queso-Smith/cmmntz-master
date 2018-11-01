@@ -103,6 +103,7 @@ export const GenderSelector = props => {
 
   var genderButtons = genders.map((gender) => {
     var translucency;
+
     if (gender[0] == "") {
       translucency = props.value.length == 0 ? "" : "translucent"
     } else {
