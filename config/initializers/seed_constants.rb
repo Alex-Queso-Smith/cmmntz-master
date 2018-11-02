@@ -1,3 +1,5 @@
+SORTABLE_TYPES = ['top_count', 'love_count', 'like_score', 'smart_count', 'funny_count', 'comment_length']
+
 AVATARS = [
   "",
   "boxing-glove",
