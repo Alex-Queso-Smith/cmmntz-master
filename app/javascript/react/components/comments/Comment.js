@@ -5,6 +5,7 @@ import { FetchBasic, FetchWithUpdate } from '../../util/CoreUtil';
 import { Checkbox } from '../form/FormComponents';
 import Reply from './Reply';
 import UserInfoTile from './UserInfoTile';
+import VotingContainerBase from '../voting/VotingContainerBase';
 
 class Comment extends React.Component {
   constructor(props){
@@ -245,7 +246,15 @@ class Comment extends React.Component {
           </div>
         </div>
         <div className="cf-comment-voting">
-          Voting to move here
+          <VotingContainerBase
+            commentId={this.props.commentId}
+            commentRoot={this.props.commentRoot}
+            commentVotes={this.props.commentVotes}
+            votePercents={this.props.votePercents}
+            userVoted={this.props.userVoted}
+            handleDelayClick={this.props.handleDelayClick}
+            handleTopChange={this.props.handleTopChange}
+          />
         </div>
         {commentRepliesWrapper}
 

@@ -2,7 +2,6 @@ import React from 'react';
 
 import { FetchDidMount } from '../../util/CoreUtil';
 import { CommentLengthSorter } from '../../util/CommentUtil';
-import VotingContainerBase from '../../components/voting/VotingContainerBase'
 import Comment from '../../components/comments/Comment';
 
 class CommentsList extends React.Component {
@@ -37,18 +36,15 @@ class CommentsList extends React.Component {
               lengthImage={lengthImage}
               text={text}
               replies={replies}
-              artId={commentRoot.getAttribute('data-art-id')}
-              currentUserId={commentRoot.getAttribute('data-user-id')}
-              artType={commentRoot.getAttribute('data-art-type')}
-            />
-            <VotingContainerBase
-              commentId={id}
               commentRoot={commentRoot}
               commentVotes={current_users_votes}
               votePercents={vote_percents}
               userVoted={user_has_voted}
               handleDelayClick={handleDelayClick}
               handleTopChange={handleTopChange}
+              artId={commentRoot.getAttribute('data-art-id')}
+              currentUserId={commentRoot.getAttribute('data-user-id')}
+              artType={commentRoot.getAttribute('data-art-type')}
             />
             <hr />
           </div>
