@@ -213,41 +213,6 @@ class Comment extends React.Component {
       </div>
     }
 
-    if (!this.state.userTileHover) {
-      var avatarImage = '/assets/avatar-default';
-      if (this.props.userInfo.base_image) {
-        avatarImage = `/assets/avatar-${this.props.userInfo.base_image}`
-      }
-      userTile =
-      <div className="cf-comment-user-meta" onMouseEnter={this.onUserHover} onMouseLeave={this.onUserHover}>
-        <div className="cf-comment-user-avatar">
-          <span className="avatar-helper"></span>
-          <img className="avatar-image" src={avatarImage} />
-        </div>
-        <div className="cf-comment-user-name" >
-          {userName}
-        </div>
-      </div>
-    } else {
-      userTile =
-      <div className="cf-comment-user-meta" onMouseEnter={this.onUserHover} onMouseLeave={this.onUserHover}>
-        <div className="cf-comment-user-avatar">
-          <span className="avatar-helper"></span>
-        </div>
-        <div className="cf-comment-user-data" >
-          <div>
-            {`${userInfo.user_name}`}
-          </div>
-          <div>
-            {`${userInfo.gender}`}
-          </div>
-          <div>
-            {`${userInfo.age_range}`}
-          </div>
-        </div>
-      </div>
-    }
-
     return(
       <div className="cf-comment">
         <div className="cf-comment-wrapper">
