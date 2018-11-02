@@ -4,6 +4,7 @@ import Textarea from 'react-expanding-textarea'
 import { FetchBasic, FetchWithUpdate } from '../../util/CoreUtil';
 import { Checkbox } from '../form/FormComponents';
 import Reply from './Reply';
+import UserInfoTile from './UserInfoTile';
 
 class Comment extends React.Component {
   constructor(props){
@@ -250,9 +251,13 @@ class Comment extends React.Component {
     return(
       <div className="cf-comment">
         <div className="cf-comment-wrapper">
-
-          {userTile}
-
+          <UserInfoTile
+            userTileHover={this.state.userTileHover}
+            userInfo={this.props.userInfo}
+            onMouseEnter={this.onUserHover}
+            onMouseLeave={this.onUserHover}
+            userName={this.props.userName}
+          />
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta">
               <div className="cf-comment-length">
