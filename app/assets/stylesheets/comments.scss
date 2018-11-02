@@ -1,3 +1,105 @@
-// Place all the styles related to the comments controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$grayline: #D3D3D3;
+$bootstrap-blue: #0069D9;
+
+.cf-comment {
+
+  .cf-comment-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 150px;
+
+
+    .cf-comment-user-meta {
+      position: relative;
+      width: 15%;
+      min-height: 200px;
+      float: left;
+
+      .cf-comment-user-avatar {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        border: 1px solid $grayline;
+        border-radius: 50%;
+        height: 90%;
+        width: 100%;
+        white-space: nowrap;
+        text-align: center; margin: 1em 0;
+
+        .avatar-helper {
+          display: inline-block;
+          height: 100%;
+          vertical-align: middle;
+        }
+
+        .avatar-image {
+          height: 100%;
+          width: 100%;
+          border-radius: 50%;
+          vertical-align: middle;
+          // this may be the key to getting the avatar the way the user wants
+          // filter: brightness(0.5) sepia(1) saturate(10000%) hue-rotate(120deg);
+        }
+      }
+      .cf-comment-user-name {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 10%;
+        width: 100%;
+        text-align: center; margin: 1em 0;
+      }
+    }
+
+    .cf-comment-w-meta {
+      width: 83%;
+      min-height: 200px;
+      margin-left: 17%;
+
+      .cf-comment-comment-meta {
+        height: 15px;
+        .cf-comment-at {
+          float: right;
+        }
+        .cf-comment-length {
+          float: left;
+        }
+      }
+
+      .cf-comment-text {
+        border: 1px solid $grayline;
+        border-radius: 10px;
+        min-height: 35px;
+        padding: 15px;
+        margin: 10px 0 10px 0;
+      }
+    }
+    .cf-comment-voting {}
+  }
+}
+
+.cf-comment-replies-wrapper {
+  margin-left: 20px;
+
+  .cf-comment-replies {
+    border-left: 1px solid $grayline;
+    padding: 20px;
+  }
+}
+
+.cf-comment-user-data {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 10%;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 7em;
+}
+
+.cf-comment-text-area-edit {
+  padding: 15px;
+  margin: 10px 0 10px 0;
+  border: 1px solid $bootstrap-blue;
+}

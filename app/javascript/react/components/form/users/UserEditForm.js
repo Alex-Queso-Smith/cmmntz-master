@@ -1,16 +1,24 @@
 import React from 'react';
 
-import Input from '../Input';
+import { Input, NukaCarousel as Carousel } from '../FormComponents';
 import { ErrorClassValidation } from '../../../util/CoreUtil';
-import AgeRangeSelector from '../AgeRangeSelector';
-import GenderSelector from '../GenderSelector';
+import { AgeRangeSelector, AgeSlider, GenderSelector } from '../FormComponents';
+import UserThemeSelector from '../UserThemeSelector';
 
 const UserEditForm = props => {
 
-  var userNameClass, emailClass
+  var userNameClass, emailClass, selectedAvatar;
 
   userNameClass = ErrorClassValidation(props.userNameError);
   emailClass = ErrorClassValidation(props.emailError);
+
+  if (props.avatar) {
+    selectedAvatar =
+    <div className="text-center">
+      <h5>Selected Avatar</h5>
+      <img src={`/assets/avatar-${props.avatar}`} />
+    </div>
+  }
 
   return(
     <div>
@@ -36,19 +44,18 @@ const UserEditForm = props => {
       </div>
       <div id="reg-optional-1" className="form-group">
         <hr />
-        <AgeRangeSelector
+        <AgeSlider
           name="ageRange"
           label="Age Range"
-          onChange={props.onChange}
-          content={props.ageRange}
-          type="text"
+          onChange={props.handleSliderChange}
+          value={props.ageRange}
         />
         <hr />
         <GenderSelector
           name="gender"
           label="Gender"
-          onChange={props.onChange}
-          content={props.gender}
+          onChange={props.handleGenderChange}
+          value={props.gender}
         />
         <hr />
         <Input
@@ -69,13 +76,23 @@ const UserEditForm = props => {
           <input type="checkbox" className="custom-control-input" id='location-opt-out' autoComplete="off" />
           <label className="custom-control-label text-medium" htmlFor='location-opt-out' >None of Your Business</label>
         </div>
+
+        <hr />
+        <UserThemeSelector
+          onChange={props.handleThemeSelectorChange}
+          font={props.font}
+          colorTheme={props.colorTheme}
+        />
       </div>
       <div id="reg-optional-2" className="form-group ">
         <hr />
         <div className="form-group margin-top-10px">
-          <label className="text-large" htmlFor="avatar">Avatar</label>
+          <label className="text-large text-center" htmlFor="avatar">Choose Your Avatar</label>
           <br />
-          Coming Soon
+          {selectedAvatar}
+          <Carousel
+            onChange={props.handleAvatarClick}
+            />
         </div>
         <input type="hidden"/>
       </div>

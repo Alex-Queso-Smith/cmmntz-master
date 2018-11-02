@@ -4,3 +4,112 @@ $breakpoint-tablet: 768px;
     position: relative;
   }
 }
+
+#delete-account {
+  margin: 50px 0 20px 0;
+  padding: 20px 10% 20px 10%;
+  border-radius: 20px;
+  border: 2px solid red;
+
+  color: red;
+
+  h3 {
+    width: 100%;
+    text-align: center;
+  }
+
+  .warning-text {
+
+  }
+}
+/* AgeRangeSelector style */
+.cf-slider-label {
+  text-align: center;
+}
+
+.cf-age-image {
+  min-height: 50px
+}
+
+.slidecontainer {
+    width: 100%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+/* UserThemeSelector style */
+#theme-selector-options-wrapper {
+  position: relative;
+  width: 100%;
+
+  height: 80px;
+
+  select {
+    width: 90%;
+  }
+
+  #theme-selector-options-left {
+    width: 50%;
+    padding: 0 5% 0 5%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  #theme-selector-options-right {
+    width: 50%;
+    padding: 0 5% 0 5%;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+#theme-selector-demo-wrapper {
+  width: 100%;
+  height: 150px;
+  line-height: 150px;
+  text-align: center;
+  border: 1px solid #000;
+
+  div {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    padding: 10px;
+
+    font-size: 3em;
+  }
+}

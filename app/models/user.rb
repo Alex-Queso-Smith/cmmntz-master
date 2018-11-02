@@ -1,6 +1,19 @@
 class User < ApplicationRecord
   include AuthlogicValidations
 
+  # avatar settings v-attrs
+  vstr 'avatar', {
+    base_image: :string,
+    fg_color: :string,
+    bg_color: :string
+  }
+
+  # general settings v-attrs
+  vstr 'settings', {
+    color_theme: :string,
+    font: :string
+  }
+
   GENDERS = [0, 1, 2]
   DISPLAY_GENDERS = ["male", "other", "female"]
   AGES = [nil, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\
@@ -10,7 +23,7 @@ class User < ApplicationRecord
   has_many :comment_interactions
   has_many :comment_vote_tabulation, primary_key: 'id'
 
-  validates :user_name, presence: true, uniqueness: true
+  validates :user_name, presence: true, uniqueness: { case_sensitive: false }
 
   validates :gender, numericality: true, inclusion: { in: GENDERS }, unless: Proc.new { |u| u.gender.nil? }
   validates :age_range, numericality: true, inclusion: { in: AGES }, unless: Proc.new { |u| u.age_range.nil? }

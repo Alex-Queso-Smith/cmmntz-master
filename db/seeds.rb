@@ -2,7 +2,7 @@
 num_users = 100
 
 # set the number of articles we want in this pass
-num_articles = 1
+num_articles = 2
 time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
 puts "Starting process at #{Time.now}"
@@ -13,28 +13,24 @@ jesse = User.create(
   user_name: "Jesse",
   email: "J@gmail.com",
   password: "password",
-  password_confirmation: "password"
-)
-
-matt = User.create(
-  user_name: "Matt",
-  email: "M@gmail.com",
-  password: "password",
-  password_confirmation: "password"
+  password_confirmation: "password",
+  base_image: "butterfly"
 )
 
 alex = User.create(
   user_name: "Alex",
   email: "A@gmail.com",
   password: "password",
-  password_confirmation: "password"
+  password_confirmation: "password",
+  base_image: "gi"
 )
 
 aj = User.create(
   user_name: "AJ",
   email: "AJ@gmail.com",
   password: "password",
-  password_confirmation: "password"
+  password_confirmation: "password",
+  base_image: AVATARS.sample
 )
 
 # generate random users
@@ -48,7 +44,8 @@ while x <= num_users do
     password_confirmation: "password",
     email: "User#{x}@gmail.com",
     age_range: User::AGES.sample,
-    gender: User::GENDERS.sample
+    gender: User::GENDERS.sample,
+    base_image: AVATARS.sample
   )
   x += 1
 end
@@ -71,7 +68,7 @@ num_articles.times do
   time += rand(100..1000)
 
   # generate a random number of comments
-  num_comments = rand(30..600)
+  num_comments = rand(30..75)
   puts "generating #{num_comments} comments"
   num_comments.times do
     comment = Comment.create(
@@ -83,6 +80,24 @@ num_articles.times do
       updated_at: time,
       anonymous: [false, true].sample
     )
+
+    #generate random number of replies
+    num_replies = rand(-7..5)
+    if num_replies > 0
+      puts "generating #{num_replies} replies"
+      num_replies.times do
+        Comment.create(
+          user: users.sample,
+          art_id: article_one.id,
+          art_type: "article",
+          text: RANDOM_TEXT.sample,
+          created_at: time,
+          updated_at: time,
+          anonymous: [false, true].sample,
+          parent_id: comment.id
+        )
+      end
+    end
 
     # generate a random number of votes
     num_votes = rand(50)

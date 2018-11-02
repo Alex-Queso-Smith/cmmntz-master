@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Input from '../../components/form/Input';
-import Checkbox from '../../components/form/Checkbox';
+import { Input, Checkbox } from '../../components/form/FormComponents';
 import { FetchWithPush, CreateErrorElements, SetStateWithValidation } from '../../util/CoreUtil';
 
 class UserPasswordFormContainer extends React.Component {
@@ -30,7 +29,7 @@ class UserPasswordFormContainer extends React.Component {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-    
+
     if (
       this.state.password.length != 0 &&
       this.state.passwordConfirmation.length != 0
@@ -70,7 +69,7 @@ class UserPasswordFormContainer extends React.Component {
         />
         {passwordConfirmationError}
         <div className="form-group actions margin-top-10px">
-          <button id="login-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit" disabled={this.state.formInvalid}>
+          <button id="login-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit" disabled={this.state.formInvalid}>
             <span className="text-large">Update Password</span>
           </button>
         </div>

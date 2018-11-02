@@ -3,7 +3,11 @@ class Vote < ApplicationRecord
   EXCLUSIVE_VOTES = ['like_a_lot', 'like', 'indifferent', 'dislike', 'dislike_a_lot']
   TYPES = ['top', 'love'] + Vote::EXCLUSIVE_VOTES + ['trash', 'warn', 'smart', 'funny', 'happy', 'shocked', 'sad', 'boring', 'angry']
 
+  attr_accessor :force, :old_top_id
+
+
   belongs_to :user
+
   belongs_to :comment
   belongs_to :comment_vote_tabulation, primary_key: 'id', foreign_key: 'comment_id', optional: true
 
@@ -12,6 +16,7 @@ class Vote < ApplicationRecord
   validates :vote_type, presence: true, inclusion: { in: TYPES }
   validates :vote_type, uniqueness: { scope: [:user_id, :comment_id, :vote_type]}
   validate :vote_is_unique_from_exclusve_group
+  validate :deal_with_duplicate_top_votes
 
   after_create_commit :add_comment_interaction_for_comment_and_user!
 
@@ -29,6 +34,31 @@ class Vote < ApplicationRecord
     errors.add(:base) << "can not be from the exclusive group of #{EXCLUSIVE_VOTES.join(', ')}" if prev_votes.any?
   end
 
+  def deal_with_duplicate_top_votes
+    return unless comment
+    return unless vote_type == "top"
+
+    all_thread_comment_ids = Comment.select(:id).for_art_type_and_id(comment.art_type, comment.art_id).map(&:id)
+    top_votes_for_user = Vote.for_user_and_comment(user_id, all_thread_comment_ids).of_vote_type('top')
+
+    # if force flag passed or user is owner of prev comment:
+    # delete prev top votes for user for thread
+    comments_owned_by = top_votes_for_user.map(&:comment).flatten.map(&:user_id)
+
+    if (self.force == true || self.force == 'true') || (comments_owned_by.any? && comments_owned_by.first == user_id)
+      self.old_top_id = top_votes_for_user.first.comment.id if top_votes_for_user.first
+      top_votes_for_user.destroy_all
+
+      return
+    end
+
+    if top_votes_for_user.any?
+      c = top_votes_for_user.first.comment
+      errors.add(:base) << "You have already voted the following as top:\n\n #{c.text}\nWould you like to change your top vote for this thread?"
+      errors.add(:base) << c.id
+    end
+  end
+
   ### Preprocessors
 
   def normalize_vote_type
@@ -41,5 +71,4 @@ class Vote < ApplicationRecord
   def add_comment_interaction_for_comment_and_user!
     CommentInteraction.create_for_user_and_comment(self.user_id, self.comment_id)
   end
-
 end

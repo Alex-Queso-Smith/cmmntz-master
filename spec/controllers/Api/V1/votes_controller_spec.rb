@@ -45,6 +45,7 @@ RSpec.describe Api::V1::VotesController, type: :controller do
 
         it "includes the vote_type" do
           post :create, format: :json, params: {vote: valid_attributes}, session: valid_session
+          JSON.parse(response.body).inspect
           expect(JSON.parse(response.body)["vote_type"]).to eq(valid_attributes[:vote_type])
         end
       end
@@ -55,6 +56,7 @@ RSpec.describe Api::V1::VotesController, type: :controller do
           expect(response).to be_successful
         end
       end
+
     end
 
     describe "PUT #update" do

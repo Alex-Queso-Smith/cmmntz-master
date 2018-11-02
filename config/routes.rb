@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:show, :create, :update, :destroy]
       resources :user_sessions, only: [:new, :create, :destroy]
-      resources :comments, only: [:index, :create, :update, :destroy]
+      resources :comments, only: [:index, :show, :create, :update, :destroy]
       resources :comment_filters, only: [:create]
       resources :votes, only: [:create, :update, :destroy]
     end

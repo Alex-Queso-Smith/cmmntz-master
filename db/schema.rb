@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_171705) do
+ActiveRecord::Schema.define(version: 2018_11_01_135820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -42,8 +42,10 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "interactions_count", default: 0
+    t.uuid "parent_id"
     t.index ["art_id", "art_type"], name: "index_comments_on_art_id_and_art_type"
     t.index ["interactions_count"], name: "index_comments_on_interactions_count"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -55,11 +57,12 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
     t.integer "age_range", limit: 2
     t.float "latitude"
     t.float "longitude"
-    t.string "avatar"
+    t.text "avatar"
     t.integer "gender", limit: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email"
+    t.text "settings"
     t.index ["age_range"], name: "index_users_on_age_range"
     t.index ["gender"], name: "index_users_on_gender"
     t.index ["latitude", "longitude"], name: "index_users_on_latitude_and_longitude"
@@ -87,6 +90,7 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
       comments.created_at,
       comments.updated_at,
       comments.interactions_count,
+      comments.parent_id,
       char_length(comments.text) AS comment_length,
       sum(
           CASE
@@ -339,6 +343,7 @@ ActiveRecord::Schema.define(version: 2018_10_25_171705) do
           END)::numeric(5,4) AS like_score
      FROM (comments
        LEFT JOIN votes ON ((votes.comment_id = comments.id)))
+    WHERE (comments.parent_id IS NULL)
     GROUP BY comments.id;
   SQL
 

@@ -5,4 +5,8 @@ json.user do
   json.gender @user.gender || ""
   json.longitude @user.longitude || ""
   json.latitude @user.latitude || ""
+  json.font @user.font || "serif"
+  json.avatar_image @user.base_image || ""
+  json.color_theme @user.color_theme || "light"
+  json.base_image @user.base_image
 end

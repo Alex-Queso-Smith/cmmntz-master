@@ -70,5 +70,53 @@ RSpec.describe Comment, type: :model do
     it "should not create a comment_interaction with no votes" do
       expect{ comment.save }.to change(CommentInteraction, :count).by(0)
     end
+
+    context "top votes not self owned previous comment" do
+      let!(:comment2) { FactoryBot.create(:comment, art_id: comment.art_id) }
+      let!(:prev_top_vote) { FactoryBot.create(:vote, comment: comment2, user: comment.user, vote_type: "top") }
+
+      it "should not allow a duplicate top vote in the same thread without force" do
+        comment.vote_types = "top"
+        expect(comment).to_not be_valid
+      end
+
+      it "should allow a top vote in the same thread with force" do
+        comment.vote_types = "top"
+        comment.force = true
+        expect(comment).to be_valid
+      end
+    end
+
+    context "top votes self owned previous comment" do
+      let!(:comment2) { FactoryBot.create(:comment, art_id: comment.art_id, user: comment.user) }
+      let!(:prev_top_vote) { FactoryBot.create(:vote, comment: comment2, user: comment.user, vote_type: "top") }
+
+      it "should allow a top vote in the same thread without force" do
+        comment.vote_types = "top"
+        expect(comment).to be_valid
+      end
+    end
+  end
+
+  describe "replies " do
+    let!(:comment) { FactoryBot.create(:comment) }
+    let!(:comment_with_replies) { FactoryBot.create(:comment_with_replies, replies_count: 4) }
+
+    context "when it is a parent" do
+      it "should return [] when it has no replies" do
+        expect(comment.replies).to eq([])
+      end
+
+      it "should return its replies" do
+        expect(comment_with_replies.replies.size).to eq(4)
+      end
+    end
+
+    context "when it is a reply" do
+      it "should return its parent" do
+        reply1 = comment_with_replies.replies.first
+        expect(reply1.parent_id).to eq(comment_with_replies.id)
+      end
+    end
   end
 end

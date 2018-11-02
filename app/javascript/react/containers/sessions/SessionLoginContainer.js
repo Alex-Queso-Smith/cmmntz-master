@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Input from '../../components/form/Input';
-import Checkbox from '../../components/form/Checkbox';
+import { Input, Checkbox } from '../../components/form/FormComponents';
 import { FetchWithPush, CreateErrorElements, SetStateWithValidation } from '../../util/CoreUtil';
 
 
@@ -77,7 +76,7 @@ class SessionLoginContainer extends React.Component {
           onChange={this.handleChange}
         />
         <div className="form-group actions margin-top-10px">
-          <button id="login-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit" disabled={this.state.formInvalid}>
+          <button id="login-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit" disabled={this.state.formInvalid}>
             <span className="text-large">Login</span>
           </button>
         </div>

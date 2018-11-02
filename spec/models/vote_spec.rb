@@ -66,6 +66,64 @@ RSpec.describe Vote, type: :model do
         vote2 = FactoryBot.build_stubbed(:vote, comment: comment, user: user, vote_type: "warn")
         expect(vote2).to be_valid
       end
+
+      describe "when it is a top vote" do
+        context "when no other top vote exists for the user in the thread" do
+          it "should allow the top vote" do
+            vote = FactoryBot.build(:vote)
+            expect(vote).to be_valid
+          end
+        end
+
+        context "when another top vote exists for the user in the thread" do
+          context "when the user owns the 1st comment " do
+            let!(:user) {FactoryBot.create(:user)}
+            let!(:comment1) {FactoryBot.create(:comment, user: user)}
+            let!(:top_vote1) {FactoryBot.create(:vote, comment: comment1, user: user, vote_type: "top")}
+            let!(:comment2) {FactoryBot.create(:comment)}
+
+            it "should remove the vote from the prev comment" do
+              new_top = FactoryBot.create(:vote, comment: comment2, user: user, vote_type: "top")
+              comment1.reload
+              expect(comment1.votes.of_vote_type('top').size).to eq(0)
+            end
+
+            it "should change the top vote to the new one" do
+              new_top = FactoryBot.create(:vote, comment: comment2, user: user, vote_type: "top")
+              comment1.reload
+              comment2.reload
+              expect(comment1.votes.of_vote_type('top').size).to eq(0)
+            end
+          end
+
+          context "when the user does not own the 1st comment " do
+            let!(:comment_user) {FactoryBot.create(:user)}
+            let!(:vote_user) {FactoryBot.create(:user)}
+            let!(:comment1) {FactoryBot.create(:comment, user: comment_user)}
+            let!(:top_vote1) {FactoryBot.create(:vote, comment: comment1, user: vote_user, vote_type: "top")}
+            let!(:comment2) {FactoryBot.create(:comment, user: comment_user)}
+
+            it "should not allow the top vote if force is not passed" do
+              new_top = FactoryBot.build(:vote, comment: comment2, user: vote_user, vote_type: "top")
+              expect(new_top).to_not be_valid
+            end
+
+            it "should remove the vote from the prev if force is passed" do
+              new_top = FactoryBot.create(:vote, comment: comment2, user: vote_user, vote_type: "top", force: true)
+              comment1.reload
+              expect(comment1.votes.of_vote_type('top').size).to eq(0)
+            end
+
+            it "should vote 'top' on the new comment if force is passed" do
+              new_top = FactoryBot.create(:vote, comment: comment2, user: vote_user, vote_type: "top", force: true)
+              comment1.reload
+              comment2.reload
+              expect(comment2.votes.of_vote_type('top').size).to eq(1)
+            end
+          end
+
+        end
+      end
     end
   end
 

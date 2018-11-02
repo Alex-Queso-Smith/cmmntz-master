@@ -1,12 +1,11 @@
 import React from 'react'
+import Textarea from 'react-expanding-textarea'
 
-import Input from '../../components/form/Input';
+import { Input, Checkbox } from '../../components/form/FormComponents';
+import VoteButtonRowOne from '../../components/voting/VoteButtonRowOne';
 import { CreateErrorElements, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
 import { Timeout } from '../../util/CommentUtil';
 import { ImageSelector } from '../../util/VoteUtil';
-import Checkbox from '../../components/form/Checkbox';
-import VoteButton from '../../components/voting/VoteButton';
-import Textarea from 'react-expanding-textarea'
 
 class CommentsFormContainer extends React.Component {
   state = {
@@ -51,8 +50,7 @@ class CommentsFormContainer extends React.Component {
   handleFormSubmit(event){
     var { text, anonymous, formInvalid, selfVotes } = this.state
 
-    this.props.handleSubmit(event, text, anonymous, formInvalid, selfVotes)
-    this.handleClear();
+    this.props.handleSubmit(event, text, anonymous, formInvalid, selfVotes, this.handleClear)
   }
 
   handleClear(){
@@ -85,7 +83,7 @@ class CommentsFormContainer extends React.Component {
         }
 
         return(
-          <VoteButton
+          <VoteButtonRowOne
             key={type}
             name={type}
             visibility={"margin-top-10px"}
@@ -106,7 +104,7 @@ class CommentsFormContainer extends React.Component {
               placeholder="Type your comment here"
               value={this.state.text}
               onChange={ this.handleChange }
-              rows={8}
+              rows={7}
               />
             <div className="col-sm-2">
               {selfVoteButtons}
@@ -120,7 +118,7 @@ class CommentsFormContainer extends React.Component {
             className="row"
           />
           <div className="form-group actions margin-top-10px row">
-            <button id="comments-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit" disabled={formInvalid}>
+            <button id="comments-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit" disabled={formInvalid}>
               <span className="text-large">Submit Comment</span>
             </button>
           </div>

@@ -11,13 +11,19 @@ class Api::V1::CommentsController < ApiController
     @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comments.map(&:id))
   end
 
+  def show
+    @comment = CommentVoteTabulation.where(id: params[:id]).first
+    @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
+    @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
+  end
+
   # POST /comments
   # POST /comments.json
   def create
     @comment = Comment.new(comment_params)
 
     if @comment.save
-      redirect_to api_v1_comments_path(art_type: comment_params[:art_type], art_id: comment_params[:art_id] )
+      redirect_to api_v1_comments_path(art_type: @comment.art_type, art_id: @comment.art_id, old_top_id: @comment.old_top_id)
     else
       render json: { errors: @comment.errors, status: :unprocessable_entity }
     end
@@ -51,6 +57,6 @@ class Api::V1::CommentsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:user_id, :art_id, :art_type, :text, :anonymous, :vote_types)
+      params.require(:comment).permit(:user_id, :art_id, :art_type, :text, :anonymous, :vote_types, :parent_id, :force, :old_top_id)
     end
 end

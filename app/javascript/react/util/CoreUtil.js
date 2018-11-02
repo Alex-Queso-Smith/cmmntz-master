@@ -78,6 +78,23 @@ export const FetchBasic = (object, path, payload, method) => {
    .then(response => response.json())
 }
 
+export const FetchIndividual = (object, path, method) => {
+  return fetch(path, {
+    method: method,
+    credentials: 'same-origin'
+  })
+  .then(response => {
+     if(response.ok){
+       return response
+     } else {
+       let errorMessage = `${response.status} (${response.statusText})`,
+           error = new Error(errorMessage)
+       throw(error)
+     }
+   })
+   .then(response => response.json())
+}
+
 export const FetchDeleteBasic = (object, path) => {
   return fetch(path, {
     method: 'DELETE',
@@ -86,6 +103,25 @@ export const FetchDeleteBasic = (object, path) => {
   .then(response => {
      if(response.ok){
        return response
+     } else {
+       let errorMessage = `${response.status} (${response.statusText})`,
+           error = new Error(errorMessage)
+       throw(error)
+     }
+   })
+   .then(response => response.json())
+}
+
+export const FetchDeleteBasicWithPush = (object, path, push) => {
+  return fetch(path, {
+    method: 'DELETE',
+    credentials: 'same-origin'
+  })
+  .then(response => {
+     if(response.ok){
+       if (push != '') {
+         object.props.history.push(push)
+       }
      } else {
        let errorMessage = `${response.status} (${response.statusText})`,
            error = new Error(errorMessage)
@@ -128,5 +164,6 @@ export default {
   ErrorClassValidation,
   FetchWithUpdate,
   FetchBasic,
-  FetchDeleteBasic
+  FetchDeleteBasic,
+  FetchDeleteBasicWithPush
 }

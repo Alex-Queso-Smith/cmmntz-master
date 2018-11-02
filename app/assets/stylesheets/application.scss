@@ -1,6 +1,77 @@
 @import "bootstrap";
 @import "/\*";
 
+$light-base: #fff;
+$light: #fff;
+$light-grayline: #D3D3D3;
+
+$dark-base: #7A7A7A;
+$dark: #7A7A7A;
+$dark-grayline: #D3D3D3;
+
+.clear {
+  clear: both;
+}
+
+.translucent {
+  opacity: .25;
+}
+
 .visibility-hidden {
   visibility: hidden;
+}
+
+#cf-comments-app {
+  width: 100%;
+}
+.cf-comments-main {
+  width: 100%;
+}
+
+.cf-modal-locked {
+  overflow: hidden;
+}
+
+.serif {
+  font-family: "Times New Roman", Times, serif;
+
+  p {
+    font-family: "Times New Roman", Times, serif;
+  }
+}
+
+.sans-serif {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+
+  p {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+  }
+}
+
+.light {
+  background: $light-base;
+
+  div, p {
+    // background-color: $light;
+    color: #000;
+  }
+
+  .bordered {
+    border: 1px solid $light-grayline;
+    border-radius: 10px;
+  }
+}
+
+.dark {
+  background-color: $dark-base;
+
+  div, p {
+    background-color: $dark;
+    color: #fff;
+  }
+
+  .bordered {
+    border: 1px solid $dark-grayline;
+    border-radius: 10px;
+  }
 }

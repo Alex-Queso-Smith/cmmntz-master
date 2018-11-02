@@ -1,3 +1,36 @@
+AVATARS = [
+  "",
+  "boxing-glove",
+  "burger",
+  "butterfly",
+  "deer",
+  "female-superhero-0",
+  "male-superhero-0",
+  "female-superhero-1",
+  "male-superhero-1",
+  "female-superhero-2",
+  "male-superhero-2",
+  "female-superhero-3",
+  "male-superhero-3",
+  "female-wizard-0",
+  "male-wizard-0",
+  "female-wizard-1",
+  "male-wizard-1",
+  "female-wizard-2",
+  "male-wizard-2",
+  "fox",
+  "french-fries",
+  "gi",
+  "gorilla",
+  "hotdog",
+  "mouse",
+  "snail",
+  "male-zombie",
+  "female-zombie",
+  "taco",
+  "whale"
+]
+
 RANDOM_TEXT =[
   "Increasing impression interested expression he my at. Respect invited request charmed me warrant to. Expect no pretty as do though so genius afraid cousin. Girl when of ye snug poor draw. Mistake totally of in chiefly. Justice visitor him entered for. Continue delicate as unlocked entirely mr relation diverted in. Known not end fully being style house. An whom down kept lain name so at easy.
   Increasing impression interested expression he my at. Respect invited request charmed me warrant to. Expect no pretty as do though so genius afraid cousin. Girl when of ye snug poor draw. Mistake totally of in chiefly. Justice visitor him entered for. Continue delicate as unlocked entirely mr relation diverted in. Known not end fully being style house. An whom down kept lain name so at easy.
