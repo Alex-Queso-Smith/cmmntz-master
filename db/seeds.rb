@@ -82,7 +82,7 @@ num_articles.times do
     )
 
     #generate random number of replies
-    num_replies = rand(-7..5)
+    num_replies = rand(-7..10)
     if num_replies > 0
       puts "generating #{num_replies} replies"
       num_replies.times do
