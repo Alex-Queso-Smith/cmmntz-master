@@ -11,7 +11,7 @@ puts "Starting process at #{Time.now}"
 puts "generating staff accounts"
 jesse = User.create(
   user_name: "Jesse",
-  email: "J@gmail.com",
+  email: "jesse@classifilter.com",
   password: "password",
   password_confirmation: "password",
   base_image: "butterfly"
@@ -19,7 +19,7 @@ jesse = User.create(
 
 alex = User.create(
   user_name: "Alex",
-  email: "A@gmail.com",
+  email: "aj@classifilter.com",
   password: "password",
   password_confirmation: "password",
   base_image: "gi"
@@ -27,10 +27,10 @@ alex = User.create(
 
 aj = User.create(
   user_name: "AJ",
-  email: "AJ@gmail.com",
+  email: "alex@classifilter.com",
   password: "password",
   password_confirmation: "password",
-  base_image: AVATARS.sample
+  base_image: "boxing-glove"
 )
 
 # generate random users
@@ -119,9 +119,24 @@ num_articles.times do
       end
     end
     time += rand(5).minutes
-
-    iter+=1
   end
+  # add some text to the most x comments based on counts
+  SORTABLE_TYPES.each do |type|
+    puts "Determining most #{type} comment for #{article_one.title}"
+    filter_opts = {sort_dir: 'desc', sort_type: type}
+    most_comment_tab = CommentVoteTabulation.filter_and_sort(article_one.id, "article", filter_opts, 1).first
+
+    if most_comment_tab
+      most_comment = Comment.find(most_comment_tab.id)
+      most_comment.text += " This is the comment with the highest #{type.titleize}."
+      most_comment.save
+    end
+
+  end
+
+
+
+  iter+=1
 end
 time_end = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 puts "Finishing process at #{Time.now}"
