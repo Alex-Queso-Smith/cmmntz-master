@@ -49,7 +49,7 @@ class Comment extends React.Component {
   handleCancelClick(){
     this.setState({
       edit: false,
-      text: this.state.text
+      text: this.props.text
     })
   }
 
