@@ -15,15 +15,13 @@ class CommentsList extends React.Component {
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
-      
+
         var { user_name, gender, age_range, user_id} = comment.user
         var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted } = comment
         var userName, commentLength;
         var lengthImage = CommentLengthSorter(text)
 
-        if (user_name == '') {
-          userName = "Anonymous"
-        } else {
+        if (user_name) {
           userName = `${user_name}`
         }
 

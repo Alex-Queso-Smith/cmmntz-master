@@ -57,14 +57,19 @@ export const AgeSlider = props => {
     if (ageRange === "60+") {
       ageImage =
       <div className="cf-age-image">
-        <img src={`/assets/60-plus.png`}></img>
+        <img src={`/assets/60-plus.png`} />
       </div>
     } else {
       ageImage =
       <div className="cf-age-image">
-        <img src={`/assets/${ageRange}.png`}></img>
+        <img src={`/assets/${ageRange}`} />
       </div>
     }
+  } else {
+    ageImage =
+    <div className="cf-age-image">
+      <img src={`/assets/age-range-none.png`} />
+    </div>
   }
 
   return(

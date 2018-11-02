@@ -1,40 +1,52 @@
 import React from 'react';
 
-const Reply = props => {
-  var userInfo;
+import UserInfoTile from './UserInfoTile';
 
-  if (props.user.user_name == '') {
-    userInfo = "Anonymous"
-  } else {
-    userInfo = `${props.user.user_name} - ${props.user.gender} - ${props.user.age_range}`
+class Reply extends React.Component {
+  state = {
+    userTileHover: false
+  }
+  
+  onUserHover = this.onUserHover.bind(this);
+
+  onUserHover(){
+    this.setState({ userTileHover: !this.state.userTileHover })
   }
 
-  return(
-    <div className="cf-comment cf-comment-reply margin-top-10px">
-      <div className="cf-comment-wrapper">
-        <div className="cf-comment-user-meta">
-          <div className="cf-comment-user-avatar">
-            <span className="avatar-helper"></span>
-            <span className="avatar-image">[avatar here]</span>
-          </div>
-          <div className="cf-comment-user-name">
-            {userInfo}
-          </div>
-        </div>
+  render(){
+    var userInfo;
 
-        <div className="cf-comment-w-meta">
-          <div className="cf-comment-comment-meta">
-            <div className="cf-comment-at" >
-              {props.posted}
+    if (this.props.user.user_name == '') {
+      userInfo = "Anonymous"
+    } else {
+      userInfo = `${this.props.user.user_name} - ${this.props.user.gender} - ${this.props.user.age_range}`
+    }
+
+    return(
+      <div className="cf-comment cf-comment-reply margin-top-10px">
+        <div className="cf-comment-wrapper">
+
+          <UserInfoTile
+            userTileHover={this.state.userTileHover}
+            userInfo={this.props.user}
+            onMouseEnter={this.onUserHover}
+            onMouseLeave={this.onUserHover}
+            userName={this.props.user.user_name}
+            />
+          <div className="cf-comment-w-meta">
+            <div className="cf-comment-comment-meta">
+              <div className="cf-comment-at" >
+                {this.props.posted}
+              </div>
             </div>
-          </div>
-          <div className="cf-comment-text" >
-            {props.reply}
+            <div className="cf-comment-text" >
+              {this.props.reply}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default Reply;
