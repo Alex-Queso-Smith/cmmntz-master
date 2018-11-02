@@ -14,7 +14,7 @@ jesse = User.create(
   email: "J@gmail.com",
   password: "password",
   password_confirmation: "password",
-  base_image: AVATARS.sample
+  base_image: "butterfly"
 )
 
 alex = User.create(
@@ -22,7 +22,7 @@ alex = User.create(
   email: "A@gmail.com",
   password: "password",
   password_confirmation: "password",
-  base_image: AVATARS.sample
+  base_image: "gi"
 )
 
 aj = User.create(
