@@ -78,11 +78,11 @@ export const VoteClick = (object, event) => {
   }
 }
 
-export const ImageSelector = (type, state) => {
+export const ImageSelector = (type) => {
   if (type === "blank1" || type === 'blank2') {
     return ''
   } else {
-    return `/assets/${type}.${state}.png`
+    return `/assets/${type}.png`
   }
 }
 
@@ -116,10 +116,19 @@ export const RowTwoVoteTypes = [
   ["blank2", "blank2"]
 ]
 
+const OpacityHandler = (selectedVotes, type) => {
+  if(selectedVotes[type]){
+    return ""
+  } else {
+    return "translucent"
+  }
+}
+
 export const RowOneVoteButtons = (object) => {
   return RowOneVoteTypes.map((type) => {
     var visibility, image, percentage;
     var { userVoted, percentShow, votePercents, selectedVotes } = object.state
+    var opacity = OpacityHandler(selectedVotes, type[0]);
 
     if ( userVoted && percentShow ) {
       percentage = `%${votePercents[type[0]]}`
@@ -132,10 +141,11 @@ export const RowOneVoteButtons = (object) => {
     }
 
     if (selectedVotes[type[0]]) {
-      image = ImageSelector(type[0], 'Selected')
+      image = ImageSelector(type[0])
     } else {
-      image = ImageSelector(type[0], 'Unselected')
+      image = ImageSelector(type[0])
     }
+
 
     return(
       <VoteButtonRowOne
@@ -145,6 +155,7 @@ export const RowOneVoteButtons = (object) => {
         label={type[1]}
         onClick={object.handleClickVote}
         visibility={visibility}
+        opacity={opacity}
         percentage={percentage}
         image={image}
         />
@@ -156,6 +167,7 @@ export const RowTwoVoteButtons = (object) => {
   return RowTwoVoteTypes.map((type) => {
     var visibility, image, percentage;
     var { userVoted, percentShow, votePercents, selectedVotes } = object.state
+    var opacity = OpacityHandler(selectedVotes, type[0])
 
     if ( // show percentage if user has voted and div is not blank
       userVoted &&
@@ -175,9 +187,9 @@ export const RowTwoVoteButtons = (object) => {
 
     // select image for button based on type
     if (selectedVotes[type[0]]) {
-      image = ImageSelector(type[0], 'Selected')
+      image = ImageSelector(type[0])
     } else {
-      image = ImageSelector(type[0], 'Unselected')
+      image = ImageSelector(type[0])
     }
 
     return(
@@ -188,6 +200,7 @@ export const RowTwoVoteButtons = (object) => {
         label={type[1]}
         onClick={object.handleClickVote}
         visibility={visibility}
+        opacity={opacity}
         percentage={percentage}
         image={image}
         />

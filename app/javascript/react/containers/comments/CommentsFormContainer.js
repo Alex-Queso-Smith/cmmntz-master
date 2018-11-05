@@ -6,6 +6,7 @@ import VoteButtonRowOne from '../../components/voting/VoteButtonRowOne';
 import { CreateErrorElements, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
 import { Timeout } from '../../util/CommentUtil';
 import { ImageSelector } from '../../util/VoteUtil';
+import { OpacityHandlerIncludes } from '../../util/FilterUtil';
 
 class CommentsFormContainer extends React.Component {
   state = {
@@ -75,17 +76,14 @@ class CommentsFormContainer extends React.Component {
 
     var selfVoteButtons =
       SelfVoteButtonTypes.map((type) => {
-        var image;
-        if (selfVotes.includes(type)) {
-          image = ImageSelector(type, "Selected")
-        } else {
-          image = ImageSelector(type, "Unselected")
-        }
+        var image = ImageSelector(type)
+        var opacity = OpacityHandlerIncludes(selfVotes, type)
 
         return(
           <VoteButtonRowOne
             key={type}
             name={type}
+            opacity={opacity}
             visibility={"margin-top-10px"}
             image={image}
             onClick={this.handleSelfVoteClick}

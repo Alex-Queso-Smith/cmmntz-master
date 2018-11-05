@@ -10,6 +10,7 @@ class CommentFilters extends React.Component {
     var sortButtons = SortButtons(this)
     var filterButtonsRowOne = FilterButtonsRowOne(this)
     var filterButtonsRowTwo = FilterButtonsRowTwo(this)
+
     return(
       <div className="cf-filter-block">
         <h4>Sort</h4>
@@ -19,7 +20,7 @@ class CommentFilters extends React.Component {
           <SortDir
             value={this.props.sortOpts.sortDir}
             onClick={this.props.handleSortDirClick}
-            image={ImageSelector(this.props.sortOpts.sortDir, 'Selected')}
+            image={ImageSelector(this.props.sortOpts.sortDir)}
           />
         </div>
 
