@@ -8,7 +8,7 @@ import { Timeout } from '../../util/CommentUtil';
 import { ImageSelector } from '../../util/VoteUtil';
 import { OpacityHandlerIncludes } from '../../util/FilterUtil';
 
-class CommentsFormContainer extends React.Component {
+class CommentFormContainer extends React.Component {
   state = {
     text: '',
     anonymous: false,
@@ -128,4 +128,4 @@ class CommentsFormContainer extends React.Component {
   }
 }
 
-export default CommentsFormContainer;
+export default CommentFormContainer;

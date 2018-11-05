@@ -62,8 +62,6 @@ class VotingContainerBase extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-
-
   handleUpdate(payload, id){
     FetchBasic(this, `/api/v1/votes/${id}.json`, payload, 'PATCH')
     .then(body => {
