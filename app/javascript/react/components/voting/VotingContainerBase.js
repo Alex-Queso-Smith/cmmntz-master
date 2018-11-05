@@ -31,10 +31,10 @@ class VotingContainerBase extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    if ( prevState.selectedVotes.top != this.state.selectedVotes.top ) {
-      FetchDidMount(this, `/api/v1/comments/${this.props.commentId}.json`)
-      .then(body => {debugger})
-    }
+    // if ( prevProps.selectedVotes.top != this.state.selectedVotes.top ) {
+    //   FetchDidMount(this, `/api/v1/comments/${this.props.commentId}.json`)
+    //   .then(body => {debugger})
+    // }
   }
 
   handlePost(payload){
