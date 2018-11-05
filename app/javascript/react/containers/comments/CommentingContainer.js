@@ -3,7 +3,7 @@ import React from 'react';
 import CommentsFormContainer from './CommentsFormContainer';
 import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
-import { FetchDidMount, SetStateWithValidation, FetchWithUpdate, FetchBasic, FetchIndividual } from '../../util/CoreUtil';
+import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual } from '../../util/CoreUtil';
 import CommentEtiquette from '../../components/modals/CommentEtiquette'
 
 class CommentsContainer extends React.Component {

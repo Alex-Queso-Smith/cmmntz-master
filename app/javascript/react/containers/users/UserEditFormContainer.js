@@ -33,9 +33,8 @@ class UserEditFormContainer extends React.Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    this.setState({
-      [name]: value
-    })
+    
+    this.setState({ [name]: value })
   }
 
   handleDeleteAccountClick(event){

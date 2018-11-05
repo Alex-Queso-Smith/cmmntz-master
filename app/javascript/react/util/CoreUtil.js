@@ -141,11 +141,16 @@ export const CreateErrorElements = (errors, name) => {
   }
 }
 
-export const SetStateWithValidation = (object, valid, name, value) => {
-  object.setState({
-    formInvalid: valid,
-    [name]: value
+export const CheckInputValidation = (object, state) => {
+  var valid = false;
+
+  state.forEach((item) => {
+    if (item.length === 0) {
+      valid = true
+    }
   })
+
+  object.setState({ formInvalid: valid })
 }
 
 export const ErrorClassValidation = (error) => {
@@ -160,7 +165,7 @@ export default {
   CreateErrorElements,
   FetchDidMount,
   FetchWithPush,
-  SetStateWithValidation,
+  CheckInputValidation,
   ErrorClassValidation,
   FetchWithUpdate,
   FetchBasic,

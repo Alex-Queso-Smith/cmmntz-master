@@ -3,7 +3,7 @@ import Textarea from 'react-expanding-textarea'
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
 import VoteButtonRowOne from '../../components/voting/VoteButtonRowOne';
-import { CreateErrorElements, SetStateWithValidation, FetchWithUpdate } from '../../util/CoreUtil';
+import { CreateErrorElements, CheckInputValidation, FetchWithUpdate } from '../../util/CoreUtil';
 import { Timeout } from '../../util/CommentUtil';
 import { ImageSelector } from '../../util/VoteUtil';
 import { OpacityHandlerIncludes } from '../../util/FilterUtil';
@@ -21,16 +21,18 @@ class CommentsFormContainer extends React.Component {
   handleClear = this.handleClear.bind(this);
   handleSelfVoteClick = this.handleSelfVoteClick.bind(this);
 
+  componentDidUpdate(prevProps, prevState){
+    if (prevState.text != this.state.text) {
+      CheckInputValidation(this, [this.state.text])
+    }
+  }
+
   handleChange(event){
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    if (this.state.text.length != 0) {
-      SetStateWithValidation(this, false, name, value)
-    } else {
-      SetStateWithValidation(this, true, name, value)
-    }
+    this.setState({ [name]: value })
   }
 
   handleSelfVoteClick(event){
