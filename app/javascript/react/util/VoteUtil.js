@@ -207,13 +207,3 @@ export const RowTwoVoteButtons = (object) => {
     )
   })
 }
-
-export default {
-  VoteClick,
-  ImageSelector,
-  RowOneVoteTypes,
-  RowTwoVoteTypes,
-  AlwaysVisible,
-  RowOneVoteButtons,
-  RowTwoVoteButtons
-}

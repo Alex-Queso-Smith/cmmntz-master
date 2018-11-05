@@ -24,7 +24,7 @@ export const SortTypes = [
 export const SortButtons = (object) => {
   var { sortDir, sortType } = object.props.sortOpts
   var opacity;
-  
+
   return SortTypes.map((type) => {
     var image = ImageSelector(type[1])
 
@@ -84,6 +84,7 @@ export const RowTwoFilterTypes = [
   ["angry", "Angry"],
   ["blank2", "blank2"]
 ]
+
 export const FilterButtonsRowTwo = (object) => {
   return RowTwoFilterTypes.map((type) => {
     var visibility;
@@ -107,15 +108,4 @@ export const FilterButtonsRowTwo = (object) => {
         />
     )
   })
-}
-
-
-
-export default {
-  SortTypes,
-  RowOneFilterTypes,
-  RowTwoFilterTypes,
-  SortButtons,
-  FilterButtonsRowOne,
-  FilterButtonsRowTwo
 }

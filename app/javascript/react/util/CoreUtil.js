@@ -160,15 +160,3 @@ export const ErrorClassValidation = (error) => {
     "valid"
   }
 }
-
-export default {
-  CreateErrorElements,
-  FetchDidMount,
-  FetchWithPush,
-  CheckInputValidation,
-  ErrorClassValidation,
-  FetchWithUpdate,
-  FetchBasic,
-  FetchDeleteBasic,
-  FetchDeleteBasicWithPush
-}
