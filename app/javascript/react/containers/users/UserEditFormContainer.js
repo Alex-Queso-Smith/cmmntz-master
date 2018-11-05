@@ -33,7 +33,7 @@ class UserEditFormContainer extends React.Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    
+
     this.setState({ [name]: value })
   }
 
@@ -42,7 +42,7 @@ class UserEditFormContainer extends React.Component {
     var confirm1 = confirm("Are you sure you wish to delete your account?");
     if (confirm1 == true) {
       var confirm2 = confirm("Are you REALLY certain that you wish to delete your account?\n\nOnce you do this, there is no going back.");
-      if (confirm2){
+      if (confirm2 == true){
         FetchDeleteBasicWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/login')
       }
     }
