@@ -102,10 +102,10 @@ class VotingContainerBase extends React.Component {
 
     return(
       <div className="cf-votes-container margin-top-10px container" >
-        <div className="cf-votes-top-row row">
+        <div className="cf-votes-top-row row ">
           {voteButtonsRowOne}
         </div>
-        <div className="cf-votes-bot-row row">
+        <div className="cf-votes-bot-row row ">
           {voteButtonsRowTwo}
         </div>
       </div>
