@@ -224,17 +224,15 @@ class Comment extends React.Component {
             onMouseLeave={this.onUserHover}
           />
           <div className="cf-comment-w-meta">
-            <div className="cf-comment-comment-meta">
-              <div className="cf-comment-user-name">
+            <div className="cf-comment-comment-meta row">
+              <div className="cf-comment-user-name col-4 col-sm-4">
                 {this.props.userName}
               </div>
-              <div className="cf-comment-len-date">
-                <div className="cf-comment-at" >
-                  {createdAt}
-                </div>
-                <div className="cf-comment-length">
-                  <img src={lengthImage} height="20px" width="20px"/>
-                </div>
+              <div className="cf-comment-at col-4 col-sm-4" >
+                {createdAt}
+              </div>
+              <div className="cf-comment-length col-4 col-sm-4">
+                <img src={lengthImage} height="20px" width="20px"/>
               </div>
             </div>
 
