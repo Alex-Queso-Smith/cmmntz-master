@@ -97,14 +97,14 @@ class CommentsFormContainer extends React.Component {
           <div className="row">
             <Textarea
               maxLength="3000"
-              className="form-control margin-top-10px textarea col-sm-10"
+              className="form-control margin-top-10px textarea col-10 col-sm-10"
               name="text"
               placeholder="Type your comment here"
               value={this.state.text}
               onChange={ this.handleChange }
               rows={7}
               />
-            <div className="col-sm-2">
+            <div className="col-2 col-sm-2">
               {selfVoteButtons}
             </div>
           </div>
