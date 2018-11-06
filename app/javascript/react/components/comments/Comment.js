@@ -186,7 +186,7 @@ class Comment extends React.Component {
 
     if (edit && currentUserId === commentUserId) {
       editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
-      cancelButton = <button className="btn btn-light btn-sm" onClick={this.handleCancelClick}>Cancel Edit</button>
+      cancelButton = <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelClick}>Cancel Edit</button>
     } else if (currentUserId === commentUserId) {
       editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditClick}>Edit Comment</button>
     }
@@ -240,7 +240,7 @@ class Comment extends React.Component {
             {textBox}
 
             {lastEdited}
-            <div>
+            <div className="margin-top-5px">
               {editButton}
               {cancelButton}
             </div>
