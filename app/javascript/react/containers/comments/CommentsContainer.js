@@ -38,6 +38,38 @@ class CommentsContainer extends React.Component {
   handleFilterClick = this.handleFilterClick.bind(this);
   submitterMan = this.submitterMan.bind(this);
 
+  componentWillMount(){
+    var commentRoot = this.props.commentRoot
+    var userId = commentRoot.getAttribute('data-user-id')
+    if (userId.length > 0){
+      FetchDidMount(this, `/api/v1/users/${userId}.json`)
+      .then(body => {
+        var oldUserSettings = this.state.userSettings
+        oldUserSettings.font = body.user.font;
+        oldUserSettings.colorTheme = body.user.color_theme
+        this.setState({
+          userSettings: oldUserSettings
+        })
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
+  }
+
+  componentDidMount(){
+    var commentRoot = this.props.commentRoot
+    var artType = commentRoot.getAttribute('data-art-type')
+    var artId = commentRoot.getAttribute('data-art-id')
+
+    FetchDidMount(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`)
+    .then(body => {
+     this.setState({
+       comments: body.comments,
+       totalComments: body.total_comments
+      })
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
   handleLoadMoreClick(event){
     var opts = this.state.sortOpts
     opts.page += 1
@@ -69,38 +101,6 @@ class CommentsContainer extends React.Component {
 
       }
     }.bind(this), 50)
-  }
-
-  componentWillMount(){
-    var commentRoot = this.props.commentRoot
-    var userId = commentRoot.getAttribute('data-user-id')
-    if (userId.length > 0){
-      FetchDidMount(this, `/api/v1/users/${userId}.json`)
-      .then(body => {
-        var oldUserSettings = this.state.userSettings
-        oldUserSettings.font = body.user.font;
-        oldUserSettings.colorTheme = body.user.color_theme
-        this.setState({
-          userSettings: oldUserSettings
-        })
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
-    }
-  }
-
-  componentDidMount(){
-    var commentRoot = this.props.commentRoot
-    var artType = commentRoot.getAttribute('data-art-type')
-    var artId = commentRoot.getAttribute('data-art-id')
-
-    FetchDidMount(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`)
-    .then(body => {
-     this.setState({
-       comments: body.comments,
-       totalComments: body.total_comments
-      })
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   // repetetive with handleFilterSubmit
