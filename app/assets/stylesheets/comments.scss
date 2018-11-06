@@ -5,22 +5,19 @@ $bootstrap-blue: #0069D9;
 
   .cf-comment-wrapper {
     width: 100%;
-    min-height: 100px;
+    height: auto; overflow: hidden;
 
 
     .cf-comment-user-meta {
-      width: 10%;
-      min-height: 100px;
+      width: 100px;
       float: left;
 
       .cf-comment-user-avatar {
-        float: left;
-
         border: 1px solid $grayline;
         border-radius: 50%;
-        height: 80%;
+        height: 100%;
         width: 100%;
-        min-width: 60px;
+        min-width: 60px; min-height: 60px;
         white-space: nowrap;
         text-align: center; margin: 1em 0;
 
@@ -30,21 +27,21 @@ $bootstrap-blue: #0069D9;
           vertical-align: middle;
         }
 
-        .avatar-image {
+        .avatar-image, .cf-comment-user-data {
           height: 100%;
           width: 100%;
           border-radius: 50%;
+          min-width: 60px; min-height: 60px;
           vertical-align: middle;
-          // this may be the key to getting the avatar the way the user wants
-          // filter: brightness(0.5) sepia(1) saturate(10000%) hue-rotate(120deg);
         }
       }
     }
 
     .cf-comment-w-meta {
-      width: 80%;
-      min-height: 40px;
-      float: right;
+      padding-left: 10px;
+      float: none;
+      width: auto;
+      overflow: hidden;
 
       .cf-comment-comment-meta {
         height: 15px;
@@ -69,7 +66,7 @@ $bootstrap-blue: #0069D9;
       .cf-comment-text {
         border: 1px solid $grayline;
         border-radius: 10px;
-        min-height: 35px;
+        height: auto;
         padding: 15px;
         margin-top: 10px;
       }
@@ -90,13 +87,9 @@ $bootstrap-blue: #0069D9;
 }
 
 .cf-comment-user-data {
-  position: absolute;
-  bottom: 0;
-  left: 0;
   height: 10%;
   width: 100%;
   text-align: center;
-  margin-bottom: 7em;
 }
 
 .cf-comment-text-area-edit {
@@ -108,4 +101,12 @@ $bootstrap-blue: #0069D9;
 .vote-btn {
   height: 35px;
   width: 35px;
+}
+
+$breakpoint-tablet: 768px;
+@media (max-width: $breakpoint-tablet) {
+  .vote-btn {
+    height: 25px;
+    width: 25px;
+  }
 }
