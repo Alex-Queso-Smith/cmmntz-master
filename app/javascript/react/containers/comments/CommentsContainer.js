@@ -275,7 +275,7 @@ class CommentsContainer extends React.Component {
     var { totalComments, comments, commentFormErrors, userSettings} = this.state;
 
     return(
-      <div className={`cf-comments-main ${userSettings.font} ${userSettings.colorTheme}`}>
+      <div id="cf-comments-main" className={`${userSettings.font} ${userSettings.colorTheme}`}>
         <CommentEtiquette />
         <div>
           {totalComments} comments for this article
