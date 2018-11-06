@@ -23,7 +23,7 @@ class CommentFilters extends React.Component {
             image={ImageSelector(this.props.sortOpts.sortDir)}
           />
         </div>
-
+        <br/>
         <h4>Filters</h4>
         <div className="row">
           {filterButtonsRowOne}

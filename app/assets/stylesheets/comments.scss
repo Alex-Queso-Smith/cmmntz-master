@@ -9,7 +9,7 @@ $bootstrap-blue: #0069D9;
 
 
     .cf-comment-user-meta {
-      width: 100px;
+      width: 75px;
       float: left;
 
       .cf-comment-user-avatar {
@@ -49,6 +49,8 @@ $bootstrap-blue: #0069D9;
         .cf-comment-user-name {
           width: 50%;
           float: left;
+          font-size: 1.5em;
+          font-weight: bold;
         }
         .cf-comment-len-date{
           width: 50%;
