@@ -4,26 +4,23 @@ $bootstrap-blue: #0069D9;
 .cf-comment {
 
   .cf-comment-wrapper {
-    position: relative;
     width: 100%;
     min-height: 100px;
 
 
     .cf-comment-user-meta {
-      position: relative;
       width: 10%;
       min-height: 100px;
       float: left;
 
       .cf-comment-user-avatar {
-        position: absolute;
-        top: 0;
-        left: 0;
+        float: left;
 
         border: 1px solid $grayline;
         border-radius: 50%;
         height: 80%;
         width: 100%;
+        min-width: 60px;
         white-space: nowrap;
         text-align: center; margin: 1em 0;
 
@@ -45,9 +42,9 @@ $bootstrap-blue: #0069D9;
     }
 
     .cf-comment-w-meta {
-      width: 89%;
+      width: 80%;
       min-height: 40px;
-      margin-left: 11%;
+      float: right;
 
       .cf-comment-comment-meta {
         height: 15px;
@@ -77,7 +74,9 @@ $bootstrap-blue: #0069D9;
         margin-top: 10px;
       }
     }
-    .cf-comment-voting {}
+  }
+  .cf-comment-voting {
+    clear: both;
   }
 }
 
