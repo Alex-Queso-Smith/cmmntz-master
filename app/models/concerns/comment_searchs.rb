@@ -16,6 +16,17 @@ module CommentSearchs
         end
       end
 
+      # filter not list
+
+      # filter user info
+
+      # geo
+      # convert users geo locations to radians (deg * (Math::PI / 180))
+      # lat_rad = user.latitude * (Math::PI / 180)
+      # lon_rad = user.longitude * (Math::PI / 180)
+      # use basic bounding and law of cosines
+      # see https://www.movable-type.co.uk/scripts/latlong-db.html
+
 
       dir = filter_opts[:sort_dir] ? filter_opts[:sort_dir] : "desc"
       sort_type = filter_opts[:sort_type] ? filter_opts[:sort_type] : "created_at"
