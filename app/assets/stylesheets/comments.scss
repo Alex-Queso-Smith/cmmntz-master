@@ -110,3 +110,14 @@ $breakpoint-tablet: 768px;
     width: 25px;
   }
 }
+
+$breakpoint-phone: 450px;
+@media (max-width: $breakpoint-phone) {
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .cf-votes-top-row, .cf-votes-bot-row {
+    font-size: 10px;
+  }
+}
