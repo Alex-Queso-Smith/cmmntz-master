@@ -44,7 +44,7 @@ $bootstrap-blue: #0069D9;
       overflow: hidden;
 
       .cf-comment-comment-meta {
-        height: 15px;
+        min-height: 15px;
 
         .cf-comment-user-name {
           width: 50%;
