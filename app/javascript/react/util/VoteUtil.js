@@ -131,7 +131,7 @@ export const RowOneVoteButtons = (object) => {
     var opacity = OpacityHandler(selectedVotes, type[0]);
 
     if ( userVoted && percentShow ) {
-      percentage = `%${votePercents[type[0]]}`
+      percentage = `${votePercents[type[0]]}%`
     }
 
     if (!userVoted) {
@@ -175,7 +175,7 @@ export const RowTwoVoteButtons = (object) => {
       type[0] != "blank2" &&
       percentShow
     ) {
-      percentage = `%${votePercents[type[0]]}`
+      percentage = `${votePercents[type[0]]}%`
     }
 
     if ( // hide all but big three if user has not voted
