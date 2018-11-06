@@ -38,38 +38,6 @@ class CommentsContainer extends React.Component {
   handleFilterClick = this.handleFilterClick.bind(this);
   submitterMan = this.submitterMan.bind(this);
 
-  handleLoadMoreClick(event){
-    var opts = this.state.sortOpts
-    opts.page += 1
-
-    this.setState({
-      sortOpts: opts
-    })
-
-    setTimeout(function() { //Start the timer
-      this.handleFilterSubmit();
-    }.bind(this), 1)
-  }
-
-  handleTopChange(oldTopCommentId){
-
-    setTimeout(function() { //Start the timer
-      if (this.state.comments.find( c => c.id === oldTopCommentId)) {
-        // replace comment with updated version
-        FetchIndividual(this, `/api/v1/comments/${oldTopCommentId}.json`, "GET")
-        .then(body => {
-          var updatedComments = this.state.comments
-          var comment = updatedComments.find( c => c.id === oldTopCommentId);
-
-          comment.current_users_votes.top = null;
-          comment.vote_percents.top = body.comment.vote_percents.top;
-
-          this.setState({ comments: updatedComments });
-        })
-
-      }
-    }.bind(this), 50)
-  }
 
   componentWillMount(){
     var commentRoot = this.props.commentRoot
@@ -101,6 +69,39 @@ class CommentsContainer extends React.Component {
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  handleLoadMoreClick(event){
+    var opts = this.state.sortOpts
+    opts.page += 1
+
+    this.setState({
+      sortOpts: opts
+    })
+
+    setTimeout(function() { //Start the timer
+      this.handleFilterSubmit();
+    }.bind(this), 1)
+  }
+
+  handleTopChange(oldTopCommentId){
+
+    setTimeout(function() { //Start the timer
+      if (this.state.comments.find( c => c.id === oldTopCommentId)) {
+        // replace comment with updated version
+        FetchIndividual(this, `/api/v1/comments/${oldTopCommentId}.json`, "GET")
+        .then(body => {
+          var updatedComments = this.state.comments
+          var comment = updatedComments.find( c => c.id === oldTopCommentId);
+
+          comment.current_users_votes.top = null;
+          comment.vote_percents.top = body.comment.vote_percents.top;
+
+          this.setState({ comments: updatedComments });
+        })
+
+      }
+    }.bind(this), 50)
   }
 
   // repetetive with handleFilterSubmit
