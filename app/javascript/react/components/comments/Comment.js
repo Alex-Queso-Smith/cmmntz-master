@@ -222,16 +222,19 @@ class Comment extends React.Component {
             userInfo={this.props.userInfo}
             onMouseEnter={this.onUserHover}
             onMouseLeave={this.onUserHover}
-            userName={this.props.userName}
           />
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta">
-              <div className="cf-comment-length">
-                Comment Length:
-                <img src={lengthImage} height="20px" width="20px"/>
+              <div className="cf-comment-user-name">
+                {this.props.userName}
               </div>
-              <div className="cf-comment-at" >
-                {createdAt}
+              <div className="cf-comment-len-date">
+                <div className="cf-comment-at" >
+                  {createdAt}
+                </div>
+                <div className="cf-comment-length">
+                  <img src={lengthImage} height="20px" width="20px"/>
+                </div>
               </div>
             </div>
 

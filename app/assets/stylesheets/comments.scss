@@ -6,13 +6,13 @@ $bootstrap-blue: #0069D9;
   .cf-comment-wrapper {
     position: relative;
     width: 100%;
-    min-height: 150px;
+    min-height: 100px;
 
 
     .cf-comment-user-meta {
       position: relative;
-      width: 15%;
-      min-height: 200px;
+      width: 10%;
+      min-height: 100px;
       float: left;
 
       .cf-comment-user-avatar {
@@ -22,7 +22,7 @@ $bootstrap-blue: #0069D9;
 
         border: 1px solid $grayline;
         border-radius: 50%;
-        height: 90%;
+        height: 80%;
         width: 100%;
         white-space: nowrap;
         text-align: center; margin: 1em 0;
@@ -42,28 +42,30 @@ $bootstrap-blue: #0069D9;
           // filter: brightness(0.5) sepia(1) saturate(10000%) hue-rotate(120deg);
         }
       }
-      .cf-comment-user-name {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 10%;
-        width: 100%;
-        text-align: center; margin: 1em 0;
-      }
     }
 
     .cf-comment-w-meta {
-      width: 83%;
-      min-height: 200px;
-      margin-left: 17%;
+      width: 89%;
+      min-height: 40px;
+      margin-left: 11%;
 
       .cf-comment-comment-meta {
         height: 15px;
-        .cf-comment-at {
-          float: right;
-        }
-        .cf-comment-length {
+
+        .cf-comment-user-name {
+          width: 50%;
           float: left;
+        }
+        .cf-comment-len-date{
+          width: 50%;
+          float: right;
+
+          .cf-comment-at {
+            float: left;
+          }
+          .cf-comment-length {
+            float: right;
+          }
         }
       }
 
@@ -72,7 +74,7 @@ $bootstrap-blue: #0069D9;
         border-radius: 10px;
         min-height: 35px;
         padding: 15px;
-        margin: 10px 0 10px 0;
+        margin-top: 10px;
       }
     }
     .cf-comment-voting {}

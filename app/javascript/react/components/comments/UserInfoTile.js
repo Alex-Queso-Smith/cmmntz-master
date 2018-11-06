@@ -14,21 +14,18 @@ const UserInfoTile = props => {
         <span className="avatar-helper"></span>
         <img className="avatar-image" src={avatarImage} />
       </div>
-      <div className="cf-comment-user-name" >
-        {props.userName}
-      </div>
     </div>
   } else {
     var demoData =
     <div className="cf-comment-user-data" >
       <div>
-      User Name: {`${props.userInfo.user_name}`}
+        {`${props.userInfo.user_name}`}
       </div>
       <div>
-        Gender: {`${props.userInfo.gender}`}
+        {`${props.userInfo.gender}`}
       </div>
       <div>
-        Age Range: {`${props.userInfo.age_range}`}
+        {`${props.userInfo.age_range}`}
       </div>
     </div>
 
