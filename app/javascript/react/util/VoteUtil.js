@@ -143,18 +143,13 @@ export const RowOneVoteButtons = (object) => {
       percentage = `${votePercents[type[0]]}%`
     }
 
-    if (
-      !userVoted ||
-      type[0].includes('blank')
-    ) {
+    if ( !userVoted || type[0].includes('blank') ) {
       if (!AlwaysVisible.includes(type[0])) {
         visibility = 'visibility-hidden'
       }
     }
 
-    if (selectedVotes[type[0]] && !type[0].includes('blank')) {
-      image = ImageSelector(type[0])
-    } else if ( !type[0].includes('blank') ) {
+    if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
     }
 
@@ -189,17 +184,12 @@ export const RowTwoVoteButtons = (object) => {
       percentage = `${votePercents[type[0]]}%`
     }
 
-    if ( // hide all but big three if user has not voted
-      !userVoted ||
-      type[0].includes('blank')
-    ) {
+    if ( !userVoted || type[0].includes('blank') ) {
       visibility = 'visibility-hidden'
     }
 
     // select image for button based on type
-    if (selectedVotes[type[0]] && !type[0].includes('blank')) {
-      image = ImageSelector(type[0])
-    } else if ( !type[0].includes('blank') ) {
+    if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
     }
 
