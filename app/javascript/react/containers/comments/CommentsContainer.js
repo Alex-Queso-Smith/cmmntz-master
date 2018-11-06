@@ -38,7 +38,6 @@ class CommentsContainer extends React.Component {
   handleFilterClick = this.handleFilterClick.bind(this);
   submitterMan = this.submitterMan.bind(this);
 
-
   componentWillMount(){
     var commentRoot = this.props.commentRoot
     var userId = commentRoot.getAttribute('data-user-id')
