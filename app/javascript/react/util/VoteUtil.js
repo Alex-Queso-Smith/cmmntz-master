@@ -118,7 +118,7 @@ export const RowTwoVoteTypes = [
   ["sad", "Sad"],
   ["boring", "Boring"],
   ["angry", "Angry"],
-  ["blank4", "blank4"],
+  ["blank4", "blank4"]
 ]
 
 const OpacityHandler = (selectedVotes, type) => {

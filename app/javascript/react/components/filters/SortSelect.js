@@ -15,8 +15,3 @@ export const SortButton = props => {
     </div>
   )
 };
-
-export default {
-  SortDir,
-  SortButton
-};
