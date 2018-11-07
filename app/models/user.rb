@@ -22,7 +22,14 @@ class User < ApplicationRecord
   has_many :votes
   has_many :comment_interactions
   has_many :comment_vote_tabulation, primary_key: 'id'
+
+  # define  users that the user is following
   has_many :followings, foreign_key: "follower_id"
+  has_many :followed_users, through: :followings, source: :following
+
+  # define users that are following the users
+  has_many :followers, class_name: 'Following', foreign_key: "following_id"
+  has_many :follower_users, through: :followers, source: :follower
 
   validates :user_name, presence: true, uniqueness: { case_sensitive: false }
 
