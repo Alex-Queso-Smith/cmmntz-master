@@ -18,5 +18,10 @@ RSpec.describe Following, type: :model do
       expect(follow).to_not be_valid
     end
 
+    it "should not be valid if follow is duplicate" do
+      follow_1 = FactoryBot.create(:following)
+      follow_2 = FactoryBot.build(:following, follower: follow_1.follower, following: follow_1.following)
+      expect(follow_2).to_not be_valid
+    end
   end
 end
