@@ -30,6 +30,13 @@ class VotingContainerBase extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState){
+    // if ( prevProps.selectedVotes.top != this.state.selectedVotes.top ) {
+    //   FetchDidMount(this, `/api/v1/comments/${this.props.commentId}.json`)
+    //   .then(body => {debugger})
+    // }
+  }
+
   handlePost(payload){
     FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
     .then(body => {
@@ -42,7 +49,6 @@ class VotingContainerBase extends React.Component {
           var old_top_id = body.errors[3]
           payload.append("vote[force]", true)
           payload.append("vote[old_top_id]",old_top_id )
-
           this.handlePost(payload)
         }
       } else {
@@ -61,8 +67,6 @@ class VotingContainerBase extends React.Component {
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
-
-
 
   handleUpdate(payload, id){
     FetchBasic(this, `/api/v1/votes/${id}.json`, payload, 'PATCH')
@@ -97,6 +101,7 @@ class VotingContainerBase extends React.Component {
   }
 
   render(){
+
     var voteButtonsRowOne = RowOneVoteButtons(this)
     var voteButtonsRowTwo = RowTwoVoteButtons(this)
 
