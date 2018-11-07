@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
-import { FetchWithPush, CreateErrorElements, SetStateWithValidation } from '../../util/CoreUtil';
+import { FetchWithPush, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
 
 
 class SessionLoginContainer extends React.Component {
@@ -15,6 +15,17 @@ class SessionLoginContainer extends React.Component {
 
   handleSubmit = this.handleSubmit.bind(this);
   handleChange = this.handleChange.bind(this);
+
+  componentDidUpdate(prevProps, prevState){
+    if (
+      prevState.userName != this.state.userName ||
+      prevState.password != this.state.password
+    ) {
+      var { userName, password } = this.state;
+
+      CheckInputValidation(this, [userName, password])
+    }
+  }
 
   handleSubmit(event){
     event.preventDefault();
@@ -32,14 +43,7 @@ class SessionLoginContainer extends React.Component {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-    if (
-      this.state.userName.length != 0 &&
-      this.state.password.length != 0
-    ) {
-      SetStateWithValidation(this, false, name, value)
-    } else {
-      SetStateWithValidation(this, true, name, value)
-    }
+    this.setState({ [name]: value })
   }
 
   render(){

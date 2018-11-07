@@ -97,6 +97,7 @@ export const RowTwoFilterTypes = [
   ["angry", "Angry"],
   ["blank4", "blank4"]
 ]
+
 export const FilterButtonsRowTwo = (object) => {
   return RowTwoFilterTypes.map((type) => {
     var image, visibility;
@@ -121,15 +122,4 @@ export const FilterButtonsRowTwo = (object) => {
         />
     )
   })
-}
-
-
-
-export default {
-  SortTypes,
-  RowOneFilterTypes,
-  RowTwoFilterTypes,
-  SortButtons,
-  FilterButtonsRowOne,
-  FilterButtonsRowTwo
 }

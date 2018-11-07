@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
-import { FetchWithPush, CreateErrorElements, SetStateWithValidation } from '../../util/CoreUtil';
+import { FetchWithPush, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
 
 class UserPasswordFormContainer extends React.Component {
   state = {
@@ -13,6 +13,17 @@ class UserPasswordFormContainer extends React.Component {
 
   handleSubmit = this.handleSubmit.bind(this);
   handleChange = this.handleChange.bind(this);
+
+  componentDidUpdate(prevProps, prevState){
+    if (
+      prevState.password != this.state.password ||
+      prevState.passwordConfirmation != this.state.passwordConfirmation
+    ) {
+      var { password, passwordConfirmation } = this.state;
+
+      CheckInputValidation(this, [password, passwordConfirmation])
+    }
+  }
 
   handleSubmit(event){
     event.preventDefault();
@@ -30,14 +41,7 @@ class UserPasswordFormContainer extends React.Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    if (
-      this.state.password.length != 0 &&
-      this.state.passwordConfirmation.length != 0
-    ) {
-      SetStateWithValidation(this, false, name, value)
-    } else {
-      SetStateWithValidation(this, true, name, value)
-    }
+    this.setState({ [name]: value })
   }
 
   render(){

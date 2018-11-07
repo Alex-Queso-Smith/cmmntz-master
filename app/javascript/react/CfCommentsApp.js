@@ -1,7 +1,6 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
 
-import CommentsContainer from './containers/comments/CommentsContainer';
+import CommentingContainer from './containers/comments/CommentingContainer';
 
 class CfCommentsApp extends React.Component {
 
@@ -9,7 +8,7 @@ class CfCommentsApp extends React.Component {
     var commentRoot = document.getElementById('cf-comments-app')
 
     return (
-      <CommentsContainer
+      <CommentingContainer
         commentRoot={commentRoot}
       />
     )

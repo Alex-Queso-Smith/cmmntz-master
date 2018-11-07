@@ -75,8 +75,3 @@ export const Timeout = (() => {
     executed
   }
 })()
-
-export default {
-  CommentLengthSorter,
-  Timeout
-}

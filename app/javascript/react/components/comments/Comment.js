@@ -11,7 +11,7 @@ class Comment extends React.Component {
   constructor(props){
     super(props);
       this.state = {
-        edit: false,
+        editStatus: false,
         reply: false,
         replyAnonymous: false,
         updateId: null,
@@ -24,42 +24,26 @@ class Comment extends React.Component {
         userTileHover: false,
         showFullText: false
       }
-    this.handleEditClick = this.handleEditClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleEditSubmit = this.handleEditSubmit.bind(this);
-    this.handleCancelClick = this.handleCancelClick.bind(this);
+    this.handleCancelEditComment = this.handleCancelEditComment.bind(this);
     this.handleReplySubmit = this.handleReplySubmit.bind(this);
-    this.handleReplyClick = this.handleReplyClick.bind(this);
     this.handleCancelReply = this.handleCancelReply.bind(this);
-    this.handleShowReplyToggle = this.handleShowReplyToggle.bind(this);
     this.onUserHover = this.onUserHover.bind(this);
-    this.toggleFullText = this.toggleFullText.bind(this);
-  }
-
-  toggleFullText(event){
-    event.preventDefault();
-    this.setState({ showFullText: !this.state.showFullText });
+    this.handleStateFlip = this.handleStateFlip.bind(this);
   }
 
   onUserHover(){
     this.setState({ userTileHover: !this.state.userTileHover })
   }
 
-  handleShowReplyToggle(){
-    this.setState({
-      showReplies: !this.state.showReplies
-    })
-  }
+  handleStateFlip(event){
+    event.preventDefault();
+    const target = event.target;
+    const name = event.target.name;
+    const state = this.state[name];
 
-  handleEditClick(){
-    this.setState({ edit: true })
-  }
-
-  handleCancelClick(){
-    this.setState({
-      edit: false,
-      text: this.props.text
-    })
+    this.setState({ [name]: !state })
   }
 
   handleChange(event){
@@ -67,6 +51,17 @@ class Comment extends React.Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     this.setState({ [name]: value })
+  }
+
+  handleCancelEditComment(){
+    if (this.state.edited) {
+      this.setState({ editStatus: false })
+    } else {
+      this.setState({
+        editStatus: false,
+        text: this.props.text
+      })
+    }
   }
 
   handleEditSubmit(event){
@@ -77,16 +72,12 @@ class Comment extends React.Component {
     FetchBasic(this, `/api/v1/comments/${this.props.commentId}.json`, newText, 'PATCH')
     .then(resp => {
       this.setState({
-        edit: false,
+        editStatus: false,
         text: resp.comment.text,
         edited: resp.comment.edited
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
-  handleReplyClick(){
-    this.setState({ reply: !this.state.reply })
   }
 
   handleCancelReply(){
@@ -98,7 +89,8 @@ class Comment extends React.Component {
     })
   }
 
-  handleReplySubmit(){
+  handleReplySubmit(event){
+    event.preventDefault();
 
     var newReply = new FormData();
     var { artId, artType, currentUserId, commentId } = this.props
@@ -129,7 +121,7 @@ class Comment extends React.Component {
 
   render(){
     var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, userInfo } = this.props
-    var { replies, edit, edited, text, reply, replyText, showReplies } = this.state
+    var { replies, editStatus, edited, text, reply, replyText, showReplies, userTileHover } = this.state
     var textBox, editButton, cancelButton, lastEdited, commentReplies, commentRepliesWrapper, replyField, replyButton, cancelReplyButton, userTile, repliesContainer;
 
     if (reply) {
@@ -157,7 +149,7 @@ class Comment extends React.Component {
       <button className="btn btn-light btn-sm" onClick={this.handleCancelReply}>Cancel Reply</button>
     } else {
       replyButton =
-      <button className="btn btn-primary btn-sm" onClick={this.handleReplyClick}>Reply</button>
+      <button className="btn btn-primary btn-sm" name="reply" onClick={this.handleStateFlip}>Reply</button>
     }
 
     if (replies && showReplies) {
@@ -186,16 +178,16 @@ class Comment extends React.Component {
           There are {replies.length} replies to this comment
         </span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="btn btn-primary btn-sm " onClick={this.handleShowReplyToggle}>{buttonText}</button>
+        <button className="btn btn-primary btn-sm" name="showReplies" onClick={this.handleStateFlip}>{buttonText}</button>
         {repliesContainer}
       </div>
     }
 
-    if (edit && currentUserId === commentUserId) {
+    if (editStatus && currentUserId === commentUserId) {
       editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
       cancelButton = <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelClick}>Cancel Edit</button>
     } else if (currentUserId === commentUserId) {
-      editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditClick}>Edit Comment</button>
+      editButton = <button className="btn btn-primary btn-sm" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
     }
 
     if (edited) {
@@ -205,7 +197,7 @@ class Comment extends React.Component {
       </div>
     }
 
-    if (edit) {
+    if (editStatus) {
       textBox =
         <Textarea
         maxLength="3000"
@@ -220,13 +212,13 @@ class Comment extends React.Component {
           textBox =
           <div className="cf-comment-text" >
             {text.substring(0, 1000) + "..."}
-            <a href='#' onClick={this.toggleFullText}>show more</a>
+            <a href='#' onClick={this.handleStateFlip} name="showFullText">show more</a>
           </div>
         } else {
           textBox =
           <div className="cf-comment-text" >
             {text}
-            <a href='#' onClick={this.toggleFullText}>show less</a>
+            <a href='#' onClick={this.handleStateFlip} name="showFullText">show less</a>
           </div>
         }
       } else {
@@ -242,10 +234,11 @@ class Comment extends React.Component {
       <div className="cf-comment">
         <div className="cf-comment-wrapper">
           <UserInfoTile
-            userTileHover={this.state.userTileHover}
-            userInfo={this.props.userInfo}
+            userTileHover={userTileHover}
+            userInfo={userInfo}
             onMouseEnter={this.onUserHover}
             onMouseLeave={this.onUserHover}
+            userName={userName}
           />
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
