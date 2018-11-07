@@ -1,12 +1,12 @@
 class Api::V1::UnfollowingsController < ApiController
-  load_and_authorize_resource
+  load_and_authorize_resource :following
 
   before_action :set_following, only: [:update, :destroy]
 
   # POST /followings.json
   def create
     @following = Following.where(following_params).first
-    if @following &&  @following.destroy
+    if @following && can?(:crud, @following) &&  @following.destroy
       render json: { message: "Following Destroyed" }
     else
       render json: { message: "Could not find or destroy matching following", status: :unprocessable_entity }
