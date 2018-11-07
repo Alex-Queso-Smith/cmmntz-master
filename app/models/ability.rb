@@ -17,6 +17,7 @@ class Ability
 
   def guest_permissions
     can :create, User # can register
+    can :read, Article
   end
 
   def default_permissions

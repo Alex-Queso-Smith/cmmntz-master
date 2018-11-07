@@ -2,6 +2,7 @@ import React from 'react'
 import Textarea from 'react-expanding-textarea'
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
+import Modal from '../../components/modals/Modal';
 import VoteButtonRowOne from '../../components/voting/VoteButtonRowOne';
 import { CreateErrorElements, CheckInputValidation, FetchWithUpdate } from '../../util/CoreUtil';
 import { Timeout } from '../../util/CommentUtil';
@@ -13,6 +14,8 @@ class CommentFormContainer extends React.Component {
     text: '',
     anonymous: false,
     formInvalid: true,
+    anonModalShown: false,
+    anonModalShow: false,
     selfVotes: []
   }
 
@@ -20,10 +23,18 @@ class CommentFormContainer extends React.Component {
   handleFormSubmit = this.handleFormSubmit.bind(this);
   handleClear = this.handleClear.bind(this);
   handleSelfVoteClick = this.handleSelfVoteClick.bind(this);
+  handleShowAnonModal = this.handleShowAnonModal.bind(this);
+  handleCloseAnonModal = this.handleCloseAnonModal.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (prevState.text != this.state.text) {
       CheckInputValidation(this, [this.state.text])
+      if (
+        !this.state.anonModalShown &&
+        this.state.anonymous
+      ) {
+        this.handleShowAnonModal()
+      }
     }
   }
 
@@ -65,12 +76,25 @@ class CommentFormContainer extends React.Component {
     })
   }
 
+  handleShowAnonModal(){
+    this.setState({
+      anonModalShow: true,
+      anonModalShown: true
+    });
+    document.body.classList.add("cf-modal-locked");
+  }
+
+  handleCloseAnonModal(){
+    this.setState({ anonModalShow: false });
+    document.body.classList.remove("cf-modal-locked");
+  }
+
   render(){
     const SelfVoteButtonTypes = ["top", "like_a_lot", "smart", "funny"]
 
     var { commentFormErrors } = this.props
     var { text, formInvalid, selfVotes } = this.state
-    var textError, timer;
+    var textError, timer, anonModal;
 
     if (commentFormErrors.text) {
       textError = CreateErrorElements(commentFormErrors.text, "Comment text")
@@ -93,8 +117,19 @@ class CommentFormContainer extends React.Component {
         )
       })
 
+      if (this.state.anonModalShow) {
+        anonModal =
+        <Modal
+          handleClose={this.handleCloseAnonModal}
+          modalTitle={'Do you wish to post anonymously?'}
+        >
+        If you wish to take advantage of ...... please do not post anonymously, thanks pal!
+        </Modal>
+      }
+
     return(
       <div className="container">
+        {anonModal}
         <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit} >
           <div className="">
             <Checkbox
