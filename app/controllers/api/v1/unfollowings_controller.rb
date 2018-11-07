@@ -1,8 +1,6 @@
 class Api::V1::UnfollowingsController < ApiController
   load_and_authorize_resource :following
 
-  before_action :set_following, only: [:update, :destroy]
-
   # POST /followings.json
   def create
     @following = Following.where(following_params).first
@@ -14,13 +12,8 @@ class Api::V1::UnfollowingsController < ApiController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_following
-      @following = Following.find(params[:id])
-    end
-
     # Never trust parameters from the scary internwet, only allow the white list through.
     def following_params
-      params.require(:unfollowing).permit(:follower_id, :following_id)
+      params.require(:following).permit(:follower_id, :following_id)
     end
 end
