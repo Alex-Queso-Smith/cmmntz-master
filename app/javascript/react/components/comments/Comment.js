@@ -21,7 +21,8 @@ class Comment extends React.Component {
         replyText: '',
         replyErrors: {},
         showReplies: false,
-        userTileHover: false
+        userTileHover: false,
+        showFullText: false
       }
     this.handleChange = this.handleChange.bind(this);
     this.handleEditSubmit = this.handleEditSubmit.bind(this);
@@ -37,6 +38,7 @@ class Comment extends React.Component {
   }
 
   handleStateFlip(event){
+    event.preventDefault();
     const target = event.target;
     const name = event.target.name;
     const state = this.state[name];
@@ -205,10 +207,27 @@ class Comment extends React.Component {
         onChange={ this.handleChange }
         />
     } else {
-      textBox =
-      <div className="cf-comment-text" >
-        {text}
-      </div>
+      if (text.length > 1000) {
+        if (!this.state.showFullText) {
+          textBox =
+          <div className="cf-comment-text" >
+            {text.substring(0, 1000) + "..."}
+            <a href='#' onClick={this.handleStateFlip} name="showFullText">show more</a>
+          </div>
+        } else {
+          textBox =
+          <div className="cf-comment-text" >
+            {text}
+            <a href='#' onClick={this.handleStateFlip} name="showFullText">show less</a>
+          </div>
+        }
+      } else {
+        textBox =
+        <div className="cf-comment-text" >
+          {text}
+        </div>
+      }
+
     }
 
     return(
