@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_01_135820) do
+ActiveRecord::Schema.define(version: 2018_11_07_180930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 2018_11_01_135820) do
     t.index ["interactions_count"], name: "index_comments_on_interactions_count"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "followings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "follower_id"
+    t.uuid "following_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["follower_id"], name: "index_followings_on_follower_id"
+    t.index ["following_id"], name: "index_followings_on_following_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
