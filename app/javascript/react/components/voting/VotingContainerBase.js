@@ -88,12 +88,20 @@ class VotingContainerBase extends React.Component {
 
   handleClickVote(event){
     VoteClick(this, event)
-    this.setState({ userVoted: true })
+
     var percentShowSet = () => {
       this.setState({ percentShow: true })
     }
-    Timeout.clear('timer')
-    Timeout.set('timer', percentShowSet, 3000)
+
+    if (this.state.userVoted) {
+      Timeout.clear('timer')
+      Timeout.set('timer', percentShowSet, 1500)
+    } else {
+      this.setState({ userVoted: true })
+
+      Timeout.clear('timer')
+      Timeout.set('timer', percentShowSet, 3000)
+    }
   }
 
   render(){
