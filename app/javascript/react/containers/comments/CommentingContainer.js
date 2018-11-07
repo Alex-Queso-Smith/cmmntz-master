@@ -1,9 +1,9 @@
 import React from 'react';
 
-import CommentsFormContainer from './CommentsFormContainer';
+import CommentFormContainer from './CommentFormContainer';
 import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
-import { FetchDidMount, SetStateWithValidation, FetchWithUpdate, FetchBasic, FetchIndividual } from '../../util/CoreUtil';
+import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual } from '../../util/CoreUtil';
 import CommentEtiquette from '../../components/modals/CommentEtiquette'
 
 class CommentsContainer extends React.Component {
@@ -26,7 +26,7 @@ class CommentsContainer extends React.Component {
     }
   }
 
-  handleFormSubmit = this.handleFormSubmit.bind(this);
+  handleCommentForm = this.handleCommentForm.bind(this);
   commentFormSubmitter = this.commentFormSubmitter.bind(this);
   handleFilterSubmit = this.handleFilterSubmit.bind(this);
   handleTopChange = this.handleTopChange.bind(this);
@@ -70,41 +70,29 @@ class CommentsContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleLoadMoreClick(event){
+  handleChange(event){
+    event.preventDefault();
+    const target = event.target;
+    const name = target.name;
+
+    var value;
+    if (target.type === "checkbox") {
+      value = target.checked
+    } else if (target.getAttribute('data-value')) {
+      value = target.getAttribute('data-value')
+    } else {
+      value = target.value
+    };
+
     var opts = this.state.sortOpts
-    opts.page += 1
+    opts[name] = value
+    opts.page = 1
 
-    this.setState({
-      sortOpts: opts
-    })
-
-    setTimeout(function() { //Start the timer
-      this.handleFilterSubmit();
-    }.bind(this), 1)
-  }
-
-  handleTopChange(oldTopCommentId){
-
-    setTimeout(function() { //Start the timer
-      if (this.state.comments.find( c => c.id === oldTopCommentId)) {
-        // replace comment with updated version
-        FetchIndividual(this, `/api/v1/comments/${oldTopCommentId}.json`, "GET")
-        .then(body => {
-          var updatedComments = this.state.comments
-          var comment = updatedComments.find( c => c.id === oldTopCommentId);
-
-          comment.current_users_votes.top = null;
-          comment.vote_percents.top = body.comment.vote_percents.top;
-
-          this.setState({ comments: updatedComments });
-        })
-
-      }
-    }.bind(this), 50)
-  }
+    this.setState({ sortOpts: opts })
+  };
 
   // repetetive with handleFilterSubmit
-  handleFormSubmit(event, text, anonymous, formInvalid, selfVotes = [], handleClear){
+  handleCommentForm(event, text, anonymous, formInvalid, selfVotes = [], handleClear){
     event.preventDefault();
     if (!formInvalid) {
       var newComment = new FormData();
@@ -117,7 +105,6 @@ class CommentsContainer extends React.Component {
       newComment.append("comment[vote_types]", selfVotes.join(','))
 
       this.commentFormSubmitter(newComment, handleClear)
-
     }
   }
 
@@ -152,7 +139,6 @@ class CommentsContainer extends React.Component {
           newComments = body.comments
         }
 
-
         this.setState({
           comments: newComments,
           totalComments: body.total_comments
@@ -167,7 +153,7 @@ class CommentsContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  // repetetive with handleFormSubmit
+  // repetetive with handleCommentForm
   handleFilterSubmit(){
     var search = new FormData();
     var commentRoot = this.props.commentRoot
@@ -197,32 +183,8 @@ class CommentsContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleChange(event){
-    event.preventDefault();
-    const target = event.target;
-
-    var value;
-    if (target.type === "checkbox") {
-      value = target.checked
-    } else if (target.getAttribute('data-value')) {
-      value = target.getAttribute('data-value')
-    } else {
-      value = target.value
-    };
-
-    const name = target.name;
-    var opts = this.state.sortOpts
-    opts[name] = value
-    opts.page = 1
-
-    this.setState({
-      sortOpts: opts
-    })
-  };
-
   handleFilterSubmitMan(event){
     this.handleChange(event)
-
     this.submitterMan(event)
   }
 
@@ -269,10 +231,43 @@ class CommentsContainer extends React.Component {
     this.submitterMan(event)
   }
 
+  handleLoadMoreClick(event){
+    var opts = this.state.sortOpts
+    opts.page += 1
+
+    this.setState({
+      sortOpts: opts
+    })
+
+    setTimeout(function() { //Start the timer
+      this.handleFilterSubmit();
+    }.bind(this), 1)
+  }
+
+  handleTopChange(oldTopCommentId){
+
+    setTimeout(function() { //Start the timer
+      if (this.state.comments.find( c => c.id === oldTopCommentId)) {
+        // replace comment with updated version
+        FetchIndividual(this, `/api/v1/comments/${oldTopCommentId}.json`, "GET")
+        .then(body => {
+          var updatedComments = this.state.comments
+          var comment = updatedComments.find( c => c.id === oldTopCommentId);
+
+          comment.current_users_votes.top = null;
+          comment.vote_percents.top = body.comment.vote_percents.top;
+
+          this.setState({ comments: updatedComments });
+        })
+
+      }
+    }.bind(this), 50)
+  }
+
   render(){
 
     var { commentRoot } = this.props;
-    var { totalComments, comments, commentFormErrors, userSettings} = this.state;
+    var { totalComments, comments, commentFormErrors, userSettings, sortOpts} = this.state;
 
     return(
       <div id="cf-comments-main" className={`${userSettings.font} ${userSettings.colorTheme}`}>
@@ -280,9 +275,9 @@ class CommentsContainer extends React.Component {
         <div>
           {totalComments} comments for this article
         </div>
-        <CommentsFormContainer
+        <CommentFormContainer
           commentRoot={commentRoot}
-          handleSubmit={this.handleFormSubmit}
+          handleSubmit={this.handleCommentForm}
           commentFormErrors={commentFormErrors}
         />
         <hr />

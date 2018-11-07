@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { UserRegPageOne, UserRegPageTwo, UserRegPageThree } from '../../components/form/users/UserRegPages';
-import { FetchWithPush, CreateErrorElements, SetStateWithValidation } from '../../util/CoreUtil';
+import { FetchWithPush, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
 import PrivacyPolicy from '../../components/modals/PrivacyPolicy'
 
 class UserNewFormContainer extends React.Component {
@@ -28,6 +28,19 @@ class UserNewFormContainer extends React.Component {
   handleAvatarClick = this.handleAvatarClick.bind(this);
   handleGenderChange = this.handleGenderChange.bind(this);
 
+  componentDidUpdate(prevProps, prevState){
+    if (
+      prevState.text != this.state.text ||
+      prevState.password != this.state.password ||
+      prevState.passwordConfirmation != this.state.passwordConfirmation ||
+      prevState.email != this.state.email
+    ) {
+      var { userName, password, passwordConfirmation, email } = this.state
+
+      CheckInputValidation(this, [userName, password, passwordConfirmation, email])
+    }
+  }
+
   handleGenderChange(event){
     event.preventDefault();
     const target = event.target;
@@ -40,16 +53,7 @@ class UserNewFormContainer extends React.Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    if (
-      this.state.userName.length != 0 &&
-      this.state.email.length != 0 &&
-      this.state.password.length != 0 &&
-      this.state.passwordConfirmation.length != 0
-    ) {
-      SetStateWithValidation(this, false, name, value)
-    } else {
-      SetStateWithValidation(this, true, name, value)
-    }
+    this.setState({ [name]: value })
   }
 
   handleAvatarClick(event){
