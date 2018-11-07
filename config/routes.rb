@@ -15,7 +15,8 @@ Rails.application.routes.draw do
       resources :comments, only: [:index, :show, :create, :update, :destroy]
       resources :comment_filters, only: [:create]
       resources :votes, only: [:create, :update, :destroy]
-      resources :followings, only: [:create, :destroy]
+      resources :followings, only: [:create]
+      resources :unfollowings, only: [:create]
     end
   end
 
