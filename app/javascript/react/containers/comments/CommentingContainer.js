@@ -6,7 +6,7 @@ import CommentFilters from './CommentFilters';
 import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual } from '../../util/CoreUtil';
 import CommentEtiquette from '../../components/modals/CommentEtiquette'
 
-class CommentsContainer extends React.Component {
+class CommentingContainer extends React.Component {
   state = {
     userSettings: {
       font: 'serif',
@@ -302,4 +302,4 @@ class CommentsContainer extends React.Component {
   }
 }
 
-export default CommentsContainer;
+export default CommentingContainer;
