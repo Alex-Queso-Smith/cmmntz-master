@@ -21,7 +21,8 @@ class Comment extends React.Component {
         replyText: '',
         replyErrors: {},
         showReplies: false,
-        userTileHover: false
+        userTileHover: false,
+        showFullText: false
       }
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -32,6 +33,12 @@ class Comment extends React.Component {
     this.handleCancelReply = this.handleCancelReply.bind(this);
     this.handleShowReplyToggle = this.handleShowReplyToggle.bind(this);
     this.onUserHover = this.onUserHover.bind(this);
+    this.toggleFullText = this.toggleFullText.bind(this);
+  }
+
+  toggleFullText(event){
+    event.preventDefault();
+    this.setState({ showFullText: !this.state.showFullText });
   }
 
   onUserHover(){
@@ -208,10 +215,27 @@ class Comment extends React.Component {
         onChange={ this.handleChange }
         />
     } else {
-      textBox =
-      <div className="cf-comment-text" >
-        {text}
-      </div>
+      if (text.length > 1000) {
+        if (!this.state.showFullText) {
+          textBox =
+          <div className="cf-comment-text" >
+            {text.substring(0, 1000) + "..."}
+            <a href='#' onClick={this.toggleFullText}>show more</a>
+          </div>
+        } else {
+          textBox =
+          <div className="cf-comment-text" >
+            {text}
+            <a href='#' onClick={this.toggleFullText}>show less</a>
+          </div>
+        }
+      } else {
+        textBox =
+        <div className="cf-comment-text" >
+          {text}
+        </div>
+      }
+
     }
 
     return(
