@@ -123,9 +123,7 @@ class CommentFormContainer extends React.Component {
           handleClose={this.handleCloseAnonModal}
           modalTitle={'Do you wish to post anonymously?'}
         >
-        If you wish to take advantage of ...... please click
-        <a href='/register'> here </a>
-        to create an account
+        If you wish to take advantage of ...... please do not post anonymously, thanks pal!
         </Modal>
       }
 
