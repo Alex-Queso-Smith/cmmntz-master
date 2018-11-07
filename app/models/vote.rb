@@ -1,3 +1,4 @@
+include ActionView::Helpers::TextHelper
 class Vote < ApplicationRecord
   include ActiveSupport::Inflector
   EXCLUSIVE_VOTES = ['like_a_lot', 'like', 'indifferent', 'dislike', 'dislike_a_lot']
@@ -54,7 +55,7 @@ class Vote < ApplicationRecord
 
     if top_votes_for_user.any?
       c = top_votes_for_user.first.comment
-      errors.add(:base) << "You have already voted the following as top:\n\n #{c.text}\nWould you like to change your top vote for this thread?"
+      errors.add(:base) << "You have already voted the following as top (A):\n\n#{truncate(c.text, length: 100)}\n\nWould you like to change your top vote for this thread to (B):\n\n#{truncate(comment.text, length: 100)}"
       errors.add(:base) << c.id
     end
   end

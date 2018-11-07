@@ -93,6 +93,8 @@ export const AlwaysVisible = [
 ]
 
 export const RowOneVoteTypes = [
+  ["blank1", "blank1"],
+  ["blank2", "blank2"],
   ["top", "Top"],
   ["love", "Love"],
   ["like_a_lot", "Like A Lot"],
@@ -101,11 +103,14 @@ export const RowOneVoteTypes = [
   ["dislike", "Dislike"],
   ["dislike_a_lot", "Dislike A Lot"],
   ["trash", "Trash"],
-  ["warn", "Warn"]
+  ["warn", "Warn"],
+  ["blank3", "blank3"]
 ]
 
 export const RowTwoVoteTypes = [
   ["blank1", "blank1"],
+  ["blank2", "blank2"],
+  ["blank3", "blank3"],
   ["smart", "Smart"],
   ["funny", "Funny"],
   ["happy", "Happy"],
@@ -113,7 +118,7 @@ export const RowTwoVoteTypes = [
   ["sad", "Sad"],
   ["boring", "Boring"],
   ["angry", "Angry"],
-  ["blank2", "blank2"]
+  ["blank4", "blank4"]
 ]
 
 const OpacityHandler = (selectedVotes, type) => {
@@ -130,19 +135,21 @@ export const RowOneVoteButtons = (object) => {
     var { userVoted, percentShow, votePercents, selectedVotes } = object.state
     var opacity = OpacityHandler(selectedVotes, type[0]);
 
-    if ( userVoted && percentShow ) {
-      percentage = `%${votePercents[type[0]]}`
+    if (
+      userVoted &&
+      !type[0].includes('blank') &&
+      percentShow
+    ) {
+      percentage = `${votePercents[type[0]]}%`
     }
 
-    if (!userVoted) {
+    if ( !userVoted || type[0].includes('blank') ) {
       if (!AlwaysVisible.includes(type[0])) {
         visibility = 'visibility-hidden'
       }
     }
 
-    if (selectedVotes[type[0]]) {
-      image = ImageSelector(type[0])
-    } else {
+    if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
     }
 
@@ -171,24 +178,18 @@ export const RowTwoVoteButtons = (object) => {
 
     if ( // show percentage if user has voted and div is not blank
       userVoted &&
-      type[0] != "blank1" &&
-      type[0] != "blank2" &&
+      !type[0].includes('blank') &&
       percentShow
     ) {
-      percentage = `%${votePercents[type[0]]}`
+      percentage = `${votePercents[type[0]]}%`
     }
 
-    if ( // hide all but big three if user has not voted
-      !userVoted ||
-      type[0].includes('blank')
-    ) {
+    if ( !userVoted || type[0].includes('blank') ) {
       visibility = 'visibility-hidden'
     }
 
     // select image for button based on type
-    if (selectedVotes[type[0]]) {
-      image = ImageSelector(type[0])
-    } else {
+    if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
     }
 

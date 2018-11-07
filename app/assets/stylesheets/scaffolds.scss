@@ -98,9 +98,18 @@ label {
 .margin-top-10px {
   margin-top: 10px;
 }
+
 .margin-top-bottom-10px {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.margin-top-5px {
+  margin-top: 5px;
+}
+
+.margin-left-5px {
+  margin-left: 5px;
 }
 
 .hidden {
@@ -109,4 +118,8 @@ label {
 
 .error-text {
   color: #FF0001;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

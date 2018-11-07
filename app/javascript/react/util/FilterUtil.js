@@ -23,9 +23,9 @@ export const SortTypes = [
 
 export const SortButtons = (object) => {
   var { sortDir, sortType } = object.props.sortOpts
-  var opacity;
 
   return SortTypes.map((type) => {
+    var opacity, visibility, image;
     var image = ImageSelector(type[1])
 
     sortType == type[0] ? opacity = "" : opacity = "translucent"
@@ -37,13 +37,15 @@ export const SortButtons = (object) => {
         opacity={opacity}
         onClick={object.props.handleFilterSubmit}
         image={image}
-        visibility=''
+        visibility={''}
         />
     )
   })
 }
 
 export const RowOneFilterTypes = [
+  ["blank1", "blank1"],
+  ["blank2", "blank2"],
   ["top", "Top"],
   ["love", "Love"],
   ["like_a_lot", "Like A Lot"],
@@ -52,13 +54,22 @@ export const RowOneFilterTypes = [
   ["dislike", "Dislike"],
   ["dislike_a_lot", "Dislike A Lot"],
   ["trash", "Trash"],
-  ["warn", "Warn"]
+  ["warn", "Warn"],
+  ["blank3", "blank3"]
 ]
 
 export const FilterButtonsRowOne = (object) => {
   return RowOneFilterTypes.map((type) => {
-    var image = ImageSelector(type[0])
+    var image, visibility;
     var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, `${type[0]}_percent`)
+
+    if (!type[0].includes('blank')) {
+      image = ImageSelector(type[0])
+    }
+
+    if (type[0].includes('blank')) {
+      visibility = "visibility-hidden"
+    }
 
     return(
       <SortButton
@@ -67,7 +78,7 @@ export const FilterButtonsRowOne = (object) => {
         opacity={opacity}
         onClick={object.props.handleFilterClick}
         image={image}
-        visibility=''
+        visibility={visibility}
         />
     )
   })
@@ -75,6 +86,8 @@ export const FilterButtonsRowOne = (object) => {
 
 export const RowTwoFilterTypes = [
   ["blank1", "blank1"],
+  ["blank2", "blank2"],
+  ["blank3", "blank3"],
   ["smart", "Smart"],
   ["funny", "Funny"],
   ["happy", "Happy"],
@@ -82,19 +95,20 @@ export const RowTwoFilterTypes = [
   ["sad", "Sad"],
   ["boring", "Boring"],
   ["angry", "Angry"],
-  ["blank2", "blank2"]
+  ["blank4", "blank4"]
 ]
 
 export const FilterButtonsRowTwo = (object) => {
   return RowTwoFilterTypes.map((type) => {
-    var visibility;
-    var image = ImageSelector(type[0])
+    var image, visibility;
     var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, `${type[0]}_percent`)
 
-    if (type[0] == "blank1" || type[0] == "blank2"){
+    if (!type[0].includes('blank')) {
+      image = ImageSelector(type[0])
+    }
+
+    if (type[0].includes('blank')){
       visibility = "visibility-hidden"
-    } else {
-      visibility = ""
     }
 
     return(

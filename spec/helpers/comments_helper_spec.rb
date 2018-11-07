@@ -15,7 +15,7 @@ RSpec.describe CommentsHelper, type: :helper do
     let!(:comment) {FactoryBot.build_stubbed(:comment, anonymous: true)}
 
     it "should not supply the user's user_name" do
-      expect(comment_user_user_name(comment)).to eq("")
+      expect(comment_user_user_name(comment)).to eq("Anonymous")
     end
     it "should not supply the user's gender" do
       expect(comment_user_gender(comment)).to eq("")

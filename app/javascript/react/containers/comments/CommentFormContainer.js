@@ -96,32 +96,39 @@ class CommentFormContainer extends React.Component {
     return(
       <div className="container">
         <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit} >
+          <div className="">
+            <Checkbox
+              name="anonymous"
+              onChange={this.handleChange}
+              label="Submit Anonymously"
+              className="row"
+              />
+          </div>
           <div className="row">
             <Textarea
               maxLength="3000"
-              className="form-control margin-top-10px textarea col-sm-10"
+              className="form-control margin-top-10px textarea col-10 col-sm-10"
               name="text"
               placeholder="Type your comment here"
               value={this.state.text}
               onChange={ this.handleChange }
               rows={7}
               />
-            <div className="col-sm-2">
+            <div className="col-2 col-sm-2">
               {selfVoteButtons}
             </div>
           </div>
           {textError}
-          <Checkbox
-            name="anonymous"
-            onChange={this.handleChange}
-            label="Submit Anonymously"
-            className="row"
-          />
-          <div className="form-group actions margin-top-10px row">
-            <button id="comments-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit" disabled={formInvalid}>
-              <span className="text-large">Submit Comment</span>
-            </button>
+          <div className="row">
+            <div className="margin-top-10px col-10 col-sm-10">
+              <div className="float-right">
+                <button id="comments-button" type="submit" className="btn btn-large btn-primary" value="Submit" disabled={formInvalid}>
+                  Submit Comment
+                </button>
+              </div>
+            </div>
           </div>
+          <div className="clear"></div>
         </form>
       </div>
     )

@@ -183,7 +183,7 @@ class Comment extends React.Component {
 
     if (editStatus && currentUserId === commentUserId) {
       editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
-      cancelButton = <button className="btn btn-light btn-sm" onClick={this.handleCancelEditComment}>Cancel Edit</button>
+      cancelButton = <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelClick}>Cancel Edit</button>
     } else if (currentUserId === commentUserId) {
       editButton = <button className="btn btn-primary btn-sm" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
     }
@@ -222,13 +222,21 @@ class Comment extends React.Component {
             userName={userName}
           />
           <div className="cf-comment-w-meta">
-            <div className="cf-comment-comment-meta">
-              <div className="cf-comment-length">
-                Comment Length:
-                <img src={lengthImage} height="20px" width="20px"/>
+            <div className="cf-comment-comment-meta row">
+              <div className="cf-comment-user-name col-6 col-sm-6">
+                {this.props.userName}
               </div>
-              <div className="cf-comment-at" >
-                {createdAt}
+              <div className="cf-comment-length col-6 col-sm-6">
+                <div className="float-right">
+                  <img src={lengthImage} height="20px" width="20px"/>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="cf-comment-at col-12 col-sm-12" >
+                <div className="float-right">
+                  {createdAt}
+                </div>
               </div>
             </div>
 
@@ -236,7 +244,7 @@ class Comment extends React.Component {
             {textBox}
 
             {lastEdited}
-            <div>
+            <div className="margin-top-5px">
               {editButton}
               {cancelButton}
             </div>
