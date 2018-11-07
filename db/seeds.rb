@@ -52,6 +52,14 @@ end
 User.import users, validate: false
 users = User.all
 
+# generate some followigs for the users
+puts "generating followings for users"
+users.each do |user|
+  rand(0..10).times do
+    user.followings.create(following: (users - [user]).sample)
+  end
+end
+
 # generate desired number of articles
 puts "generating #{num_articles} articles"
 iter = 1

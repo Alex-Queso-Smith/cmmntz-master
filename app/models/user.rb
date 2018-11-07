@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_many :votes
   has_many :comment_interactions
   has_many :comment_vote_tabulation, primary_key: 'id'
+  has_many :followings, foreign_key: "follower_id"
 
   validates :user_name, presence: true, uniqueness: { case_sensitive: false }
 

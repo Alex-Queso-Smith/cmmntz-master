@@ -19,7 +19,7 @@ class Api::V1::UnfollowingsController < ApiController
       @following = Following.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Never trust parameters from the scary internwet, only allow the white list through.
     def following_params
       params.require(:unfollowing).permit(:follower_id, :following_id)
     end
