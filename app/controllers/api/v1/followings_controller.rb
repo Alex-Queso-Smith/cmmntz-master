@@ -13,14 +13,6 @@ class Api::V1::FollowingsController < ApiController
     end
   end
 
-
-  # DELETE /followings/1.json
-  def destroy
-    if @following.destroy
-      render json: { message: "Following Destroyed" }
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_following
