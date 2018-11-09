@@ -20,7 +20,7 @@ export const VoteClick = (object, event) => {
       var commentRoot = object.props.commentRoot;
 
       newVote.append("vote[comment_id]", object.props.commentId)
-      newVote.append("vote[user_id]", commentRoot.getAttribute('data-user-id'))
+      newVote.append("vote[user_id]", object.props.currentUserId)
       newVote.append("vote[vote_type]", name)
 
       object.handlePost(newVote)
@@ -61,7 +61,7 @@ export const VoteClick = (object, event) => {
       var commentRoot = object.props.commentRoot;
 
       newVote.append("vote[comment_id]", object.props.commentId)
-      newVote.append("vote[user_id]", commentRoot.getAttribute('data-user-id'))
+      newVote.append("vote[user_id]", object.props.currentUserId)
       newVote.append("vote[vote_type]", name)
 
       object.handlePost(newVote)

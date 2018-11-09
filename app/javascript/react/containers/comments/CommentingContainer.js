@@ -14,6 +14,7 @@ class CommentingContainer extends React.Component {
     },
     totalComments: 0,
     followedUsers: [],
+    blockedUsers: [],
     comments: [],
     userId: '',
     artId: '',
@@ -51,7 +52,8 @@ class CommentingContainer extends React.Component {
         oldUserSettings.colorTheme = body.user.color_theme
         this.setState({
           userSettings: oldUserSettings,
-          followedUsers: body.user.followed_users
+          followedUsers: body.user.followed_users,
+          blockedUsers: body.user.blocked_users
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -270,7 +272,7 @@ class CommentingContainer extends React.Component {
   render(){
 
     var { commentRoot } = this.props;
-    var { totalComments, comments, commentFormErrors, userSettings, sortOpts, followedUsers} = this.state;
+    var { totalComments, comments, commentFormErrors, userSettings, sortOpts, followedUsers, blockedUsers} = this.state;
 
     return(
       <div id="cf-comments-main" className={`${userSettings.font} ${userSettings.colorTheme}`}>
@@ -295,9 +297,9 @@ class CommentingContainer extends React.Component {
         <CommentsList
           allComments={comments}
           commentRoot={commentRoot}
-          handleDelayClick={this.handleDelayClick}
           handleTopChange={this.handleTopChange}
           followedUsers={followedUsers}
+          blockedUsers={blockedUsers}
         />
 
       <button className="btn btn-block btn-large btn-primary" onClick={this.handleLoadMoreClick}>Load More</button>

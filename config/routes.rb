@@ -17,6 +17,8 @@ Rails.application.routes.draw do
       resources :votes, only: [:create, :update, :destroy]
       resources :followings, only: [:create]
       resources :unfollowings, only: [:create]
+      resources :blockings, only: [:create]
+      resources :unblockings, only: [:create]
     end
   end
 

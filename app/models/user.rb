@@ -31,6 +31,14 @@ class User < ApplicationRecord
   has_many :followers, class_name: 'Following', foreign_key: "following_id"
   has_many :follower_users, through: :followers, source: :follower
 
+  # define  users that the user is blocking
+  has_many :blockings, foreign_key: "blocker_id"
+  has_many :blocked_users, through: :blockings, source: :blocking
+
+  # define users that are blocking the users
+  has_many :blockers, class_name: 'Blocking', foreign_key: "blocking_id"
+  has_many :blocker_users, through: :blockers, source: :blocker
+
   validates :user_name, presence: true, uniqueness: { case_sensitive: false }
 
   validates :gender, numericality: true, inclusion: { in: GENDERS }, unless: Proc.new { |u| u.gender.nil? }

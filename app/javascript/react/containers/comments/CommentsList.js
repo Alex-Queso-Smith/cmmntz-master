@@ -10,7 +10,7 @@ class CommentsList extends React.Component {
   render(){
 
     var commentsArray;
-    var { allComments, percentShow, handleDelayClick, commentRoot, handleTopChange } = this.props
+    var { allComments, percentShow, commentRoot, handleTopChange, followedUsers, blockedUsers } = this.props
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
@@ -19,38 +19,41 @@ class CommentsList extends React.Component {
         var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted } = comment
         var userName, commentLength;
         var lengthImage = CommentLengthSorter(text)
-        var userFollowed = this.props.followedUsers.includes(user_id)
+        var userFollowed = followedUsers.includes(user_id)
+        var userBlocked = blockedUsers.includes(user_id)
 
         if (user_name) {
           userName = `${user_name}`
         }
-
-        return(
-          <div className="cf-comment-div" key={id}>
-            <Comment
-              edited={edited}
-              userFollowed={userFollowed}
-              commentUserId={user_id}
-              commentId={id}
-              userName={userName}
-              userInfo={comment.user}
-              createdAt={created_at}
-              lengthImage={lengthImage}
-              text={text}
-              replies={replies}
-              commentRoot={commentRoot}
-              commentVotes={current_users_votes}
-              votePercents={vote_percents}
-              userVoted={user_has_voted}
-              handleDelayClick={handleDelayClick}
-              handleTopChange={handleTopChange}
-              artId={commentRoot.getAttribute('data-art-id')}
-              currentUserId={commentRoot.getAttribute('data-user-id')}
-              artType={commentRoot.getAttribute('data-art-type')}
-            />
-            <hr />
-          </div>
-        )
+        if (!userBlocked) {
+          return(
+            <div className="cf-comment-div" key={id}>
+              <Comment
+                edited={edited}
+                userFollowed={userFollowed}
+                userBlocked={userBlocked}
+                followedUsers={followedUsers}
+                blockedUsers={blockedUsers}
+                commentUserId={user_id}
+                commentId={id}
+                userName={userName}
+                userInfo={comment.user}
+                createdAt={created_at}
+                lengthImage={lengthImage}
+                text={text}
+                replies={replies}
+                commentVotes={current_users_votes}
+                votePercents={vote_percents}
+                userVoted={user_has_voted}
+                handleTopChange={handleTopChange}
+                artId={commentRoot.getAttribute('data-art-id')}
+                currentUserId={commentRoot.getAttribute('data-user-id')}
+                artType={commentRoot.getAttribute('data-art-type')}
+                />
+              <hr />
+            </div>
+          )
+        }
       })
     }
 

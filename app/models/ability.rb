@@ -29,5 +29,6 @@ class Ability
     can :crud, Vote, {user_id: user.id} # can crud own votes
     can :read, Vote # can view other user's votes in list or individual
     can :crud, Following, {follower_id: user.id}
+    can :crud, Blocking, {blocker_id: user.id}
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_07_180930) do
+ActiveRecord::Schema.define(version: 2018_11_09_192756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 2018_11_07_180930) do
     t.uuid "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "blockings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "blocker_id"
+    t.uuid "blocking_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blocker_id"], name: "index_blockings_on_blocker_id"
+    t.index ["blocking_id"], name: "index_blockings_on_blocking_id"
   end
 
   create_table "comment_interactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

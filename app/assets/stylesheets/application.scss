@@ -79,6 +79,10 @@ $breakpoint-tablet: 768px;
     border: 1px solid $light-grayline;
     border-radius: 10px;
   }
+
+  .error-text {
+    color: #FF0001;
+  }
 }
 
 .dark {

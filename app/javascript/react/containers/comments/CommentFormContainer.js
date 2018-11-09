@@ -181,16 +181,15 @@ class CommentFormContainer extends React.Component {
       })
     }
 
-
-      if (this.state.anonModalShow) {
-        anonModal =
-        <Modal
-          handleClose={this.handleCloseAnonModal}
-          modalTitle={'Do you wish to post anonymously?'}
-        >
-        If you wish to take advantage of ...... please do not post anonymously, thanks pal!
-        </Modal>
-      }
+    if (this.state.anonModalShow) {
+      anonModal =
+      <Modal
+        handleClose={this.handleCloseAnonModal}
+        modalTitle={'Do you wish to post anonymously?'}
+      >
+      If you wish to take advantage of ...... please do not post anonymously, thanks pal!
+      </Modal>
+    }
 
     return(
       <div className="container">

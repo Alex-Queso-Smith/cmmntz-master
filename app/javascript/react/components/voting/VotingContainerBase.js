@@ -16,7 +16,6 @@ class VotingContainerBase extends React.Component {
     }
     this.handleClickVote = this.handleClickVote.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
   }
 
@@ -28,13 +27,6 @@ class VotingContainerBase extends React.Component {
         this.setState({ selectedBigFive: key })
       }
     })
-  }
-
-  componentDidUpdate(prevProps, prevState){
-    // if ( prevProps.selectedVotes.top != this.state.selectedVotes.top ) {
-    //   FetchDidMount(this, `/api/v1/comments/${this.props.commentId}.json`)
-    //   .then(body => {debugger})
-    // }
   }
 
   handlePost(payload){
@@ -111,7 +103,10 @@ class VotingContainerBase extends React.Component {
   render(){
 
     var voteButtonsRowOne = RowOneVoteButtons(this)
-    var voteButtonsRowTwo = RowTwoVoteButtons(this)
+    var voteButtonsRowTwo;
+    if (this.state.userVoted) {
+      voteButtonsRowTwo = RowTwoVoteButtons(this)
+    }
 
     return(
       <div className="cf-votes-container margin-top-10px container" >
