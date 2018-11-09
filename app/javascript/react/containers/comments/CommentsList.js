@@ -19,6 +19,7 @@ class CommentsList extends React.Component {
         var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted } = comment
         var userName, commentLength;
         var lengthImage = CommentLengthSorter(text)
+        var userFollowed = this.props.followedUsers.includes(user_id)
 
         if (user_name) {
           userName = `${user_name}`
@@ -28,6 +29,7 @@ class CommentsList extends React.Component {
           <div className="cf-comment-div" key={id}>
             <Comment
               edited={edited}
+              userFollowed={userFollowed}
               commentUserId={user_id}
               commentId={id}
               userName={userName}

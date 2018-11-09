@@ -39,7 +39,7 @@ const UserInfoTile = props => {
     }
 
       userTile =
-      <div className="cf-comment-user-meta" onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>
+      <div className="cf-comment-user-meta cursor-help" onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>
         <div className="cf-comment-user-avatar">
           <span className="avatar-helper"></span>
           {demoData}

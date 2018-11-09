@@ -18,6 +18,7 @@ class Comment extends React.Component {
         text: this.props.text,
         edited: this.props.edited,
         replies: this.props.replies,
+        userFollowed: this.props.userFollowed,
         replyText: '',
         replyErrors: {},
         showReplies: false,
@@ -31,6 +32,7 @@ class Comment extends React.Component {
     this.handleCancelReply = this.handleCancelReply.bind(this);
     this.onUserHover = this.onUserHover.bind(this);
     this.handleStateFlip = this.handleStateFlip.bind(this);
+    this.handleFollow = this.handleFollow.bind(this);
   }
 
   onUserHover(){
@@ -119,10 +121,29 @@ class Comment extends React.Component {
     this.handleCancelReply()
   }
 
+  handleFollow(event){
+    event.preventDefault();
+
+    var path;
+    var newFollow = new FormData();
+    newFollow.append("following[following_id]", this.props.commentUserId)
+    newFollow.append("following[follower_id]", this.props.currentUserId)
+
+    if (this.state.userFollowed) {
+      path = `/api/v1/unfollowings.json`
+    } else {
+      path = `/api/v1/followings.json`
+    }
+    FetchWithUpdate(this, path, 'POST', newFollow)
+    .then(body => {
+      this.setState({ userFollowed: !this.state.userFollowed })
+    })
+  }
+
   render(){
     var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, userInfo } = this.props
-    var { replies, editStatus, edited, text, reply, replyText, showReplies, userTileHover } = this.state
-    var textBox, editButton, cancelButton, lastEdited, commentReplies, commentRepliesWrapper, replyField, replyButton, cancelReplyButton, userTile, repliesContainer;
+    var { replies, editStatus, edited, text, reply, replyText, showReplies, userTileHover, userFollowed } = this.state
+    var textBox, editButton, cancelButton, lastEdited, commentReplies, commentRepliesWrapper, replyField, replyButton, cancelReplyButton, userTile, repliesContainer, starOpacity, followStar;
 
     if (reply) {
       replyField =
@@ -185,7 +206,7 @@ class Comment extends React.Component {
 
     if (editStatus && currentUserId === commentUserId) {
       editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
-      cancelButton = <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelClick}>Cancel Edit</button>
+      cancelButton = <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelEditComment}>Cancel Edit</button>
     } else if (currentUserId === commentUserId) {
       editButton = <button className="btn btn-primary btn-sm" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
     }
@@ -227,8 +248,23 @@ class Comment extends React.Component {
           {text}
         </div>
       }
-
     }
+
+    if (commentUserId != currentUserId) {
+      if (!userFollowed) {
+        starOpacity = "translucent"
+      }
+
+      followStar =
+      <div className={`cf-comment-user-name col-6 col-sm-6 cursor-pointer ${starOpacity}`}>
+        <img onClick={this.handleFollow} src="/assets/star" height="20px" width="20px" />
+      </div>
+    } else {
+      followStar =
+      <div className={`cf-comment-user-name col-6 col-sm-6`}>
+      </div>
+    }
+
 
     return(
       <div className="cf-comment">
@@ -252,7 +288,8 @@ class Comment extends React.Component {
               </div>
             </div>
             <div className="row">
-              <div className="cf-comment-at col-12 col-sm-12" >
+              {followStar}
+              <div className="cf-comment-at col-6 col-sm-6" >
                 <div className="float-right">
                   {createdAt}
                 </div>

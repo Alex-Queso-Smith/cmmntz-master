@@ -13,6 +13,7 @@ class CommentingContainer extends React.Component {
       colorTheme: 'light'
     },
     totalComments: 0,
+    followedUsers: [],
     comments: [],
     userId: '',
     artId: '',
@@ -44,11 +45,13 @@ class CommentingContainer extends React.Component {
     if (userId.length > 0){
       FetchDidMount(this, `/api/v1/users/${userId}.json`)
       .then(body => {
+
         var oldUserSettings = this.state.userSettings
         oldUserSettings.font = body.user.font;
         oldUserSettings.colorTheme = body.user.color_theme
         this.setState({
-          userSettings: oldUserSettings
+          userSettings: oldUserSettings,
+          followedUsers: body.user.followed_users
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -267,7 +270,7 @@ class CommentingContainer extends React.Component {
   render(){
 
     var { commentRoot } = this.props;
-    var { totalComments, comments, commentFormErrors, userSettings, sortOpts} = this.state;
+    var { totalComments, comments, commentFormErrors, userSettings, sortOpts, followedUsers} = this.state;
 
     return(
       <div id="cf-comments-main" className={`${userSettings.font} ${userSettings.colorTheme}`}>
@@ -294,6 +297,7 @@ class CommentingContainer extends React.Component {
           commentRoot={commentRoot}
           handleDelayClick={this.handleDelayClick}
           handleTopChange={this.handleTopChange}
+          followedUsers={followedUsers}
         />
 
       <button className="btn btn-block btn-large btn-primary" onClick={this.handleLoadMoreClick}>Load More</button>

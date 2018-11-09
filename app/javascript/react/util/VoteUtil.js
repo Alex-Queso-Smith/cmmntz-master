@@ -79,7 +79,7 @@ export const VoteClick = (object, event) => {
 }
 
 export const ImageSelector = (type) => {
-  if (type === "blank1" || type === 'blank2') {
+  if (type.includes('blank')) {
     return ''
   } else {
     return `/assets/${type}.png`
