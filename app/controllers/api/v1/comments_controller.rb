@@ -6,7 +6,7 @@ class Api::V1::CommentsController < ApiController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = CommentVoteTabulation.filter_and_sort(params[:art_id], params[:art_type], {}, 1)
+    @comments = CommentVoteTabulation.filter_and_sort(current_user, params[:art_id], params[:art_type], {}, 1)
     @current_users_votes = Vote.for_user_and_comment(current_user.id, @comments.map(&:id))
     @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comments.map(&:id))
   end

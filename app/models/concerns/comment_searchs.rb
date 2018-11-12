@@ -7,7 +7,7 @@ module CommentSearchs
 
     scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
 
-    def self.filter_and_sort(article_id, article_type, filter_opts = {}, page)
+    def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, page)
       scope = for_art_type_and_id(article_type, article_id).includes(:user, replies: [:user])
 
       if filter_opts[:filter_list]
@@ -30,6 +30,12 @@ module CommentSearchs
 
       dir = filter_opts[:sort_dir] ? filter_opts[:sort_dir] : "desc"
       sort_type = filter_opts[:sort_type] ? filter_opts[:sort_type] : "created_at"
+
+      # remove blacklisted users from consideration
+      if user && user.blocked_users.present?
+        scope = scope.where(arel_table[:user_id].send(:not_in, user.blocked_user_ids))
+      end
+
       scope = scope.order(sort_type.to_sym => dir.to_sym)
       scope = scope.page(page)
       return scope
