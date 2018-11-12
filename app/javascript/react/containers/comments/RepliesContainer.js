@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { FetchWithUpdate, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
-import { ReplyFieldActivated, ReplyButtonActive, ReplyButtonInactive, ReplyCancelButton } from './CommentComponents';
-import Modal from '../modals/Modal';
-import Reply from './Reply';
+import { ReplyFieldActivated, ReplyButtonActive, ReplyButtonInactive, ReplyCancelButton } from '../../components/comments/CommentComponents';
+import Modal from '../../components/modals/Modal';
+import Reply from '../../components/comments/Reply';
 
 class RepliesContainer extends React.Component {
   state = {

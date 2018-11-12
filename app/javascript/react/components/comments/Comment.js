@@ -6,7 +6,7 @@ import { ReplyFieldActivated, ReplyButtonActive, ReplyButtonInactive, ReplyCance
 import { Checkbox } from '../form/FormComponents';
 import Modal from '../modals/Modal';
 import Reply from './Reply';
-import RepliesContainer from './RepliesContainer';
+import RepliesContainer from '../../containers/comments/RepliesContainer';
 import UserInfoTile from './UserInfoTile';
 import VotingContainerBase from '../voting/VotingContainerBase';
 
@@ -192,7 +192,6 @@ class Comment extends React.Component {
 
     return(
       <div className="cf-comment">
-
         <div className="cf-comment-wrapper">
           <UserInfoTile
             userTileHover={userTileHover}
