@@ -1,9 +1,7 @@
 class Api::V1::BlockingsController < ApiController
   load_and_authorize_resource
 
-  before_action :set_following, only: [:update, :destroy]
-
-  # POST /followings.json
+  # POST /blockings.json
   def create
     @blocking = Blocking.new(blocking_params)
     if @blocking.save

@@ -201,6 +201,7 @@ RSpec.describe User, type: :model do
       expect(total_votes).to eq(expected_votes)
     end
   end
+  
   describe "following" do
     describe "network" do
       let(:given_user) {FactoryBot.create(:user)}

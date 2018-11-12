@@ -41,10 +41,10 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
           }.to change(Comment, :count).by(1)
         end
 
-        it "redirects to the index" do
-          post :create, format: :json, params: {comment: valid_attributes}, session: valid_session
-          expect(response).to redirect_to(api_v1_comments_url(art_id: valid_attributes[:art_id], art_type: valid_attributes[:art_type]))
-        end
+        # it "redirects to the index" do
+        #   post :create, format: :json, params: {comment: valid_attributes}, session: valid_session
+        #   expect(response).to redirect_to(api_v1_comments_url(art_id: valid_attributes[:art_id], art_type: valid_attributes[:art_type]))
+        # end
 
       end
 
