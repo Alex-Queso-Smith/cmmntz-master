@@ -2,10 +2,11 @@ import React from 'react';
 import Textarea from 'react-expanding-textarea'
 
 import { FetchBasic, FetchWithUpdate, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
-import { ReplyFieldActivated } from './CommentComponents';
+import { ReplyFieldActivated, ReplyButtonActive, ReplyButtonInactive, ReplyCancelButton } from './CommentComponents';
 import { Checkbox } from '../form/FormComponents';
 import Modal from '../modals/Modal';
 import Reply from './Reply';
+import RepliesList from './RepliesList';
 import UserInfoTile from './UserInfoTile';
 import VotingContainerBase from '../voting/VotingContainerBase';
 
@@ -14,7 +15,7 @@ class Comment extends React.Component {
     super(props);
       this.state = {
         editStatus: false,
-        reply: false,
+        replyActive: false,
         replyAnonymous: false,
         updateId: null,
         text: this.props.text,
@@ -106,7 +107,7 @@ class Comment extends React.Component {
 
   handleCancelReply(){
     this.setState({
-      reply: false,
+      replyActive: false,
       replyAnonymous: false,
       replyErrors: {},
       replyText: ''
@@ -205,7 +206,7 @@ class Comment extends React.Component {
 
   render(){
     var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, userInfo, followedUsers, blockedUsers } = this.props
-    var { replies, editStatus, edited, text, reply, showReplies, replyErrors, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
+    var { replies, editStatus, edited, text, replyActive, showReplies, replyErrors, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
     var textBox, editButton, cancelButton, lastEdited, commentReplies, commentRepliesWrapper, replyField, replyButton, cancelReplyButton, userTile, repliesContainer, starOpacity, blockOpacity, followStar, blockSym, replyErrorText, anonModal;
     var blockedCount = 0
 
@@ -213,83 +214,79 @@ class Comment extends React.Component {
       replyErrorText = CreateErrorElements(replyErrors.text, "Reply")
     }
 
-    if (reply) {
+    if (replyActive) {
       replyField = ReplyFieldActivated(this)
-
-      replyButton =
-        <button className="btn btn-primary btn-sm" onClick={this.handleReplySubmit} disabled={formInvalid}>
-          Submit Reply
-        </button>
-      cancelReplyButton =
-      <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelReply}>Cancel Reply</button>
+      replyButton = ReplyButtonActive(this)
+      cancelReplyButton = ReplyCancelButton(this)
     } else {
-      replyButton =
-      <button className="btn btn-primary btn-sm" name="reply" onClick={this.handleStateFlip}>Reply</button>
+      replyButton = ReplyButtonInactive(this)
     }
 
-    if (replies && showReplies) {
+    // if (replies && showReplies) {
+    //   replies =
 
-      commentReplies = replies.map((reply) => {
-        var followed = followedUsers.includes(reply.user.user_id)
-        var blocked = blockedUsers.includes(reply.user.user_id)
-        var { id, user, text, created_at } = reply
-
-        if (!blocked) {
-          return(
-            <Reply
-              key={id}
-              user={user}
-              reply={text}
-              posted={created_at}
-              userFollowed={followed}
-              userBlocked={blocked}
-              replyUserId={user.user_id}
-              currentUserId={currentUserId}
-              />
-          )
-        } else {
-          blockedCount ++
-        }
-      })
-      repliesContainer =
-      <div className="cf-comment-replies">
-        {commentReplies}
-      </div>
-    }
-
-    if (replies.length > 0){ // will alway show without the explicit len check
-      var buttonText = showReplies ? "Hide" : "Show"
-      var showBlockedCount, repliesCount;
-
-      if (blockedCount > 1) {
-        showBlockedCount = `${blockedCount} replies have been blocked`
-      } else if (blockedCount > 0) {
-        showBlockedCount = `${blockedCount} reply has been blocked`
-      }
-
-      if (replies.length === 1) {
-        repliesCount =
-        <span className="cf-replies-count">
-          There is {replies.length} reply to this comment
-        </span>
-      } else {
-        repliesCount =
-        <span className="cf-replies-count">
-          There are {replies.length} replies to this comment
-        </span>
-      }
-
-      commentRepliesWrapper =
-      <div className="cf-comment-replies-wrapper">
-        {repliesCount}
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="btn btn-primary btn-sm" name="showReplies" onClick={this.handleStateFlip}>{buttonText}</button>
-        <span className="margin-left-5px">
-          {showBlockedCount}
-        </span>
-        {repliesContainer}
-      </div>
-    }
+    //   commentReplies = replies.map((reply) => {
+    //     var followedUsers = followedUsers.includes(reply.user.user_id)
+    //     var blocked = blockedUsers.includes(reply.user.user_id)
+    //     var { id, user, text, created_at } = reply
+    //
+    //     if (!blocked) {
+    //       return(
+    //         <Reply
+    //           key={id}
+    //           user={user}
+    //           reply={text}
+    //           posted={created_at}
+    //           userFollowed={followed}
+    //           userBlocked={blocked}
+    //           replyUserId={user.user_id}
+    //           currentUserId={currentUserId}
+    //           />
+    //       )
+    //     } else {
+    //       blockedCount ++
+    //     }
+    //   })
+    //
+    //   repliesContainer =
+    //   <div className="cf-comment-replies">
+    //     {commentReplies}
+    //   </div>
+    // }
+    //
+    // if (replies.length > 0){ // will alway show without the explicit len check
+    //   var buttonText = showReplies ? "Hide" : "Show"
+    //   var showBlockedCount, repliesCount;
+    //
+    //   if (blockedCount > 1) {
+    //     showBlockedCount = `${blockedCount} replies have been blocked`
+    //   } else if (blockedCount > 0) {
+    //     showBlockedCount = `${blockedCount} reply has been blocked`
+    //   }
+    //
+    //   if (replies.length === 1) {
+    //     repliesCount =
+    //     <span className="cf-replies-count">
+    //       There is {replies.length} reply to this comment
+    //     </span>
+    //   } else {
+    //     repliesCount =
+    //     <span className="cf-replies-count">
+    //       There are {replies.length} replies to this comment
+    //     </span>
+    //   }
+    //
+    //   commentRepliesWrapper =
+    //   <div className="cf-comment-replies-wrapper">
+    //     {repliesCount}
+    //     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    //     <button className="btn btn-primary btn-sm" name="showReplies" onClick={this.handleStateFlip}>{buttonText}</button>
+    //     <span className="margin-left-5px">
+    //       {showBlockedCount}
+    //     </span>
+    //     {repliesContainer}
+    //   </div>
+    // }
 
     if (editStatus && currentUserId === commentUserId) {
       editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
@@ -413,19 +410,23 @@ class Comment extends React.Component {
             </div>
           </div>
         </div>
-        <div className="cf-comment-voting">
-          <VotingContainerBase
-            commentId={this.props.commentId}
-            currentUserId={this.props.currentUserId}
-            commentVotes={this.props.commentVotes}
-            votePercents={this.props.votePercents}
-            userVoted={this.props.userVoted}
-            handleDelayClick={this.props.handleDelayClick}
-            handleTopChange={this.props.handleTopChange}
-          />
-        </div>
-        {commentRepliesWrapper}
-
+        <VotingContainerBase
+          commentId={this.props.commentId}
+          currentUserId={this.props.currentUserId}
+          commentVotes={this.props.commentVotes}
+          votePercents={this.props.votePercents}
+          userVoted={this.props.userVoted}
+          handleDelayClick={this.props.handleDelayClick}
+          handleTopChange={this.props.handleTopChange}
+        />
+        <RepliesList
+          replies={replies}
+          handleStateFlip={this.handleStateFlip}
+          showReplies={showReplies}
+          followedUsers={followedUsers}
+          blockedUsers={blockedUsers}
+          currentUserId={currentUserId}
+        />
         <div className="cf-comment-reply-field  margin-top-10px">
           {replyField}
           <div>
