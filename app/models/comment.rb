@@ -1,6 +1,7 @@
 include ActionView::Helpers::SanitizeHelper
 class Comment < ApplicationRecord
   include CommentBase
+  include CommentSearchs
 
   attr_accessor :vote_types, :force, :old_top_id
 
