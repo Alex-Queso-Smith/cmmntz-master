@@ -71,4 +71,16 @@ class User < ApplicationRecord
 
     "#{age_range}-#{age_range + 4}"
   end
+
+  def network
+    followed_users + followed_users_of_follow_users
+  end
+
+  def network_user_ids
+    network.map(&:id)
+  end
+
+  def followed_users_of_follow_users
+    followed_users.includes(:followed_users).map(&:followed_users).flatten
+  end
 end
