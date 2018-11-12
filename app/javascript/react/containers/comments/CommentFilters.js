@@ -2,7 +2,7 @@ import React from 'react'
 
 import { SortDir, SortButton } from '../../components/filters/SortSelect'
 import { ImageSelector } from '../../util/VoteUtil';
-import { SortButtons, FilterButtonsRowOne, FilterButtonsRowTwo } from '../../util/FilterUtil'
+import { SortButtons, FilterButtonsRowOne, FilterButtonsRowTwo, FilterCommentsBy } from '../../util/FilterUtil'
 
 class CommentFilters extends React.Component {
   render(){
@@ -31,6 +31,17 @@ class CommentFilters extends React.Component {
         <div className="row">
           {filterButtonsRowTwo}
         </div>
+        <br/>
+        <div className="row">
+          <h4>Show only comments from:</h4>
+        </div>
+        <div className="row">
+          <FilterCommentsBy
+            commentsFrom={this.props.sortOpts.commentsFrom}
+            onClick={this.props.handleFiltersStandardClick}
+          />
+        </div>
+
       </div>
     )
   }

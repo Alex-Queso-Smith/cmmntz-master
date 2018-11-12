@@ -1,6 +1,6 @@
 import React from "react"
 
-import { SortDir, SortButton } from '../components/filters/SortSelect'
+import { SortDir, SortButton, FilterFromButton } from '../components/filters/SortSelect'
 import { ImageSelector } from './VoteUtil';
 
 export const OpacityHandlerIncludes = (list, type) => {
@@ -122,4 +122,29 @@ export const FilterButtonsRowTwo = (object) => {
         />
     )
   })
+
+}
+
+export const FilterCommentsBy = (props) => {
+  var fromTypes = [
+    ["", "Everyone"],
+    ["friends", "Friends"],
+    ["network", "Network"]
+  ]
+
+
+  return(
+    fromTypes.map((type) => {
+      var opacity = props.commentsFrom == type[0] ? "" : "translucent"
+      return(
+        <FilterFromButton
+          key={`filter_from_${type[1]}`}
+          title={type[1]}
+          onClick={props.onClick}
+          value={type[0]}
+          opacityClass={opacity}
+        />
+      )
+    })
+  )
 }
