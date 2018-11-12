@@ -77,6 +77,10 @@ module CommentSearchs
       where(parent_id: nil)
     }
 
+    scope :comments_from_followed, lambda { |user_ids|
+      where(comments: {user_id: user_ids})
+    }
+
     def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, page)
       scope = select_tabulation.for_art_type_and_id(article_type, article_id).includes(:user, replies: [:user])
 
@@ -106,10 +110,19 @@ module CommentSearchs
       #   # scope = scope.merge(Vote.where(user_id: user.followed_user_ids))
       # end
 
-      # remove blacklisted users from consideration
-        if user && user.blocked_users
-          scope = scope.where(arel_table[:user_id].send(:not_in, user.blocked_user_ids))
+      if user && user.followed_users && filter_opts[:comments_from]
+        if filter_opts[:comments_from] == "friends"
+          user_ids = user.followed_user_ids
+        elsif filter_opts[:comments_from] == "network"
+          user_ids = user.network_user_ids
         end
+        scope = scope.comments_from_followed(user_ids)
+      end
+
+      # remove blacklisted users from consideration
+      if user && user.blocked_users
+        scope = scope.where(arel_table[:user_id].send(:not_in, user.blocked_user_ids))
+      end
 
       # do not include replies
       scope = scope.not_replies
