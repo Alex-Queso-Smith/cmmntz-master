@@ -15,3 +15,11 @@ export const SortButton = props => {
     </div>
   )
 };
+
+export const FilterFromButton = props => {
+  return(
+    <div className="col-4 col-sm-4 col-md-4">
+      <button name="commentsFrom" value={props.value} className={`btn btn-large btn-primary btn-block ${props.opacityClass}`} onClick={props.onClick}>{props.title}</button>
+    </div>
+  )
+}

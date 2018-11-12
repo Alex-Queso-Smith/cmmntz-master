@@ -24,7 +24,8 @@ class CommentingContainer extends React.Component {
       sortDir: 'desc',
       sortType: 'created_at',
       filterList: [],
-      page: 1
+      page: 1,
+      commentsFrom: ""
     }
   }
 
@@ -33,6 +34,7 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit = this.handleFilterSubmit.bind(this);
   handleTopChange = this.handleTopChange.bind(this);
   handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
+  handleFiltersStandardClick = this.handleFiltersStandardClick.bind(this);
 
   handleChange = this.handleChange.bind(this);
   handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
@@ -162,13 +164,16 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit(){
     var search = new FormData();
     var commentRoot = this.props.commentRoot
-    var {sortDir, page, sortType, filterList } = this.state.sortOpts;
+    var {sortDir, page, sortType, filterList, commentsFrom } = this.state.sortOpts;
     search.append("art_type", commentRoot.getAttribute('data-art-type'))
     search.append("art_id", commentRoot.getAttribute('data-art-id'))
     search.append("page", page);
     search.append("search[sort_dir]", sortDir);
     search.append("search[sort_type]", sortType);
     search.append("search[filter_list]", filterList.join());
+    if (commentsFrom) {
+      search.append("search[comments_from]", commentsFrom)
+    }
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
     .then(body => {
@@ -212,6 +217,20 @@ class CommentingContainer extends React.Component {
     setTimeout(function() { //Start the timer
       this.handleFilterSubmit();
     }.bind(this), 1)
+  }
+
+  handleFiltersStandardClick(event){
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+
+    var opts = this.state.sortOpts
+    opts[name] = value;
+    this.setState({
+      sortOpts: opts
+    })
+
+    this.submitterMan(event);
   }
 
   handleFilterClick(event){
@@ -291,6 +310,7 @@ class CommentingContainer extends React.Component {
           handleFilterSubmit={this.handleFilterSubmitMan}
           handleSortDirClick={this.handleSortDirClick}
           handleFilterClick={this.handleFilterClick}
+          handleFiltersStandardClick={this.handleFiltersStandardClick}
 
         />
         <hr />
