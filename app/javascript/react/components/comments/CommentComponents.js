@@ -1,6 +1,7 @@
 import React from 'react';
 import Textarea from 'react-expanding-textarea';
 import { Checkbox } from '../form/FormComponents';
+import Reply from './Reply';
 
 export const ReplyFieldActivated = (object) => {
   var field =
@@ -23,10 +24,22 @@ export const ReplyFieldActivated = (object) => {
   return field
 }
 
-// export const ReplyButton
-// replyButton =
-//   <button className="btn btn-primary btn-sm" onClick={this.handleReplySubmit} disabled={formInvalid}>
-//     Submit Reply
-//   </button>
-// cancelReplyButton =
-// <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelReply}>Cancel Reply</button>
+export const ReplyButtonActive = (object) => {
+  var replyButton =
+  <button className="btn btn-primary btn-sm" onClick={object.handleReplySubmit} disabled={object.state.formInvalid}>
+    Submit Reply
+  </button>
+  return replyButton
+}
+
+export const ReplyButtonInactive = (object) => {
+  var replyButton =
+  <button className="btn btn-primary btn-sm" name="replyActive" onClick={object.handleStateFlip}>Reply</button>
+  return replyButton
+}
+
+export const ReplyCancelButton = (object) => {
+  var replyCancelButton =
+  <button className="btn btn-light btn-sm margin-left-5px" onClick={object.handleCancelReply}>Cancel Reply</button>
+  return replyCancelButton
+}

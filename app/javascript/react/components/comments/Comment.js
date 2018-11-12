@@ -2,10 +2,11 @@ import React from 'react';
 import Textarea from 'react-expanding-textarea'
 
 import { FetchBasic, FetchWithUpdate, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
-import { ReplyFieldActivated } from './CommentComponents';
+import { ReplyFieldActivated, ReplyButtonActive, ReplyButtonInactive, ReplyCancelButton } from './CommentComponents';
 import { Checkbox } from '../form/FormComponents';
 import Modal from '../modals/Modal';
 import Reply from './Reply';
+import RepliesContainer from '../../containers/comments/RepliesContainer';
 import UserInfoTile from './UserInfoTile';
 import VotingContainerBase from '../voting/VotingContainerBase';
 
@@ -14,47 +15,23 @@ class Comment extends React.Component {
     super(props);
       this.state = {
         editStatus: false,
-        reply: false,
-        replyAnonymous: false,
         updateId: null,
         text: this.props.text,
         edited: this.props.edited,
         replies: this.props.replies,
         userFollowed: this.props.userFollowed,
         userBlocked: this.props.userBlocked,
-        replyText: '',
-        replyErrors: {},
         formInvalid: true,
-        anonModalShown: false,
-        anonModalShow: false,
-        showReplies: false,
         userTileHover: false,
         showFullText: false
       }
     this.handleChange = this.handleChange.bind(this);
     this.handleEditSubmit = this.handleEditSubmit.bind(this);
     this.handleCancelEditComment = this.handleCancelEditComment.bind(this);
-    this.handleReplySubmit = this.handleReplySubmit.bind(this);
-    this.handleCancelReply = this.handleCancelReply.bind(this);
     this.onUserHover = this.onUserHover.bind(this);
     this.handleStateFlip = this.handleStateFlip.bind(this);
     this.handleFollow = this.handleFollow.bind(this);
     this.handleBlock = this.handleBlock.bind(this);
-    this.handleShowAnonModal = this.handleShowAnonModal.bind(this);
-    this.handleCloseAnonModal = this.handleCloseAnonModal.bind(this);
-    this.handleSuccessfulReply = this.handleSuccessfulReply.bind(this);
-  }
-
-  componentDidUpdate(prevProps, prevState){
-    if (prevState.replyText != this.state.replyText) {
-      CheckInputValidation(this, [this.state.replyText])
-      if (
-        !this.state.anonModalShown &&
-        this.state.replyAnonymous
-      ) {
-        this.handleShowAnonModal()
-      }
-    }
   }
 
   onUserHover(){
@@ -104,52 +81,6 @@ class Comment extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleCancelReply(){
-    this.setState({
-      reply: false,
-      replyAnonymous: false,
-      replyErrors: {},
-      replyText: ''
-    })
-  }
-
-  handleSuccessfulReply(){
-    this.setState({
-      replyErrors: {},
-      replyText: '',
-      showReplies: true
-    })
-  }
-
-  handleReplySubmit(event){
-    event.preventDefault();
-
-    var newReply = new FormData();
-    var { artId, artType, currentUserId, commentId } = this.props
-    var { replyText, replyAnonymous } = this.state
-    var allComments;
-
-    newReply.append("comment[text]", replyText)
-    newReply.append("comment[art_id]", artId)
-    newReply.append("comment[art_type]", artType)
-    newReply.append("comment[user_id]", currentUserId)
-    newReply.append("comment[anonymous]", replyAnonymous)
-    newReply.append("comment[parent_id]", commentId)
-
-    FetchWithUpdate(this, `/api/v1/comments.json`, 'POST', newReply)
-    .then(body => {
-      if (body.errors) {
-        this.setState({ replyErrors: body.errors})
-      } else {
-        var id = this.props.commentId
-        var commentReplies = body.comments.find(c => c.id === id).replies
-        this.setState({ replies: commentReplies })
-        this.handleSuccessfulReply()
-      }
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
   handleFollow(event){
     event.preventDefault();
 
@@ -190,106 +121,10 @@ class Comment extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleShowAnonModal(){
-    this.setState({
-      anonModalShow: true,
-      anonModalShown: true
-    });
-    document.body.classList.add("cf-modal-locked");
-  }
-
-  handleCloseAnonModal(){
-    this.setState({ anonModalShow: false });
-    document.body.classList.remove("cf-modal-locked");
-  }
-
   render(){
-    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, userInfo, followedUsers, blockedUsers } = this.props
-    var { replies, editStatus, edited, text, reply, showReplies, replyErrors, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
-    var textBox, editButton, cancelButton, lastEdited, commentReplies, commentRepliesWrapper, replyField, replyButton, cancelReplyButton, userTile, repliesContainer, starOpacity, blockOpacity, followStar, blockSym, replyErrorText, anonModal;
-    var blockedCount = 0
-
-    if (replyErrors) {
-      replyErrorText = CreateErrorElements(replyErrors.text, "Reply")
-    }
-
-    if (reply) {
-      replyField = ReplyFieldActivated(this)
-
-      replyButton =
-        <button className="btn btn-primary btn-sm" onClick={this.handleReplySubmit} disabled={formInvalid}>
-          Submit Reply
-        </button>
-      cancelReplyButton =
-      <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelReply}>Cancel Reply</button>
-    } else {
-      replyButton =
-      <button className="btn btn-primary btn-sm" name="reply" onClick={this.handleStateFlip}>Reply</button>
-    }
-
-    if (replies && showReplies) {
-
-      commentReplies = replies.map((reply) => {
-        var followed = followedUsers.includes(reply.user.user_id)
-        var blocked = blockedUsers.includes(reply.user.user_id)
-        var { id, user, text, created_at } = reply
-
-        if (!blocked) {
-          return(
-            <Reply
-              key={id}
-              user={user}
-              reply={text}
-              posted={created_at}
-              userFollowed={followed}
-              userBlocked={blocked}
-              replyUserId={user.user_id}
-              currentUserId={currentUserId}
-              />
-          )
-        } else {
-          blockedCount ++
-        }
-      })
-      repliesContainer =
-      <div className="cf-comment-replies">
-        {commentReplies}
-      </div>
-    }
-
-    if (replies.length > 0){ // will alway show without the explicit len check
-      var buttonText = showReplies ? "Hide" : "Show"
-      var showBlockedCount, repliesCount;
-
-      if (blockedCount > 1) {
-        showBlockedCount = `${blockedCount} replies have been blocked`
-      } else if (blockedCount > 0) {
-        showBlockedCount = `${blockedCount} reply has been blocked`
-      }
-
-      if (replies.length === 1) {
-        repliesCount =
-        <span className="cf-replies-count">
-          There is {replies.length} reply to this comment
-        </span>
-      } else {
-        repliesCount =
-        <span className="cf-replies-count">
-          There are {replies.length} replies to this comment
-        </span>
-      }
-
-      commentRepliesWrapper =
-      <div className="cf-comment-replies-wrapper">
-        {repliesCount}
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="btn btn-primary btn-sm" name="showReplies" onClick={this.handleStateFlip}>{buttonText}</button>
-        <span className="margin-left-5px">
-          {showBlockedCount}
-        </span>
-        {repliesContainer}
-      </div>
-    }
+    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers } = this.props
+    var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
+    var textBox, editButton, cancelButton, lastEdited, userTile, starOpacity, blockOpacity, followStar, blockSym;
 
     if (editStatus && currentUserId === commentUserId) {
       editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
@@ -338,45 +173,25 @@ class Comment extends React.Component {
     }
 
     if (commentUserId != currentUserId && userName != "Anonymous") {
-      if (!userFollowed) {
-        starOpacity = "translucent"
-      }
+      if (!userFollowed) { starOpacity = "translucent" }
       followStar =
       <div className={`col-1 col-sm-1 cursor-pointer ${starOpacity}`}>
         <img onClick={this.handleFollow} src="/assets/star" height="20px" width="20px" />
       </div>
-    } else {
-      followStar =
-      <div className={`col-1 col-sm-1`} />
-    }
 
-    if (commentUserId != currentUserId && userName != "Anonymous") {
-      if (!userBlocked) {
-        blockOpacity = "translucent"
-      }
+      if (!userBlocked) { blockOpacity = "translucent" }
       blockSym =
       <div className={`col-1 col-sm-1 cursor-pointer ${blockOpacity}`}>
         <img onClick={this.handleBlock} src="/assets/block" height="20px" width="20px" />
       </div>
-    } else {
-      blockSym =
-      <div className={`col-1 col-sm-1`}>
-      </div>
-    }
 
-    if (this.state.anonModalShow) {
-      anonModal =
-      <Modal
-        handleClose={this.handleCloseAnonModal}
-        modalTitle={'Do you wish to post anonymously?'}
-      >
-      If you wish to take advantage of ...... please do not post anonymously, thanks pal!
-      </Modal>
+    } else {
+      followStar = <div className={`col-1 col-sm-1`} />
+      blockSym = <div className={`col-1 col-sm-1`} />
     }
 
     return(
       <div className="cf-comment">
-        {anonModal}
         <div className="cf-comment-wrapper">
           <UserInfoTile
             userTileHover={userTileHover}
@@ -413,29 +228,24 @@ class Comment extends React.Component {
             </div>
           </div>
         </div>
-        <div className="cf-comment-voting">
-          <VotingContainerBase
-            commentId={this.props.commentId}
-            currentUserId={this.props.currentUserId}
-            commentVotes={this.props.commentVotes}
-            votePercents={this.props.votePercents}
-            userVoted={this.props.userVoted}
-            handleDelayClick={this.props.handleDelayClick}
-            handleTopChange={this.props.handleTopChange}
-          />
-        </div>
-        {commentRepliesWrapper}
-
-        <div className="cf-comment-reply-field  margin-top-10px">
-          {replyField}
-          <div>
-            {replyErrorText}
-          </div>
-          <div>
-            {replyButton}
-            {cancelReplyButton}
-          </div>
-        </div>
+        <VotingContainerBase
+          commentId={this.props.commentId}
+          currentUserId={this.props.currentUserId}
+          commentVotes={this.props.commentVotes}
+          votePercents={this.props.votePercents}
+          userVoted={this.props.userVoted}
+          handleDelayClick={this.props.handleDelayClick}
+          handleTopChange={this.props.handleTopChange}
+        />
+        <RepliesContainer
+          replies={replies}
+          followedUsers={followedUsers}
+          blockedUsers={blockedUsers}
+          currentUserId={currentUserId}
+          artId={artId}
+          artType={artType}
+          commentId={commentId}
+        />
       </div>
     )
   }
