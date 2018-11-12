@@ -29,32 +29,21 @@ RSpec.describe Api::V1::FollowingsController, type: :controller do
       context "with valid params" do
         it "creates a new Following" do
           expect {
-            post :create, format: :json, params: {following: valid_attributes}, session: valid_session
+            post :create, format: :json, params: { following: valid_attributes }, session: valid_session
           }.to change(Following, :count).by(1)
         end
 
         it "responds successfully" do
-          post :create, format: :json, params: {following: valid_attributes}, session: valid_session
+          post :create, format: :json, params: { following: valid_attributes }, session: valid_session
           expect(response).to be_successful
         end
       end
 
       context "with invalid params" do
         it "returns a success response (i.e. to display the 'new' template)" do
-          post :create, format: :json, params: {following: invalid_attributes}, session: valid_session
+          post :create, format: :json, params: { following: invalid_attributes }, session: valid_session
           expect(response).to be_successful
         end
-      end
-    end
-
-
-
-    describe "DELETE #destroy" do
-      it "destroys the requested following" do
-        following = Following.create! valid_attributes
-        expect {
-          delete :destroy, format: :json, params: {id: following.to_param}, session: valid_session
-        }.to change(Following, :count).by(-1)
       end
     end
   end
