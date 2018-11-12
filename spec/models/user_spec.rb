@@ -263,4 +263,28 @@ RSpec.describe User, type: :model do
     end
 
   end
+
+  describe "blocking" do
+    let(:given_user) {FactoryBot.create(:user)}
+    let(:user_1) {FactoryBot.create(:user)}
+    let(:user_2) {FactoryBot.create(:user)}
+    let(:user_3) {FactoryBot.create(:user)}
+    let(:user_4) {FactoryBot.create(:user)}
+    before do
+      Blocking.create(blocker: given_user, blocking: user_1)
+      Blocking.create(blocker: given_user, blocking: user_3)
+    end
+
+    it "should return an array of the right size" do
+      expect(given_user.blocked_users.size).to eq(2)
+    end
+
+    it "should include users that the given user is blocking" do
+      expect(given_user.blocked_users).to include(user_1 && user_3)
+    end
+
+    it "should not include users that the given user is not blocking" do
+      expect(given_user.blocked_users).to_not include(user_2 || user_4)
+    end
+  end
 end
