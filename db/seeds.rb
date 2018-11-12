@@ -56,11 +56,11 @@ users = User.all
 puts "generating followings for users"
 users.each do |user|
   rand(0..10).times do
-    user.followed_users << (users - [user]).sample
+    user.followings.create(following: (users - [user]).sample)
   end
 
   rand(-5..3).times do
-    user.blocked_users << (users - [users]).sample
+    user.blockings.create(blocking: (users - [user]).sample)
   end
 end
 
