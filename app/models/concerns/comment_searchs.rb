@@ -93,6 +93,11 @@ module CommentSearchs
       end
 
       # filter not list
+      if filter_opts[:not_filter_list]
+        filter_opts[:not_filter_list].split(",").each do |item|
+          scope = scope.where(arel_table[item].send(:lt, FILTER_PERCENT))
+        end
+      end
 
       # filter user info
 
