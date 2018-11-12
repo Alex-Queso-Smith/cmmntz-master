@@ -201,5 +201,65 @@ RSpec.describe User, type: :model do
       expect(total_votes).to eq(expected_votes)
     end
   end
+  describe "following" do
+    describe "network" do
+      let(:given_user) {FactoryBot.create(:user)}
+      let(:user_1) {FactoryBot.create(:user)}
+      let(:user_2) {FactoryBot.create(:user)}
+      let(:user_3) {FactoryBot.create(:user)}
+      let(:user_4) {FactoryBot.create(:user)}
+      let(:user_5) {FactoryBot.create(:user)}
+      before do
+        Following.create(follower: given_user, following: user_1)
+        Following.create(follower: given_user, following: user_2)
+        Following.create(follower: user_1, following: user_3)
+        Following.create(follower: user_1, following: user_4)
+        Following.create(follower: user_2, following: user_4)
+        Following.create(follower: user_2, following: user_5)
+      end
 
+      let(:non_network_user_1) {FactoryBot.create(:user)}
+      let(:non_network_user_2) {FactoryBot.create(:user)}
+
+
+      context "network method" do
+        it "should return an array of the right size" do
+          expect(given_user.network.size).to eq(5)
+        end
+
+        it "should include users that the given user is connected with" do
+          expect(given_user.network).to include(user_1 && user_2)
+        end
+
+        it "should include users that the users follows are following" do
+          expect(given_user.network).to include(user_3 && user_4 && user_5)
+        end
+
+        it "should exclude users the given user has no connection with" do
+          expect(given_user.network).to_not include(non_network_user_1 || non_network_user_2)
+        end
+
+
+      end
+
+      context "network_user_ids method" do
+        it "should return an array of the right size" do
+          expect(given_user.network_user_ids.size).to eq(5)
+        end
+
+        it "should include user ids for the given users network" do
+          expect(given_user.network_user_ids).to include(user_1.id && user_2.id)
+        end
+
+        it "should include users ids for the given users followings followings" do
+          expect(given_user.network_user_ids).to include(user_3.id && user_4.id && user_5.id)
+        end
+
+        it "should exclude user ids that the given user has no connection with" do
+          expect(given_user.network_user_ids).to_not include(non_network_user_1 || non_network_user_2)
+        end
+      end
+    end
+
+  end
 end

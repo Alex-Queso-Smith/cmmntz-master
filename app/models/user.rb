@@ -73,7 +73,7 @@ class User < ApplicationRecord
   end
 
   def network
-    followed_users + followed_users_of_follow_users
+    (followed_users + followed_users_of_follow_users).uniq
   end
 
   def network_user_ids
