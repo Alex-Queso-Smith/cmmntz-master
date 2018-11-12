@@ -209,13 +209,17 @@ RSpec.describe User, type: :model do
       let(:user_3) {FactoryBot.create(:user)}
       let(:user_4) {FactoryBot.create(:user)}
       let(:user_5) {FactoryBot.create(:user)}
+      let(:user_6_blocked) {FactoryBot.create(:user)}
       before do
-        Following.create(follower: given_user, following: user_1)
-        Following.create(follower: given_user, following: user_2)
-        Following.create(follower: user_1, following: user_3)
-        Following.create(follower: user_1, following: user_4)
-        Following.create(follower: user_2, following: user_4)
-        Following.create(follower: user_2, following: user_5)
+        given_user.followed_users << user_1
+        given_user.followed_users << user_2
+        user_1.followed_users << user_3
+        user_1.followed_users << user_4
+        user_2.followed_users << user_4
+        user_2.followed_users << user_5
+        user_2.followed_users << user_6_blocked
+
+        given_user.blocked_users << user_6_blocked
       end
 
       let(:non_network_user_1) {FactoryBot.create(:user)}
@@ -239,6 +243,10 @@ RSpec.describe User, type: :model do
           expect(given_user.network).to_not include(non_network_user_1 || non_network_user_2)
         end
 
+        it "should exclude users the given user is blocking" do
+          expect(given_user.network).to_not include(user_6_blocked)
+        end
+
 
       end
 
@@ -257,6 +265,10 @@ RSpec.describe User, type: :model do
 
         it "should exclude user ids that the given user has no connection with" do
           expect(given_user.network_user_ids).to_not include(non_network_user_1 || non_network_user_2)
+        end
+
+        it "should exclude user ids that the given user is blocking" do
+          expect(given_user.network_user_ids).to_not include(user_6_blocked.id)
         end
       end
     end
