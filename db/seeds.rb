@@ -1,5 +1,5 @@
 # set the number of rando-users we want in this pass
-num_users = 100
+num_users = 200
 
 # set the number of articles we want in this pass
 num_articles = 2
@@ -52,13 +52,17 @@ end
 User.import users, validate: false
 users = User.all
 
-# generate some followigs for the users
+# generate some followings for the users
 puts "generating followings for users"
 users.each do |user|
   rand(0..10).times do
     user.followings.create(following: (users - [user]).sample)
   end
+end
 
+# generate some blockings for the users
+puts "generating blockings for users"
+users.each do |user|
   rand(-5..3).times do
     user.blockings.create(blocking: (users - [user]).sample)
   end
