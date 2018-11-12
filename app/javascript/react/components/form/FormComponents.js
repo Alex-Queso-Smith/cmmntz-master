@@ -208,13 +208,3 @@ export const NukaCarousel = props => {
     </Carousel>
   )
 }
-
-export default {
-  AgeSlider,
-  Checkbox,
-  GenderSelector,
-  Input,
-  RadioButton,
-  NukaCarousel,
-  Avatars
-}
