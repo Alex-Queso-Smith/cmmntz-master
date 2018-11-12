@@ -3,7 +3,7 @@ module CommentSearchs
 
   included do
     FILTER_PERCENT = '.2000'
-    self.per_page = 10
+    self.per_page = 100
 
     scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
     scope :select_tabulation, -> {
@@ -107,10 +107,14 @@ module CommentSearchs
       dir = filter_opts[:sort_dir] ? filter_opts[:sort_dir] : "desc"
       sort_type = filter_opts[:sort_type] ? filter_opts[:sort_type] : "created_at"
 
-      # if user && user.followed_users
-      #   scope = scope.where(votes: {user_id: user.followed_user_ids})
-      #   # scope = scope.merge(Vote.where(user_id: user.followed_user_ids))
-      # end
+      if user && user.followed_users && filter_opts[:votes_from]
+        if filter_opts[:votes_from] == "friends"
+          user_ids = user.followed_user_ids
+        elsif filter_opts[:votes_from] == "network"
+          user_ids = user.network_user_ids
+        end
+        scope = scope.where(votes: {user_id: user_ids})
+      end
 
       if user && user.followed_users && filter_opts[:comments_from]
         if filter_opts[:comments_from] == "friends"

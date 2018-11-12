@@ -124,22 +124,39 @@ export const FilterButtonsRowTwo = (object) => {
   })
 
 }
+export const FilterFromTypes = [
+  ["", "Everyone"],
+  ["friends", "Friends"],
+  ["network", "Network"]
+]
 
 export const FilterCommentsBy = (props) => {
-  var fromTypes = [
-    ["", "Everyone"],
-    ["friends", "Friends"],
-    ["network", "Network"]
-  ]
-
-
   return(
-    fromTypes.map((type) => {
+    FilterFromTypes.map((type) => {
       var opacity = props.commentsFrom == type[0] ? "" : "translucent"
       return(
         <FilterFromButton
           key={`filter_from_${type[1]}`}
           title={type[1]}
+          name="commentsFrom"
+          onClick={props.onClick}
+          value={type[0]}
+          opacityClass={opacity}
+        />
+      )
+    })
+  )
+}
+
+export const FilterVotesBy = (props) => {
+  return(
+    FilterFromTypes.map((type) => {
+      var opacity = props.votesFrom == type[0] ? "" : "translucent"
+      return(
+        <FilterFromButton
+          key={`filter_from_${type[1]}`}
+          title={type[1]}
+          name="votesFrom"
           onClick={props.onClick}
           value={type[0]}
           opacityClass={opacity}

@@ -25,7 +25,8 @@ class CommentingContainer extends React.Component {
       sortType: 'created_at',
       filterList: [],
       page: 1,
-      commentsFrom: ""
+      commentsFrom: "",
+      votesFrom: ""
     }
   }
 
@@ -164,7 +165,7 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit(){
     var search = new FormData();
     var commentRoot = this.props.commentRoot
-    var {sortDir, page, sortType, filterList, commentsFrom } = this.state.sortOpts;
+    var {sortDir, page, sortType, filterList, commentsFrom, votesFrom } = this.state.sortOpts;
     search.append("art_type", commentRoot.getAttribute('data-art-type'))
     search.append("art_id", commentRoot.getAttribute('data-art-id'))
     search.append("page", page);
@@ -173,6 +174,9 @@ class CommentingContainer extends React.Component {
     search.append("search[filter_list]", filterList.join());
     if (commentsFrom) {
       search.append("search[comments_from]", commentsFrom)
+    }
+    if (votesFrom) {
+      search.append("search[votes_from]", votesFrom)
     }
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
@@ -184,7 +188,7 @@ class CommentingContainer extends React.Component {
       } else {
         newComments = body.comments
       }
-
+      
       this.setState({
         comments: newComments,
         totalComments: body.total_comments
