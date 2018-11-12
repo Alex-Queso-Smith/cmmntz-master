@@ -73,14 +73,14 @@ class User < ApplicationRecord
   end
 
   def network
-    (followed_users + followed_users_of_follow_users).uniq
+    ((followed_users + followed_users_of_followed_users) - blocked_users).uniq
   end
 
   def network_user_ids
     network.map(&:id)
   end
 
-  def followed_users_of_follow_users
+  def followed_users_of_followed_users
     followed_users.includes(:followed_users).map(&:followed_users).flatten
   end
 end
