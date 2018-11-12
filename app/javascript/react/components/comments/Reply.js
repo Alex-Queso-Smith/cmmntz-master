@@ -69,7 +69,7 @@ class Reply extends React.Component {
       userInfo = `${user_name} - ${gender} - ${age_range}`
     }
 
-    if (user.id != currentUserId && user_name != "Anonymous") {
+    if (user.user_id != currentUserId && user_name != "Anonymous") {
       if (!this.state.userFollowed) {
         starOpacity = "translucent"
       }
@@ -83,7 +83,7 @@ class Reply extends React.Component {
       </div>
     }
 
-    if (user.id != currentUserId && user_name != "Anonymous") {
+    if (user.user_id != currentUserId && user_name != "Anonymous") {
       if (!this.state.userBlocked) {
         blockOpacity = "translucent"
       }
