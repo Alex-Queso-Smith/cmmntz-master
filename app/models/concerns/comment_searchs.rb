@@ -81,6 +81,8 @@ module CommentSearchs
       where(comments: {user_id: user_ids})
     }
 
+    scope :not_anon, -> { where(comments: {anonymous: false}) }
+
     def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, page)
       scope = select_tabulation.for_art_type_and_id(article_type, article_id).includes(:user, replies: [:user])
 
@@ -116,7 +118,7 @@ module CommentSearchs
         elsif filter_opts[:comments_from] == "network"
           user_ids = user.network_user_ids
         end
-        scope = scope.comments_from_followed(user_ids)
+        scope = scope.comments_from_followed(user_ids).not_anon
       end
 
       # remove blacklisted users from consideration
