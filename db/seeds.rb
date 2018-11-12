@@ -1,5 +1,5 @@
 # set the number of rando-users we want in this pass
-num_users = 100
+num_users = 1000
 
 # set the number of articles we want in this pass
 num_articles = 2
@@ -55,7 +55,7 @@ users = User.all
 # generate some followigs for the users
 puts "generating followings for users"
 users.each do |user|
-  rand(0..10).times do
+  rand(-5..15).times do
     user.followings.create(following: (users - [user]).sample)
   end
 end
