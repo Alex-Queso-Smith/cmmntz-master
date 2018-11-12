@@ -2,6 +2,7 @@ import React from 'react';
 import Textarea from 'react-expanding-textarea'
 
 import { FetchBasic, FetchWithUpdate, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
+import { ReplyFieldActivated } from './CommentComponents';
 import { Checkbox } from '../form/FormComponents';
 import Modal from '../modals/Modal';
 import Reply from './Reply';
@@ -204,7 +205,7 @@ class Comment extends React.Component {
 
   render(){
     var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, userInfo, followedUsers, blockedUsers } = this.props
-    var { replies, editStatus, edited, text, reply, replyText, showReplies, replyErrors, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
+    var { replies, editStatus, edited, text, reply, showReplies, replyErrors, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
     var textBox, editButton, cancelButton, lastEdited, commentReplies, commentRepliesWrapper, replyField, replyButton, cancelReplyButton, userTile, repliesContainer, starOpacity, blockOpacity, followStar, blockSym, replyErrorText, anonModal;
     var blockedCount = 0
 
@@ -213,23 +214,8 @@ class Comment extends React.Component {
     }
 
     if (reply) {
-      replyField =
-      <div>
-        <Textarea
-          maxLength="1000"
-          className="form-control margin-top-10px textarea"
-          name="replyText"
-          value={replyText}
-          rows={3}
-          onChange={this.handleChange}
-          />
-        <Checkbox
-          name="replyAnonymous"
-          onChange={this.handleChange}
-          label="Submit Anonymously"
-          className="margin-top-bottom-10px"
-          />
-      </div>
+      replyField = ReplyFieldActivated(this)
+
       replyButton =
         <button className="btn btn-primary btn-sm" onClick={this.handleReplySubmit} disabled={formInvalid}>
           Submit Reply
