@@ -102,7 +102,7 @@ num_articles.times do
     if num_replies > 0
       puts "generating #{num_replies} replies"
       num_replies.times do
-        Comment.create(
+        reply = Comment.create(
           user: users.sample,
           art_id: article_one.id,
           art_type: "article",
@@ -112,6 +112,26 @@ num_articles.times do
           anonymous: [false, true, false, false, false].sample,
           parent_id: comment.id
         )
+
+        num_votes = rand(50)
+        puts "generating #{num_votes} reply votes"
+        num_votes.times do
+          # seed some Votes
+          u = (users - [comment.user]).sample
+          Vote.create(
+            user: u,
+            comment: reply,
+            vote_type: Vote::EXCLUSIVE_VOTES.sample
+          )
+          rand(3).times do
+            Vote.create(
+              user: u,
+              comment: reply,
+              vote_type: (Vote::TYPES - Vote::EXCLUSIVE_VOTES).sample
+            )
+          end
+        end
+
       end
     end
 

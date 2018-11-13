@@ -125,7 +125,7 @@ class RepliesContainer extends React.Component {
         var followed = followedUsers.includes(reply.user.user_id)
         var blocked = blockedUsers.includes(reply.user.user_id)
         var { id, user, text, created_at, vote_percents, user_has_voted, current_users_votes } = reply
-
+        
         if (!blocked) {
           return(
             <Reply

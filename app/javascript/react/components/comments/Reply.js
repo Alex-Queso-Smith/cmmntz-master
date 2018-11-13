@@ -113,6 +113,8 @@ class Reply extends React.Component {
               <div className="cf-comment-at col-8" >
                 <div className="float-right">
                   {this.props.posted}
+                  <br />
+                  {this.props.replyId}
                 </div>
               </div>
             </div>
