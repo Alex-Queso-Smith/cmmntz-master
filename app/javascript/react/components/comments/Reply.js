@@ -73,20 +73,13 @@ class Reply extends React.Component {
       if (!this.state.userFollowed) {
         starOpacity = "translucent"
       }
+      if (!this.state.userBlocked) {
+        blockOpacity = "translucent"
+      }
       followStar =
       <div className={`col-1 col-sm-1 cursor-pointer ${starOpacity}`}>
         <img onClick={this.handleFollow} src="/assets/star" height="20px" width="20px" />
       </div>
-    } else {
-      followStar =
-      <div className={`cf-comment-user-name col-1 col-sm-1`}>
-      </div>
-    }
-
-    if (user.user_id != currentUserId && user_name != "Anonymous") {
-      if (!this.state.userBlocked) {
-        blockOpacity = "translucent"
-      }
       blockSym =
       <div className={`col-1 col-sm-1 cursor-pointer ${blockOpacity}`}>
         <img onClick={this.handleBlock} src="/assets/block" height="20px" width="20px" />
@@ -94,6 +87,9 @@ class Reply extends React.Component {
     } else {
       blockSym =
       <div className={`col-1 col-sm-1`}>
+      </div>
+      followStar =
+      <div className={`cf-comment-user-name col-1 col-sm-1`}>
       </div>
     }
 
@@ -125,6 +121,14 @@ class Reply extends React.Component {
             </div>
           </div>
         </div>
+        <VotingContainerBase
+          commentId={this.props.replyId}
+          currentUserId={this.props.currentUserId}
+          commentVotes={this.props.commentVotes}
+          votePercents={this.props.votePercents}
+          handleTopChange={this.props.handleTopChange}
+          userVoted={this.props.userVoted}
+        />
       </div>
     )
   }

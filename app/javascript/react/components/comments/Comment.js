@@ -230,11 +230,10 @@ class Comment extends React.Component {
         </div>
         <VotingContainerBase
           commentId={this.props.commentId}
-          currentUserId={this.props.currentUserId}
+          currentUserId={currentUserId}
           commentVotes={this.props.commentVotes}
           votePercents={this.props.votePercents}
           userVoted={this.props.userVoted}
-          handleDelayClick={this.props.handleDelayClick}
           handleTopChange={this.props.handleTopChange}
         />
         <RepliesContainer
@@ -245,6 +244,7 @@ class Comment extends React.Component {
           artId={artId}
           artType={artType}
           commentId={commentId}
+          handleTopChange={this.props.handleTopChange}
         />
       </div>
     )

@@ -10,7 +10,6 @@ json.user do
   json.base_image comment_user_base_image(comment)
 end
 
-if comment.parent_id.nil?
   user_has_interacted = current_users_interactions.detect {|i| i.comment_id == comment.id}.present?
   json.user_has_voted user_has_interacted
   json.current_users_votes do
@@ -21,4 +20,3 @@ if comment.parent_id.nil?
   end
 
   json.partial! 'api/v1/shared/vote_percents', comment: comment, user_has_interacted: user_has_interacted
-end
