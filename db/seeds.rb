@@ -140,7 +140,7 @@ num_articles.times do
   SORTABLE_TYPES.each do |type|
     puts "Determining most #{type} comment for #{article_one.title}"
     filter_opts = {sort_dir: 'desc', sort_type: type}
-    most_comment_tab = CommentVoteTabulation.filter_and_sort(User.new, article_one.id, "article", filter_opts, 1).first
+    most_comment_tab = Comment.filter_and_sort(User.new, article_one.id, "article", filter_opts, 1).first
 
     if most_comment_tab
       most_comment = Comment.find(most_comment_tab.id)
