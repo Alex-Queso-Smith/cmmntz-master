@@ -23,6 +23,7 @@ class CommentingContainer extends React.Component {
     sortOpts: {
       sortDir: 'desc',
       sortType: 'created_at',
+      notFilterList: [],
       filterList: [],
       page: 1,
       commentsFrom: "",
@@ -35,7 +36,7 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit = this.handleFilterSubmit.bind(this);
   handleTopChange = this.handleTopChange.bind(this);
   handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
-  handleFiltersStandardClick = this.handleFiltersStandardClick.bind(this);
+  handleFilterByClick = this.handleFilterByClick.bind(this);
 
   handleChange = this.handleChange.bind(this);
   handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
@@ -165,13 +166,14 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit(){
     var search = new FormData();
     var commentRoot = this.props.commentRoot
-    var {sortDir, page, sortType, filterList, commentsFrom, votesFrom } = this.state.sortOpts;
+    var {sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom } = this.state.sortOpts;
     search.append("art_type", commentRoot.getAttribute('data-art-type'))
     search.append("art_id", commentRoot.getAttribute('data-art-id'))
     search.append("page", page);
     search.append("search[sort_dir]", sortDir);
     search.append("search[sort_type]", sortType);
     search.append("search[filter_list]", filterList.join());
+    search.append("search[not_filter_list]", notFilterList.join());
     if (commentsFrom) {
       search.append("search[comments_from]", commentsFrom)
     }
@@ -188,7 +190,7 @@ class CommentingContainer extends React.Component {
       } else {
         newComments = body.comments
       }
-      
+
       this.setState({
         comments: newComments,
         totalComments: body.total_comments
@@ -223,7 +225,7 @@ class CommentingContainer extends React.Component {
     }.bind(this), 1)
   }
 
-  handleFiltersStandardClick(event){
+  handleFilterByClick(event){
     const target = event.target;
     const name = target.name;
     const value = target.value;
@@ -241,21 +243,31 @@ class CommentingContainer extends React.Component {
     event.preventDefault();
     const target = event.target;
     const name = target.getAttribute('data-value');
-
+    // var { filterList, notFilterList } = this.state.sortOpts
     var updatedFilters = this.state.sortOpts.filterList
+    var updatedNotFilters = this.state.sortOpts.notFilterList
 
     if (updatedFilters.includes(name)){
       updatedFilters = updatedFilters.filter(v => v != name)
+      var test = name
+      updatedNotFilters = updatedNotFilters.push(name)
+      // debugger
+    } else if (updatedNotFilters.includes(name)) {
+      updatedNotFilters = updatedNotFilters.filter(v => v != name)
     } else {
+      // debugger
       updatedFilters.push(name)
     }
+
     var opts = this.state.sortOpts
+    opts.notFilterList = updatedNotFilters
     opts.filterList = updatedFilters
     opts.page = 1
 
     this.setState({
       sortOpts: opts
     })
+
     this.submitterMan(event)
   }
 
@@ -314,7 +326,7 @@ class CommentingContainer extends React.Component {
           handleFilterSubmit={this.handleFilterSubmitMan}
           handleSortDirClick={this.handleSortDirClick}
           handleFilterClick={this.handleFilterClick}
-          handleFiltersStandardClick={this.handleFiltersStandardClick}
+          handleFilterByClick={this.handleFilterByClick}
 
         />
         <hr />

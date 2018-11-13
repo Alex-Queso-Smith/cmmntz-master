@@ -36,6 +36,10 @@ $breakpoint-tablet: 768px;
   opacity: .40;
 }
 
+.exclude-translucent {
+  opacity: .20;
+}
+
 .visibility-hidden {
   visibility: hidden;
 }

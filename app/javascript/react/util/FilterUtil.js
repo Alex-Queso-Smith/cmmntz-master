@@ -3,9 +3,12 @@ import React from "react"
 import { SortDir, SortButton, FilterFromButton } from '../components/filters/SortSelect'
 import { ImageSelector } from './VoteUtil';
 
-export const OpacityHandlerIncludes = (list, type) => {
-  if (list.includes(type)) {
+export const OpacityHandlerIncludes = (filterList, notFilterList, type) => {
+
+  if (filterList.includes(type)) {
     return ""
+  } else if (notFilterList.includes(type)) {
+    return  "exclude-translucent"
   } else {
     return "translucent"
   }
@@ -61,7 +64,7 @@ export const RowOneFilterTypes = [
 export const FilterButtonsRowOne = (object) => {
   return RowOneFilterTypes.map((type) => {
     var image, visibility;
-    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, `${type[0]}_percent`)
+    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
 
     if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
@@ -101,7 +104,7 @@ export const RowTwoFilterTypes = [
 export const FilterButtonsRowTwo = (object) => {
   return RowTwoFilterTypes.map((type) => {
     var image, visibility;
-    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, `${type[0]}_percent`)
+    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
 
     if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])

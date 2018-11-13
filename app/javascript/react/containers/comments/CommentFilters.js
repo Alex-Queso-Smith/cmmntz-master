@@ -38,7 +38,7 @@ class CommentFilters extends React.Component {
         <div className="row">
           <FilterCommentsBy
             commentsFrom={this.props.sortOpts.commentsFrom}
-            onClick={this.props.handleFiltersStandardClick}
+            onClick={this.props.handleFilterByClick}
           />
         </div>
         <br />
@@ -48,7 +48,7 @@ class CommentFilters extends React.Component {
         <div className="row">
           <FilterVotesBy
             votesFrom={this.props.sortOpts.votesFrom}
-            onClick={this.props.handleFiltersStandardClick}
+            onClick={this.props.handleFilterByClick}
           />
         </div>
 
