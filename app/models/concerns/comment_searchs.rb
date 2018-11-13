@@ -156,6 +156,8 @@ module CommentSearchs
 
       if comment_ids.empty?
         scope = scope.not_replies.page(page)
+      elsif filter_opts[:comment_id]
+        scope = scope.where(id: filter_opts[:comment_id])
       else
         scope = scope.where(parent_id: comment_ids)
       end
