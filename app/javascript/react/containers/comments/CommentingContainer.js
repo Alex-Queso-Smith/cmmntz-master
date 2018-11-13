@@ -190,7 +190,6 @@ class CommentingContainer extends React.Component {
       } else {
         newComments = body.comments
       }
-
       this.setState({
         comments: newComments,
         totalComments: body.total_comments
@@ -233,7 +232,7 @@ class CommentingContainer extends React.Component {
     var opts = this.state.sortOpts
     opts[name] = value;
     opts.page = 1
-    
+
     this.setState({
       sortOpts: opts
     })
@@ -245,25 +244,19 @@ class CommentingContainer extends React.Component {
     event.preventDefault();
     const target = event.target;
     const name = target.getAttribute('data-value');
-    // var { filterList, notFilterList } = this.state.sortOpts
-    var updatedFilters = this.state.sortOpts.filterList
-    var updatedNotFilters = this.state.sortOpts.notFilterList
+    var opts = this.state.sortOpts
 
-    if (updatedFilters.includes(name)){
-      updatedFilters = updatedFilters.filter(v => v != name)
-      var test = name
-      updatedNotFilters = updatedNotFilters.push(name)
-      // debugger
-    } else if (updatedNotFilters.includes(name)) {
-      updatedNotFilters = updatedNotFilters.filter(v => v != name)
+    if (opts.filterList.includes(name)){
+      var newFilters = opts.filterList.filter(v => v != name)
+      opts.filterList = newFilters
+      opts.notFilterList.push(name)
+    } else if (opts.notFilterList.includes(name)) {
+      var newFilters = opts.notFilterList.filter(v => v != name)
+      opts.notFilterList = newFilters
     } else {
-      // debugger
-      updatedFilters.push(name)
+      opts.filterList.push(name)
     }
 
-    var opts = this.state.sortOpts
-    opts.notFilterList = updatedNotFilters
-    opts.filterList = updatedFilters
     opts.page = 1
 
     this.setState({
@@ -329,7 +322,6 @@ class CommentingContainer extends React.Component {
           handleSortDirClick={this.handleSortDirClick}
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
-
         />
         <hr />
         <CommentsList
