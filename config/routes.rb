@@ -19,6 +19,9 @@ Rails.application.routes.draw do
       resources :unfollowings, only: [:create]
       resources :blockings, only: [:create]
       resources :unblockings, only: [:create]
+
+      # this only lives here temporarily
+      resources :admin_mails, only: [:create]
     end
   end
 
