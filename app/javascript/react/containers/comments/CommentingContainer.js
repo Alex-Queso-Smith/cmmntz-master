@@ -232,6 +232,8 @@ class CommentingContainer extends React.Component {
 
     var opts = this.state.sortOpts
     opts[name] = value;
+    opts.page = 1
+    
     this.setState({
       sortOpts: opts
     })
