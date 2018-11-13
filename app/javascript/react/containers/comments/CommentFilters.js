@@ -43,7 +43,7 @@ class CommentFilters extends React.Component {
         </div>
         <br />
         <div className="row">
-          <h4>Show only comments Voted on by:</h4>
+          <h4>Based on Votes from:</h4>
         </div>
         <div className="row">
           <FilterVotesBy

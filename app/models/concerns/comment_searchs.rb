@@ -3,11 +3,11 @@ module CommentSearchs
 
   included do
     FILTER_PERCENT = '.2000'
-    self.per_page = 100
+    self.per_page = 10
 
     scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
     scope :select_tabulation, -> {
-      select_base.select_vote_summation.select_vote_percentiles.select_like_score.joins_votes.group(:id)
+      select_base.select_vote_summation.select_vote_percentiles.select_like_score.group(:id)
     }
     scope :select_base, -> {
       select("comments.*", "CHAR_LENGTH(comments.text) as comment_length")
@@ -73,6 +73,10 @@ module CommentSearchs
     scope :joins_votes, -> {
       joins("left join votes on votes.comment_id = comments.id")
     }
+    scope :joins_votes_with_user_list, lambda { |user_ids|
+      joins("left join votes on votes.comment_id = comments.id and votes.user_id in (#{user_ids})")
+    }
+
     scope :not_replies, -> {
       where(parent_id: nil)
     }
@@ -124,13 +128,16 @@ module CommentSearchs
       dir = filter_opts[:sort_dir] ? filter_opts[:sort_dir] : "desc"
       sort_type = filter_opts[:sort_type] ? filter_opts[:sort_type] : "created_at"
 
+      # narrow scope of votes
       if user && user.followed_users && filter_opts[:votes_from]
         if filter_opts[:votes_from] == "friends"
           user_ids = user.followed_user_ids
         elsif filter_opts[:votes_from] == "network"
           user_ids = user.network_user_ids
         end
-        scope = scope.where(votes: {user_id: user_ids})
+        scope = scope.joins_votes_with_user_list(user_ids.map{|id| "'#{id}'"}.join(", "))
+      else
+        scope = scope.joins_votes
       end
 
       if user && user.followed_users && filter_opts[:comments_from]
