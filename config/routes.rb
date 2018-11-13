@@ -25,6 +25,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # temp routes
+  resources :admin_mails, only: [:new]
+
   ### named routes be here
   get 'register' => "users#new",           as: :register
   get 'login' => "user_sessions#new",      as: :login
