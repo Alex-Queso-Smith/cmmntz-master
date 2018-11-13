@@ -1,4 +1,4 @@
-class Api::V1::AdminMailssController < ApiController
+class Api::V1::AdminMailsController < ApiController
   load_and_authorize_resource
 
   # POST /api/v1/admin_mails.json
