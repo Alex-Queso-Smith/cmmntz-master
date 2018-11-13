@@ -188,7 +188,7 @@ class CommentingContainer extends React.Component {
       } else {
         newComments = body.comments
       }
-      
+
       this.setState({
         comments: newComments,
         totalComments: body.total_comments
@@ -230,6 +230,8 @@ class CommentingContainer extends React.Component {
 
     var opts = this.state.sortOpts
     opts[name] = value;
+    opts.page = 1
+    
     this.setState({
       sortOpts: opts
     })
