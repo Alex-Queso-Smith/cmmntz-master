@@ -7,7 +7,7 @@ class Api::V1::AdminMailsController < ApiController
     if @admin_mail.save
       render json: { message: "Admin Mail Sent" }
     else
-      render json: { errors: @admin_mail.errors.full_messages, status: :unprocessable_entity }
+      render json: { errors: @admin_mail.errors, status: :unprocessable_entity }
     end
   end
 
@@ -15,6 +15,6 @@ class Api::V1::AdminMailsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_mail_params
-      params.require(:admin_mail).permit(:user_id, :subject, :content)
+      params.require(:admin_mail).permit(:user_name, :subject, :content)
     end
 end
