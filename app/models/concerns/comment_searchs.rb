@@ -99,8 +99,8 @@ module CommentSearchs
       end
     end
 
-    def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, page)
-      scope = select_tabulation.for_art_type_and_id(article_type, article_id).includes(:user, replies: [:user])
+    def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, comment_ids = [], page)
+      scope = select_tabulation.for_art_type_and_id(article_type, article_id).includes(:user)
 
       if filter_opts[:filter_list]
         filter_opts[:filter_list].split(",").each do |item|
@@ -154,11 +154,16 @@ module CommentSearchs
         scope = scope.where(arel_table[:user_id].send(:not_in, user.blocked_user_ids))
       end
 
+      if comment_ids.empty?
+        scope = scope.not_replies.page(page)
+      else
+        scope = scope.where(parent_id: comment_ids)
+      end
+
       # do not include replies
-      scope = scope.not_replies
       # scope = scope.order(sort_type.to_sym => dir.to_sym)
       scope = scope.order("#{sort_type} #{dir}")
-      scope = scope.page(page)
+      # scope = scope.page(page)
       return scope
     end
   end
