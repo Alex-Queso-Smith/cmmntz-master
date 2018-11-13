@@ -67,8 +67,29 @@ RSpec.describe AdminMail, type: :model do
   describe "callbacks" do
     let!(:admin_mail) { FactoryBot.build(:admin_mail) }
 
-    it "should send an email after create" do
+    it "should send an email after create with valid attributes" do
       expect { admin_mail.save }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+    it "should NOT send an email after create with invalid attributes" do
+      admin_mail.user = nil
+      expect { admin_mail.save }.to change { ActionMailer::Base.deliveries.count }.by(0)
+    end
+  end
+
+  describe "resuting email" do
+    let!(:admin_mail) { FactoryBot.create(:admin_mail) }
+    before do
+      @email = ActionMailer::Base.deliveries.last
+    end
+
+    it "should be sent to the proper use email" do
+      puts @email.inspect
+      expect(@email.to.first).to eq(admin_mail.user.email)
+    end
+
+    it "should have a subject matching protocol" do
+      subject = "Classifilter: #{admin_mail.subject}"
+      expect(@email.subject).to eq(subject)
     end
   end
 end
