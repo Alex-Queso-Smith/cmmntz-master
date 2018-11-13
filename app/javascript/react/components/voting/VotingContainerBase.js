@@ -29,6 +29,14 @@ class VotingContainerBase extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState){
+    if (prevProps != this.props) {
+      this.setState({
+        votePercents: this.props.votePercents
+      })
+    }
+  }
+
   handlePost(payload){
     FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
     .then(body => {
