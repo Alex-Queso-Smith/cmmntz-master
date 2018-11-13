@@ -1,5 +1,5 @@
 # set the number of rando-users we want in this pass
-num_users = 200
+num_users = 100
 
 # set the number of articles we want in this pass
 num_articles = 3
@@ -55,7 +55,7 @@ users = User.all
 # generate some followings for the users
 puts "generating followings for users"
 users.each do |user|
-  rand(0..10).times do
+  rand(0..15).times do
     user.followings.create(following: (users - [user]).sample)
   end
 end
@@ -98,7 +98,7 @@ num_articles.times do
     )
 
     #generate random number of replies
-    num_replies = rand(-7..10)
+    num_replies = rand(-5..10)
     if num_replies > 0
       puts "generating #{num_replies} replies"
       num_replies.times do
@@ -140,7 +140,7 @@ num_articles.times do
   SORTABLE_TYPES.each do |type|
     puts "Determining most #{type} comment for #{article_one.title}"
     filter_opts = {sort_dir: 'desc', sort_type: type}
-    most_comment_tab = CommentVoteTabulation.filter_and_sort(User.new, article_one.id, "article", filter_opts, 1).first
+    most_comment_tab = Comment.filter_and_sort(User.new, article_one.id, "article", filter_opts, 1).first
 
     if most_comment_tab
       most_comment = Comment.find(most_comment_tab.id)

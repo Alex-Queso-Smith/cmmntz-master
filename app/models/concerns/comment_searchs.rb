@@ -83,19 +83,31 @@ module CommentSearchs
 
     scope :not_anon, -> { where(comments: {anonymous: false}) }
 
+    # Meta Scoping
+
+    Vote::TYPES.each do |type|
+      scope "having_#{type}_percent_gteq", ->(value) do
+        having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) >= '#{value}'")
+      end
+
+      scope "having_#{type}_percent_lt", ->(value) do
+        having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) < '#{value}'")
+      end
+    end
+
     def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, page)
       scope = select_tabulation.for_art_type_and_id(article_type, article_id).includes(:user, replies: [:user])
 
       if filter_opts[:filter_list]
         filter_opts[:filter_list].split(",").each do |item|
-          scope = scope.where(arel_table[item].send(:gteq, FILTER_PERCENT))
+          scope = scope.send("having_#{item}_gteq", FILTER_PERCENT)
         end
       end
 
       # filter not list
       if filter_opts[:not_filter_list]
         filter_opts[:not_filter_list].split(",").each do |item|
-          scope = scope.where(arel_table[item].send(:lt, FILTER_PERCENT))
+          scope = scope.send("having_#{item}_lt", FILTER_PERCENT)
         end
       end
 
