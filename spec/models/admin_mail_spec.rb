@@ -83,7 +83,6 @@ RSpec.describe AdminMail, type: :model do
     end
 
     it "should be sent to the proper use email" do
-      puts @email.inspect
       expect(@email.to.first).to eq(admin_mail.user.email)
     end
 
