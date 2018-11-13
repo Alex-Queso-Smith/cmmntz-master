@@ -30,7 +30,7 @@ class VotingContainerBase extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    if (prevProps != this.props) {
+    if ( prevProps.votePercents != this.props.votePercents ) {
       this.setState({
         votePercents: this.props.votePercents
       })
