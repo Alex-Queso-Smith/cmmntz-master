@@ -1,6 +1,6 @@
 class CommentInteraction < ApplicationRecord
   belongs_to :comment, counter_cache: 'interactions_count'
-  belongs_to :comment_vote_tabulation, primary_key: 'id', foreign_key: "comment_id"
+  belongs_to :comment_vote_tabulation, primary_key: 'id', foreign_key: "comment_id", optional: true
   belongs_to :user
 
   validates :comment_id, :user_id, presence: true
