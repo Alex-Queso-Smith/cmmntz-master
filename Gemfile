@@ -87,8 +87,8 @@ gem 'activerecord-import'
 gem 'will_paginate'
 gem 'scenic'
 
-# background que handling
-gem 'resque'
+# background queue handling
+gem 'sidekiq'
 
 # foreman to load all processes from a single procfile
 gem 'foreman'
