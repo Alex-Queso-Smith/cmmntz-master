@@ -2,7 +2,7 @@
 num_users = 100
 
 # set the number of articles we want in this pass
-num_articles = 3
+num_articles = 1
 time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
 puts "Starting process at #{Time.now}"
