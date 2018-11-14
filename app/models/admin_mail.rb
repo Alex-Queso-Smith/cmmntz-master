@@ -24,7 +24,6 @@ class AdminMail < ApplicationRecord
   end
 
   def send_mail
-    to = user.email
-    AdminMailer.send_mail(to, "Classifilter: #{subject}", content).deliver
+    AdminEmailWorker.perform_async(user.email, "Classifilter: #{subject}", content)
   end
 end
