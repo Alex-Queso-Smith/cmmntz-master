@@ -11,7 +11,7 @@ puts "Starting process at #{Time.now}"
 puts "generating staff accounts"
 jesse = User.create(
   user_name: "Jesse",
-  email: "jesse@classifilter.com",
+  email: "jesse@classibridge.com",
   password: "password",
   password_confirmation: "password",
   base_image: "butterfly"
@@ -19,7 +19,7 @@ jesse = User.create(
 
 alex = User.create(
   user_name: "Alex",
-  email: "aj@classifilter.com",
+  email: "aj@classibridge.com",
   password: "password",
   password_confirmation: "password",
   base_image: "gi"
@@ -27,7 +27,7 @@ alex = User.create(
 
 aj = User.create(
   user_name: "AJ",
-  email: "alex@classifilter.com",
+  email: "alex@classibridge.com",
   password: "password",
   password_confirmation: "password",
   base_image: "boxing-glove"

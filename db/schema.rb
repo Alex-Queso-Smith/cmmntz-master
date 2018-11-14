@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_13_181556) do
+ActiveRecord::Schema.define(version: 2018_11_14_204109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -67,6 +67,13 @@ ActiveRecord::Schema.define(version: 2018_11_13_181556) do
     t.index ["interactions_count"], name: "index_comments_on_interactions_count"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "email_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.string "email_name"
+    t.datetime "created_at"
+    t.index ["user_id", "email_name", "created_at"], name: "index_email_logs_on_user_id_and_email_name_and_created_at"
   end
 
   create_table "followings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
