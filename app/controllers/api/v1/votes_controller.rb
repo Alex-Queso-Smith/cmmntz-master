@@ -40,7 +40,7 @@ class Api::V1::VotesController < ApiController
     end
 
     def set_comment
-      @comment = Comment.filter_and_sort(current_user, @vote.comment.art_id, @vote.comment.art_type, { comment_id: @vote.comment_id }, [], 1).first
+      @comment = Comment.tabulation_for_individual_comment(current_user, @vote.comment_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

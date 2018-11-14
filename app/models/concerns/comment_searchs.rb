@@ -12,47 +12,6 @@ module CommentSearchs
     scope :select_base, -> {
       select("comments.*", "CHAR_LENGTH(comments.text) as comment_length")
     }
-    scope :select_vote_summation, -> {
-      select(
-        "sum(case when votes.vote_type  = 'top' then 1 else 0 end) as top_count,
-        sum(case when votes.vote_type  = 'love' then 1 else 0 end) as love_count,
-        sum(case when votes.vote_type  = 'like_a_lot' then 1 else 0 end) as like_a_lot_count,
-        sum(case when votes.vote_type  = 'like' then 1 else 0 end) as like_count,
-        sum(case when votes.vote_type  = 'indifferent' then 1 else 0 end) as indifferent_count,
-        sum(case when votes.vote_type  = 'dislike' then 1 else 0 end) as dislike_count,
-        sum(case when votes.vote_type  = 'dislike_a_lot' then 1 else 0 end) as dislike_a_lot_count,
-        sum(case when votes.vote_type  = 'trash' then 1 else 0 end) as trash_count,
-        sum(case when votes.vote_type  = 'warn' then 1 else 0 end) as warn_count,
-        sum(case when votes.vote_type  = 'smart' then 1 else 0 end) as smart_count,
-        sum(case when votes.vote_type  = 'funny' then 1 else 0 end) as funny_count,
-        sum(case when votes.vote_type  = 'happy' then 1 else 0 end) as happy_count,
-        sum(case when votes.vote_type  = 'shocked' then 1 else 0 end) as shocked_count,
-        sum(case when votes.vote_type  = 'sad' then 1 else 0 end) as sad_count,
-        sum(case when votes.vote_type  = 'boring' then 1 else 0 end) as boring_count,
-        sum(case when votes.vote_type  = 'angry' then 1 else 0 end) as angry_count"
-      )
-    }
-
-    scope :select_vote_percentiles, -> {
-      select(
-        "(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'top' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as top_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'love' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as love_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'like_a_lot' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as like_a_lot_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'like' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as like_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'indifferent' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as indifferent_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'dislike' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as dislike_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'dislike_a_lot' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as dislike_a_lot_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'trash' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as trash_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'warn' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as warn_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'smart' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as smart_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'funny' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as funny_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'happy' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as happy_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'shocked' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as shocked_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'sad' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as sad_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'boring' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as boring_percent,
-        (case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = 'angry' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as angry_percent"
-      )
-    }
 
     scope :select_like_score, -> {
       select(
@@ -90,49 +49,59 @@ module CommentSearchs
     # Meta Scoping
 
     Vote::TYPES.each do |type|
-      scope "having_#{type}_percent_gteq", ->(value) do
+      scope "having_#{type}_percent_gteq", ->(value) {
         having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) >= '#{value}'")
-      end
+      }
 
-      scope "having_#{type}_percent_lt", ->(value) do
+      scope "having_#{type}_percent_lt", ->(value) {
         having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) < '#{value}'")
-      end
+      }
+
+      scope "select_#{type}_count", -> {
+        select("sum(case when votes.vote_type  = '#{type}' then 1 else 0 end) as #{type}_count")
+      }
+
+      scope "select_#{type}_percent", -> {
+        select("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as #{type}_percent")
+      }
     end
 
-    def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, comment_ids = [], page)
-      scope = select_tabulation.for_art_type_and_id(article_type, article_id).includes(:user)
+    scope :select_vote_summation, -> {
+      select_top_count.select_love_count.select_like_a_lot_count.select_like_count.select_indifferent_count.select_dislike_count.select_dislike_a_lot_count.select_trash_count.select_warn_count.select_smart_count.select_funny_count.select_happy_count.select_shocked_count.select_sad_count.select_boring_count.select_angry_count
+    }
 
-      if filter_opts[:filter_list]
-        filter_opts[:filter_list].split(",").each do |item|
-          scope = scope.send("having_#{item}_gteq", FILTER_PERCENT)
-        end
+    scope :select_vote_percentiles, -> {
+      select_top_percent.select_love_percent.select_like_a_lot_percent.select_like_percent.select_indifferent_percent.select_dislike_percent.select_dislike_a_lot_percent.select_trash_percent.select_warn_percent.select_smart_percent.select_funny_percent.select_happy_percent.select_shocked_percent.select_sad_percent.select_boring_percent.select_angry_percent
+    }
+
+    def self.filter_by_list(scope, filter_list)
+      filter_list.split(",").each do |item|
+        scope = scope.send("having_#{item}_gteq", FILTER_PERCENT)
       end
+      scope
+    end
 
-      # filter not list
-      if filter_opts[:not_filter_list]
-        filter_opts[:not_filter_list].split(",").each do |item|
-          scope = scope.send("having_#{item}_lt", FILTER_PERCENT)
-        end
+    def self.filter_by_not_list(scope, not_filter_list)
+      not_filter_list.split(",").each do |item|
+        scope = scope.send("having_#{item}_lt", FILTER_PERCENT)
       end
+      scope
+    end
 
-      # filter user info
-
-      # geo
+    def self.geo_filtering(scope, some_data)
       # convert users geo locations to radians (deg * (Math::PI / 180))
       # lat_rad = user.latitude * (Math::PI / 180)
       # lon_rad = user.longitude * (Math::PI / 180)
       # use basic bounding and law of cosines
       # see https://www.movable-type.co.uk/scripts/latlong-db.html
+      scope
+    end
 
-
-      dir = filter_opts[:sort_dir] ? filter_opts[:sort_dir] : "desc"
-      sort_type = filter_opts[:sort_type] ? filter_opts[:sort_type] : "created_at"
-
-      # narrow scope of votes
-      if user && user.followed_users && filter_opts[:votes_from]
-        if filter_opts[:votes_from] == "friends"
+    def self.vote_scoping(scope, user, votes_from = "")
+      if user && user.followed_users && votes_from
+        if votes_from == "friends"
           user_ids = user.followed_user_ids
-        elsif filter_opts[:votes_from] == "network"
+        elsif votes_from == "network"
           user_ids = user.network_user_ids
         end
         scope = scope.joins_votes_with_user_list(user_ids.map{|id| "'#{id}'"}.join(", "))
@@ -140,33 +109,67 @@ module CommentSearchs
         scope = scope.joins_votes
       end
 
-      if user && user.followed_users && filter_opts[:comments_from]
-        if filter_opts[:comments_from] == "friends"
+      scope
+    end
+
+    def self.get_comments_from(scope, user, comments_from = "")
+      if user && user.followed_users && comments_from
+        if comments_from == "friends"
           user_ids = user.followed_user_ids
-        elsif filter_opts[:comments_from] == "network"
+        elsif comments_from == "network"
           user_ids = user.network_user_ids
         end
         scope = scope.comments_from_followed(user_ids).not_anon
       end
 
-      # remove blacklisted users from consideration
+      scope
+    end
+
+    def self.eliminate_blocked(scope, user)
       if user && user.blocked_users
         scope = scope.where(arel_table[:user_id].send(:not_in, user.blocked_user_ids))
       end
 
-      if filter_opts[:comment_id] # individual comment
-        scope = scope.where(id: filter_opts[:comment_id])
-      elsif comment_ids.present? # specific list of comments
-        scope = scope.where(parent_id: comment_ids)
-      else # full list
-        scope = scope.not_replies.page(page)
-      end
+      scope
+    end
 
-      # do not include replies
-      # scope = scope.order(sort_type.to_sym => dir.to_sym)
-      scope = scope.order("#{sort_type} #{dir}")
-      # scope = scope.page(page)
-      return scope
+    def self.sort_list(scope, sort_dir, sort_type)
+      sort_dir = sort_dir ? sort_dir : "desc"
+      sort_type = sort_type ? sort_type : "created_at"
+      scope = scope.order("#{sort_type} #{sort_dir}")
+      scope
+    end
+
+    def self.base_search(scope, user, filter_opts = {})
+      scope = scope.select_tabulation.includes(:user)
+      scope = self.filter_by_list(scope, filter_opts[:filter_list]) if filter_opts[:filter_list]
+      scope = self.filter_by_not_list(scope, filter_opts[:not_filter_list]) if filter_opts[:not_filter_list]
+      scope = self.geo_filtering(scope, filter_opts[:some_data]) if filter_opts[:some_data]
+      scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
+      scope = self.get_comments_from(scope, user, filter_opts[:comments_from])
+      scope = self.eliminate_blocked(scope, user)
+      scope = self.sort_list(scope, filter_opts[:sort_dir], filter_opts[:sort_type])
+    end
+
+    # sort and filter for art listings
+    def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, page)
+      scope = for_art_type_and_id(article_type, article_id)
+      scope = self.base_search(scope, user, filter_opts)
+      scope = scope.not_replies.page(page)
+    end
+
+    # sort and filter for given list of comments
+    def self.tabulation_for_comments_list(user, comment_ids, filter_opts = {})
+      scope = where(parent_id: comment_ids)
+      scope = self.base_search(scope, user, filter_opts)
+    end
+
+    # retrieve tabulation for single comment
+    def self.tabulation_for_individual_comment(user, comment_id, filter_opts = {})
+      scope = where(id: comment_id).select_tabulation.includes(:user)
+
+      # narrow scope of votes
+      scope = self.vote_scoping(scope, user, filter_opts[:votes_from]).first
     end
   end
 end
