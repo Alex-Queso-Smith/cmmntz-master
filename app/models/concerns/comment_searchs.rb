@@ -143,14 +143,10 @@ module CommentSearchs
     def self.base_search(scope, user, filter_opts = {})
       scope = scope.select_tabulation.includes(:user)
       scope = self.filter_by_list(scope, filter_opts[:filter_list]) if filter_opts[:filter_list]
-      # filter not list
       scope = self.filter_by_not_list(scope, filter_opts[:not_filter_list]) if filter_opts[:not_filter_list]
-      # geo
       scope = self.geo_filtering(scope, filter_opts[:some_data]) if filter_opts[:some_data]
-      # narrow scope of votes
       scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
       scope = self.get_comments_from(scope, user, filter_opts[:comments_from])
-      # remove blacklisted users from consideration
       scope = self.eliminate_blocked(scope, user)
       scope = self.sort_list(scope, filter_opts[:sort_dir], filter_opts[:sort_type])
     end
