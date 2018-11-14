@@ -245,6 +245,8 @@ class Comment extends React.Component {
           artType={artType}
           commentId={commentId}
           handleTopChange={this.props.handleTopChange}
+          handleReplyOpen={this.props.handleReplyOpen}
+          replyParent={this.props.replyParent}
         />
       </div>
     )

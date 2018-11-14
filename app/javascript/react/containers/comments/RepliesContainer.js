@@ -35,6 +35,12 @@ class RepliesContainer extends React.Component {
         this.handleShowAnonModal()
       }
     }
+
+    if (prevProps.replyParent != this.props.replyParent) {
+      if (this.props.commentId != this.props.replyParent) {
+        this.handleCancelReply()
+      }
+    }
   }
 
   handleStateFlip(event){
@@ -43,7 +49,12 @@ class RepliesContainer extends React.Component {
     const name = event.target.name;
     const state = this.state[name];
 
-    this.setState({ [name]: !state })
+    if (name === 'replyActive') {
+      this.setState({ [name]: !state })
+      this.props.handleReplyOpen(this.props.commentId)
+    } else {
+      this.setState({ [name]: !state })
+    }
   }
 
   handleChange(event){
@@ -119,17 +130,23 @@ class RepliesContainer extends React.Component {
     var repliesList, anonModal, replyField, replyButton, cancelReplyButton, replyErrorText;
     var blockedCount = 0;
 
+
     if (replies && this.state.showReplies) {
        var commentReplies = replies.map((reply) => {
 
         var followed = followedUsers.includes(reply.user.user_id)
         var blocked = blockedUsers.includes(reply.user.user_id)
         var { id, user, text, created_at, vote_percents, user_has_voted, current_users_votes } = reply
-        
+
+        var handleNewReplyBox = () => {
+          this.props.handleReplyOpen(this.props.commentId)
+        }
+
         if (!blocked) {
           return(
             <Reply
               key={id}
+              handleNewReplyBox={handleNewReplyBox}
               replyId={id}
               user={user}
               reply={text}

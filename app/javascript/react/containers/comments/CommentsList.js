@@ -5,7 +5,15 @@ import { CommentLengthSorter } from '../../util/CommentUtil';
 import Comment from '../../components/comments/Comment';
 
 class CommentsList extends React.Component {
-  state = {}
+  state = {
+    replyParent: null
+  }
+
+  handleReplyOpen = this.handleReplyOpen.bind(this);
+
+  handleReplyOpen(commentId){
+    this.setState({ replyParent: commentId })
+  }
 
   render(){
 
@@ -46,6 +54,8 @@ class CommentsList extends React.Component {
                 votePercents={vote_percents}
                 userVoted={user_has_voted}
                 handleTopChange={handleTopChange}
+                handleReplyOpen={this.handleReplyOpen}
+                replyParent={this.state.replyParent}
                 artId={commentRoot.getAttribute('data-art-id')}
                 currentUserId={commentRoot.getAttribute('data-user-id')}
                 artType={commentRoot.getAttribute('data-art-type')}
