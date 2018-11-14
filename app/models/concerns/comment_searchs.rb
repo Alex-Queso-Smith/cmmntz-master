@@ -74,41 +74,34 @@ module CommentSearchs
       select_top_percent.select_love_percent.select_like_a_lot_percent.select_like_percent.select_indifferent_percent.select_dislike_percent.select_dislike_a_lot_percent.select_trash_percent.select_warn_percent.select_smart_percent.select_funny_percent.select_happy_percent.select_shocked_percent.select_sad_percent.select_boring_percent.select_angry_percent
     }
 
-    # sort and filter for art listings
-    def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, comment_ids = [], page)
-      scope = select_tabulation.for_art_type_and_id(article_type, article_id).includes(:user)
-
-      if filter_opts[:filter_list]
-        filter_opts[:filter_list].split(",").each do |item|
-          scope = scope.send("having_#{item}_gteq", FILTER_PERCENT)
-        end
+    def self.filter_by_list(scope, filter_list)
+      filter_list.split(",").each do |item|
+        scope = scope.send("having_#{item}_gteq", FILTER_PERCENT)
       end
+      scope
+    end
 
-      # filter not list
-      if filter_opts[:not_filter_list]
-        filter_opts[:not_filter_list].split(",").each do |item|
-          scope = scope.send("having_#{item}_lt", FILTER_PERCENT)
-        end
+    def self.filter_by_not_list(scope, not_filter_list)
+      not_filter_list.split(",").each do |item|
+        scope = scope.send("having_#{item}_lt", FILTER_PERCENT)
       end
+      scope
+    end
 
-      # filter user info
-
-      # geo
+    def self.geo_filtering(scope, some_data)
       # convert users geo locations to radians (deg * (Math::PI / 180))
       # lat_rad = user.latitude * (Math::PI / 180)
       # lon_rad = user.longitude * (Math::PI / 180)
       # use basic bounding and law of cosines
       # see https://www.movable-type.co.uk/scripts/latlong-db.html
+      scope
+    end
 
-
-      dir = filter_opts[:sort_dir] ? filter_opts[:sort_dir] : "desc"
-      sort_type = filter_opts[:sort_type] ? filter_opts[:sort_type] : "created_at"
-
-      # narrow scope of votes
-      if user && user.followed_users && filter_opts[:votes_from]
-        if filter_opts[:votes_from] == "friends"
+    def self.vote_scoping(scope, user, votes_from = "")
+      if user && user.followed_users && votes_from
+        if votes_from == "friends"
           user_ids = user.followed_user_ids
-        elsif filter_opts[:votes_from] == "network"
+        elsif votes_from == "network"
           user_ids = user.network_user_ids
         end
         scope = scope.joins_votes_with_user_list(user_ids.map{|id| "'#{id}'"}.join(", "))
@@ -116,103 +109,85 @@ module CommentSearchs
         scope = scope.joins_votes
       end
 
-      if user && user.followed_users && filter_opts[:comments_from]
-        if filter_opts[:comments_from] == "friends"
+      scope
+    end
+
+    def self.get_comments_from(scope, user, comments_from = "")
+      if user && user.followed_users && comments_from
+        if comments_from == "friends"
           user_ids = user.followed_user_ids
-        elsif filter_opts[:comments_from] == "network"
+        elsif comments_from == "network"
           user_ids = user.network_user_ids
         end
         scope = scope.comments_from_followed(user_ids).not_anon
       end
 
-      # remove blacklisted users from consideration
+      scope
+    end
+
+    def self.eliminate_blocked(scope, user)
       if user && user.blocked_users
         scope = scope.where(arel_table[:user_id].send(:not_in, user.blocked_user_ids))
       end
 
-      if filter_opts[:comment_id] # individual comment
-        scope = scope.where(id: filter_opts[:comment_id])
-      elsif comment_ids.present? # specific list of comments
-        scope = scope.where(parent_id: comment_ids)
-      else # full list
-        scope = scope.not_replies.page(page)
-      end
+      scope
+    end
 
-      # do not include replies
-      # scope = scope.order(sort_type.to_sym => dir.to_sym)
-      scope = scope.order("#{sort_type} #{dir}")
-      # scope = scope.page(page)
+    def self.sort_list(scope, sort_dir = "desc", sort_type)
+      sort_dir = sort_dir ? sort_dir : "desc"
+      sort_type = sort_type ? sort_type : "created_at"
+      scope = scope.order("#{sort_type} #{sort_dir}")
+      scope
+    end
+
+    # sort and filter for art listings
+    def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, page)
+      scope = select_tabulation.for_art_type_and_id(article_type, article_id).includes(:user)
+
+      scope = self.filter_by_list(scope, filter_opts[:filter_list]) if filter_opts[:filter_list]
+
+      # filter not list
+      scope = self.filter_by_not_list(scope, filter_opts[:not_filter_list]) if filter_opts[:not_filter_list]
+
+      # geo
+      scope = self.geo_filtering(scope, filter_opts[:some_data]) if filter_opts[:some_data]
+
+      # narrow scope of votes
+      scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
+
+      scope = self.get_comments_from(scope, user, filter_opts[:comments_from])
+
+      # remove blacklisted users from consideration
+      scope = self.eliminate_blocked(scope, user)
+
+      scope = self.sort_list(scope, filter_opts[:sort_dir], filter_opts[:sort_type])
+
+      scope = scope.not_replies.page(page)
       return scope
     end
 
     # sort and filter for given list of comments
-    def self.tabulation_for_comments_list(user, article_id, article_type, filter_opts = {}, comment_ids = [], page)
-      scope = select_tabulation.for_art_type_and_id(article_type, article_id).includes(:user)
+    def self.tabulation_for_comments_list(user, comment_ids, filter_opts = {})
+      scope = select_tabulation.includes(:user).where(parent_id: comment_ids)
 
-      if filter_opts[:filter_list]
-        filter_opts[:filter_list].split(",").each do |item|
-          scope = scope.send("having_#{item}_gteq", FILTER_PERCENT)
-        end
-      end
+      scope = self.filter_by_list(scope, filter_opts[:filter_list]) if filter_opts[:filter_list]
 
       # filter not list
-      if filter_opts[:not_filter_list]
-        filter_opts[:not_filter_list].split(",").each do |item|
-          scope = scope.send("having_#{item}_lt", FILTER_PERCENT)
-        end
-      end
-
-      # filter user info
+      scope = self.filter_by_not_list(scope, filter_opts[:not_filter_list]) if filter_opts[:not_filter_list]
 
       # geo
-      # convert users geo locations to radians (deg * (Math::PI / 180))
-      # lat_rad = user.latitude * (Math::PI / 180)
-      # lon_rad = user.longitude * (Math::PI / 180)
-      # use basic bounding and law of cosines
-      # see https://www.movable-type.co.uk/scripts/latlong-db.html
-
-
-      dir = filter_opts[:sort_dir] ? filter_opts[:sort_dir] : "desc"
-      sort_type = filter_opts[:sort_type] ? filter_opts[:sort_type] : "created_at"
+      scope = self.geo_filtering(scope, filter_opts[:some_data]) if filter_opts[:some_data]
 
       # narrow scope of votes
-      if user && user.followed_users && filter_opts[:votes_from]
-        if filter_opts[:votes_from] == "friends"
-          user_ids = user.followed_user_ids
-        elsif filter_opts[:votes_from] == "network"
-          user_ids = user.network_user_ids
-        end
-        scope = scope.joins_votes_with_user_list(user_ids.map{|id| "'#{id}'"}.join(", "))
-      else
-        scope = scope.joins_votes
-      end
+      scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
 
-      if user && user.followed_users && filter_opts[:comments_from]
-        if filter_opts[:comments_from] == "friends"
-          user_ids = user.followed_user_ids
-        elsif filter_opts[:comments_from] == "network"
-          user_ids = user.network_user_ids
-        end
-        scope = scope.comments_from_followed(user_ids).not_anon
-      end
+      scope = self.get_comments_from(scope, user, filter_opts[:comments_from])
 
       # remove blacklisted users from consideration
-      if user && user.blocked_users
-        scope = scope.where(arel_table[:user_id].send(:not_in, user.blocked_user_ids))
-      end
+      scope = self.eliminate_blocked(scope, user)
 
-      if filter_opts[:comment_id] # individual comment
-        scope = scope.where(id: filter_opts[:comment_id])
-      elsif comment_ids.present? # specific list of comments
-        scope = scope.where(parent_id: comment_ids)
-      else # full list
-        scope = scope.not_replies.page(page)
-      end
+      scope = self.sort_list(scope, filter_opts[:sort_dir], filter_opts[:sort_type])
 
-      # do not include replies
-      # scope = scope.order(sort_type.to_sym => dir.to_sym)
-      scope = scope.order("#{sort_type} #{dir}")
-      # scope = scope.page(page)
       return scope
     end
 
@@ -221,16 +196,7 @@ module CommentSearchs
       scope = where(id: comment_id).select_tabulation.includes(:user)
 
       # narrow scope of votes
-      if user && user.followed_users && filter_opts[:votes_from]
-        if filter_opts[:votes_from] == "friends"
-          user_ids = user.followed_user_ids
-        elsif filter_opts[:votes_from] == "network"
-          user_ids = user.network_user_ids
-        end
-        scope = scope.joins_votes_with_user_list(user_ids.map{|id| "'#{id}'"}.join(", "))
-      else
-        scope = scope.joins_votes
-      end
+      scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
 
       return scope.first
     end
