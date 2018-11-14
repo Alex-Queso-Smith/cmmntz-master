@@ -98,16 +98,13 @@ class VotingContainerBase extends React.Component {
     }
 
     if (this.state.userVoted) {
-      var timerRand = Math.floor(Math.random() * 1000 )
-
-      Timeout.clear(`timer${timerRand}`)
-      Timeout.set(`timer${timerRand}`, percentShowSet, 1500)
+      Timeout.clear('timer')
+      Timeout.set('timer', percentShowSet, 1500)
     } else {
       this.setState({ userVoted: true })
 
-      var timerRand2 = Math.floor(Math.random() * 1000 )
-      Timeout.clear(`timer${timerRand2}`)
-      Timeout.set(`timer${timerRand2}`, percentShowSet, 3000)
+      Timeout.clear('timer')
+      Timeout.set('timer', percentShowSet, 3000)
     }
   }
 
