@@ -1,3 +1,4 @@
 web: rails s -p 3000
-# resque: bundle exec rake environment resque:work
+redis: redis-server
+sidekiq: bundle exec sidekiq
 yarn: yarn start
