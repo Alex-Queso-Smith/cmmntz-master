@@ -133,62 +133,39 @@ module CommentSearchs
       scope
     end
 
-    def self.sort_list(scope, sort_dir = "desc", sort_type)
+    def self.sort_list(scope, sort_dir, sort_type)
       sort_dir = sort_dir ? sort_dir : "desc"
       sort_type = sort_type ? sort_type : "created_at"
       scope = scope.order("#{sort_type} #{sort_dir}")
       scope
     end
 
-    # sort and filter for art listings
-    def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, page)
-      scope = select_tabulation.for_art_type_and_id(article_type, article_id).includes(:user)
-
+    def self.base_search(scope, user, filter_opts = {})
+      scope = scope.select_tabulation.includes(:user)
       scope = self.filter_by_list(scope, filter_opts[:filter_list]) if filter_opts[:filter_list]
-
       # filter not list
       scope = self.filter_by_not_list(scope, filter_opts[:not_filter_list]) if filter_opts[:not_filter_list]
-
       # geo
       scope = self.geo_filtering(scope, filter_opts[:some_data]) if filter_opts[:some_data]
-
       # narrow scope of votes
       scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
-
       scope = self.get_comments_from(scope, user, filter_opts[:comments_from])
-
       # remove blacklisted users from consideration
       scope = self.eliminate_blocked(scope, user)
-
       scope = self.sort_list(scope, filter_opts[:sort_dir], filter_opts[:sort_type])
+    end
 
+    # sort and filter for art listings
+    def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, page)
+      scope = for_art_type_and_id(article_type, article_id)
+      scope = self.base_search(scope, user, filter_opts)
       scope = scope.not_replies.page(page)
-      return scope
     end
 
     # sort and filter for given list of comments
     def self.tabulation_for_comments_list(user, comment_ids, filter_opts = {})
-      scope = select_tabulation.includes(:user).where(parent_id: comment_ids)
-
-      scope = self.filter_by_list(scope, filter_opts[:filter_list]) if filter_opts[:filter_list]
-
-      # filter not list
-      scope = self.filter_by_not_list(scope, filter_opts[:not_filter_list]) if filter_opts[:not_filter_list]
-
-      # geo
-      scope = self.geo_filtering(scope, filter_opts[:some_data]) if filter_opts[:some_data]
-
-      # narrow scope of votes
-      scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
-
-      scope = self.get_comments_from(scope, user, filter_opts[:comments_from])
-
-      # remove blacklisted users from consideration
-      scope = self.eliminate_blocked(scope, user)
-
-      scope = self.sort_list(scope, filter_opts[:sort_dir], filter_opts[:sort_type])
-
-      return scope
+      scope = where(parent_id: comment_ids)
+      scope = self.base_search(scope, user, filter_opts)
     end
 
     # retrieve tabulation for single comment
@@ -196,9 +173,7 @@ module CommentSearchs
       scope = where(id: comment_id).select_tabulation.includes(:user)
 
       # narrow scope of votes
-      scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
-
-      return scope.first
+      scope = self.vote_scoping(scope, user, filter_opts[:votes_from]).first
     end
   end
 end
