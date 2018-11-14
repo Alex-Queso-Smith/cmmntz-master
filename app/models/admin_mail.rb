@@ -24,6 +24,6 @@ class AdminMail < ApplicationRecord
   end
 
   def send_mail
-    AdminEmailJob.perform_later(user.email, "Classifilter: #{subject}", content)
+    AdminMailer.send_mail(user.email, "Classifilter: #{subject}", content).deliver_later
   end
 end

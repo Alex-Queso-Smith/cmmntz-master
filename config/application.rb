@@ -20,5 +20,8 @@ module ClassifilterMaster
 
     # use sidekiq as background processor
     config.active_job.queue_adapter = :sidekiq
+
+    # use the default queue for mailers (for now)
+    config.action_mailer.deliver_later_queue_name = 'default'
   end
 end
