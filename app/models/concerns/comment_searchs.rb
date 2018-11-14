@@ -217,34 +217,8 @@ module CommentSearchs
     end
 
     # retrieve tabulation for single comment
-    def self.tabulation_for_individual_comment(user, article_id, article_type, filter_opts = {}, comment_ids = [], page)
-      scope = select_tabulation.for_art_type_and_id(article_type, article_id).includes(:user)
-
-      if filter_opts[:filter_list]
-        filter_opts[:filter_list].split(",").each do |item|
-          scope = scope.send("having_#{item}_gteq", FILTER_PERCENT)
-        end
-      end
-
-      # filter not list
-      if filter_opts[:not_filter_list]
-        filter_opts[:not_filter_list].split(",").each do |item|
-          scope = scope.send("having_#{item}_lt", FILTER_PERCENT)
-        end
-      end
-
-      # filter user info
-
-      # geo
-      # convert users geo locations to radians (deg * (Math::PI / 180))
-      # lat_rad = user.latitude * (Math::PI / 180)
-      # lon_rad = user.longitude * (Math::PI / 180)
-      # use basic bounding and law of cosines
-      # see https://www.movable-type.co.uk/scripts/latlong-db.html
-
-
-      dir = filter_opts[:sort_dir] ? filter_opts[:sort_dir] : "desc"
-      sort_type = filter_opts[:sort_type] ? filter_opts[:sort_type] : "created_at"
+    def self.tabulation_for_individual_comment(user, comment_id, filter_opts = {})
+      scope = where(id: comment_id).select_tabulation.includes(:user)
 
       # narrow scope of votes
       if user && user.followed_users && filter_opts[:votes_from]
@@ -258,33 +232,7 @@ module CommentSearchs
         scope = scope.joins_votes
       end
 
-      if user && user.followed_users && filter_opts[:comments_from]
-        if filter_opts[:comments_from] == "friends"
-          user_ids = user.followed_user_ids
-        elsif filter_opts[:comments_from] == "network"
-          user_ids = user.network_user_ids
-        end
-        scope = scope.comments_from_followed(user_ids).not_anon
-      end
-
-      # remove blacklisted users from consideration
-      if user && user.blocked_users
-        scope = scope.where(arel_table[:user_id].send(:not_in, user.blocked_user_ids))
-      end
-
-      if filter_opts[:comment_id] # individual comment
-        scope = scope.where(id: filter_opts[:comment_id])
-      elsif comment_ids.present? # specific list of comments
-        scope = scope.where(parent_id: comment_ids)
-      else # full list
-        scope = scope.not_replies.page(page)
-      end
-
-      # do not include replies
-      # scope = scope.order(sort_type.to_sym => dir.to_sym)
-      scope = scope.order("#{sort_type} #{dir}")
-      # scope = scope.page(page)
-      return scope
+      return scope.first
     end
   end
 end
