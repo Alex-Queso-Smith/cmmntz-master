@@ -8,9 +8,9 @@ class CommentInteraction < ApplicationRecord
 
   scope :for_user_and_comment, lambda {|user_id, comment_id| where(user_id: user_id, comment_id: comment_id)}
 
-  def self.create_for_user_and_comment(user, comment)
-    if self.for_user_and_comment(user, comment).size == 0
-      create!(user_id: user, comment_id: comment)
+  def self.create_for_user_and_comment(user_id, comment_id)
+    if self.for_user_and_comment(user_id, comment_id).size == 0
+      create!(user_id: user_id, comment_id: comment_id)
     end
   rescue
     # the only way this should trip is if there is one already

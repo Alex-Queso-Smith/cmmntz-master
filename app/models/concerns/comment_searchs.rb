@@ -154,12 +154,12 @@ module CommentSearchs
         scope = scope.where(arel_table[:user_id].send(:not_in, user.blocked_user_ids))
       end
 
-      if comment_ids.empty?
-        scope = scope.not_replies.page(page)
-      elsif filter_opts[:comment_id]
+      if filter_opts[:comment_id] # individual comment
         scope = scope.where(id: filter_opts[:comment_id])
-      else
+      elsif comment_ids.present? # specific list of comments
         scope = scope.where(parent_id: comment_ids)
+      else # full list
+        scope = scope.not_replies.page(page)
       end
 
       # do not include replies

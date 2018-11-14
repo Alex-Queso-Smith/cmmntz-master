@@ -1,14 +1,14 @@
 class Api::V1::VotesController < ApiController
   load_and_authorize_resource
 
-  before_action :set_vote, :set_comment, only: [:update, :destroy]
+  before_action :set_vote, only: [:update, :destroy]
 
   # POST /votes.json
   def create
     @vote = Vote.new(vote_params)
-    set_comment
 
     if @vote.save
+      set_comment
       render "api/v1/votes/all_returns"
     else
       render json: { errors: @vote.errors.full_messages, status: :unprocessable_entity }
@@ -18,6 +18,7 @@ class Api::V1::VotesController < ApiController
   # PATCH/PUT /votes/1.json
   def update
     if @vote.update(vote_params)
+      set_comment
       render "api/v1/votes/all_returns"
     else
       render json: { errors: @vote.errors.full_messages, status: :unprocessable_entity}
@@ -27,6 +28,7 @@ class Api::V1::VotesController < ApiController
   # DELETE /votes/1.json
   def destroy
     if @vote.destroy
+      set_comment
       render "api/v1/votes/all_returns"
     end
   end
