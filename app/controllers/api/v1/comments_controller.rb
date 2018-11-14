@@ -8,7 +8,7 @@ class Api::V1::CommentsController < ApiController
   def index
     @comments = Comment.filter_and_sort(current_user, params[:art_id], params[:art_type], {}, [], 1)
     comment_ids = @comments.map(&:id)
-    @replies = Comment.filter_and_sort(current_user, params[:art_id], params[:art_type], {}, comment_ids, 1)
+    @replies = Comment.tabulation_for_comments_list(current_user, params[:art_id], params[:art_type], {}, comment_ids, 1)
     comment_ids += @replies.map(&:id)
     @current_users_votes = Vote.for_user_and_comment(current_user.id, comment_ids)
     @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, comment_ids)
