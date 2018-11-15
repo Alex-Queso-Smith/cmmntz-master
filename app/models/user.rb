@@ -100,8 +100,9 @@ class User < ApplicationRecord
     }
   end
 
-  def self.ready_for_quality_email_check(last_check, email_name)
-    scope = where_email_does_not_exist(last_check, email_name)
+  def self.ready_for_quality_email_check(letter, last_check, email_name)
+    scope = where(arel_table[:user_name].matches("#{letter}%"))
+    scope = scope.where_email_does_not_exist(last_check, email_name)
     scope
   end
 end
