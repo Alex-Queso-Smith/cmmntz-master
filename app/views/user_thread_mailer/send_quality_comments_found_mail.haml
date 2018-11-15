@@ -1,0 +1,7 @@
+%p= "Hey #{@user.user_name},"
+
+%p There has been some interesting activity on threads that you posted to since last week.
+
+%ul
+  - @quality_threads.each do |thread|
+    %li= thread.id
