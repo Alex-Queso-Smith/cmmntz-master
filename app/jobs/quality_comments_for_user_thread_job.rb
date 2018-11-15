@@ -15,7 +15,7 @@ class QualityCommentsForUserThreadJob < ApplicationJob
       end
 
       if quality_threads.present? # there are quality quality_threads found
-        raise "quality_threads: #{quality_threads.size}"
+        # raise "quality_threads: #{quality_threads.size}"
         UserThreadMailer.send_quality_comments_found_mail(user, quality_threads).deliver_now
         EmailLog.add_log(user, "quality_thread_checker")
       else # no quality_threads found
