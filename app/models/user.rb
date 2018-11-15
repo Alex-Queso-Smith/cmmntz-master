@@ -56,6 +56,13 @@ class User < ApplicationRecord
     c.validate_password_field = false
   end
 
+  scope :registered_gteq, -> (datetime) {
+    where("users.created_at >= ?", datetime)
+  }
+
+  scope :where_email_does_not_exist, -> (datetime, email_name) {
+    where( EmailLog.where("email_logs.user_id = users.id AND email_logs.created_at >= ? AND email_logs.email_name = ?", datetime, email_name).exists.not )
+  }
 
   ### re gender
   # display gender
@@ -91,5 +98,10 @@ class User < ApplicationRecord
       "like_a_lot": 0.40,
       "like":       0.40
     }
+  end
+
+  def self.ready_for_quality_email_check(last_check, email_name)
+    scope = registered_gteq(last_check).where_email_does_not_exist(last_check, email_name)
+    scope
   end
 end
