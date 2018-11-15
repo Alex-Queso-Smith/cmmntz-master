@@ -83,4 +83,13 @@ class User < ApplicationRecord
   def followed_users_of_followed_users
     followed_users.includes(:followed_users).map(&:followed_users).flatten
   end
+
+  def quality_comment_settings
+    {
+      "top":        0.40,
+      "love":       0.40,
+      "like_a_lot": 0.40,
+      "like":       0.40
+    }
+  end
 end

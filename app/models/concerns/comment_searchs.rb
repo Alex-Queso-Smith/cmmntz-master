@@ -46,6 +46,10 @@ module CommentSearchs
 
     scope :not_anon, -> { where(comments: {anonymous: false}) }
 
+    scope :created_since, -> (datetime) {
+      where("comments.created_at >= ?", datetime)
+    }
+
     # Meta Scoping
 
     Vote::TYPES.each do |type|
@@ -170,6 +174,21 @@ module CommentSearchs
 
       # narrow scope of votes
       scope = self.vote_scoping(scope, user, filter_opts[:votes_from]).first
+    end
+
+    def self.threads_with_activity_since_for_user(user_id, datetime)
+      scope = where(user_id: user_id).select(:art_id, :art_type).group(:art_id, :art_type)
+      scope= scope.joins("join comments other_comments on comments.art_id = other_comments.art_id AND comments.art_type = other_comments.art_type AND comments.user_id != other_comments.user_id AND other_comments.created_at >= '#{datetime}' ")
+      scope
+    end
+
+    def self.quality_comments_for_thread_since_for_user(art_id, art_type, user, datetime)
+      user_settings = user.quality_comment_settings.map {|k,v| "(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{k}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) >= '#{v}'"}
+      user_settings = user_settings.join(" OR ")
+      scope = for_art_type_and_id(art_type, art_id).where.not(user_id: user.id).created_since(datetime)
+      scope = scope.joins_votes
+      scope = scope.having(user_settings).group(:id)
+      scope
     end
   end
 end
