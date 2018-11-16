@@ -133,8 +133,8 @@ export const FilterButtonsRowTwo = (object) => {
 }
 export const FilterFromTypes = [
   ["", "Everyone"],
-  ["friends", "Friends"],
-  ["network", "Network"]
+  ["network", "Network"],
+  ["friends", "Friends"]
 ]
 
 export const FilterCommentsBy = (props) => {
