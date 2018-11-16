@@ -8,14 +8,12 @@ class QualityCommentsForUserThreadJob < ApplicationJob
     if threads.present? # there is activity since last_check for threads that the user has posted to
       quality_threads = []
 
-      threads.each do |thread|
-        # find quality Quality Comments
+      threads.each do |thread| # find quality Quality Comments
         quality_comments = Comment.quality_comments_for_thread_since_for_user(thread.art_id, thread.art_type, user, last_check)
         quality_threads << thread if quality_comments.present?
       end
 
       if quality_threads.present? # there are quality quality_threads found
-        # raise "quality_threads: #{quality_threads.size}"
         UserThreadMailer.send_quality_comments_found_mail(user, quality_threads).deliver_now
       end
     end
