@@ -131,7 +131,7 @@ const OpacityHandler = (selectedVotes, type) => {
 
 export const RowOneVoteButtons = (object) => {
   return RowOneVoteTypes.map((type) => {
-    var visibility, image, percentage;
+    var visibility, image, percentage, blankClass;
     var { userVoted, percentShow, votePercents, selectedVotes } = object.state
     var opacity = OpacityHandler(selectedVotes, type[0]);
 
@@ -151,13 +151,15 @@ export const RowOneVoteButtons = (object) => {
 
     if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
+    } else {
+      blankClass = 'no-show'
     }
 
 
     return(
       <VoteButtonRowOne
         key={`${object.props.commentId}_${type[0]}`}
-        className={'margin-top-bottom-10px'}
+        className={`margin-top-bottom-10px ${no-show}`}
         name={type[0]}
         label={type[1]}
         onClick={object.handleClickVote}
@@ -172,7 +174,7 @@ export const RowOneVoteButtons = (object) => {
 
 export const RowTwoVoteButtons = (object) => {
   return RowTwoVoteTypes.map((type) => {
-    var visibility, image, percentage;
+    var visibility, image, percentage, blankClass;
     var { userVoted, percentShow, votePercents, selectedVotes } = object.state
     var opacity = OpacityHandler(selectedVotes, type[0])
 
@@ -191,12 +193,14 @@ export const RowTwoVoteButtons = (object) => {
     // select image for button based on type
     if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
+    } else {
+      blankClass = type[0]
     }
 
     return(
       <VoteButtonRowTwo
         key={`${object.props.commentId}_${type[0]}`}
-        className={'margin-top-bottom-10px'}
+        className={`margin-top-bottom-10px ${blankClass}`}
         name={type[0]}
         label={type[1]}
         onClick={object.handleClickVote}
