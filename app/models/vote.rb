@@ -19,7 +19,7 @@ class Vote < ApplicationRecord
   validate :vote_is_unique_from_exclusve_group
   validate :deal_with_duplicate_top_votes
 
-  after_create_commit :add_comment_interaction_for_comment_and_user!
+  after_create_commit :add_comment_interaction_for_comment_and_user!, :update_last_interaction_at_for_art!
 
   scope :for_user_and_comment, lambda {|user_id, comment_id| where(user_id: user_id, comment_id: comment_id)}
   scope :of_vote_type, lambda {|vote_type| where(vote_type: vote_type)}
@@ -71,5 +71,11 @@ class Vote < ApplicationRecord
 
   def add_comment_interaction_for_comment_and_user!
     CommentInteraction.create_for_user_and_comment(self.user_id, self.comment_id)
+  end
+
+  ### Postprocessors
+
+  def update_last_interaction_at_for_art!
+    Art.find(comment.art_id).update_attribute("last_interaction_at", Time.now())
   end
 end

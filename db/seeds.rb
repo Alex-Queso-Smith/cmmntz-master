@@ -80,6 +80,8 @@ num_articles.times do
     created_at: time,
     updated_at: time
   )
+  url = article_one.url
+  art = Art.create(url: url)
 
   time += rand(100..1000)
 
@@ -89,8 +91,8 @@ num_articles.times do
   num_comments.times do
     comment = Comment.create(
       user: users.sample,
-      art_id: article_one.id,
-      art_type: "article",
+      art_id: art.id,
+      art_type: "art",
       text: RANDOM_TEXT.sample,
       created_at: time,
       updated_at: time,
@@ -104,8 +106,8 @@ num_articles.times do
       num_replies.times do
         reply = Comment.create(
           user: users.sample,
-          art_id: article_one.id,
-          art_type: "article",
+          art_id: art.id,
+          art_type: "art",
           text: RANDOM_TEXT.sample,
           created_at: time,
           updated_at: time,
