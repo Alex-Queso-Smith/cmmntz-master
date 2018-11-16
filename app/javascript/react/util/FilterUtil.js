@@ -63,7 +63,7 @@ export const RowOneFilterTypes = [
 
 export const FilterButtonsRowOne = (object) => {
   return RowOneFilterTypes.map((type) => {
-    var image, visibility;
+    var image, visibility, blankClass;
     var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
 
     if (!type[0].includes('blank')) {
@@ -72,11 +72,14 @@ export const FilterButtonsRowOne = (object) => {
 
     if (type[0].includes('blank')) {
       visibility = "visibility-hidden"
+    } else {
+      blankClass = type[0]
     }
 
     return(
       <SortButton
         key={`filter_${type[1]}`}
+        className={`${blankClass}`}
         value={`${type[0]}_percent`}
         opacity={opacity}
         onClick={object.props.handleFilterClick}
@@ -103,7 +106,7 @@ export const RowTwoFilterTypes = [
 
 export const FilterButtonsRowTwo = (object) => {
   return RowTwoFilterTypes.map((type) => {
-    var image, visibility;
+    var image, visibility, blankClass;
     var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
 
     if (!type[0].includes('blank')) {
@@ -112,11 +115,14 @@ export const FilterButtonsRowTwo = (object) => {
 
     if (type[0].includes('blank')){
       visibility = "visibility-hidden"
+    } else {
+      blankClass = type[0]
     }
 
     return(
       <SortButton
         key={`filter_${type[1]}`}
+        className={`${blankClass}`}
         value={`${type[0]}_percent`}
         opacity={opacity}
         onClick={object.props.handleFilterClick}
