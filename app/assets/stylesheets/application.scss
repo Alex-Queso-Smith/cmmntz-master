@@ -13,7 +13,7 @@ $dark-grayline: #D3D3D3;
   margin: 0 auto;
 }
 
-$breakpoint-tablet: 768px;
+$breakpoint-tablet: 900px;
 @media (min-width: $breakpoint-tablet) {
   #cf-comments-main {
     max-width: 60%;
