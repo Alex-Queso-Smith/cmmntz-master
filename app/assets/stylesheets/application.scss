@@ -29,9 +29,12 @@ $breakpoint-tablet: 900px;
     display: none;
   }
 
-  .filter-btn {
-    width: 100%;
+  .filter-btn-container {
+    padding: 0;
 
+    .filter-btn {
+      border-radius: 0;
+    }
   }
 }
 
