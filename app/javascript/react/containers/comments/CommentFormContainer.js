@@ -140,7 +140,7 @@ class CommentFormContainer extends React.Component {
       RowOneVoteTypes.map((type) => {
         var visibility;
         var image = ImageSelector(type[0])
-        var opacity = OpacityHandlerIncludes(selfVotes, type[0])
+        var opacity = OpacityHandlerIncludes(selfVotes, [], type[0])
 
         if (type[0].includes('blank')) {
           visibility = "hidden"
@@ -162,7 +162,7 @@ class CommentFormContainer extends React.Component {
       RowTwoVoteTypes.map((type) => {
         var visibility;
         var image = ImageSelector(type[0])
-        var opacity = OpacityHandlerIncludes(selfVotes, type[0])
+        var opacity = OpacityHandlerIncludes(selfVotes, [], type[0])
 
         if (type[0].includes('blank')) {
           visibility = "hidden"
