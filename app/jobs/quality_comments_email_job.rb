@@ -4,7 +4,7 @@ class QualityCommentsEmailJob < ApplicationJob
   def perform(letter = "a")
     last_check = 1.week.ago
     # find users registered more than one week ago whos last check (email log name: 'quality_thread_checker') was > same
-    users = User.ready_for_quality_email_check(letter, last_check, 'quality_thread_checker')
+    users = User.ready_for_quality_thread_check(letter, last_check, 'quality_thread_checker')
     users.each { |user| QualityCommentsForUserThreadJob.perform_later(user, last_check.to_s) } if users.present?
 
     # # enque the next letter's process

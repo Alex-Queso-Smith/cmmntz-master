@@ -47,7 +47,7 @@ module CommentSearchs
     scope :not_anon, -> { where(comments: {anonymous: false}) }
 
     scope :created_since, -> (datetime) {
-      where("comments.created_at >= ?", datetime)
+      where(arel_table[:created_at].gteq(datetime))
     }
 
     # Meta Scoping
@@ -190,5 +190,10 @@ module CommentSearchs
       scope = scope.having(user_settings).group(:id)
       scope
     end
+    
+    def self.for_thread_since(thread, last_check)
+      for_art_type_and_id('art', thread.id).created_since(last_check)
+    end
   end
+
 end

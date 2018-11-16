@@ -24,6 +24,10 @@ class Vote < ApplicationRecord
   scope :for_user_and_comment, lambda {|user_id, comment_id| where(user_id: user_id, comment_id: comment_id)}
   scope :of_vote_type, lambda {|vote_type| where(vote_type: vote_type)}
 
+  scope :created_since, -> (datetime) {
+    where(arel_table[:created_at].gteq(datetime))
+  }
+
   private
 
   ### Custom validations
@@ -77,5 +81,12 @@ class Vote < ApplicationRecord
 
   def update_last_interaction_at_for_art!
     Art.find(comment.art_id).update_attribute("last_interaction_at", Time.now())
+  end
+
+
+  ### searches
+
+  def self.for_thread_since(thread, last_check)
+    joins(:comment).created_since(last_check).where(comments: {art_type: 'art', art_id: thread.id})
   end
 end

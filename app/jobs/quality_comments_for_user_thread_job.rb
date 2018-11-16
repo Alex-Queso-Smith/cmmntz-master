@@ -17,6 +17,6 @@ class QualityCommentsForUserThreadJob < ApplicationJob
         UserThreadMailer.send_quality_comments_found_mail(user, quality_threads).deliver_now
       end
     end
-    EmailLog.add_log(user, "quality_thread_checker")
+    CheckLog.add_log(user, "quality_thread_checker")
   end
 end

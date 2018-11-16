@@ -60,8 +60,8 @@ class User < ApplicationRecord
     where("users.created_at >= ?", datetime)
   }
 
-  scope :where_email_does_not_exist, -> (datetime, email_name) {
-    where( EmailLog.where("email_logs.user_id = users.id AND email_logs.created_at >= ? AND email_logs.email_name = ?", datetime, email_name).exists.not )
+  scope :where_check_does_not_exist, -> (datetime, check_name) {
+    where( CheckLog.where("check_logs.checkable_id = users.id AND check_logs.checkable_type = 'user' AND check_logs.created_at >= ? AND check_logs.check_name = ?", datetime, check_name).exists.not )
   }
 
   ### re gender
@@ -100,9 +100,9 @@ class User < ApplicationRecord
     }
   end
 
-  def self.ready_for_quality_email_check(letter, last_check, email_name)
+  def self.ready_for_quality_thread_check(letter, last_check, check_name)
     scope = where(arel_table[:user_name].matches("#{letter}%"))
-    scope = scope.where_email_does_not_exist(last_check, email_name)
+    scope = scope.where_check_does_not_exist(last_check, check_name)
     scope
   end
 end

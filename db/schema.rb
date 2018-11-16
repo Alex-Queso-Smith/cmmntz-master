@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_16_155230) do
+ActiveRecord::Schema.define(version: 2018_11_16_181106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -54,6 +54,15 @@ ActiveRecord::Schema.define(version: 2018_11_16_155230) do
     t.index ["blocking_id"], name: "index_blockings_on_blocking_id"
   end
 
+  create_table "check_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "checkable_id"
+    t.string "check_name"
+    t.datetime "created_at"
+    t.string "checkable_type"
+    t.index ["checkable_id", "check_name", "created_at"], name: "index_check_logs_on_checkable_id_and_check_name_and_created_at"
+    t.index ["checkable_id", "checkable_type"], name: "index_check_logs_on_checkable_id_and_checkable_type"
+  end
+
   create_table "comment_interactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "comment_id"
     t.uuid "user_id"
@@ -76,13 +85,6 @@ ActiveRecord::Schema.define(version: 2018_11_16_155230) do
     t.index ["interactions_count"], name: "index_comments_on_interactions_count"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "email_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.string "email_name"
-    t.datetime "created_at"
-    t.index ["user_id", "email_name", "created_at"], name: "index_email_logs_on_user_id_and_email_name_and_created_at"
   end
 
   create_table "followings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
