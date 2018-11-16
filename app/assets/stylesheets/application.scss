@@ -18,7 +18,20 @@ $breakpoint-tablet: 768px;
   #cf-comments-main {
     max-width: 60%;
   }
+  .container {
+    width: 100%;
+  }
 }
+
+@media (max-width: $breakpoint-tablet) {
+  #cf-comments-main {
+    width: 100%;
+  }
+  .container {
+    width: 100%;
+  }
+}
+
 
 .flot-left {
   float: left;
