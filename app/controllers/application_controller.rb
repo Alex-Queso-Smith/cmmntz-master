@@ -2,10 +2,16 @@ class ApplicationController < ActionController::Base
   # include ControllerIncludes::CurrentUser # methods regarding current_user
 
   helper_method :current_user_session, :current_user
-  ALL_FILTERS = [:require_user, :current_user, :current_user_session]
+  ALL_FILTERS = [:require_office_ip_prod, :require_user, :current_user, :current_user_session]
   before_action *ALL_FILTERS
 
   private
+
+  def require_office_ip_prod
+    if Rails.env.production? && request.remote_ip != '96.227.61.123'
+      raise "You are not Authorized to be here!"
+    end
+  end
 
   def store_location
     session[:return_to] = request[:REQUEST_URI]
