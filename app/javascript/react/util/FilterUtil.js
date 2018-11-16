@@ -72,7 +72,6 @@ export const FilterButtonsRowOne = (object) => {
 
     if (type[0].includes('blank')) {
       visibility = "visibility-hidden"
-    } else {
       blankClass = type[0]
     }
 
@@ -115,7 +114,6 @@ export const FilterButtonsRowTwo = (object) => {
 
     if (type[0].includes('blank')){
       visibility = "visibility-hidden"
-    } else {
       blankClass = type[0]
     }
 
