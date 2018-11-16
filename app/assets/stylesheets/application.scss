@@ -9,14 +9,13 @@ $dark-base: #7A7A7A;
 $dark: #7A7A7A;
 $dark-grayline: #D3D3D3;
 
-#cf-comments-main {
-  margin: 0 auto;
-}
-
 $breakpoint-tablet: 900px;
 @media (min-width: $breakpoint-tablet) {
   #cf-comments-main {
     max-width: 60%;
+  }
+  #cf-comments-main {
+    margin: 0 auto;
   }
 
 }
@@ -24,6 +23,10 @@ $breakpoint-tablet: 900px;
 @media (max-width: $breakpoint-tablet) {
   #cf-comments-main {
     width: 100%;
+  }
+
+  .blank1, .blank2 {
+    display: none;
   }
 }
 
