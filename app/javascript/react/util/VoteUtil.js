@@ -152,14 +152,14 @@ export const RowOneVoteButtons = (object) => {
     if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
     } else {
-      blankClass = 'no-show'
+      blankClass = type[0]
     }
 
 
     return(
       <VoteButtonRowOne
         key={`${object.props.commentId}_${type[0]}`}
-        className={`margin-top-bottom-10px ${no-show}`}
+        className={`margin-top-bottom-10px ${blankClass}`}
         name={type[0]}
         label={type[1]}
         onClick={object.handleClickVote}
