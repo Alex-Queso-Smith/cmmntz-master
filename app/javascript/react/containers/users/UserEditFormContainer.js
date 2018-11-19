@@ -136,49 +136,51 @@ class UserEditFormContainer extends React.Component {
     passwordConfirmationError = CreateErrorElements(saveErrors.password_confirmation, "Password Confirmation")
 
     return(
-      <form className="form" id="user-edit-form" onSubmit={this.handleSubmit} >
-        <h1 className="user-title text-center">Edit Account</h1>
+      <div className="login-container">
+        <form className="form" id="user-edit-form" onSubmit={this.handleSubmit} >
+          <h1 className="user-title text-center">Edit Account</h1>
 
-        <UserEditForm
-          onChange={this.handleChange}
-          handleSliderChange={this.handleSliderChange}
-          handleThemeSelectorChange={this.handleThemeSelectorChange}
-          handleGenderChange={this.handleGenderChange}
-          handleAvatarClick={this.handleAvatarClick}
-          userName={userName}
-          password={password}
-          passwordConfirmation={passwordConfirmation}
-          email={email}
-          handleButtonClick={this.handleNextClick}
-          handleBackClick={this.handleBackClick}
-          handleChange={this.handleChange}
-          emailError={emailError}
-          userNameError={userNameError}
-          passwordError={passwordError}
-          passwordConfirmationError={passwordConfirmationError}
-          ageRange={ageRange}
-          gender={gender}
-          latitude={latitude}
-          longitude={longitude}
-          font={font}
-          avatar={avatar}
-          colorTheme={colorTheme}
-        />
+          <UserEditForm
+            onChange={this.handleChange}
+            handleSliderChange={this.handleSliderChange}
+            handleThemeSelectorChange={this.handleThemeSelectorChange}
+            handleGenderChange={this.handleGenderChange}
+            handleAvatarClick={this.handleAvatarClick}
+            userName={userName}
+            password={password}
+            passwordConfirmation={passwordConfirmation}
+            email={email}
+            handleButtonClick={this.handleNextClick}
+            handleBackClick={this.handleBackClick}
+            handleChange={this.handleChange}
+            emailError={emailError}
+            userNameError={userNameError}
+            passwordError={passwordError}
+            passwordConfirmationError={passwordConfirmationError}
+            ageRange={ageRange}
+            gender={gender}
+            latitude={latitude}
+            longitude={longitude}
+            font={font}
+            avatar={avatar}
+            colorTheme={colorTheme}
+          />
 
-        <div className="form-group actions margin-top-10px">
-          <button id="user-registration-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit">
-            <span className="text-large">Update</span>
-          </button>
-        </div>
-        <hr />
-        <div id="delete-account">
-          <h3>Delete my account</h3>
-          <p className="warning-text">Warning: Deleting your account is irreversible. Once you delete your accounts, all of your comments and interactions will become anonymous.</p>
-          <p className="warning-text">Do not click the button unless you are certain.</p>
-          <button onClick={this.handleDeleteAccountClick}  className="btn btn-danger btn-large btn-block">Delete Account</button>
+          <div className="form-group actions margin-top-10px">
+            <button id="user-registration-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit">
+              <span className="text-large">Update</span>
+            </button>
+          </div>
+          <hr />
+          <div id="delete-account">
+            <h3>Delete my account</h3>
+            <p className="warning-text">Warning: Deleting your account is irreversible. Once you delete your accounts, all of your comments and interactions will become anonymous.</p>
+            <p className="warning-text">Do not click the button unless you are certain.</p>
+            <button onClick={this.handleDeleteAccountClick}  className="btn btn-danger btn-large btn-block">Delete Account</button>
 
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
     )
   }
 }
