@@ -150,19 +150,19 @@ class Comment extends React.Component {
         onChange={ this.handleChange }
         />
     } else {
-      var text_length = (window.innerWidth > 700) ? 1000 : 300 ;
+      var text_length = 400 ;
       if (text.length > text_length) {
         if (!this.state.showFullText) {
           textBox =
           <div className="cf-comment-text" >
             {text.substring(0, text_length) + "..."}
-            <a href='#' onClick={this.handleStateFlip} name="showFullText">show more</a>
+            <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show more</a>
           </div>
         } else {
           textBox =
           <div className="cf-comment-text" >
             {text}
-            <a href='#' onClick={this.handleStateFlip} name="showFullText">show less</a>
+            <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show less</a>
           </div>
         }
       } else {
