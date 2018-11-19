@@ -13,6 +13,12 @@ class UserNewFormContainer extends React.Component {
     ageRange: '',
     latitude: '',
     longitude: '',
+    x: '',
+    y: '',
+    geoPin: {
+      x: '',
+      y: ''
+    },
     gender: '',
     avatar: '',
     currentPage: 1,
@@ -27,6 +33,8 @@ class UserNewFormContainer extends React.Component {
   handleSliderChange = this.handleSliderChange.bind(this);
   handleAvatarClick = this.handleAvatarClick.bind(this);
   handleGenderChange = this.handleGenderChange.bind(this);
+  _onMouseMove = this._onMouseMove.bind(this);
+  setLatLongClick = this.setLatLongClick.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (
@@ -39,6 +47,23 @@ class UserNewFormContainer extends React.Component {
 
       CheckInputValidation(this, [userName, password, passwordConfirmation, email])
     }
+  }
+
+  _onMouseMove(event) {
+    this.setState({ x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY });
+  }
+
+  setLatLongClick(event){
+    var { x, y } = this.state;
+
+    var longitude = Math.round((x * (180 / 150)) - 180)
+    var latitude = Math.round(((y * (180 / 100)) - 180) * -1)
+
+    this.setState({
+      latitude: latitude,
+      longitude: longitude,
+      geoPin: { x: x, y: y }
+     })
   }
 
   handleGenderChange(event){
@@ -146,6 +171,11 @@ class UserNewFormContainer extends React.Component {
           gender={this.state.gender}
           latitude={this.state.latitude}
           longitude={this.state.longitude}
+          geoPin={this.state.geoPin}
+          x={this.state.x}
+          y={this.state.y}
+          onMouseMove={this._onMouseMove}
+          setLatLongClick={this.setLatLongClick}
           handleButtonClick={this.handleNextClick}
           handleBackClick={this.handleBackClick}
         />

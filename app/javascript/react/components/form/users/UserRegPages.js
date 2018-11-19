@@ -63,6 +63,19 @@ export const UserRegPageOne = props => {
 };
 
 export const UserRegPageTwo = props => {
+
+  const { x, y, latitude, longitude, geoPin } = props
+
+  if (props.latitude && props.longitude) {
+    const style = {
+      top: geoPin.y,
+      left: geoPin.x
+    }
+
+    var geoMarker =
+      <div className="cf-geomarker" style={style} />
+  }
+
   return(
     <div id="reg-optional-1" className="form-group">
       <h3 className="text-center">Sign-Up Optional Information 1/2 </h3>
@@ -81,20 +94,11 @@ export const UserRegPageTwo = props => {
         value={props.gender}
       />
       <hr />
-      <Input
-        name="latitude"
-        label="Latitude"
-        onChange={props.onChange}
-        content={props.latitude}
-        type="text"
-      />
-      <Input
-        name="longitude"
-        label="Longitude"
-        onChange={props.onChange}
-        content={props.longitude}
-        type="text"
-      />
+      <div className="cf-geomap-wrapper">
+        <div className="cf-geomap-container" onMouseMove={props.onMouseMove} onClick={props.setLatLongClick}>
+          {geoMarker}
+        </div>
+      </div>
       <div className="custom-control custom-checkbox margin-top-10px">
         <input type="checkbox" className="custom-control-input" id='location-opt-out' autoComplete="off" />
         <label className="custom-control-label text-medium" htmlFor='location-opt-out' >None of Your Business</label>

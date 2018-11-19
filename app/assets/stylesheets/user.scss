@@ -113,3 +113,26 @@ $breakpoint-tablet: 768px;
     font-size: 3em;
   }
 }
+
+.cf-geomap-wrapper {
+  width: 100%;
+}
+
+.cf-geomap-container {
+  position: relative;
+  height: 200px;
+  width: 300px;
+  border: 1px solid #000000;
+  margin: auto;
+  z-index: 10;
+}
+
+.cf-geomarker {
+  position: absolute;
+  border-radius: 50%;
+  border: solid 1px red;
+  background-color: red;
+  height: 6px;
+  width: 6px;
+  pointer-events: none;
+}
