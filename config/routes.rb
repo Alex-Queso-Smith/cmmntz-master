@@ -39,5 +39,5 @@ Rails.application.routes.draw do
   get 'logout' => "user_sessions#destroy", as: :logout
 
   # root
-  root :to => 'users#index'
+  root :to => 'articles#index'
 end

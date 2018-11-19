@@ -49,7 +49,8 @@ $bootstrap-blue: #0069D9;
         .cf-comment-user-name {
           width: 50%;
           float: left;
-          font-size: 1.5em;
+          font-size: 1.25em;
+          color: purple;
           font-weight: bold;
         }
         .cf-comment-len-date{
@@ -101,17 +102,12 @@ $bootstrap-blue: #0069D9;
 }
 
 .vote-btn {
-  height: 35px;
-  width: 35px;
+  height: 25px;
+  width: 25px;
 }
 
 $breakpoint-tablet: 900px;
 @media (max-width: $breakpoint-tablet) {
-  .vote-btn {
-    height: 25px;
-    width: 25px;
-  }
-
   .cf-comment-replies-wrapper {
     margin-left: 5px;
 
@@ -120,6 +116,10 @@ $breakpoint-tablet: 900px;
       padding: 10px;
     }
   }
+}
+
+.w-450 {
+  width: 450px;
 }
 
 

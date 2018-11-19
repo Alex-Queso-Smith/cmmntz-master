@@ -217,11 +217,11 @@ class CommentFormContainer extends React.Component {
           {textError}
           <div className="row">
             <div className=" margin-top-10px float-left col-3">
-              <button className="btn btn-large btn-primary" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
+              <button className="btn btn-sm btn-primary" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
             </div>
             <div className="margin-top-10px col-9 col-sm-9">
               <div className="float-right">
-                <button id="comments-button" type="submit" className="btn btn-large btn-primary" value="Submit" disabled={formInvalid}>
+                <button id="comments-button" type="submit" className="btn btn-sm btn-primary" value="Submit" disabled={formInvalid}>
                   Submit Comment
                 </button>
               </div>

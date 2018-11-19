@@ -1,4 +1,5 @@
 import React from 'react';
+import BottomScollListener from 'react-bottom-scroll-listener'
 
 import CommentFormContainer from './CommentFormContainer';
 import CommentsList from './CommentsList';
@@ -307,9 +308,7 @@ class CommentingContainer extends React.Component {
     return(
       <div id="cf-comments-main" className={`${userSettings.font} ${userSettings.colorTheme}`}>
         <CommentEtiquette />
-        <div>
-          {totalComments} comments for this article
-        </div>
+
         <CommentFormContainer
           commentRoot={commentRoot}
           handleSubmit={this.handleCommentForm}
@@ -324,6 +323,9 @@ class CommentingContainer extends React.Component {
           handleFilterByClick={this.handleFilterByClick}
         />
         <hr />
+        <div>
+          <p>{totalComments} comments for this article</p>
+        </div>
         <CommentsList
           allComments={comments}
           commentRoot={commentRoot}
@@ -332,7 +334,11 @@ class CommentingContainer extends React.Component {
           blockedUsers={blockedUsers}
         />
 
-      <button className="btn btn-block btn-large btn-primary" onClick={this.handleLoadMoreClick}>Load More</button>
+        <button className="btn btn-block btn-large btn-primary" onClick={this.handleLoadMoreClick}>Load More</button>
+        <BottomScollListener
+          onBottom={this.handleLoadMoreClick}
+          offset={500}
+        />
       </div>
     )
   }
