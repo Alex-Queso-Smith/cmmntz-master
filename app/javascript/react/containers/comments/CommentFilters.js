@@ -13,7 +13,7 @@ class CommentFilters extends React.Component {
 
     return(
       <div className="cf-filter-block">
-        <div className="row">
+        <div className="row w-450" >
           <h4 className="col-2 col-sm-2 col-md-2">Sort</h4>
 
           {sortButtons}
@@ -25,10 +25,10 @@ class CommentFilters extends React.Component {
         </div>
         <br/>
         <h4>Filters</h4>
-        <div className="row">
+        <div className="row w-450">
           {filterButtonsRowOne}
         </div>
-        <div className="row">
+        <div className="row w-450">
           {filterButtonsRowTwo}
         </div>
         <br/>

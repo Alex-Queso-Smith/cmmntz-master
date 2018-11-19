@@ -92,7 +92,7 @@ export const Checkbox = props => {
       name={props.name}
       id={props.name} onClick={props.onChange}
       autoComplete="off" />
-      <label className="custom-control-label text-medium" htmlFor={props.name}>{props.label}</label>
+      <label className="custom-control-label" htmlFor={props.name}>{props.label}</label>
     </div>
   );
 };

@@ -12,10 +12,8 @@ $dark-grayline: #D3D3D3;
 $breakpoint-tablet: 900px;
 @media (min-width: $breakpoint-tablet) {
   #cf-comments-main {
-    max-width: 550px;
-  }
-  #cf-comments-main {
-    margin: 0 auto;
+    max-width: 540px;
+    margin-left: 50px;
   }
 
 }
@@ -120,4 +118,8 @@ $breakpoint-tablet: 900px;
     border: 1px solid $dark-grayline;
     border-radius: 10px;
   }
+}
+
+h4 {
+  font-size: 1em;
 }
