@@ -92,12 +92,24 @@ module CommentSearchs
       scope
     end
 
-    def self.geo_filtering(scope, some_data)
-      # convert users geo locations to radians (deg * (Math::PI / 180))
-      # lat_rad = user.latitude * (Math::PI / 180)
-      # lon_rad = user.longitude * (Math::PI / 180)
-      # use basic bounding and law of cosines
+    def self.geo_filtering(scope, lat, lon, radius)
       # see https://www.movable-type.co.uk/scripts/latlong-db.html
+      # lat 69 per degree
+      # long 66 per degree
+      if lat && lon && radius
+        case radius
+        when 1000
+          # lat 14.5
+          # lon 15.15
+
+        when 500
+          # lat 7.25
+          # lon 7.57
+        when 100
+          # lat 1.45
+          # lon 1.51
+        end
+      end
       scope
     end
 
@@ -190,7 +202,7 @@ module CommentSearchs
       scope = scope.having(user_settings).group(:id)
       scope
     end
-    
+
     def self.for_thread_since(thread, last_check)
       for_art_type_and_id('art', thread.id).created_since(last_check)
     end
