@@ -16,7 +16,7 @@ export const UserRegPageOne = props => {
 
   return(
     <div id="reg-required" className="form-group">
-      <h5 className="text-center">Sign-Up Required Information</h5>
+      <h6 className="text-center">Sign-Up Required Information</h6>
       <Input
         name="userName"
         label="User Name"
@@ -53,9 +53,9 @@ export const UserRegPageOne = props => {
         addClass={passwordConfirmationClass}
       />
       {props.passwordConfirmationError}
-      <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-page-one" className="btn btn-block btn-medium btn-primary" onClick={props.handleButtonClick} disabled={props.disabled}>
-          <span className="text-medium">Next Page (Optional)</span>
+      <div className="form-group actions margin-top-10px centered">
+        <button id="user-registration-button-page-one" className="btn btn-sm btn-primary" onClick={props.handleButtonClick} disabled={props.disabled}>
+          Next Page (Optional)
         </button>
       </div>
     </div>
@@ -78,7 +78,7 @@ export const UserRegPageTwo = props => {
 
   return(
     <div id="reg-optional-1" className="form-group">
-      <h5 className="text-center">Sign-Up Optional Information 1/2 </h5>
+      <h6 className="text-center">Sign-Up Optional Information 1/2 </h6>
       <hr />
       <AgeSlider
         name="ageRange"
@@ -104,13 +104,13 @@ export const UserRegPageTwo = props => {
         <label className="custom-control-label text-medium" htmlFor='location-opt-out' >None of Your Business</label>
       </div>
       <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-page-two" className="btn btn-block btn-medium btn-primary" onClick={props.handleButtonClick} >
-          <span className="text-medium">Next Page (Optional)</span>
+        <button id="user-registration-button-page-two" className="btn btn-sm btn-primary" onClick={props.handleButtonClick} >
+          Next Page (Optional)
         </button>
       </div>
       <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-back-two" className="btn btn-block btn-medium btn-primary" onClick={props.handleBackClick}>
-          <span className="text-medium">Back</span>
+        <button id="user-registration-button-back-two" className="btn btn-sm btn-primary" onClick={props.handleBackClick}>
+          Back
         </button>
       </div>
     </div>
@@ -128,7 +128,7 @@ export const UserRegPageThree = props => {
 
   return(
     <div id="reg-optional-2" className="form-group ">
-      <h5 className="text-center">Sign-Up Optional Information 2/2 </h5>
+      <h6 className="text-center">Sign-Up Optional Information 2/2 </h6>
       <hr />
       <div className="form-group margin-top-10px">
         <label className="text-medium text-center" htmlFor="avatar">Avatar</label>

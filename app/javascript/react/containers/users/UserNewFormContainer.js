@@ -193,13 +193,13 @@ class UserNewFormContainer extends React.Component {
     return(
       <div className="login-container">
         <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
-          <h1 className="user-title text-center">User Registration</h1>
+          <h5 className="user-title text-center">User Registration</h5>
 
           {page}
 
           <div className="form-group actions margin-top-10px">
-            <button id="user-registration-button" type="submit" className="btn btn-block btn-medium btn-primary" value="Submit" disabled={this.state.formInvalid}>
-              <span className="text-medium">Register</span>
+            <button id="user-registration-button" type="submit" className="btn btn-sm btn-primary" value="Submit" disabled={this.state.formInvalid}>
+              Register
             </button>
           </div>
           <PrivacyPolicy />
