@@ -166,7 +166,7 @@ class UserEditFormContainer extends React.Component {
 
     return(
       <form className="form" id="user-edit-form" onSubmit={this.handleSubmit} >
-        <h1 className="user-title text-center">Edit Account</h1>
+        <h5 className="user-title text-center">Edit Account</h5>
 
         <UserEditForm
           onChange={this.handleChange}
@@ -203,7 +203,7 @@ class UserEditFormContainer extends React.Component {
 
         <div className="form-group actions margin-top-10px">
           <button id="user-registration-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit">
-            <span className="text-large">Update</span>
+            <span className="text-medium">Update</span>
           </button>
         </div>
         <hr />

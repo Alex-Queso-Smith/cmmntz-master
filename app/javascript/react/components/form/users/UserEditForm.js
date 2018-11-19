@@ -91,7 +91,7 @@ const UserEditForm = props => {
       <div id="reg-optional-2" className="form-group ">
         <hr />
         <div className="form-group margin-top-10px">
-          <label className="text-large text-center" htmlFor="avatar">Choose Your Avatar</label>
+          <label className="text-medium text-center" htmlFor="avatar">Choose Your Avatar</label>
           <br />
           {selectedAvatar}
           <Carousel

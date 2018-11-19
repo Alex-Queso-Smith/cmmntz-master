@@ -198,8 +198,8 @@ class UserNewFormContainer extends React.Component {
           {page}
 
           <div className="form-group actions margin-top-10px">
-            <button id="user-registration-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit" disabled={this.state.formInvalid}>
-              <span className="text-large">Register</span>
+            <button id="user-registration-button" type="submit" className="btn btn-block btn-medium btn-primary" value="Submit" disabled={this.state.formInvalid}>
+              <span className="text-medium">Register</span>
             </button>
           </div>
           <PrivacyPolicy />

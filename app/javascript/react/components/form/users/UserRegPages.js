@@ -54,8 +54,8 @@ export const UserRegPageOne = props => {
       />
       {props.passwordConfirmationError}
       <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-page-one" className="btn btn-block btn-large btn-primary" onClick={props.handleButtonClick} disabled={props.disabled}>
-          <span className="text-large">Next Page (Optional)</span>
+        <button id="user-registration-button-page-one" className="btn btn-block btn-medium btn-primary" onClick={props.handleButtonClick} disabled={props.disabled}>
+          <span className="text-medium">Next Page (Optional)</span>
         </button>
       </div>
     </div>
@@ -104,13 +104,13 @@ export const UserRegPageTwo = props => {
         <label className="custom-control-label text-medium" htmlFor='location-opt-out' >None of Your Business</label>
       </div>
       <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-page-two" className="btn btn-block btn-large btn-primary" onClick={props.handleButtonClick} >
-          <span className="text-large">Next Page (Optional)</span>
+        <button id="user-registration-button-page-two" className="btn btn-block btn-medium btn-primary" onClick={props.handleButtonClick} >
+          <span className="text-medium">Next Page (Optional)</span>
         </button>
       </div>
       <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-back-two" className="btn btn-block btn-large btn-primary" onClick={props.handleBackClick}>
-          <span className="text-large">Back</span>
+        <button id="user-registration-button-back-two" className="btn btn-block btn-medium btn-primary" onClick={props.handleBackClick}>
+          <span className="text-medium">Back</span>
         </button>
       </div>
     </div>
@@ -131,7 +131,7 @@ export const UserRegPageThree = props => {
       <h3 className="text-center">Sign-Up Optional Information 2/2 </h3>
       <hr />
       <div className="form-group margin-top-10px">
-        <label className="text-large text-center" htmlFor="avatar">Avatar</label>
+        <label className="text-medium text-center" htmlFor="avatar">Avatar</label>
         {selectedAvatar}
         <br />
         <Carousel
@@ -140,8 +140,8 @@ export const UserRegPageThree = props => {
       </div>
       <input type="hidden"/>
       <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-back-three" className="btn btn-block btn-large btn-primary" onClick={props.handleBackClick}>
-          <span className="text-large">Back</span>
+        <button id="user-registration-button-back-three" className="btn btn-block btn-medium btn-primary" onClick={props.handleBackClick}>
+          <span className="text-medium">Back</span>
         </button>
       </div>
     </div>

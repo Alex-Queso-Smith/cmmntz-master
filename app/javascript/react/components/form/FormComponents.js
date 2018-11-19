@@ -56,19 +56,19 @@ export const AgeSlider = props => {
   ) {
     if (ageRange === "60+") {
       ageImage =
-      <div className="cf-age-image">
-        <img src={`/assets/60-plus.png`} />
+      <div>
+        <img className="cf-age-image" src={`/assets/60-plus.png`} />
       </div>
     } else {
       ageImage =
-      <div className="cf-age-image">
-        <img src={`/assets/${ageRange}`} />
+      <div>
+        <img className="cf-age-image" src={`/assets/${ageRange}`} />
       </div>
     }
   } else {
     ageImage =
-    <div className="cf-age-image">
-      <img src={`/assets/age-range-none.png`} />
+    <div>
+      <img className="cf-age-image" src={`/assets/age-range-none.png`} />
     </div>
   }
 
@@ -128,7 +128,7 @@ export const GenderSelector = props => {
 
   return(
     <div>
-      <label className="text-large">Gender</label>
+      <label className="text-medium">Gender</label>
       <div id="gender-selector" className="row margin-top-bottom-10px">
         {genderButtons}
       </div>
