@@ -77,19 +77,19 @@ class Reply extends React.Component {
         blockOpacity = "translucent"
       }
       followStar =
-      <div className={`col-2 col-sm-2 col-md-1 cursor-pointer ${starOpacity}`}>
+      <div className={`col-1 col-sm-1 col-md-1 cursor-pointer ${starOpacity}`}>
         <img onClick={this.handleFollow} src="/assets/star" height="20px" width="20px" />
       </div>
       blockSym =
-      <div className={`col-2 col-sm-2 col-md-1 cursor-pointer ${blockOpacity}`}>
+      <div className={`col-1 col-sm-1 col-md-1 cursor-pointer ${blockOpacity}`}>
         <img onClick={this.handleBlock} src="/assets/block" height="20px" width="20px" />
       </div>
     } else {
       blockSym =
-      <div className={`col-2 col-sm-2 col-md-1`}>
+      <div className={`col-1 col-sm-1 col-md-1`}>
       </div>
       followStar =
-      <div className={`cf-comment-user-name col-2 col-sm-2 col-md-1`}>
+      <div className={`cf-comment-user-name col-1 col-sm-1 col-md-1`}>
       </div>
     }
 
@@ -105,12 +105,13 @@ class Reply extends React.Component {
             />
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
-              <div className="cf-comment-user-name col-4 col-sm-4 col-md-2">
-                {user_name}
-              </div>
               {followStar}
               {blockSym}
-              <div className="cf-comment-at col-8" >
+              <div className="cf-comment-user-name col-4 col-sm-4 col-md-4">
+                {user_name}
+              </div>
+              <div className="col-3 col-md-3"></div>
+              <div className="cf-comment-at col-2" >
                 <div className="float-right">
                   {this.props.posted}
                 </div>
