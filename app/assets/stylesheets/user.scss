@@ -125,6 +125,9 @@ $breakpoint-tablet: 768px;
   border: 1px solid #000000;
   margin: auto;
   z-index: 10;
+  background-image: url('mercator-map.jpg');
+  background-size: 300px 200px;
+  background-repeat: no-repeat;
 }
 
 .cf-geomarker {
