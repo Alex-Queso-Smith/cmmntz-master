@@ -18,6 +18,10 @@ const UserInfoTile = props => {
   } else {
     var demoData =
     <div className="cf-comment-user-data" >
+      <div className="row centered">
+        {props.followStar}
+        {props.blockSym}
+      </div>
       <div>
         {`${props.userInfo.user_name}`}
       </div>
