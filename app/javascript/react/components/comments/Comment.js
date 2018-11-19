@@ -156,12 +156,14 @@ class Comment extends React.Component {
           textBox =
           <div className="cf-comment-text" >
             {text.substring(0, text_length) + "..."}
+            <br />
             <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show more</a>
           </div>
         } else {
           textBox =
           <div className="cf-comment-text" >
             {text}
+            <br />
             <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show less</a>
           </div>
         }
@@ -200,11 +202,11 @@ class Comment extends React.Component {
             onMouseEnter={this.onUserHover}
             onMouseLeave={this.onUserHover}
             userName={userName}
+            followStar={followStar}
+            blockSym={blockSym}
           />
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
-              {followStar}
-              {blockSym}
               <div className="cf-comment-user-name col-4 col-sm-4">
                 {this.props.userName}
               </div>

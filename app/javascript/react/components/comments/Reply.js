@@ -102,11 +102,11 @@ class Reply extends React.Component {
             onMouseEnter={this.onUserHover}
             onMouseLeave={this.onUserHover}
             userName={user_name}
+            followStar={followStar}
+            blockSym={blockSym}
             />
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
-              {followStar}
-              {blockSym}
               <div className="cf-comment-user-name col-4 col-sm-4 col-md-4">
                 {user_name}
               </div>
