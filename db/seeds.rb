@@ -9,28 +9,74 @@ puts "Starting process at #{Time.now}"
 
 # generate staff accounts
 puts "generating staff accounts"
-jesse = User.create(
+User.create(
   user_name: "Jesse",
   email: "jesse@classibridge.com",
   password: "password",
   password_confirmation: "password",
-  base_image: "butterfly"
+  base_image: "butterfly",
+  longitude: -75,
+  latitude: 40
 )
 
-alex = User.create(
+User.create(
   user_name: "Alex",
-  email: "aj@classibridge.com",
-  password: "password",
-  password_confirmation: "password",
-  base_image: "gi"
-)
-
-aj = User.create(
-  user_name: "AJ",
   email: "alex@classibridge.com",
   password: "password",
   password_confirmation: "password",
-  base_image: "boxing-glove"
+  base_image: "gi",
+  longitude: -75,
+  latitude: 40
+)
+
+User.create(
+  user_name: "AJ",
+  email: "aj@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  base_image: "boxing-glove",
+  longitude: -75,
+  latitude: 40
+)
+
+User.create(
+  user_name: "Renee",
+  email: "renee@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  base_image: AVATARS.sample,
+  longitude: -75,
+  latitude: 40
+)
+
+User.create(
+  user_name: "Jackie",
+  email: "jackie@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  base_image: AVATARS.sample,
+  longitude: -75,
+  latitude: 40
+)
+
+User.create(
+  user_name: "Dustin",
+  email: "dustin@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  base_image: AVATARS.sample,
+  longitude: -75,
+  latitude: 40
+)
+
+User.create(
+  user_name: "Anthony",
+  email: "anthony@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  base_image: AVATARS.sample,
+  longitude: -75,
+  latitude: 40
 )
 
 # generate random users
@@ -45,7 +91,9 @@ while x <= num_users do
     email: "User#{x}@gmail.com",
     age_range: User::AGES.sample,
     gender: User::GENDERS.sample,
-    base_image: AVATARS.sample
+    base_image: AVATARS.sample,
+    longitude: (-75 + rand(-18..18)),
+    latitude: (40 + rand(-18..18))
   )
   x += 1
 end
