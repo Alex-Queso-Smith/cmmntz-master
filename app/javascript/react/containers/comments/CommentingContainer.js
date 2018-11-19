@@ -308,9 +308,7 @@ class CommentingContainer extends React.Component {
     return(
       <div id="cf-comments-main" className={`${userSettings.font} ${userSettings.colorTheme}`}>
         <CommentEtiquette />
-        <div>
-          {totalComments} comments for this article
-        </div>
+
         <CommentFormContainer
           commentRoot={commentRoot}
           handleSubmit={this.handleCommentForm}
@@ -325,6 +323,9 @@ class CommentingContainer extends React.Component {
           handleFilterByClick={this.handleFilterByClick}
         />
         <hr />
+        <div>
+          <p>{totalComments} comments for this article</p>
+        </div>
         <CommentsList
           allComments={comments}
           commentRoot={commentRoot}
