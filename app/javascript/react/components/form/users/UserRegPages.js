@@ -16,7 +16,7 @@ export const UserRegPageOne = props => {
 
   return(
     <div id="reg-required" className="form-group">
-      <h3 className="text-center">Sign-Up Required Information</h3>
+      <h5 className="text-center">Sign-Up Required Information</h5>
       <Input
         name="userName"
         label="User Name"
@@ -78,7 +78,7 @@ export const UserRegPageTwo = props => {
 
   return(
     <div id="reg-optional-1" className="form-group">
-      <h3 className="text-center">Sign-Up Optional Information 1/2 </h3>
+      <h5 className="text-center">Sign-Up Optional Information 1/2 </h5>
       <hr />
       <AgeSlider
         name="ageRange"
@@ -128,7 +128,7 @@ export const UserRegPageThree = props => {
 
   return(
     <div id="reg-optional-2" className="form-group ">
-      <h3 className="text-center">Sign-Up Optional Information 2/2 </h3>
+      <h5 className="text-center">Sign-Up Optional Information 2/2 </h5>
       <hr />
       <div className="form-group margin-top-10px">
         <label className="text-medium text-center" htmlFor="avatar">Avatar</label>
