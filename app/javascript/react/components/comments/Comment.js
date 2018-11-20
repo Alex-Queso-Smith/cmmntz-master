@@ -96,7 +96,16 @@ class Comment extends React.Component {
     }
     FetchWithUpdate(this, path, 'POST', newFollow)
     .then(body => {
-      this.setState({ userFollowed: !this.state.userFollowed })
+      if (this.state.userBlocked) {
+        this.setState({
+          userFollowed: !this.state.userFollowed,
+          userBlocked: !this.state.userBlocked
+        })
+      } else {
+        this.setState({
+          userFollowed: !this.state.userFollowed
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -116,7 +125,16 @@ class Comment extends React.Component {
     }
     FetchWithUpdate(this, path, 'POST', newBlock)
     .then(body => {
-      this.setState({ userBlocked: !this.state.userBlocked })
+      if (this.state.userFollowed) {
+        this.setState({
+          userBlocked: !this.state.userBlocked,
+          userFollowed: !this.state.userFollowed
+        })
+      } else {
+        this.setState({
+          userBlocked: !this.state.userBlocked
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
