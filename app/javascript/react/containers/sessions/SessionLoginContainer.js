@@ -54,7 +54,7 @@ class SessionLoginContainer extends React.Component {
     passwordError = CreateErrorElements(loginErrors.password, "Password")
 
     return(
-      <div className="login-container">
+      <div id="user-login-container" className="login-container">
         <form className="form" id="login-form" onSubmit={this.handleSubmit}>
           <h1 className="user-title text-center">Login</h1>
           <Input

@@ -191,7 +191,7 @@ class UserNewFormContainer extends React.Component {
     }
 
     return(
-      <div id="login-container" className="login-container">
+      <div className="login-container">
         <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
           <h5 className="user-title text-center">User Registration</h5>
 
