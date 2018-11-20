@@ -75,7 +75,7 @@ class UserPasswordFormContainer extends React.Component {
           {passwordConfirmationError}
           <div className="form-group actions margin-top-10px">
             <button id="login-button" type="submit" className="btn btn-block btn-medium btn-primary" value="Submit" disabled={this.state.formInvalid}>
-              <span className="text-medium">Update Password</span>
+              Save
             </button>
           </div>
         </form>
