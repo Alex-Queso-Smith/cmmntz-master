@@ -8,7 +8,7 @@ class CfCommentsApp extends React.Component {
     var commentRoot = document.getElementById('cf-comments-app')
 
     return (
-      <div id="cf-commenting-container">
+      <div id="cf-commenting-container" className="container-fluid">
         <CommentingContainer
           commentRoot={commentRoot}
           />

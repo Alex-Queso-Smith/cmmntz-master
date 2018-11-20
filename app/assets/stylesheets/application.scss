@@ -32,6 +32,14 @@ $breakpoint-phone: 575px;
   }
 }
 
+#cf-commenting-container {
+  background-color: #ffffff;
+  padding-top: 20px;
+  border-radius: 10px;
+  margin-top: 15px;
+  width: 90%;
+}
+
 @media (max-width: $breakpoint-phone) {
   #cf-comments-main {
     width: 100%;
@@ -47,6 +55,14 @@ $breakpoint-phone: 575px;
       border-radius: 0;
       width: 100%
     }
+  }
+
+  #cf-commenting-container {
+    background-color: #ffffff;
+    padding-top: 20px;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 15px;
   }
 }
 
@@ -213,15 +229,6 @@ h4 {
 #body-container {
   padding-left: 0;
   padding-right: 0;
-}
-
-#cf-commenting-container {
-  background-color: #ffffff;
-  padding-top: 20px;
-  border-radius: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 15px;
 }
 
 .article-wrapper {
