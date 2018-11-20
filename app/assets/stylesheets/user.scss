@@ -4,6 +4,7 @@
 //     position: relative;
 //   }
 // }
+$breakpoint-phone: 575px;
 
 #user-edit-form {
   margin: auto;
@@ -33,6 +34,12 @@
   width: 500px;
   background: rgba(255, 255, 255, .9 );
   color: #000000;
+}
+
+@media (max-width: $breakpoint-phone) {
+  #user-edit-form, #password-form, #user-registration-form {
+    width: 100%;
+  }
 }
 
 #delete-account {
