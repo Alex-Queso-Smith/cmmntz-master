@@ -1,5 +1,5 @@
 class AdminMailer < ApplicationMailer
-  default :from => "do_no_reply@classifilter.com"
+  default :from => "do_not_reply@classifilter.com"
 
   def send_mail(to, subject, content)
     @content = content

@@ -1,5 +1,5 @@
 class UserThreadMailer < ApplicationMailer
-  default :from => "do_no_reply@classifilter.com"
+  default :from => "do_not_reply@classifilter.com"
 
   def send_quality_comments_found_mail(user, quality_threads)
     @quality_threads = quality_threads
