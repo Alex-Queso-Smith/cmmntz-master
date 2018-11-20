@@ -1,4 +1,5 @@
 $grey: #D3D3D3;
+$grayline: #D3D3D3;
 
 .articles-container {
   width: 90%;
@@ -6,6 +7,9 @@ $grey: #D3D3D3;
   padding: 15px;
   background-color: rgba(255, 255, 255, .95);
   color: black;
+
+  border: 1px solid $grayline;
+  border-radius: 25px;
 
 
   .articles-wrapper {
