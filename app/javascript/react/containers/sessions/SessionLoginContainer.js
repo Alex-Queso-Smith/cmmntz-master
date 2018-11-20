@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
 import { FetchWithPush, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
@@ -80,10 +81,15 @@ class SessionLoginContainer extends React.Component {
             label="Remember Me"
             onChange={this.handleChange}
           />
-          <div className="form-group actions margin-top-10px">
-            <button id="login-button" type="submit" className="btn btn-block btn-small btn-primary" value="Submit" disabled={this.state.formInvalid}>
-              <span className="text-small">Login</span>
+        <div className="form-group actions margin-top-10px text-center">
+            <button id="login-button" type="submit" className="btn btn-small btn-primary margin-right-10px" value="Submit" disabled={this.state.formInvalid}>
+              Login
             </button>
+              <Link to='/register'>
+                <button className="btn btn-small btn-primary margin-left-10px">
+                  Register
+                </button>
+              </Link>
           </div>
         </form>
       </div>
