@@ -4,15 +4,17 @@
 $light-base: #fff;
 $light: #fff;
 $light-grayline: #D3D3D3;
+$grayline: #D3D3D3;
 
 $dark-base: #7A7A7A;
 $dark: #7A7A7A;
 $dark-grayline: #D3D3D3;
+$bootstrap-blue: #0069D9;
 
 $breakpoint-tablet: 900px;
-$breakpoint-small: 400px;
+$breakpoint-phone: 450px;
 
-@media (min-width: $breakpoint-small) {
+@media (min-width: $breakpoint-phone) {
   #cf-comments-main {
     max-width: 400px;
     margin-left: 50px;
@@ -30,7 +32,7 @@ $breakpoint-small: 400px;
   }
 }
 
-@media (max-width: $breakpoint-small) {
+@media (max-width: $breakpoint-phone) {
   #cf-comments-main {
     width: 100%;
     margin-left: 0px;
@@ -90,15 +92,57 @@ $breakpoint-small: 400px;
   visibility: hidden;
 }
 
-#cf-comments-app {
-  width: 100%;
-}
-.cf-comments-main {
-  width: 100%;
+.text-medium {
+  font-size: 1.25em;
 }
 
-.cf-modal-locked {
-  overflow: hidden;
+.text-large {
+  font-size: 2.25em;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.margin-top-10px {
+  margin-top: 10px;
+}
+
+.margin-bottom-10px {
+  margin-top: 10px;
+}
+
+.margin-top-bottom-10px {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.margin-top-5px {
+  margin-top: 5px;
+}
+
+.margin-left-10px {
+  margin-left: 10px;
+}
+
+.margin-left-5px {
+  margin-left: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+.error-text {
+  color: #FF0001;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.w-450 {
+  width: 450px;
 }
 
 .serif {
