@@ -50,7 +50,6 @@ $breakpoint-phone: 575px;
   }
 }
 
-
 @media (max-width: $breakpoint-tablet) {
 
   .blank1, .blank2 {
@@ -90,6 +89,10 @@ $breakpoint-phone: 575px;
 
 .visibility-hidden {
   visibility: hidden;
+}
+
+.text-small {
+  font-size: 1em;
 }
 
 .text-medium {
@@ -195,4 +198,13 @@ $breakpoint-phone: 575px;
 
 h4 {
   font-size: 1em;
+}
+
+#body {
+  background: url('/assets/philly.jpg') no-repeat center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: #ffffff;
 }
