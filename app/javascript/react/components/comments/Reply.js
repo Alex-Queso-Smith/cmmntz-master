@@ -7,6 +7,7 @@ import VotingContainerBase from '../voting/VotingContainerBase';
 class Reply extends React.Component {
   state = {
     userTileHover: false,
+    showFullText: false,
     userFollowed: this.props.userFollowed,
     userBlocked: this.props.userBlocked
   }
@@ -14,9 +15,19 @@ class Reply extends React.Component {
   onUserHover = this.onUserHover.bind(this);
   handleFollow = this.handleFollow.bind(this);
   handleBlock = this.handleBlock.bind(this);
+  handleStateFlip = this.handleStateFlip.bind(this);
 
   onUserHover(){
     this.setState({ userTileHover: !this.state.userTileHover })
+  }
+
+  handleStateFlip(event){
+    event.preventDefault();
+    const target = event.target;
+    const name = event.target.name;
+    const state = this.state[name];
+
+    this.setState({ [name]: !state })
   }
 
   handleFollow(event){
@@ -59,7 +70,7 @@ class Reply extends React.Component {
   }
 
   render(){
-    var { currentUserId, user } = this.props;
+    var { currentUserId, user, reply } = this.props;
     var { user_name, gender, age_range } = this.props.user;
     var userInfo, starOpacity, followStar, blockSym, blockOpacity;
 
@@ -92,6 +103,30 @@ class Reply extends React.Component {
       <div className={`cf-comment-user-name col-1 col-sm-1 col-md-1`}>
       </div>
     }
+    var textBox;
+    var text_length = 400 ;
+    if (reply.length > text_length) {
+      if (!this.state.showFullText) {
+        textBox =
+        <div className="cf-comment-text" >
+          {reply.substring(0, text_length) + "..."}
+          <br />
+          <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show more</a>
+        </div>
+      } else {
+        textBox =
+        <div className="cf-comment-text" >
+          {reply}
+          <br />
+          <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show less</a>
+        </div>
+      }
+    } else {
+      textBox =
+      <div className="cf-comment-text" >
+        {reply}
+      </div>
+    }
 
     return(
       <div className="cf-comment cf-comment-reply margin-top-10px">
@@ -117,9 +152,7 @@ class Reply extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="cf-comment-text" >
-              {this.props.reply}
-            </div>
+            {textBox}
           </div>
         </div>
         <VotingContainerBase
