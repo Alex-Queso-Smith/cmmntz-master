@@ -80,8 +80,8 @@ User.create(
 )
 
 User.create(
-  user_name: "Mandy",
-  email: "mandy@classibridge.com",
+  user_name: "Mandie",
+  email: "mandie@classibridge.com",
   password: "password",
   password_confirmation: "password",
   base_image: AVATARS.sample,
