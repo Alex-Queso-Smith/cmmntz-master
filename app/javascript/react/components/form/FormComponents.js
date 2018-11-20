@@ -88,7 +88,7 @@ export const Checkbox = props => {
   return(
     <div className={`custom-control custom-checkbox margin-top-10px ${props.className}`}>
       <input type="checkbox"
-      className="custom-control-input"
+      className="custom-control-input cf-checkbox"
       name={props.name}
       id={props.name} onClick={props.onChange}
       autoComplete="off" />

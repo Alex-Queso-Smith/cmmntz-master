@@ -56,7 +56,7 @@ class SessionLoginContainer extends React.Component {
     return(
       <div id="user-login-container" className="login-container">
         <form className="form" id="login-form" onSubmit={this.handleSubmit}>
-          <h1 className="user-title text-center">Login</h1>
+          <h3 className="user-title text-center">Login</h3>
           <Input
             name="userName"
             label="User Name"
@@ -81,8 +81,8 @@ class SessionLoginContainer extends React.Component {
             onChange={this.handleChange}
           />
           <div className="form-group actions margin-top-10px">
-            <button id="login-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit" disabled={this.state.formInvalid}>
-              <span className="text-large">Login</span>
+            <button id="login-button" type="submit" className="btn btn-block btn-small btn-primary" value="Submit" disabled={this.state.formInvalid}>
+              <span className="text-small">Login</span>
             </button>
           </div>
         </form>
