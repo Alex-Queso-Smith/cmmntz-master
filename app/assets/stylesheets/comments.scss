@@ -1,5 +1,54 @@
+$breakpoint-tablet: 900px;
+$breakpoint-phone: 450px;
+
 $grayline: #D3D3D3;
 $bootstrap-blue: #0069D9;
+
+@media (max-width: $breakpoint-tablet) {
+  .cf-comment-replies-wrapper {
+    margin-left: 5px;
+
+    .cf-comment-replies {
+      border-left: 1px solid $grayline;
+      padding: 10px;
+    }
+  }
+
+  .blank1, .blank2 {
+    display: none;
+  }
+
+  .filter-btn-container {
+    padding: 0;
+
+    .filter-btn {
+      border-radius: 0;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-phone) {
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .cf-votes-top-row, .cf-votes-bot-row {
+    font-size: 10px;
+  }
+}
+
+#cf-comments-main {
+  max-width: 400px;
+  margin-left: 50px;
+}
+
+#cf-comments-app {
+  width: 100%;
+}
+
+.cf-comments-main {
+  width: 100%;
+}
 
 .cf-comment {
 
@@ -80,6 +129,7 @@ $bootstrap-blue: #0069D9;
   }
 }
 
+
 .cf-comment-replies-wrapper {
   margin-left: 20px;
 
@@ -104,32 +154,4 @@ $bootstrap-blue: #0069D9;
 .vote-btn {
   height: 25px;
   width: 25px;
-}
-
-$breakpoint-tablet: 900px;
-@media (max-width: $breakpoint-tablet) {
-  .cf-comment-replies-wrapper {
-    margin-left: 5px;
-
-    .cf-comment-replies {
-      border-left: 1px solid $grayline;
-      padding: 10px;
-    }
-  }
-}
-
-.w-450 {
-  width: 450px;
-}
-
-
-$breakpoint-phone: 450px;
-@media (max-width: $breakpoint-phone) {
-  .container {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .cf-votes-top-row, .cf-votes-bot-row {
-    font-size: 10px;
-  }
 }
