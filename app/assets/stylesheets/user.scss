@@ -26,6 +26,16 @@ $breakpoint-phone: 575px;
   color: #000000;
 }
 
+#user-login-container {
+  margin: 60px auto;
+  border: 1px solid grey;
+  padding: 30px;
+  border-radius: 20px;
+  width: 500px;
+  background: rgba(255, 255, 255, .75 );
+  color: #000000;
+}
+
 #user-registration-form {
   margin: 60px auto;
   border: 1px solid grey;
@@ -37,7 +47,7 @@ $breakpoint-phone: 575px;
 }
 
 @media (max-width: $breakpoint-phone) {
-  #user-edit-form, #password-form, #user-registration-form {
+  #user-edit-form, #password-form, #user-registration-form, #user-login-container {
     width: 100%;
   }
 }
@@ -60,15 +70,6 @@ $breakpoint-phone: 575px;
   }
 }
 
-#user-login-container {
-  margin: 60px auto;
-  border: 1px solid grey;
-  padding: 30px;
-  border-radius: 20px;
-  width: 500px;
-  background: rgba(255, 255, 255, .75 );
-  color: #000000;
-}
 
 /* UserThemeSelector style */
 #theme-selector-options-wrapper {
