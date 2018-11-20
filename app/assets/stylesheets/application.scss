@@ -10,9 +10,42 @@ $dark: #7A7A7A;
 $dark-grayline: #D3D3D3;
 
 $breakpoint-tablet: 900px;
-#cf-comments-main {
-  max-width: 400px;
-  margin-left: 50px;
+$breakpoint-small: 400px;
+
+@media (min-width: $breakpoint-small) {
+  #cf-comments-main {
+    max-width: 400px;
+    margin-left: 50px;
+  }
+  .vote-row {
+    width: 450px;
+  }
+
+  .filter-btn-container {
+    padding: 0px;
+
+    .filter-btn {
+      border-radius: 0;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-small) {
+  #cf-comments-main {
+    width: 100%;
+    margin-left: 0px;
+  }
+  .vote-row {
+    width: 100%;
+  }
+  .filter-btn-container {
+    padding: 0px;
+
+    .filter-btn {
+      border-radius: 0;
+      width: 100%
+    }
+  }
 }
 
 
@@ -22,13 +55,7 @@ $breakpoint-tablet: 900px;
     display: none;
   }
 
-  .filter-btn-container {
-    padding: 0;
 
-    .filter-btn {
-      border-radius: 0;
-    }
-  }
 }
 
 .centered {

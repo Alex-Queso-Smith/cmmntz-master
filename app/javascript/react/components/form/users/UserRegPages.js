@@ -53,7 +53,7 @@ export const UserRegPageOne = props => {
         addClass={passwordConfirmationClass}
       />
       {props.passwordConfirmationError}
-      <div className="form-group actions margin-top-10px centered">
+      <div className="form-group actions margin-top-10px text-center">
         <button id="user-registration-button-page-one" className="btn btn-sm btn-primary" onClick={props.handleButtonClick} disabled={props.disabled}>
           Next Page (Optional)
         </button>
@@ -103,12 +103,12 @@ export const UserRegPageTwo = props => {
         <input type="checkbox" className="custom-control-input" id='location-opt-out' autoComplete="off" />
         <label className="custom-control-label text-medium" htmlFor='location-opt-out' >None of Your Business</label>
       </div>
-      <div className="form-group actions margin-top-10px">
+      <div className="form-group actions margin-top-10px text-center">
         <button id="user-registration-button-page-two" className="btn btn-sm btn-primary" onClick={props.handleButtonClick} >
           Next Page (Optional)
         </button>
       </div>
-      <div className="form-group actions margin-top-10px">
+      <div className="form-group actions margin-top-10px text-center">
         <button id="user-registration-button-back-two" className="btn btn-sm btn-primary" onClick={props.handleBackClick}>
           Back
         </button>
