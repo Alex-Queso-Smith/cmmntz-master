@@ -147,9 +147,3 @@ export const UserRegPageThree = props => {
     </div>
   );
 };
-
-export default {
-  UserRegPageOne,
-  UserRegPageTwo,
-  UserRegPageThree
-}

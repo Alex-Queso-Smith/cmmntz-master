@@ -145,6 +145,10 @@ $breakpoint-phone: 575px;
   margin-left: 10px;
 }
 
+.margin-right-10px {
+  margin-right: 10px;
+}
+
 .margin-left-5px {
   margin-left: 5px;
 }
@@ -239,4 +243,8 @@ h4 {
   padding: 20px 20px;
   border-radius: 10px;
   border: 1px solid $grayline;
+}
+
+a:hover {
+  background-color: rgba(255,255,255,0.0)
 }

@@ -46,7 +46,15 @@ class CommentFormContainer extends React.Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({ [name]: value })
+    if (name === 'anonymous' && !this.state.anonModalShown) {
+      this.setState({
+        [name]: value,
+        anonModalShow: true,
+        anonModalShown: true
+      })
+    } else {
+      this.setState({ [name]: value })
+    }
   }
 
   handleSelfVoteClick(event){
