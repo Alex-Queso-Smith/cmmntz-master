@@ -79,6 +79,16 @@ User.create(
   latitude: 40
 )
 
+User.create(
+  user_name: "Mandie",
+  email: "mandie@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  base_image: AVATARS.sample,
+  longitude: -75,
+  latitude: 40
+)
+
 # generate random users
 puts "generating #{num_users} users"
 x = 1
