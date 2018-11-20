@@ -139,9 +139,9 @@ export const UserRegPageThree = props => {
         />
       </div>
       <input type="hidden"/>
-      <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-back-three" className="btn btn-block btn-medium btn-primary" onClick={props.handleBackClick}>
-          <span className="text-medium">Back</span>
+      <div className="form-group actions margin-top-10px text-center">
+        <button id="user-registration-button-back-three" className="btn btn-sm btn-primary" onClick={props.handleBackClick}>
+          Back
         </button>
       </div>
     </div>
