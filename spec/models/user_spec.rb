@@ -201,5 +201,102 @@ RSpec.describe User, type: :model do
       expect(total_votes).to eq(expected_votes)
     end
   end
+  
+  describe "following" do
+    describe "network" do
+      let(:given_user) {FactoryBot.create(:user)}
+      let(:user_1) {FactoryBot.create(:user)}
+      let(:user_2) {FactoryBot.create(:user)}
+      let(:user_3) {FactoryBot.create(:user)}
+      let(:user_4) {FactoryBot.create(:user)}
+      let(:user_5) {FactoryBot.create(:user)}
+      let(:user_6_blocked) {FactoryBot.create(:user)}
+      before do
+        given_user.followed_users << user_1
+        given_user.followed_users << user_2
+        user_1.followed_users << user_3
+        user_1.followed_users << user_4
+        user_2.followed_users << user_4
+        user_2.followed_users << user_5
+        user_2.followed_users << user_6_blocked
 
+        given_user.blocked_users << user_6_blocked
+      end
+
+      let(:non_network_user_1) {FactoryBot.create(:user)}
+      let(:non_network_user_2) {FactoryBot.create(:user)}
+
+
+      context "network method" do
+        it "should return an array of the right size" do
+          expect(given_user.network.size).to eq(5)
+        end
+
+        it "should include users that the given user is connected with" do
+          expect(given_user.network).to include(user_1 && user_2)
+        end
+
+        it "should include users that the users follows are following" do
+          expect(given_user.network).to include(user_3 && user_4 && user_5)
+        end
+
+        it "should exclude users the given user has no connection with" do
+          expect(given_user.network).to_not include(non_network_user_1 || non_network_user_2)
+        end
+
+        it "should exclude users the given user is blocking" do
+          expect(given_user.network).to_not include(user_6_blocked)
+        end
+
+
+      end
+
+      context "network_user_ids method" do
+        it "should return an array of the right size" do
+          expect(given_user.network_user_ids.size).to eq(5)
+        end
+
+        it "should include user ids for the given users network" do
+          expect(given_user.network_user_ids).to include(user_1.id && user_2.id)
+        end
+
+        it "should include users ids for the given users followings followings" do
+          expect(given_user.network_user_ids).to include(user_3.id && user_4.id && user_5.id)
+        end
+
+        it "should exclude user ids that the given user has no connection with" do
+          expect(given_user.network_user_ids).to_not include(non_network_user_1 || non_network_user_2)
+        end
+
+        it "should exclude user ids that the given user is blocking" do
+          expect(given_user.network_user_ids).to_not include(user_6_blocked.id)
+        end
+      end
+    end
+
+  end
+
+  describe "blocking" do
+    let(:given_user) {FactoryBot.create(:user)}
+    let(:user_1) {FactoryBot.create(:user)}
+    let(:user_2) {FactoryBot.create(:user)}
+    let(:user_3) {FactoryBot.create(:user)}
+    let(:user_4) {FactoryBot.create(:user)}
+    before do
+      Blocking.create(blocker: given_user, blocking: user_1)
+      Blocking.create(blocker: given_user, blocking: user_3)
+    end
+
+    it "should return an array of the right size" do
+      expect(given_user.blocked_users.size).to eq(2)
+    end
+
+    it "should include users that the given user is blocking" do
+      expect(given_user.blocked_users).to include(user_1 && user_3)
+    end
+
+    it "should not include users that the given user is not blocking" do
+      expect(given_user.blocked_users).to_not include(user_2 || user_4)
+    end
+  end
 end

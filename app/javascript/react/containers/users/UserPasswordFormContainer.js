@@ -52,32 +52,34 @@ class UserPasswordFormContainer extends React.Component {
     passwordConfirmationError = CreateErrorElements(passwordErrors.password_confirmation, "Password Confirmation")
 
     return(
-      <form className="form" id="password-form" onSubmit={this.handleSubmit}>
-        <h1 className="user-title text-center">Edit Password</h1>
-        <Input
-          name="password"
-          label="Password"
-          onChange={this.handleChange}
-          content={this.passwordConfirmation}
-          type="password"
-          addClass={passwordClass}
-        />
-        {passwordError}
-        <Input
-          name="passwordConfirmation"
-          label="Password Confirmation"
-          onChange={this.handleChange}
-          content={this.passwordConfirmation}
-          type="password"
-          addClass={passwordConfirmationClass}
-        />
-        {passwordConfirmationError}
-        <div className="form-group actions margin-top-10px">
-          <button id="login-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit" disabled={this.state.formInvalid}>
-            <span className="text-large">Update Password</span>
-          </button>
-        </div>
-      </form>
+      <div className="login-container">
+        <form className="form" id="password-form" onSubmit={this.handleSubmit}>
+          <h1 className="user-title text-center">Edit Password</h1>
+          <Input
+            name="password"
+            label="Password"
+            onChange={this.handleChange}
+            content={this.passwordConfirmation}
+            type="password"
+            addClass={passwordClass}
+          />
+          {passwordError}
+          <Input
+            name="passwordConfirmation"
+            label="Password Confirmation"
+            onChange={this.handleChange}
+            content={this.passwordConfirmation}
+            type="password"
+            addClass={passwordConfirmationClass}
+          />
+          {passwordConfirmationError}
+          <div className="form-group actions margin-top-10px">
+            <button id="login-button" type="submit" className="btn btn-block btn-medium btn-primary" value="Submit" disabled={this.state.formInvalid}>
+              <span className="text-medium">Update Password</span>
+            </button>
+          </div>
+        </form>
+      </div>
     )
   }
 }

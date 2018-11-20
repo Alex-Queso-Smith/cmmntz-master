@@ -7,7 +7,7 @@ import UserThemeSelector from '../UserThemeSelector';
 
 const UserEditForm = props => {
 
-  var userNameClass, emailClass, selectedAvatar;
+  var userNameClass, emailClass, selectedAvatar, geomarker
 
   userNameClass = ErrorClassValidation(props.userNameError);
   emailClass = ErrorClassValidation(props.emailError);
@@ -18,6 +18,19 @@ const UserEditForm = props => {
       <h5>Selected Avatar</h5>
       <img src={`/assets/avatar-${props.avatar}`} />
     </div>
+  }
+
+  const { x, y, lat, long, geoPin } = props
+
+  if (props.lat && props.long) {
+    const style = {
+      top: geoPin.y,
+      left: geoPin.x
+    }
+
+    var geoMarker =
+      <div className="cf-geomarker" style={style}>
+      </div>
   }
 
   return(
@@ -58,20 +71,11 @@ const UserEditForm = props => {
           value={props.gender}
         />
         <hr />
-        <Input
-          name="latitude"
-          label="Latitude"
-          onChange={props.onChange}
-          content={props.latitude}
-          type="text"
-        />
-        <Input
-          name="longitude"
-          label="Longitude"
-          onChange={props.onChange}
-          content={props.longitude}
-          type="text"
-        />
+        <div className="cf-geomap-wrapper">
+          <div className="cf-geomap-container" onMouseMove={props.onMouseMove} onClick={props.setLatLongClick}>
+            {geoMarker}
+          </div>
+        </div>
         <div className="custom-control custom-checkbox margin-top-10px">
           <input type="checkbox" className="custom-control-input" id='location-opt-out' autoComplete="off" />
           <label className="custom-control-label text-medium" htmlFor='location-opt-out' >None of Your Business</label>
@@ -87,7 +91,7 @@ const UserEditForm = props => {
       <div id="reg-optional-2" className="form-group ">
         <hr />
         <div className="form-group margin-top-10px">
-          <label className="text-large text-center" htmlFor="avatar">Choose Your Avatar</label>
+          <label className="text-medium text-center" htmlFor="avatar">Choose Your Avatar</label>
           <br />
           {selectedAvatar}
           <Carousel

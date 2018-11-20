@@ -16,6 +16,9 @@ class UserEditFormContainer extends React.Component {
     font: '',
     colorTheme: '',
     avatar: '',
+    x: '',
+    y: '',
+    geoPin: { x: '', y: '' },
     saveErrors: {}
   }
 
@@ -26,6 +29,35 @@ class UserEditFormContainer extends React.Component {
   handleThemeSelectorChange = this.handleThemeSelectorChange.bind(this);
   handleGenderChange = this.handleGenderChange.bind(this);
   handleAvatarClick = this.handleAvatarClick.bind(this);
+  _onMouseMove = this._onMouseMove.bind(this);
+  setLatLongClick = this.setLatLongClick.bind(this);
+
+  componentDidMount(){
+    FetchDidMount(this, `/api/v1/users/${this.props.match.params.id}.json`)
+    .then(body => {
+      var user = body.user
+
+      var x = ((user.longitude + 180) / (180 / 150))
+      var y = (((user.latitude / -1) + 180) / (180 / 100))
+
+      this.setState({
+        userName: user.user_name,
+        email: user.email,
+        ageRange: user.age_range,
+        gender: user.gender,
+        latitude: user.latitude,
+        longitude: user.longitude,
+        geoPin: {
+          x: x,
+          y: y
+        },
+        font: user.font,
+        colorTheme: user.color_theme,
+        avatar: user.avatar_image
+      })
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
 
   handleThemeSelectorChange(event){
     event.preventDefault();
@@ -63,24 +95,21 @@ class UserEditFormContainer extends React.Component {
     })
   }
 
-  componentDidMount(){
-    FetchDidMount(this, `/api/v1/users/${this.props.match.params.id}.json`)
-    .then(body => {
-      var user = body.user
+  _onMouseMove(event) {
+    this.setState({ x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY });
+  }
 
-      this.setState({
-        userName: user.user_name,
-        email: user.email,
-        ageRange: user.age_range,
-        gender: user.gender,
-        latitude: user.latitude,
-        longitude: user.longitude,
-        font: user.font,
-        colorTheme: user.color_theme,
-        avatar: user.avatar_image
-      })
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  setLatLongClick(event){
+    var { x, y } = this.state;
+
+    var longitude = Math.round((x * (180 / 150)) - 180)
+    var latitude = Math.round(((y * (180 / 100)) - 180) * -1)
+
+    this.setState({
+      latitude: latitude,
+      longitude: longitude,
+      geoPin: { x: x, y: y }
+     })
   }
 
   handleChange(event){
@@ -137,10 +166,12 @@ class UserEditFormContainer extends React.Component {
 
     return(
       <form className="form" id="user-edit-form" onSubmit={this.handleSubmit} >
-        <h1 className="user-title text-center">Edit Account</h1>
+        <h5 className="user-title text-center">Edit Account</h5>
 
         <UserEditForm
           onChange={this.handleChange}
+          onMouseMove={this._onMouseMove}
+          setLatLongClick={this.setLatLongClick}
           handleSliderChange={this.handleSliderChange}
           handleThemeSelectorChange={this.handleThemeSelectorChange}
           handleGenderChange={this.handleGenderChange}
@@ -163,11 +194,16 @@ class UserEditFormContainer extends React.Component {
           font={font}
           avatar={avatar}
           colorTheme={colorTheme}
+          x={this.state.x}
+          y={this.state.y}
+          geoPin={this.state.geoPin}
+          lat={this.state.latitude}
+          long={this.state.longitude}
         />
 
         <div className="form-group actions margin-top-10px">
           <button id="user-registration-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit">
-            <span className="text-large">Update</span>
+            <span className="text-medium">Update</span>
           </button>
         </div>
         <hr />

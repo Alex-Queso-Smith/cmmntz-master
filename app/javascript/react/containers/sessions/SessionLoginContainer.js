@@ -54,37 +54,39 @@ class SessionLoginContainer extends React.Component {
     passwordError = CreateErrorElements(loginErrors.password, "Password")
 
     return(
-      <form className="form" id="login-form" onSubmit={this.handleSubmit}>
-        <h1 className="user-title text-center">Login</h1>
-        <Input
-          name="userName"
-          label="User Name"
-          onChange={this.handleChange}
-          content={this.userName}
-          type="text"
-          addClass={userNameClass}
-        />
-        {userNameError}
-        <Input
-          name="password"
-          label="Password"
-          onChange={this.handleChange}
-          content={this.password}
-          type="password"
-          addClass={passwordClass}
-        />
-        {passwordError}
-        <Checkbox
-          name="rememberMe"
-          label="Remember Me"
-          onChange={this.handleChange}
-        />
-        <div className="form-group actions margin-top-10px">
-          <button id="login-button" type="submit" className="btn btn-block btn-large btn-primary" value="Submit" disabled={this.state.formInvalid}>
-            <span className="text-large">Login</span>
-          </button>
-        </div>
-      </form>
+      <div id="user-login-container" className="login-container">
+        <form className="form" id="login-form" onSubmit={this.handleSubmit}>
+          <h3 className="user-title text-center">Login</h3>
+          <Input
+            name="userName"
+            label="User Name"
+            onChange={this.handleChange}
+            content={this.userName}
+            type="text"
+            addClass={userNameClass}
+          />
+          {userNameError}
+          <Input
+            name="password"
+            label="Password"
+            onChange={this.handleChange}
+            content={this.password}
+            type="password"
+            addClass={passwordClass}
+          />
+          {passwordError}
+          <Checkbox
+            name="rememberMe"
+            label="Remember Me"
+            onChange={this.handleChange}
+          />
+          <div className="form-group actions margin-top-10px">
+            <button id="login-button" type="submit" className="btn btn-block btn-small btn-primary" value="Submit" disabled={this.state.formInvalid}>
+              <span className="text-small">Login</span>
+            </button>
+          </div>
+        </form>
+      </div>
     )
   }
 }

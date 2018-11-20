@@ -23,6 +23,22 @@ class User < ApplicationRecord
   has_many :comment_interactions
   has_many :comment_vote_tabulation, primary_key: 'id'
 
+  # define  users that the user is following
+  has_many :followings, foreign_key: "follower_id"
+  has_many :followed_users, through: :followings, source: :following
+
+  # define users that are following the users
+  has_many :followers, class_name: 'Following', foreign_key: "following_id"
+  has_many :follower_users, through: :followers, source: :follower
+
+  # define  users that the user is blocking
+  has_many :blockings, foreign_key: "blocker_id"
+  has_many :blocked_users, through: :blockings, source: :blocking
+
+  # define users that are blocking the users
+  has_many :blockers, class_name: 'Blocking', foreign_key: "blocking_id"
+  has_many :blocker_users, through: :blockers, source: :blocker
+
   validates :user_name, presence: true, uniqueness: { case_sensitive: false }
 
   validates :gender, numericality: true, inclusion: { in: GENDERS }, unless: Proc.new { |u| u.gender.nil? }
@@ -40,6 +56,13 @@ class User < ApplicationRecord
     c.validate_password_field = false
   end
 
+  scope :registered_gteq, -> (datetime) {
+    where("users.created_at >= ?", datetime)
+  }
+
+  scope :where_check_does_not_exist, -> (datetime, check_name) {
+    where( CheckLog.where("check_logs.checkable_id = users.id AND check_logs.checkable_type = 'user' AND check_logs.created_at >= ? AND check_logs.check_name = ?", datetime, check_name).exists.not )
+  }
 
   ### re gender
   # display gender
@@ -54,5 +77,32 @@ class User < ApplicationRecord
     return "" if age_range.nil?
 
     "#{age_range}-#{age_range + 4}"
+  end
+
+  def network
+    ((followed_users + followed_users_of_followed_users) - blocked_users).uniq
+  end
+
+  def network_user_ids
+    network.map(&:id)
+  end
+
+  def followed_users_of_followed_users
+    followed_users.includes(:followed_users).map(&:followed_users).flatten
+  end
+
+  def quality_comment_settings
+    {
+      "top":        0.40,
+      "love":       0.40,
+      "like_a_lot": 0.40,
+      "like":       0.40
+    }
+  end
+
+  def self.ready_for_quality_thread_check(letter, last_check, check_name)
+    scope = where(arel_table[:user_name].matches("#{letter}%"))
+    scope = scope.where_check_does_not_exist(last_check, check_name)
+    scope
   end
 end

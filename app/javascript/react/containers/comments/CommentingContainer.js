@@ -1,4 +1,5 @@
 import React from 'react';
+import BottomScollListener from 'react-bottom-scroll-listener'
 
 import CommentFormContainer from './CommentFormContainer';
 import CommentsList from './CommentsList';
@@ -6,13 +7,15 @@ import CommentFilters from './CommentFilters';
 import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual } from '../../util/CoreUtil';
 import CommentEtiquette from '../../components/modals/CommentEtiquette'
 
-class CommentsContainer extends React.Component {
+class CommentingContainer extends React.Component {
   state = {
     userSettings: {
       font: 'serif',
       colorTheme: 'light'
     },
     totalComments: 0,
+    followedUsers: [],
+    blockedUsers: [],
     comments: [],
     userId: '',
     artId: '',
@@ -21,8 +24,11 @@ class CommentsContainer extends React.Component {
     sortOpts: {
       sortDir: 'desc',
       sortType: 'created_at',
+      notFilterList: [],
       filterList: [],
-      page: 1
+      page: 1,
+      commentsFrom: "",
+      votesFrom: ""
     }
   }
 
@@ -31,6 +37,7 @@ class CommentsContainer extends React.Component {
   handleFilterSubmit = this.handleFilterSubmit.bind(this);
   handleTopChange = this.handleTopChange.bind(this);
   handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
+  handleFilterByClick = this.handleFilterByClick.bind(this);
 
   handleChange = this.handleChange.bind(this);
   handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
@@ -44,11 +51,14 @@ class CommentsContainer extends React.Component {
     if (userId.length > 0){
       FetchDidMount(this, `/api/v1/users/${userId}.json`)
       .then(body => {
+
         var oldUserSettings = this.state.userSettings
         oldUserSettings.font = body.user.font;
         oldUserSettings.colorTheme = body.user.color_theme
         this.setState({
-          userSettings: oldUserSettings
+          userSettings: oldUserSettings,
+          followedUsers: body.user.followed_users,
+          blockedUsers: body.user.blocked_users
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -157,13 +167,20 @@ class CommentsContainer extends React.Component {
   handleFilterSubmit(){
     var search = new FormData();
     var commentRoot = this.props.commentRoot
-    var {sortDir, page, sortType, filterList } = this.state.sortOpts;
+    var {sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom } = this.state.sortOpts;
     search.append("art_type", commentRoot.getAttribute('data-art-type'))
     search.append("art_id", commentRoot.getAttribute('data-art-id'))
     search.append("page", page);
     search.append("search[sort_dir]", sortDir);
     search.append("search[sort_type]", sortType);
     search.append("search[filter_list]", filterList.join());
+    search.append("search[not_filter_list]", notFilterList.join());
+    if (commentsFrom) {
+      search.append("search[comments_from]", commentsFrom)
+    }
+    if (votesFrom) {
+      search.append("search[votes_from]", votesFrom)
+    }
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
     .then(body => {
@@ -174,7 +191,6 @@ class CommentsContainer extends React.Component {
       } else {
         newComments = body.comments
       }
-
       this.setState({
         comments: newComments,
         totalComments: body.total_comments
@@ -209,25 +225,45 @@ class CommentsContainer extends React.Component {
     }.bind(this), 1)
   }
 
-  handleFilterClick(event){
-    event.preventDefault();
+  handleFilterByClick(event){
     const target = event.target;
-    const name = target.getAttribute('data-value');
+    const name = target.name;
+    const value = target.value;
 
-    var updatedFilters = this.state.sortOpts.filterList
-
-    if (updatedFilters.includes(name)){
-      updatedFilters = updatedFilters.filter(v => v != name)
-    } else {
-      updatedFilters.push(name)
-    }
     var opts = this.state.sortOpts
-    opts.filterList = updatedFilters
+    opts[name] = value;
     opts.page = 1
 
     this.setState({
       sortOpts: opts
     })
+
+    this.submitterMan(event);
+  }
+
+  handleFilterClick(event){
+    event.preventDefault();
+    const target = event.target;
+    const name = target.getAttribute('data-value');
+    var opts = this.state.sortOpts
+
+    if (opts.filterList.includes(name)){
+      var newFilters = opts.filterList.filter(v => v != name)
+      opts.filterList = newFilters
+      opts.notFilterList.push(name)
+    } else if (opts.notFilterList.includes(name)) {
+      var newFilters = opts.notFilterList.filter(v => v != name)
+      opts.notFilterList = newFilters
+    } else {
+      opts.filterList.push(name)
+    }
+
+    opts.page = 1
+
+    this.setState({
+      sortOpts: opts
+    })
+
     this.submitterMan(event)
   }
 
@@ -267,14 +303,12 @@ class CommentsContainer extends React.Component {
   render(){
 
     var { commentRoot } = this.props;
-    var { totalComments, comments, commentFormErrors, userSettings, sortOpts} = this.state;
+    var { totalComments, comments, commentFormErrors, userSettings, sortOpts, followedUsers, blockedUsers} = this.state;
 
     return(
       <div id="cf-comments-main" className={`${userSettings.font} ${userSettings.colorTheme}`}>
         <CommentEtiquette />
-        <div>
-          {totalComments} comments for this article
-        </div>
+
         <CommentFormContainer
           commentRoot={commentRoot}
           handleSubmit={this.handleCommentForm}
@@ -286,20 +320,28 @@ class CommentsContainer extends React.Component {
           handleFilterSubmit={this.handleFilterSubmitMan}
           handleSortDirClick={this.handleSortDirClick}
           handleFilterClick={this.handleFilterClick}
-
+          handleFilterByClick={this.handleFilterByClick}
         />
         <hr />
+        <div>
+          <p>{totalComments} comments for this article</p>
+        </div>
         <CommentsList
           allComments={comments}
           commentRoot={commentRoot}
-          handleDelayClick={this.handleDelayClick}
           handleTopChange={this.handleTopChange}
+          followedUsers={followedUsers}
+          blockedUsers={blockedUsers}
         />
 
-      <button className="btn btn-block btn-large btn-primary" onClick={this.handleLoadMoreClick}>Load More</button>
+        <button className="btn btn-block btn-large btn-primary" onClick={this.handleLoadMoreClick}>Load More</button>
+        <BottomScollListener
+          onBottom={this.handleLoadMoreClick}
+          offset={500}
+        />
       </div>
     )
   }
 }
 
-export default CommentsContainer;
+export default CommentingContainer;

@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_01_135820) do
+ActiveRecord::Schema.define(version: 2018_11_16_181106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "admin_mails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "customer_user_id"
+    t.uuid "user_id"
+    t.string "subject"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_user_id"], name: "index_admin_mails_on_customer_user_id"
+    t.index ["user_id"], name: "index_admin_mails_on_user_id"
+  end
 
   create_table "articles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
@@ -23,6 +34,33 @@ ActiveRecord::Schema.define(version: 2018_11_01_135820) do
     t.uuid "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "arts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "url"
+    t.datetime "last_interaction_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["last_interaction_at"], name: "index_arts_on_last_interaction_at"
+    t.index ["url"], name: "index_arts_on_url"
+  end
+
+  create_table "blockings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "blocker_id"
+    t.uuid "blocking_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blocker_id"], name: "index_blockings_on_blocker_id"
+    t.index ["blocking_id"], name: "index_blockings_on_blocking_id"
+  end
+
+  create_table "check_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "checkable_id"
+    t.string "check_name"
+    t.datetime "created_at"
+    t.string "checkable_type"
+    t.index ["checkable_id", "check_name", "created_at"], name: "index_check_logs_on_checkable_id_and_check_name_and_created_at"
+    t.index ["checkable_id", "checkable_type"], name: "index_check_logs_on_checkable_id_and_checkable_type"
   end
 
   create_table "comment_interactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -47,6 +85,15 @@ ActiveRecord::Schema.define(version: 2018_11_01_135820) do
     t.index ["interactions_count"], name: "index_comments_on_interactions_count"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "followings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "follower_id"
+    t.uuid "following_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["follower_id"], name: "index_followings_on_follower_id"
+    t.index ["following_id"], name: "index_followings_on_following_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

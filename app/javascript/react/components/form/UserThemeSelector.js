@@ -3,7 +3,7 @@ import React from 'react';
 const UserThemeSelector = props => {
   return(
     <div className="user-theme-selector">
-      <label className="text-large">Theme</label>
+      <label className="text-medium">Theme</label>
       <br />
 
       <div id="theme-selector-options-wrapper">

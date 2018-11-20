@@ -1,6 +1,7 @@
 include ActionView::Helpers::SanitizeHelper
 class Comment < ApplicationRecord
   include CommentBase
+  include CommentSearchs
 
   attr_accessor :vote_types, :force, :old_top_id
 
@@ -20,6 +21,8 @@ class Comment < ApplicationRecord
   validate :text_does_not_have_html
 
   scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
+
+  after_create_commit :update_last_interaction_at_for_art!
 
   private
 
@@ -48,5 +51,11 @@ class Comment < ApplicationRecord
     end
 
     self.old_top_id = votes.map(&:old_top_id).first if votes.map(&:old_top_id).any?
+  end
+
+  ### Postprocessors
+
+  def update_last_interaction_at_for_art!
+    Art.find(art_id).update_attribute("last_interaction_at", Time.now())
   end
 end

@@ -10,6 +10,8 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.json
   def show
+    url = @article.url(request)
+    @art = Art.find_or_create_by(url: url)
   end
 
   # GET /articles/new

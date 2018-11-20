@@ -17,5 +17,17 @@ module ClassifilterMaster
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    # use sidekiq as background processor
+    config.active_job.queue_adapter = :sidekiq
+
+    # use the default queue for mailers (for now)
+    config.action_mailer.deliver_later_queue_name = 'default'
+    
+    # add image sub dirs to pipline
+    Dir.glob("#{Rails.root}/app/assets/images/**/").each do |path|
+      config.assets.paths << path
+    end
   end
+
 end

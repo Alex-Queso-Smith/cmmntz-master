@@ -1,0 +1,9 @@
+%p Dear Admin,
+
+%p Your thread at #{@thread.url} has been flagged as meeting or exceeding your activity alert thresholds.
+
+%p Below is a list of the criteria that has been met or exceeded.
+
+%ul
+  - @reasons.each do |reason|
+    %li= reason

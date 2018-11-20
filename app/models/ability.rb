@@ -17,15 +17,22 @@ class Ability
 
   def guest_permissions
     can :create, User # can register
+    can :read, Article
   end
 
   def default_permissions
     cannot :manage, :all # wipe all base Permissions
-    can [:crud, :edit_password], User, {id: user.id} # can crud self
+    can [:crud, :edit_password], User, { id: user.id } # can crud self
     can :read, User # can view other users in list or individual
-    can :crud, Comment, {user_id: user.id} # can crud own comments
+    can :crud, Comment, { user_id: user.id } # can crud own comments
     can :read, Comment # can view other user's comments in list or individual
-    can :crud, Vote, {user_id: user.id} # can crud own votes
+    can :crud, Vote, { user_id: user.id } # can crud own votes
     can :read, Vote # can view other user's votes in list or individual
+    can :crud, Following, { follower_id: user.id } # can follower other users
+    can :crud, Blocking, { blocker_id: user.id } # can block other users
+
+    # TODO: move this to admin app
+    # this is only here until this feature gets moved to the admin app
+    can :create, AdminMail
   end
 end

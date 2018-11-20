@@ -18,6 +18,10 @@ const UserInfoTile = props => {
   } else {
     var demoData =
     <div className="cf-comment-user-data" >
+      <div className="row centered">
+        {props.followStar}
+        {props.blockSym}
+      </div>
       <div>
         {`${props.userInfo.user_name}`}
       </div>
@@ -39,7 +43,7 @@ const UserInfoTile = props => {
     }
 
       userTile =
-      <div className="cf-comment-user-meta" onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>
+      <div className="cf-comment-user-meta cursor-help" onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>
         <div className="cf-comment-user-avatar">
           <span className="avatar-helper"></span>
           {demoData}

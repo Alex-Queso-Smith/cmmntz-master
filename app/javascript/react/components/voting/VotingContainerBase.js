@@ -16,7 +16,6 @@ class VotingContainerBase extends React.Component {
     }
     this.handleClickVote = this.handleClickVote.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
   }
 
@@ -31,10 +30,11 @@ class VotingContainerBase extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    // if ( prevProps.selectedVotes.top != this.state.selectedVotes.top ) {
-    //   FetchDidMount(this, `/api/v1/comments/${this.props.commentId}.json`)
-    //   .then(body => {debugger})
-    // }
+    if ( prevProps.votePercents != this.props.votePercents ) {
+      this.setState({
+        votePercents: this.props.votePercents
+      })
+    }
   }
 
   handlePost(payload){
@@ -91,22 +91,36 @@ class VotingContainerBase extends React.Component {
   }
 
   handleClickVote(event){
+    const unique = this.props.commentId
+
     VoteClick(this, event)
-    this.setState({ userVoted: true })
+
     var percentShowSet = () => {
       this.setState({ percentShow: true })
     }
-    Timeout.clear('timer')
-    Timeout.set('timer', percentShowSet, 3000)
+
+    if (this.state.userVoted) {
+
+      Timeout.clear(`timer${unique}`)
+      Timeout.set(`timer${unique}`, percentShowSet, 1500)
+    } else {
+      this.setState({ userVoted: true })
+
+      Timeout.clear(`timer${unique}`)
+      Timeout.set(`timer${unique}`, percentShowSet, 3000)
+    }
   }
 
   render(){
 
     var voteButtonsRowOne = RowOneVoteButtons(this)
-    var voteButtonsRowTwo = RowTwoVoteButtons(this)
+    var voteButtonsRowTwo;
+    if (this.state.userVoted) {
+      voteButtonsRowTwo = RowTwoVoteButtons(this)
+    }
 
     return(
-      <div className="cf-votes-container margin-top-10px container" >
+      <div className="cf-votes-container margin-top-10px" >
         <div className="cf-votes-top-row row ">
           {voteButtonsRowOne}
         </div>

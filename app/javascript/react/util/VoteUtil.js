@@ -20,7 +20,7 @@ export const VoteClick = (object, event) => {
       var commentRoot = object.props.commentRoot;
 
       newVote.append("vote[comment_id]", object.props.commentId)
-      newVote.append("vote[user_id]", commentRoot.getAttribute('data-user-id'))
+      newVote.append("vote[user_id]", object.props.currentUserId)
       newVote.append("vote[vote_type]", name)
 
       object.handlePost(newVote)
@@ -61,7 +61,7 @@ export const VoteClick = (object, event) => {
       var commentRoot = object.props.commentRoot;
 
       newVote.append("vote[comment_id]", object.props.commentId)
-      newVote.append("vote[user_id]", commentRoot.getAttribute('data-user-id'))
+      newVote.append("vote[user_id]", object.props.currentUserId)
       newVote.append("vote[vote_type]", name)
 
       object.handlePost(newVote)
@@ -79,7 +79,7 @@ export const VoteClick = (object, event) => {
 }
 
 export const ImageSelector = (type) => {
-  if (type === "blank1" || type === 'blank2') {
+  if (type.includes('blank')) {
     return ''
   } else {
     return `/assets/${type}.png`
@@ -131,7 +131,7 @@ const OpacityHandler = (selectedVotes, type) => {
 
 export const RowOneVoteButtons = (object) => {
   return RowOneVoteTypes.map((type) => {
-    var visibility, image, percentage;
+    var visibility, image, percentage, blankClass;
     var { userVoted, percentShow, votePercents, selectedVotes } = object.state
     var opacity = OpacityHandler(selectedVotes, type[0]);
 
@@ -151,13 +151,15 @@ export const RowOneVoteButtons = (object) => {
 
     if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
+    } else {
+      blankClass = type[0]
     }
 
 
     return(
       <VoteButtonRowOne
         key={`${object.props.commentId}_${type[0]}`}
-        className={'margin-top-bottom-10px'}
+        className={`margin-top-bottom-10px ${blankClass}`}
         name={type[0]}
         label={type[1]}
         onClick={object.handleClickVote}
@@ -172,7 +174,7 @@ export const RowOneVoteButtons = (object) => {
 
 export const RowTwoVoteButtons = (object) => {
   return RowTwoVoteTypes.map((type) => {
-    var visibility, image, percentage;
+    var visibility, image, percentage, blankClass;
     var { userVoted, percentShow, votePercents, selectedVotes } = object.state
     var opacity = OpacityHandler(selectedVotes, type[0])
 
@@ -191,12 +193,14 @@ export const RowTwoVoteButtons = (object) => {
     // select image for button based on type
     if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
+    } else {
+      blankClass = type[0]
     }
 
     return(
       <VoteButtonRowTwo
         key={`${object.props.commentId}_${type[0]}`}
-        className={'margin-top-bottom-10px'}
+        className={`margin-top-bottom-10px ${blankClass}`}
         name={type[0]}
         label={type[1]}
         onClick={object.handleClickVote}

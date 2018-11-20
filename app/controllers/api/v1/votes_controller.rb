@@ -8,6 +8,7 @@ class Api::V1::VotesController < ApiController
     @vote = Vote.new(vote_params)
 
     if @vote.save
+      set_comment
       render "api/v1/votes/all_returns"
     else
       render json: { errors: @vote.errors.full_messages, status: :unprocessable_entity }
@@ -17,6 +18,7 @@ class Api::V1::VotesController < ApiController
   # PATCH/PUT /votes/1.json
   def update
     if @vote.update(vote_params)
+      set_comment
       render "api/v1/votes/all_returns"
     else
       render json: { errors: @vote.errors.full_messages, status: :unprocessable_entity}
@@ -26,6 +28,7 @@ class Api::V1::VotesController < ApiController
   # DELETE /votes/1.json
   def destroy
     if @vote.destroy
+      set_comment
       render "api/v1/votes/all_returns"
     end
   end
@@ -34,6 +37,10 @@ class Api::V1::VotesController < ApiController
     # Use callbacks to share common setup or constraints between actions.
     def set_vote
       @vote = Vote.find(params[:id])
+    end
+
+    def set_comment
+      @comment = Comment.tabulation_for_individual_comment(current_user, @vote.comment_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

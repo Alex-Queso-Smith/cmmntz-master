@@ -1,7 +1,7 @@
 SELECT
   comments.*,
   CHAR_LENGTH(comments.text) as comment_length,
-  /* summation of voted*/
+  /* summation of voted */
   sum(case when votes.vote_type  = 'top' then 1 else 0 end) as top_count,
   sum(case when votes.vote_type  = 'love' then 1 else 0 end) as love_count,
   sum(case when votes.vote_type  = 'like_a_lot' then 1 else 0 end) as like_a_lot_count,

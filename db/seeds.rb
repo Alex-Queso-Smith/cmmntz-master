@@ -2,35 +2,81 @@
 num_users = 100
 
 # set the number of articles we want in this pass
-num_articles = 2
+num_articles = 4
 time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
 puts "Starting process at #{Time.now}"
 
 # generate staff accounts
 puts "generating staff accounts"
-jesse = User.create(
+User.create(
   user_name: "Jesse",
-  email: "jesse@classifilter.com",
+  email: "jesse@classibridge.com",
   password: "password",
   password_confirmation: "password",
-  base_image: "butterfly"
+  base_image: "butterfly",
+  longitude: -75,
+  latitude: 40
 )
 
-alex = User.create(
+User.create(
   user_name: "Alex",
-  email: "aj@classifilter.com",
+  email: "alex@classibridge.com",
   password: "password",
   password_confirmation: "password",
-  base_image: "gi"
+  base_image: "gi",
+  longitude: -75,
+  latitude: 40
 )
 
-aj = User.create(
+User.create(
   user_name: "AJ",
-  email: "alex@classifilter.com",
+  email: "aj@classibridge.com",
   password: "password",
   password_confirmation: "password",
-  base_image: "boxing-glove"
+  base_image: "boxing-glove",
+  longitude: -75,
+  latitude: 40
+)
+
+User.create(
+  user_name: "Renee",
+  email: "renee@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  base_image: AVATARS.sample,
+  longitude: -75,
+  latitude: 40
+)
+
+User.create(
+  user_name: "Jackie",
+  email: "jackie@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  base_image: AVATARS.sample,
+  longitude: -75,
+  latitude: 40
+)
+
+User.create(
+  user_name: "Dustin",
+  email: "dustin@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  base_image: AVATARS.sample,
+  longitude: -75,
+  latitude: 40
+)
+
+User.create(
+  user_name: "Anthony",
+  email: "anthony@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  base_image: AVATARS.sample,
+  longitude: -75,
+  latitude: 40
 )
 
 # generate random users
@@ -45,12 +91,30 @@ while x <= num_users do
     email: "User#{x}@gmail.com",
     age_range: User::AGES.sample,
     gender: User::GENDERS.sample,
-    base_image: AVATARS.sample
+    base_image: AVATARS.sample,
+    longitude: (-75 + rand(-18..18)),
+    latitude: (40 + rand(-18..18))
   )
   x += 1
 end
 User.import users, validate: false
 users = User.all
+
+# generate some followings for the users
+puts "generating followings for users"
+users.each do |user|
+  rand(0..15).times do
+    user.followings.create(following: (users - [user]).sample)
+  end
+end
+
+# generate some blockings for the users
+puts "generating blockings for users"
+users.each do |user|
+  rand(-5..3).times do
+    user.blockings.create(blocking: (users - [user]).sample)
+  end
+end
 
 # generate desired number of articles
 puts "generating #{num_articles} articles"
@@ -64,43 +128,65 @@ num_articles.times do
     created_at: time,
     updated_at: time
   )
+  url = article_one.url
+  art = Art.create(url: url)
 
   time += rand(100..1000)
 
   # generate a random number of comments
-  num_comments = rand(30..75)
+  num_comments = rand(10..40)
   puts "generating #{num_comments} comments"
   num_comments.times do
     comment = Comment.create(
       user: users.sample,
-      art_id: article_one.id,
-      art_type: "article",
+      art_id: art.id,
+      art_type: "art",
       text: RANDOM_TEXT.sample,
       created_at: time,
       updated_at: time,
-      anonymous: [false, true].sample
+      anonymous: [false, true, false, false, false].sample
     )
 
     #generate random number of replies
-    num_replies = rand(-7..10)
+    num_replies = rand(-5..5)
     if num_replies > 0
       puts "generating #{num_replies} replies"
       num_replies.times do
-        Comment.create(
+        reply = Comment.create(
           user: users.sample,
-          art_id: article_one.id,
-          art_type: "article",
+          art_id: art.id,
+          art_type: "art",
           text: RANDOM_TEXT.sample,
           created_at: time,
           updated_at: time,
-          anonymous: [false, true].sample,
+          anonymous: [false, true, false, false, false].sample,
           parent_id: comment.id
         )
+
+        num_votes = rand(25)
+        puts "generating #{num_votes} reply votes"
+        num_votes.times do
+          # seed some Votes
+          u = (users - [comment.user]).sample
+          Vote.create(
+            user: u,
+            comment: reply,
+            vote_type: Vote::EXCLUSIVE_VOTES.sample
+          )
+          rand(3).times do
+            Vote.create(
+              user: u,
+              comment: reply,
+              vote_type: (Vote::TYPES - Vote::EXCLUSIVE_VOTES).sample
+            )
+          end
+        end
+
       end
     end
 
     # generate a random number of votes
-    num_votes = rand(50)
+    num_votes = rand(25)
     puts "generating #{num_votes} votes"
     num_votes.times do
       # seed some Votes
@@ -124,7 +210,7 @@ num_articles.times do
   SORTABLE_TYPES.each do |type|
     puts "Determining most #{type} comment for #{article_one.title}"
     filter_opts = {sort_dir: 'desc', sort_type: type}
-    most_comment_tab = CommentVoteTabulation.filter_and_sort(article_one.id, "article", filter_opts, 1).first
+    most_comment_tab = Comment.filter_and_sort(User.new, article_one.id, "article", filter_opts, 1).first
 
     if most_comment_tab
       most_comment = Comment.find(most_comment_tab.id)

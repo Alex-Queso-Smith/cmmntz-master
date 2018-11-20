@@ -13,6 +13,7 @@ import RedBox from 'redbox-react';
 
 import App from '../react/App';
 import CfCommentsApp from '../react/CfCommentsApp';
+import AdminMailApp from '../react/AdminMailApp';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -43,6 +44,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     else {
       render(<CfCommentsApp />, commentElement)
+    }
+  }
+
+  let adminElement = document.getElementById('admin-mail-app')
+
+  if (adminElement) {
+    if(window.railsEnv && window.railsEnv === 'development'){
+      try {
+        render(<AdminMailApp />, adminElement)
+      } catch (e) {
+        render(<RedBox error={e} />, adminElement)
+      }
+    }
+    else {
+      render(<AdminMailApp />, adminElement)
     }
   }
 })

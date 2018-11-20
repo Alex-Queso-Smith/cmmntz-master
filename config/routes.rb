@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  if Rails.env.development?
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   resources :comments
   resources :articles
   resources :users do
@@ -15,8 +20,18 @@ Rails.application.routes.draw do
       resources :comments, only: [:index, :show, :create, :update, :destroy]
       resources :comment_filters, only: [:create]
       resources :votes, only: [:create, :update, :destroy]
+      resources :followings, only: [:create]
+      resources :unfollowings, only: [:create]
+      resources :blockings, only: [:create]
+      resources :unblockings, only: [:create]
+
+      # this only lives here temporarily
+      resources :admin_mails, only: [:create]
     end
   end
+
+  # temp routes
+  resources :admin_mails, only: [:new]
 
   ### named routes be here
   get 'register' => "users#new",           as: :register
@@ -24,5 +39,5 @@ Rails.application.routes.draw do
   get 'logout' => "user_sessions#destroy", as: :logout
 
   # root
-  root :to => 'users#index'
+  root :to => 'articles#index'
 end

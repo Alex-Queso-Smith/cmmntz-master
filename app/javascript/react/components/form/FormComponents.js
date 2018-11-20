@@ -56,19 +56,19 @@ export const AgeSlider = props => {
   ) {
     if (ageRange === "60+") {
       ageImage =
-      <div className="cf-age-image">
-        <img src={`/assets/60-plus.png`} />
+      <div>
+        <img className="cf-age-image" src={`/assets/60-plus.png`} />
       </div>
     } else {
       ageImage =
-      <div className="cf-age-image">
-        <img src={`/assets/${ageRange}`} />
+      <div>
+        <img className="cf-age-image" src={`/assets/${ageRange}`} />
       </div>
     }
   } else {
     ageImage =
-    <div className="cf-age-image">
-      <img src={`/assets/age-range-none.png`} />
+    <div>
+      <img className="cf-age-image" src={`/assets/age-range-none.png`} />
     </div>
   }
 
@@ -88,11 +88,11 @@ export const Checkbox = props => {
   return(
     <div className={`custom-control custom-checkbox margin-top-10px ${props.className}`}>
       <input type="checkbox"
-      className="custom-control-input"
+      className="custom-control-input cf-checkbox"
       name={props.name}
       id={props.name} onClick={props.onChange}
       autoComplete="off" />
-      <label className="custom-control-label text-medium" htmlFor={props.name}>{props.label}</label>
+      <label className="custom-control-label" htmlFor={props.name}>{props.label}</label>
     </div>
   );
 };
@@ -128,7 +128,7 @@ export const GenderSelector = props => {
 
   return(
     <div>
-      <label className="text-large">Gender</label>
+      <label className="text-medium">Gender</label>
       <div id="gender-selector" className="row margin-top-bottom-10px">
         {genderButtons}
       </div>
@@ -138,7 +138,7 @@ export const GenderSelector = props => {
 
 const GenderButton = props => {
   return(
-    <div className={`col-sm`}>
+    <div className={`col-3`}>
       <img className={`gender-btn gender-none ${props.translucency}`} onClick={props.onChange} name={props.name} src={`/assets/gender-${props.imageName}.png`} />
       <div>{props.label}</div>
     </div>
@@ -207,14 +207,4 @@ export const NukaCarousel = props => {
       {avatarImages}
     </Carousel>
   )
-}
-
-export default {
-  AgeSlider,
-  Checkbox,
-  GenderSelector,
-  Input,
-  RadioButton,
-  NukaCarousel,
-  Avatars
 }

@@ -1,8 +1,26 @@
-$breakpoint-tablet: 768px;
-@media (max-width: $breakpoint-tablet) {
-  #user-age-range{
-    position: relative;
-  }
+// $breakpoint-tablet: 768px;
+// @media (max-width: $breakpoint-tablet) {
+//   #user-age-range{
+//     position: relative;
+//   }
+// }
+
+#user-edit-form {
+  margin: auto;
+  border: 1px solid grey;
+  padding: 30px;
+  border-radius: 20px;
+  width: 500px;
+}
+
+#user-registration-form {
+  margin: 60px auto;
+  border: 1px solid grey;
+  padding: 30px;
+  border-radius: 20px;
+  width: 500px;
+  background: rgba(255, 255, 255, .9 );
+  color: #000000;
 }
 
 #delete-account {
@@ -22,13 +40,77 @@ $breakpoint-tablet: 768px;
 
   }
 }
+
+#user-login-container {
+  margin: 60px auto;
+  border: 1px solid grey;
+  padding: 30px;
+  border-radius: 20px;
+  width: 500px;
+  background: rgba(255, 255, 255, .75 );
+  color: #000000;
+}
+
+/* UserThemeSelector style */
+#theme-selector-options-wrapper {
+  position: relative;
+  width: 100%;
+
+  height: 80px;
+
+  select {
+    width: 90%;
+  }
+
+  #theme-selector-options-left {
+    width: 50%;
+    padding: 0 5% 0 5%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  #theme-selector-options-right {
+    width: 50%;
+    padding: 0 5% 0 5%;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+#theme-selector-demo-wrapper {
+  width: 60%;
+  height: 75px;
+  line-height: 70px;
+  text-align: center;
+  border: 1px solid #000;
+  margin: auto;
+
+  div {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    padding: 10px;
+
+    font-size: 2em;
+  }
+}
+
+#login-button {
+  width: 25%;
+  margin: auto;
+}
+
 /* AgeRangeSelector style */
 .cf-slider-label {
   text-align: center;
 }
 
 .cf-age-image {
-  min-height: 50px
+  height: 50px;
+  width: 50px;
+  text-align: center;
 }
 
 .slidecontainer {
@@ -69,47 +151,38 @@ $breakpoint-tablet: 768px;
     cursor: pointer;
 }
 
-/* UserThemeSelector style */
-#theme-selector-options-wrapper {
-  position: relative;
+
+.cf-geomap-wrapper {
   width: 100%;
-
-  height: 80px;
-
-  select {
-    width: 90%;
-  }
-
-  #theme-selector-options-left {
-    width: 50%;
-    padding: 0 5% 0 5%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  #theme-selector-options-right {
-    width: 50%;
-    padding: 0 5% 0 5%;
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
 }
 
-#theme-selector-demo-wrapper {
-  width: 100%;
-  height: 150px;
-  line-height: 150px;
-  text-align: center;
-  border: 1px solid #000;
+.cf-geomap-container {
+  position: relative;
+  height: 200px;
+  width: 300px;
+  border: 1px solid #000000;
+  margin: auto;
+  z-index: 10;
+  background-image: url('mercator-map.jpg');
+  background-size: 300px 200px;
+  background-repeat: no-repeat;
+}
 
-  div {
-    display: inline-block;
-    vertical-align: middle;
-    line-height: normal;
-    padding: 10px;
+.cf-geomarker {
+  position: absolute;
+  border-radius: 50%;
+  border: solid 1px red;
+  background-color: red;
+  height: 12px;
+  width: 12px;
+  pointer-events: none;
+}
 
-    font-size: 3em;
-  }
+.gender-btn {
+  height: 25px;
+  width: 25px;
+}
+
+.custom-control-label::before {
+  background-color: #919191;
 }

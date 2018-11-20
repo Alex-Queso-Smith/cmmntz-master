@@ -1,0 +1,19 @@
+.articles-container
+  %p= link_to 'New Article', new_article_path
+  %h3 Articles
+  .articles-wrapper
+    .row
+    - @articles.in_groups_of(3, false) do |group|
+      .row
+        - group.each do |article|
+          .article-container.col-4
+            .article
+              .article-title.text-center
+                %h3= link_to article.title, article
+              .article-preview.row
+                .article-preview-image.text-center.col-5
+                  [img]
+                .article-preview-text.col-7
+                  = truncate(article.text, length: 200)
+                  %br/
+                  = link_to "read more", article

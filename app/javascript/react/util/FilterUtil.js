@@ -1,11 +1,14 @@
 import React from "react"
 
-import { SortDir, SortButton } from '../components/filters/SortSelect'
+import { SortDir, SortButton, FilterFromButton } from '../components/filters/SortSelect'
 import { ImageSelector } from './VoteUtil';
 
-export const OpacityHandlerIncludes = (list, type) => {
-  if (list.includes(type)) {
+export const OpacityHandlerIncludes = (filterList, notFilterList, type) => {
+
+  if (filterList.includes(type)) {
     return ""
+  } else if (notFilterList.includes(type)) {
+    return  "exclude-translucent"
   } else {
     return "translucent"
   }
@@ -60,8 +63,8 @@ export const RowOneFilterTypes = [
 
 export const FilterButtonsRowOne = (object) => {
   return RowOneFilterTypes.map((type) => {
-    var image, visibility;
-    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, `${type[0]}_percent`)
+    var image, visibility, blankClass;
+    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
 
     if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
@@ -69,11 +72,13 @@ export const FilterButtonsRowOne = (object) => {
 
     if (type[0].includes('blank')) {
       visibility = "visibility-hidden"
+      blankClass = type[0]
     }
 
     return(
       <SortButton
         key={`filter_${type[1]}`}
+        className={`${blankClass}`}
         value={`${type[0]}_percent`}
         opacity={opacity}
         onClick={object.props.handleFilterClick}
@@ -100,8 +105,8 @@ export const RowTwoFilterTypes = [
 
 export const FilterButtonsRowTwo = (object) => {
   return RowTwoFilterTypes.map((type) => {
-    var image, visibility;
-    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, `${type[0]}_percent`)
+    var image, visibility, blankClass;
+    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
 
     if (!type[0].includes('blank')) {
       image = ImageSelector(type[0])
@@ -109,11 +114,13 @@ export const FilterButtonsRowTwo = (object) => {
 
     if (type[0].includes('blank')){
       visibility = "visibility-hidden"
+      blankClass = type[0]
     }
 
     return(
       <SortButton
         key={`filter_${type[1]}`}
+        className={`${blankClass}`}
         value={`${type[0]}_percent`}
         opacity={opacity}
         onClick={object.props.handleFilterClick}
@@ -122,4 +129,46 @@ export const FilterButtonsRowTwo = (object) => {
         />
     )
   })
+
+}
+export const FilterFromTypes = [
+  ["", "Everyone"],
+  ["network", "Network"],
+  ["friends", "Friends"]
+]
+
+export const FilterCommentsBy = (props) => {
+  return(
+    FilterFromTypes.map((type) => {
+      var opacity = props.commentsFrom == type[0] ? "" : "translucent"
+      return(
+        <FilterFromButton
+          key={`filter_from_${type[1]}`}
+          title={type[1]}
+          name="commentsFrom"
+          onClick={props.onClick}
+          value={type[0]}
+          opacityClass={opacity}
+        />
+      )
+    })
+  )
+}
+
+export const FilterVotesBy = (props) => {
+  return(
+    FilterFromTypes.map((type) => {
+      var opacity = props.votesFrom == type[0] ? "" : "translucent"
+      return(
+        <FilterFromButton
+          key={`filter_from_${type[1]}`}
+          title={type[1]}
+          name="votesFrom"
+          onClick={props.onClick}
+          value={type[0]}
+          opacityClass={opacity}
+        />
+      )
+    })
+  )
 }

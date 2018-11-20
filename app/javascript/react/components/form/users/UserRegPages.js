@@ -16,7 +16,7 @@ export const UserRegPageOne = props => {
 
   return(
     <div id="reg-required" className="form-group">
-      <h3 className="text-center">Sign-Up Required Information</h3>
+      <h6 className="text-center">Sign-Up Required Information</h6>
       <Input
         name="userName"
         label="User Name"
@@ -53,9 +53,9 @@ export const UserRegPageOne = props => {
         addClass={passwordConfirmationClass}
       />
       {props.passwordConfirmationError}
-      <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-page-one" className="btn btn-block btn-large btn-primary" onClick={props.handleButtonClick} disabled={props.disabled}>
-          <span className="text-large">Next Page (Optional)</span>
+      <div className="form-group actions margin-top-10px text-center">
+        <button id="user-registration-button-page-one" className="btn btn-sm btn-primary" onClick={props.handleButtonClick} disabled={props.disabled}>
+          Next Page (Optional)
         </button>
       </div>
     </div>
@@ -63,9 +63,22 @@ export const UserRegPageOne = props => {
 };
 
 export const UserRegPageTwo = props => {
+
+  const { x, y, latitude, longitude, geoPin } = props
+
+  if (props.latitude && props.longitude) {
+    const style = {
+      top: geoPin.y,
+      left: geoPin.x
+    }
+
+    var geoMarker =
+      <div className="cf-geomarker" style={style} />
+  }
+
   return(
     <div id="reg-optional-1" className="form-group">
-      <h3 className="text-center">Sign-Up Optional Information 1/2 </h3>
+      <h6 className="text-center">Sign-Up Optional Information 1/2 </h6>
       <hr />
       <AgeSlider
         name="ageRange"
@@ -81,32 +94,23 @@ export const UserRegPageTwo = props => {
         value={props.gender}
       />
       <hr />
-      <Input
-        name="latitude"
-        label="Latitude"
-        onChange={props.onChange}
-        content={props.latitude}
-        type="text"
-      />
-      <Input
-        name="longitude"
-        label="Longitude"
-        onChange={props.onChange}
-        content={props.longitude}
-        type="text"
-      />
+      <div className="cf-geomap-wrapper">
+        <div className="cf-geomap-container" onMouseMove={props.onMouseMove} onClick={props.setLatLongClick}>
+          {geoMarker}
+        </div>
+      </div>
       <div className="custom-control custom-checkbox margin-top-10px">
         <input type="checkbox" className="custom-control-input" id='location-opt-out' autoComplete="off" />
         <label className="custom-control-label text-medium" htmlFor='location-opt-out' >None of Your Business</label>
       </div>
-      <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-page-two" className="btn btn-block btn-large btn-primary" onClick={props.handleButtonClick} >
-          <span className="text-large">Next Page (Optional)</span>
+      <div className="form-group actions margin-top-10px text-center">
+        <button id="user-registration-button-page-two" className="btn btn-sm btn-primary" onClick={props.handleButtonClick} >
+          Next Page (Optional)
         </button>
       </div>
-      <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-back-two" className="btn btn-block btn-large btn-primary" onClick={props.handleBackClick}>
-          <span className="text-large">Back</span>
+      <div className="form-group actions margin-top-10px text-center">
+        <button id="user-registration-button-back-two" className="btn btn-sm btn-primary" onClick={props.handleBackClick}>
+          Back
         </button>
       </div>
     </div>
@@ -124,10 +128,10 @@ export const UserRegPageThree = props => {
 
   return(
     <div id="reg-optional-2" className="form-group ">
-      <h3 className="text-center">Sign-Up Optional Information 2/2 </h3>
+      <h6 className="text-center">Sign-Up Optional Information 2/2 </h6>
       <hr />
       <div className="form-group margin-top-10px">
-        <label className="text-large text-center" htmlFor="avatar">Avatar</label>
+        <label className="text-medium text-center" htmlFor="avatar">Avatar</label>
         {selectedAvatar}
         <br />
         <Carousel
@@ -135,9 +139,9 @@ export const UserRegPageThree = props => {
         />
       </div>
       <input type="hidden"/>
-      <div className="form-group actions margin-top-10px">
-        <button id="user-registration-button-back-three" className="btn btn-block btn-large btn-primary" onClick={props.handleBackClick}>
-          <span className="text-large">Back</span>
+      <div className="form-group actions margin-top-10px text-center">
+        <button id="user-registration-button-back-three" className="btn btn-sm btn-primary" onClick={props.handleBackClick}>
+          Back
         </button>
       </div>
     </div>
