@@ -8,9 +8,11 @@ class CfCommentsApp extends React.Component {
     var commentRoot = document.getElementById('cf-comments-app')
 
     return (
-      <CommentingContainer
-        commentRoot={commentRoot}
-      />
+      <div id="cf-commenting-container">
+        <CommentingContainer
+          commentRoot={commentRoot}
+          />
+      </div>
     )
   }
 }
