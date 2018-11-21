@@ -225,15 +225,13 @@ class Comment extends React.Component {
           />
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
-              <div className="cf-comment-user-name col-4 col-sm-4">
+              <div className="cf-comment-user-name col-4">
                 {this.props.userName}
               </div>
-              <div className="cf-comment-at col-2 col-sm-2" >
+              <div className="cf-comment-at col-6" >
                 {createdAt}
               </div>
-              <div className="col-1"></div>
-              <div className="col-1"></div>
-              <div className="cf-comment-length col-1 col-sm-1">
+              <div className="cf-comment-length col-2">
                 <div className="float-right">
                   <img src={lengthImage} height="20px" width="20px"/>
                 </div>

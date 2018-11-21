@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { FetchWithUpdate, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
+import { CommentLengthSorter } from '../../util/CommentUtil';
 import { ReplyFieldActivated, ReplyButtonActive, ReplyButtonInactive, ReplyCancelButton } from '../../components/comments/CommentComponents';
 import Modal from '../../components/modals/Modal';
 import Reply from '../../components/comments/Reply';
@@ -146,6 +147,7 @@ class RepliesContainer extends React.Component {
         var followed = followedUsers.includes(reply.user.user_id)
         var blocked = blockedUsers.includes(reply.user.user_id)
         var { id, user, text, created_at, vote_percents, user_has_voted, current_users_votes } = reply
+        var lengthImage = CommentLengthSorter(text)
 
         var handleNewReplyBox = () => {
           this.props.handleReplyOpen(this.props.commentId)
@@ -158,6 +160,7 @@ class RepliesContainer extends React.Component {
               handleNewReplyBox={handleNewReplyBox}
               replyId={id}
               user={user}
+              lengthImage={lengthImage}
               reply={text}
               posted={created_at}
               userFollowed={followed}
