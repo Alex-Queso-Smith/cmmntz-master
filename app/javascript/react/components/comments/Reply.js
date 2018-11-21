@@ -70,7 +70,7 @@ class Reply extends React.Component {
   }
 
   render(){
-    var { currentUserId, user, reply } = this.props;
+    var { currentUserId, user, reply, lengthImage } = this.props;
     var { user_name, gender, age_range } = this.props.user;
     var userInfo, starOpacity, followStar, blockSym, blockOpacity;
 
@@ -142,13 +142,15 @@ class Reply extends React.Component {
             />
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
-              <div className="cf-comment-user-name col-4 col-sm-4 col-md-4">
+              <div className="cf-comment-user-name col-4">
                 {user_name}
               </div>
-              <div className="col-3 col-md-3"></div>
-              <div className="cf-comment-at col-2" >
+              <div className="cf-comment-at col-6" >
+                {this.props.posted}
+              </div>
+              <div className="cf-comment-length col-2">
                 <div className="float-right">
-                  {this.props.posted}
+                  <img src={lengthImage} height="20px" width="20px"/>
                 </div>
               </div>
             </div>
