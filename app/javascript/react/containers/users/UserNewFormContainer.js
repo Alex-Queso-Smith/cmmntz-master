@@ -119,6 +119,9 @@ class UserNewFormContainer extends React.Component {
       newUser.append("user[base_image]", this.state.avatar)
 
       FetchWithPush(this, '/api/v1/users.json', '/', 'POST', 'registrationErrors', newUser)
+      .then(redirect => window.location = '/articles')
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+
     }
   }
 

@@ -33,6 +33,7 @@ class UserPasswordFormContainer extends React.Component {
       user.append("user[password_confirmation]", this.state.passwordConfirmation);
 
       FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'passwordErrors', user)
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
     }
   }
 

@@ -34,6 +34,7 @@ class AdminMailContainer extends React.Component {
       newMail.append("admin_mail[subject]", this.state.subject)
       newMail.append("admin_mail[content]", this.state.content)
       FetchWithPush(this, '/api/v1/admin_mails.json', '/', 'POST', 'formErrors', newMail)
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
     }
   }
 

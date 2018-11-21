@@ -25,7 +25,6 @@ export const FetchWithPush = (object, path, push, method, errors, payload) => {
        }
      }
    })
-   .catch(error => console.error(`Error in fetch: ${error.message}`));
 }
 
 export const FetchDidMount = (object, path) => {
