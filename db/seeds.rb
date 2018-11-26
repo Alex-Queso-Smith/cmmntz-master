@@ -19,6 +19,14 @@ User.create(
   latitude: 40
 )
 
+FaeUser.create(
+  email: "jesse@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  first_name: "Jesse",
+  last_name: "Admin"
+)
+
 User.create(
   user_name: "Alex",
   email: "alex@classibridge.com",
@@ -27,6 +35,14 @@ User.create(
   base_image: "gi",
   longitude: -75,
   latitude: 40
+)
+
+FaeUser.create(
+  email: "alex@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  first_name: "Alex",
+  last_name: "Admin"
 )
 
 User.create(
@@ -126,6 +142,18 @@ users.each do |user|
   end
 end
 
+["Alber Einstein", "Douglas Adams", "Lore", "Newt Scamander"].each do |a|
+  Author.create(name: a)
+end
+authors = Author.all
+
+["Cars", "Politics", "Weather", "Sports", "Science and Nature"].each do |c|
+  ArticleCategory.create(name: c)
+end
+
+article_categories = ArticleCategory.all
+
+
 # generate desired number of articles
 puts "generating #{num_articles} articles"
 iter = 1
@@ -134,7 +162,10 @@ num_articles.times do
   time = Time.now - rand(150000..10000000)
   article_one = Article.create(
     title: "Demo Article #{iter}",
-    text: RANDOM_TEXT.sample,
+    introduction: truncate(RANDOM_TEXT.sample, length: 50),
+    author: authors.sample,
+    article_category: article_categories.sample,
+    body: RANDOM_TEXT.sample,
     created_at: time,
     updated_at: time
   )

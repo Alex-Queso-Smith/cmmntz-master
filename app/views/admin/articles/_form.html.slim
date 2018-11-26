@@ -3,7 +3,9 @@
 
   main.content
     = fae_input f, :title, input_class: 'slugger'
+    = fae_input f, :slug, helper_text: 'Populated from name'
     = fae_association f, :article_category
+    = fae_association f, :author
     = fae_image_form f, :banner
     = fae_datepicker f, :publish_date
     = fae_input f, :introduction, markdown: true

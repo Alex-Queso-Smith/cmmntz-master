@@ -2,6 +2,7 @@ class Article < ApplicationRecord
   include Fae::BaseModelConcern
 
   belongs_to :article_category
+  belongs_to :author
   has_fae_file :banner
 
   validates :title, :publish_date, :body, :introduction, presence: true
