@@ -119,6 +119,9 @@ class UserNewFormContainer extends React.Component {
       newUser.append("user[base_image]", this.state.avatar)
 
       FetchWithPush(this, '/api/v1/users.json', '/', 'POST', 'registrationErrors', newUser)
+      .then(redirect => window.location = '/articles')
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+
     }
   }
 
@@ -197,12 +200,11 @@ class UserNewFormContainer extends React.Component {
 
           {page}
 
-          <div className="form-group actions margin-top-10px  text-center">
-            <button id="user-registration-button" type="submit" className="btn btn-sm btn-primary" value="Submit" disabled={this.state.formInvalid}>
-              Register
-            </button>
+          <div className="row">
+            <div className="col-sm-12">
+              <PrivacyPolicy />
+            </div>
           </div>
-          <PrivacyPolicy />
         </form>
       </div>
     )

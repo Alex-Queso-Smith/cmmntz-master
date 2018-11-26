@@ -152,6 +152,8 @@ class UserEditFormContainer extends React.Component {
       user.append("user[base_image]", this.state.avatar);
 
       FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'saveErrors', user)
+      .then(redirect => window.location = '/articles')
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
     }
   }
 

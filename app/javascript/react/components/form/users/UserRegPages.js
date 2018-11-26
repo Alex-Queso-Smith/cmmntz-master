@@ -53,10 +53,17 @@ export const UserRegPageOne = props => {
         addClass={passwordConfirmationClass}
       />
       {props.passwordConfirmationError}
-      <div className="form-group actions margin-top-10px text-center">
-        <button id="user-registration-button-page-one" className="btn btn-sm btn-primary" onClick={props.handleButtonClick} disabled={props.disabled}>
-          Next Page (Optional)
-        </button>
+      <div className="row actions margin-top-10px text-center">
+        <div className="col-sm-6">
+          <button id="user-registration-button" type="submit" className="btn btn-block btn-sm btn-primary" value="Submit" disabled={props.disabled}>
+            Register
+          </button>
+        </div>
+        <div className="col-sm-6">
+          <button id="user-registration-button-next" className="btn btn-block btn-sm btn-dark" onClick={props.handleButtonClick} disabled={props.disabled}>
+            Next Page (Optional)
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -103,15 +110,25 @@ export const UserRegPageTwo = props => {
         <input type="checkbox" className="custom-control-input" id='location-opt-out' autoComplete="off" />
         <label className="custom-control-label text-medium" htmlFor='location-opt-out' >None of Your Business</label>
       </div>
-      <div className="form-group actions margin-top-10px text-center">
-        <button id="user-registration-button-page-two" className="btn btn-sm btn-primary" onClick={props.handleButtonClick} >
-          Next Page (Optional)
-        </button>
+      <div className="row actions margin-top-10px">
+        <div className="col-sm-6">
+          <button id="user-registration-button-back" className="btn btn-block btn-sm btn-dark" onClick={props.handleBackClick}>
+            Back
+          </button>
+        </div>
+        <div className="col-sm-6">
+          <button id="user-registration-button-next" className="btn btn-block btn-sm btn-dark" onClick={props.handleButtonClick} disabled={props.disabled}>
+            Next Page (Optional)
+          </button>
+        </div>
       </div>
-      <div className="form-group actions margin-top-10px text-center">
-        <button id="user-registration-button-back-two" className="btn btn-sm btn-primary" onClick={props.handleBackClick}>
-          Back
-        </button>
+      <div className="row text-center">
+        <div className="col-sm-3" />
+        <div className="col-sm-6" >
+          <button id="user-registration-button" type="submit" className="btn btn-block btn-sm btn-primary" value="Submit" disabled={props.disabled}>
+            Register
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -139,10 +156,18 @@ export const UserRegPageThree = props => {
         />
       </div>
       <input type="hidden"/>
-      <div className="form-group actions margin-top-10px text-center">
-        <button id="user-registration-button-back-three" className="btn btn-sm btn-primary" onClick={props.handleBackClick}>
-          Back
-        </button>
+      <div className="row">
+        <div className="col-sm-3">
+          <button id="user-registration-button-back" className="btn btn-sm btn-dark" onClick={props.handleBackClick}>
+            Back
+          </button>
+        </div>
+        <div className="col-sm-6" >
+          <button id="user-registration-button" type="submit" className="btn btn-block btn-sm btn-primary" value="Submit" disabled={props.disabled}>
+            Register
+          </button>
+        </div>
+        <div className="col-sm-3"/>
       </div>
     </div>
   );
