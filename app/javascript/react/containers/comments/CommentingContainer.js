@@ -1,11 +1,12 @@
 import React from 'react';
-import BottomScollListener from 'react-bottom-scroll-listener'
+import BottomScollListener from 'react-bottom-scroll-listener';
+import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 
 import CommentFormContainer from './CommentFormContainer';
 import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
 import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual } from '../../util/CoreUtil';
-import CommentEtiquette from '../../components/modals/CommentEtiquette'
+import CommentEtiquette from '../../components/modals/CommentEtiquette';
 
 class CommentingContainer extends React.Component {
   state = {
@@ -333,8 +334,9 @@ class CommentingContainer extends React.Component {
           followedUsers={followedUsers}
           blockedUsers={blockedUsers}
         />
-
-        <button className="btn btn-block btn-large btn-primary" onClick={this.handleLoadMoreClick}>Load More</button>
+        <ScrollUpButton
+          ToggledStyle={{left: '75px'}}
+        />
         <BottomScollListener
           onBottom={this.handleLoadMoreClick}
           offset={500}
