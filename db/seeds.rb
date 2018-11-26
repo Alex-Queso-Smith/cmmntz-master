@@ -24,7 +24,8 @@ FaeUser.create(
   password: "password",
   password_confirmation: "password",
   first_name: "Jesse",
-  last_name: "Admin"
+  last_name: "Admin",
+  role_id: 1
 )
 
 User.create(
@@ -42,7 +43,8 @@ FaeUser.create(
   password: "password",
   password_confirmation: "password",
   first_name: "Alex",
-  last_name: "Admin"
+  last_name: "Admin",
+  role_id: 1
 )
 
 User.create(
