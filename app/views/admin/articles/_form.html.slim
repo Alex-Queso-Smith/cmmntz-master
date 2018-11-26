@@ -2,4 +2,9 @@
   == render 'fae/shared/form_header', header: @klass_name
 
   main.content
-
+    = fae_input f, :title, input_class: 'slugger'
+    = fae_association f, :article_category
+    = fae_image_form f, :banner
+    = fae_datepicker f, :publish_date
+    = fae_input f, :introduction, markdown: true
+    = fae_input f, :body, markdown: true

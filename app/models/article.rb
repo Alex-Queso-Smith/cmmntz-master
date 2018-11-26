@@ -1,14 +1,11 @@
 class Article < ApplicationRecord
   include Fae::BaseModelConcern
-  def fae_display_field
-    
-  end
 
-  include Fae::BaseModelConcern
-  def fae_display_field
-    
-  end
+  belongs_to :article_category
   has_fae_file :banner
+
+  validates :title, :publish_date, :body, :introduction, presence: true
+  validates :slug, Fae.validation_helpers.slug
 
   def fae_display_field
     title
