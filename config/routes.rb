@@ -1,11 +1,20 @@
 Rails.application.routes.draw do
+
+  namespace :admin do
+    resources :authors
+    resources :articles
+    resources :article_categories
+  end
+  # mount Fae below your admin namespec
+  mount Fae::Engine => '/admin'
+
   if Rails.env.development?
     require 'sidekiq/web'
     mount Sidekiq::Web => '/sidekiq'
   end
 
   resources :comments
-  resources :articles
+  resources :articles, param: :slug, only: [:index, :show]
   resources :users do
     member do
       get :edit_password
