@@ -3,6 +3,7 @@ import React from 'react';
 import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
 import { VoteClick, ImageSelector, RowOneVoteButtons, RowTwoVoteButtons } from '../../util/VoteUtil';
 import { Timeout } from '../../util/CommentUtil';
+import Modal from '../modals/Modal';
 
 class VotingContainerBase extends React.Component {
   constructor(props){
@@ -12,11 +13,14 @@ class VotingContainerBase extends React.Component {
       selectedVotes: this.props.commentVotes,
       votePercents: this.props.votePercents,
       userVoted: this.props.userVoted,
-      percentShow: this.props.userVoted
+      percentShow: this.props.userVoted,
+      flagModalShow: false
     }
     this.handleClickVote = this.handleClickVote.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
+    this.handleShowFlagModal = this.handleShowFlagModal.bind(this);
+    this.handleFlagCommentModal = this.handleFlagCommentModal.bind(this);
   }
 
   componentDidMount(){
@@ -111,16 +115,44 @@ class VotingContainerBase extends React.Component {
     }
   }
 
+  handleShowFlagModal(){
+    if (this.state.flagModalShow) {
+      this.setState({ flagModalShow: !this.state.flagModalShow })
+      document.body.classList.remove("cf-modal-locked");
+    } else {
+      this.setState({ flagModalShow: !this.state.flagModalShow })
+      document.body.classList.add("cf-modal-locked");
+    }
+  }
+
+  handleFlagCommentModal(){
+    this.handleShowFlagModal()
+    alert('Comment Flagged!')
+  }
+
   render(){
 
     var voteButtonsRowOne = RowOneVoteButtons(this)
-    var voteButtonsRowTwo;
+    var voteButtonsRowTwo, flagModal;
+
     if (this.state.userVoted) {
       voteButtonsRowTwo = RowTwoVoteButtons(this)
     }
 
+    if (this.state.flagModalShow) {
+      flagModal =
+      <Modal
+        handleClose={this.handleShowFlagModal}
+        modalTitle={"Flag this comment?"}
+        actionButton={this.handleFlagCommentModal}
+      >
+      If you wish to flag this comment please click flag comment button !
+      </Modal>
+    }
+
     return(
       <div className="cf-votes-container margin-top-10px" >
+        {flagModal}
         <div className="cf-votes-top-row row ">
           {voteButtonsRowOne}
         </div>

@@ -205,6 +205,12 @@ class CommentingContainer extends React.Component {
     this.submitterMan(event)
   }
 
+  submitterMan(event){
+    setTimeout(function() { //Start the timer
+      this.handleFilterSubmit();
+    }.bind(this), 1)
+  }
+
   handleSortDirClick(event){
     event.preventDefault();
     var value = (this.state.sortOpts.sortDir == "asc") ? "desc" : "asc"
@@ -218,12 +224,6 @@ class CommentingContainer extends React.Component {
     })
 
     this.submitterMan(event)
-  }
-
-  submitterMan(event){
-    setTimeout(function() { //Start the timer
-      this.handleFilterSubmit();
-    }.bind(this), 1)
   }
 
   handleFilterByClick(event){

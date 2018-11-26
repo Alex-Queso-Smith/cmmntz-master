@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :edit_password
+      get :edit_settings
     end
   end
   resources :user_sessions, only: [:new, :create, :destroy]
