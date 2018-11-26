@@ -10,6 +10,10 @@ export const VoteClick = (object, event) => {
   const bigFive = ['like', 'dislike', 'indifferent', 'like_a_lot', 'dislike_a_lot']
 
   var selectedVotes = object.state.selectedVotes;
+  
+  if (name === "warn" && !selectedVotes.warn) {
+    object.handleShowFlagModal()
+  }
 
   if (bigFive.includes(name)) {
     if (object.state.selectedBigFive === '') { // if there is no selected big five
