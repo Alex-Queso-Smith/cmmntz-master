@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   resources :comments
-  resources :articles
+  resources :articles, param: :slug, only: [:index, :show]
   resources :users do
     member do
       get :edit_password

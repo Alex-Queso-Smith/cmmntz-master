@@ -19,7 +19,7 @@ User.create(
   latitude: 40
 )
 
-FaeUser.create(
+Fae::User.create(
   email: "jesse@classibridge.com",
   password: "password",
   password_confirmation: "password",
@@ -38,7 +38,7 @@ User.create(
   latitude: 40
 )
 
-FaeUser.create(
+Fae::User.create(
   email: "alex@classibridge.com",
   password: "password",
   password_confirmation: "password",
@@ -164,7 +164,8 @@ num_articles.times do
   time = Time.now - rand(150000..10000000)
   article_one = Article.create(
     title: "Demo Article #{iter}",
-    introduction: truncate(RANDOM_TEXT.sample, length: 50),
+    slug: "demo-article-#{iter}",
+    introduction: "This is demo article #{iter}. Read more to find out all about it!",
     author: authors.sample,
     article_category: article_categories.sample,
     body: RANDOM_TEXT.sample,

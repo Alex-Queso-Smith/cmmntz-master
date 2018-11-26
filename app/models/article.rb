@@ -8,6 +8,10 @@ class Article < ApplicationRecord
   validates :title, :publish_date, :body, :introduction, presence: true
   validates :slug, Fae.validation_helpers.slug
 
+  def to_param
+    slug
+  end
+
   def fae_display_field
     title
   end

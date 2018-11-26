@@ -1,5 +1,4 @@
 .articles-container
-  %p= link_to 'New Article', new_article_path
   %h3 Articles
   .articles-wrapper
     .row
@@ -14,6 +13,6 @@
                 .article-preview-image.text-center.col-5
                   [img]
                 .article-preview-text.col-7
-                  = truncate(article.text, length: 200)
+                  = article.introduction
                   %br/
                   = link_to "read more", article
