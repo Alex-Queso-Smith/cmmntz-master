@@ -11,7 +11,13 @@ class User < ApplicationRecord
   # general settings v-attrs
   vstr 'settings', {
     color_theme: :string,
-    font: :string
+    font: :string,
+    comments_from: :string,
+    filter_list: :array,
+    not_filter_list: :array,
+    sort_dir: :string,
+    sort_type: :string,
+    votes_from: :string
   }
 
   GENDERS = [0, 1, 2]

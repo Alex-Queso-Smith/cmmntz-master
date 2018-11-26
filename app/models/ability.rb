@@ -22,7 +22,7 @@ class Ability
 
   def default_permissions
     cannot :manage, :all # wipe all base Permissions
-    can [:crud, :edit_password], User, { id: user.id } # can crud self
+    can [:crud, :edit_password, :edit_settings], User, { id: user.id } # can crud self
     can :read, User # can view other users in list or individual
     can :crud, Comment, { user_id: user.id } # can crud own comments
     can :read, Comment # can view other user's comments in list or individual
