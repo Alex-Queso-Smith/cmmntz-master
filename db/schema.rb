@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_26_193123) do
+ActiveRecord::Schema.define(version: 2018_11_26_194303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -27,13 +27,27 @@ ActiveRecord::Schema.define(version: 2018_11_26_193123) do
     t.index ["user_id"], name: "index_admin_mails_on_user_id"
   end
 
+  create_table "article_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "articles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
-    t.text "text"
-    t.string "author_name"
+    t.string "slug"
+    t.text "introduction"
+    t.text "body"
+    t.date "publish_date"
+    t.uuid "article_category_id"
     t.uuid "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["article_category_id"], name: "index_articles_on_article_category_id"
+    t.index ["author_id"], name: "index_articles_on_author_id"
+    t.index ["publish_date"], name: "index_articles_on_publish_date"
+    t.index ["slug"], name: "index_articles_on_slug"
   end
 
   create_table "arts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
