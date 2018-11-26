@@ -2,7 +2,7 @@
 num_users = 100
 
 # set the number of articles we want in this pass
-num_articles = 4
+num_articles = 7
 time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
 puts "Starting process at #{Time.now}"
@@ -19,6 +19,15 @@ User.create(
   latitude: 40
 )
 
+Fae::User.create(
+  email: "jesse@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  first_name: "Jesse",
+  last_name: "Admin",
+  role_id: 1
+)
+
 User.create(
   user_name: "Alex",
   email: "alex@classibridge.com",
@@ -27,6 +36,15 @@ User.create(
   base_image: "gi",
   longitude: -75,
   latitude: 40
+)
+
+Fae::User.create(
+  email: "alex@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  first_name: "Alex",
+  last_name: "Admin",
+  role_id: 1
 )
 
 User.create(
@@ -126,6 +144,18 @@ users.each do |user|
   end
 end
 
+["Alber Einstein", "Douglas Adams", "Lore", "Newt Scamander"].each do |a|
+  Author.create(name: a)
+end
+authors = Author.all
+
+["Cars", "Politics", "Weather", "Sports", "Science and Nature"].each do |c|
+  ArticleCategory.create(name: c)
+end
+
+article_categories = ArticleCategory.all
+
+
 # generate desired number of articles
 puts "generating #{num_articles} articles"
 iter = 1
@@ -134,7 +164,12 @@ num_articles.times do
   time = Time.now - rand(150000..10000000)
   article_one = Article.create(
     title: "Demo Article #{iter}",
-    text: RANDOM_TEXT.sample,
+    slug: "demo-article-#{iter}",
+    introduction: "This is demo article #{iter}. Read more to find out all about it!",
+    author: authors.sample,
+    article_category: article_categories.sample,
+    body: RANDOM_TEXT.sample,
+    publish_date: time,
     created_at: time,
     updated_at: time
   )
