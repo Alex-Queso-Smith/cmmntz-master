@@ -11,7 +11,9 @@ class ArticlesController < ApplicationController
   # GET /articles/1.json
   def show
     url = @article.url(request)
-    @art = Art.find_or_create_by(url: url)
+    @art = Art.where(url: url).first_or_create do |art|
+      art.gallery = Gallery.first
+    end
   end
 
   private
