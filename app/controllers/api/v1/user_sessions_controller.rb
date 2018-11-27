@@ -10,8 +10,10 @@ class Api::V1::UserSessionsController < ApiController
   def create
     @user_session = UserSession.new(user_session_params.to_h)
     if @user_session.save
+      puts "login good~~~~~~~~~~~~~"
       render json: { message: "Logged in successfully" }
     else
+      puts "login BADDDDDD~~~~~~~~~~~~~#{@user_session.errors.full_messages}"
       render json: { errors: @user_session.errors, status: :unprocessable_entity }
     end
   end
