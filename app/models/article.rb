@@ -24,6 +24,6 @@ class Article < ApplicationRecord
     else
       base_url = "#{request.base_url.gsub("http://", "")}"
     end
-    "#{base_url}/#{self.class.to_s.pluralize.downcase}/#{id}"
+    "#{base_url}/#{self.class.to_s.pluralize.downcase}/#{slug}"
   end
 end
