@@ -1,4 +1,7 @@
 class Art < ApplicationRecord
+  belongs_to :gallery
+  delegate :checker_settings, to: :gallery
+
   scope :for_url, -> (url) {
     where(url: url)
   }
@@ -6,15 +9,4 @@ class Art < ApplicationRecord
   scope :with_activity_since, -> (datetime) {
     where(arel_table[:last_interaction_at].gteq(datetime))
   }
-
-  def checker_settings
-    {
-      comments_amount: 1,
-      votes: {
-        warn: 1,
-        dislike: 1,
-        dislike_a_lot: 1
-      }
-    }
-  end
 end
