@@ -15,6 +15,6 @@ json.user do
   json.votes_from @user.votes_from
   json.filter_list @user.filter_list
   json.not_filter_list @user.not_filter_list
-  json.sort_dir @user.sort_dir
+  json.sort_dir @user.sort_dir || "desc"
   json.sort_type @user.sort_type
 end

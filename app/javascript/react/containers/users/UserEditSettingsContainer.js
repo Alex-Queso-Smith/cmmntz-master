@@ -25,12 +25,13 @@ class UserEditSettingsContainer extends React.Component {
     FetchDidMount(this, `/api/v1/users/${this.props.match.params.id}.json`)
     .then(userData => {
       var opts = this.state.sortOpts
-
+      
       opts.sortDir = userData.user.sort_dir
       opts.sortType = userData.user.sort_type
       opts.commentsFrom = userData.user.comments_from
       opts.votesFrom = userData.user.votes_from
-
+      opts.filterList = userData.user.filter_list.split(',')
+      opts.notFilterList = userData.user.not_filter_list.split(',')
       this.setState({ sortOpts: opts })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));

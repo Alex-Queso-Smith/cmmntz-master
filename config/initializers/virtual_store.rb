@@ -9,13 +9,19 @@ module VirtualStore
       self.class_eval do
         delegate attr.to_sym, :to => loc.to_sym, :allow_nil => true
       end
-      
+
       # add setter
       case type
       when "bool"
         define_method "#{attr}=" do |val|
           self[loc.to_sym] ||= {}
           val = (val == 1 || val == true) ? 1 : 0
+          self[loc.to_sym][attr.to_sym] = val
+        end
+      when "array"
+        define_method "#{attr}=" do |val|
+          self[loc.to_sym] ||= {}
+          val = serialize val, Array
           self[loc.to_sym][attr.to_sym] = val
         end
       else
