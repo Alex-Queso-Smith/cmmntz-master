@@ -1,5 +1,6 @@
 json.id comment.id
 json.text comment.text
+json.censored_text comment.censored_text
 json.created_at display_time_ago(comment.created_at)
 json.edited has_been_edited(comment)
 json.user do

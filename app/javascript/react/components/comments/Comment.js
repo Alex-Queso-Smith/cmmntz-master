@@ -140,7 +140,7 @@ class Comment extends React.Component {
   }
 
   render(){
-    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers } = this.props
+    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored } = this.props
     var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
     var textBox, editButton, cancelButton, lastEdited, userTile, starOpacity, blockOpacity, followStar, blockSym;
 
@@ -265,6 +265,7 @@ class Comment extends React.Component {
           handleTopChange={this.props.handleTopChange}
           handleReplyOpen={this.props.handleReplyOpen}
           replyParent={this.props.replyParent}
+          censored={censored}
         />
       </div>
     )

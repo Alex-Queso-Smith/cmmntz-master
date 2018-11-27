@@ -17,4 +17,6 @@ json.user do
   json.not_filter_list @user.not_filter_list
   json.sort_dir @user.sort_dir || "desc"
   json.sort_type @user.sort_type
+  json.censor @user.censor || false
+  json.show_censored_comments @user.show_censored_comments || true
 end
