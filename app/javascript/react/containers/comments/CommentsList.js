@@ -23,7 +23,7 @@ class CommentsList extends React.Component {
     if (allComments) {
       commentsArray = allComments.map((comment) => {
 
-        var { user_name, gender, age_range, user_id} = comment.user
+        var { user_name, gender, age_range, user_id, show_censored} = comment.user
         var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted, censored_text } = comment
         var userName, commentLength;
         var shownText = text;
@@ -34,12 +34,19 @@ class CommentsList extends React.Component {
         if (censored && censored_text) {
           shownText = censored_text
         }
-
         if (user_name) {
           userName = `${user_name}`
         }
 
-        if (!userBlocked) {
+        var showCensored = true;
+
+        if (censored && user_id != commentRoot.getAttribute('data-user-id')) {
+          if (show_censored === "false") {
+            showCensored = false
+          }
+        }
+
+        if (!userBlocked && showCensored ) {
           return(
             <div className="cf-comment-div" key={id}>
               <Comment
