@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_26_200203) do
+ActiveRecord::Schema.define(version: 2018_11_27_164914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(version: 2018_11_26_200203) do
     t.datetime "last_interaction_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "gallery_id"
+    t.index ["gallery_id"], name: "index_arts_on_gallery_id"
     t.index ["last_interaction_at"], name: "index_arts_on_last_interaction_at"
     t.index ["url"], name: "index_arts_on_url"
   end
@@ -105,6 +107,33 @@ ActiveRecord::Schema.define(version: 2018_11_26_200203) do
     t.index ["interactions_count"], name: "index_comments_on_interactions_count"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "customers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "role"
+    t.uuid "gallery_id"
+    t.string "crypted_password"
+    t.string "password_salt"
+    t.string "persistence_token"
+    t.string "single_access_token"
+    t.string "perishable_token"
+    t.integer "login_count", default: 0, null: false
+    t.integer "failed_login_count", default: 0, null: false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string "current_login_ip"
+    t.string "last_login_ip"
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gallery_id"], name: "index_customers_on_gallery_id"
+    t.index ["perishable_token"], name: "index_customers_on_perishable_token", unique: true
+    t.index ["persistence_token"], name: "index_customers_on_persistence_token", unique: true
+    t.index ["single_access_token"], name: "index_customers_on_single_access_token", unique: true
   end
 
   create_table "fae_changes", id: :serial, force: :cascade do |t|
@@ -262,6 +291,13 @@ ActiveRecord::Schema.define(version: 2018_11_26_200203) do
     t.datetime "updated_at", null: false
     t.index ["follower_id"], name: "index_followings_on_follower_id"
     t.index ["following_id"], name: "index_followings_on_following_id"
+  end
+
+  create_table "galleries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.text "settings"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

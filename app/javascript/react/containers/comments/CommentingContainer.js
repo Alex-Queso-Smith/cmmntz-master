@@ -320,6 +320,14 @@ class CommentingContainer extends React.Component {
 
     var { commentRoot } = this.props;
     var { totalComments, comments, commentFormErrors, userSettings, sortOpts, followedUsers, blockedUsers} = this.state;
+    var endComments;
+
+    if (totalComments === comments.length) {
+      endComments =
+      <div className="text-center">
+        ---  end of comments ---
+      </div>
+    }
 
     return(
       <div id="cf-comments-main" className={`${userSettings.font} ${userSettings.colorTheme}`}>
@@ -349,6 +357,7 @@ class CommentingContainer extends React.Component {
           followedUsers={followedUsers}
           blockedUsers={blockedUsers}
         />
+      {endComments}
         <ScrollUpButton
           ToggledStyle={{left: '75px'}}
         />
