@@ -6,6 +6,7 @@ class Comment < ApplicationRecord
   attr_accessor :vote_types, :force, :old_top_id
 
   belongs_to :user
+  belongs_to :art
   belongs_to :parent, class_name: 'Comment', optional: true
   has_many :replies, class_name: 'Comment', foreign_key: :parent_id
   has_many :votes
@@ -22,6 +23,7 @@ class Comment < ApplicationRecord
 
   scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
 
+  before_save :censor_text!
   after_create_commit :update_last_interaction_at_for_art!
 
   private
@@ -31,6 +33,14 @@ class Comment < ApplicationRecord
   def text_does_not_have_html
     text_hold = text
     errors[:text] << "HTML is not allowed in text" if strip_tags(text_hold) != text
+  end
+
+  def censor_text!
+    text_hold = text
+    BAD_WORDS.each do |word|
+      text_hold = text_hold.gsub(/#{word}/i, ("*" * word.length)) || text_hold
+    end
+    self.censored_text = text_hold
   end
 
 

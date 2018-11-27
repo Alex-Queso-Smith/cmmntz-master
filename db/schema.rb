@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_27_164914) do
+ActiveRecord::Schema.define(version: 2018_11_27_172507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 2018_11_27_164914) do
     t.datetime "updated_at", null: false
     t.integer "interactions_count", default: 0
     t.uuid "parent_id"
+    t.text "censored_text"
     t.index ["art_id", "art_type"], name: "index_comments_on_art_id_and_art_type"
     t.index ["interactions_count"], name: "index_comments_on_interactions_count"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
