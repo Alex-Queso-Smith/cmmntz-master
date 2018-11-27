@@ -59,7 +59,8 @@ class Api::V1::UsersController < ApiController
         :sort_dir,
         :sort_type,
         :votes_from,
-        :censor
+        :censor,
+        :show_censored_comments
       )
     end
 end

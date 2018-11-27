@@ -14,7 +14,8 @@ class UserEditSettingsContainer extends React.Component {
       commentsFrom: "",
       votesFrom: ""
     },
-    censor: false
+    censor: false,
+    showCensoredComments: true
   }
 
   handleFilterByClick = this.handleFilterByClick.bind(this);
@@ -27,8 +28,9 @@ class UserEditSettingsContainer extends React.Component {
     FetchDidMount(this, `/api/v1/users/${this.props.match.params.id}.json`)
     .then(userData => {
       var opts = this.state.sortOpts
-      var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor } = userData.user
+      var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, show_censored_comments } = userData.user
       var censored = censor === "true" ? true : false;
+      var showCenComment = show_censored_comments === "false" ? false : true;
 
       opts.sortDir = sort_dir
       opts.sortType = sort_type
@@ -43,7 +45,8 @@ class UserEditSettingsContainer extends React.Component {
 
       this.setState({
         sortOpts: opts,
-        censor: censored
+        censor: censored,
+        showCensoredComments: showCenComment
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -60,6 +63,7 @@ class UserEditSettingsContainer extends React.Component {
       this.setState({
         [name]: value
       })
+      
     } else {
       if (target.getAttribute('data-value')) {
         value = target.getAttribute('data-value')
@@ -128,7 +132,7 @@ class UserEditSettingsContainer extends React.Component {
     event.preventDefault();
 
     var { sortDir, sortType, notFilterList, filterList, commentsFrom, votesFrom } = this.state.sortOpts;
-    var { censor } = this.state;
+    var { censor, showCensoredComments } = this.state;
 
     var user = new FormData();
     user.append("user[sort_dir]", sortDir);
@@ -138,6 +142,7 @@ class UserEditSettingsContainer extends React.Component {
     user.append("user[comments_from]", commentsFrom);
     user.append("user[votes_from]", votesFrom);
     user.append("user[censor]", censor);
+    user.append("user[show_censored_comments]", showCensoredComments)
 
     FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'saveErrors', user)
     .then(redirect => window.location = '/articles')
@@ -157,12 +162,22 @@ class UserEditSettingsContainer extends React.Component {
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
         />
+      <div className="row">
         <Checkbox
+          className={"col-6"}
           onChange={this.handleChange}
           name={"censor"}
           label={"Censor all text?"}
           checked={this.state.censor}
+          />
+        <Checkbox
+          className={"col-6"}
+          onChange={this.handleChange}
+          name={"showCensoredComments"}
+          label={"Show Comment if Censored?"}
+          checked={this.state.showCensoredComments}
         />
+      </div>
         <div className="margin-top-10px text-center">
           <button className="btn btn-med btn-primary" onClick={this.handleSubmit}>
             Submit

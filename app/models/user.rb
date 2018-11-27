@@ -18,7 +18,8 @@ class User < ApplicationRecord
     sort_dir: :string,
     sort_type: :string,
     votes_from: :string,
-    censor: :bool
+    censor: :bool,
+    show_censored_comments: :bool
   }
 
   GENDERS = [0, 1, 2]
