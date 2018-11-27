@@ -157,6 +157,7 @@ end
 
 article_categories = ArticleCategory.all
 
+gallery = Gallery.create(name: "Classibridge Times")
 
 # generate desired number of articles
 puts "generating #{num_articles} articles"
@@ -176,7 +177,7 @@ num_articles.times do
     updated_at: time
   )
   url = article_one.url
-  art = Art.create(url: url)
+  art = Art.create(url: url, gallery: gallery)
 
   time += rand(100..1000)
 
