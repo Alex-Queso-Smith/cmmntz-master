@@ -30,7 +30,8 @@ class CommentingContainer extends React.Component {
       page: 1,
       commentsFrom: "",
       votesFrom: ""
-    }
+    },
+    censored: false
   }
 
   handleCommentForm = this.handleCommentForm.bind(this);
@@ -58,19 +59,22 @@ class CommentingContainer extends React.Component {
         oldUserSettings.colorTheme = body.user.color_theme
 
         var opts = this.state.sortOpts
+        var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor } = body.user
+        var censorStatus = censor === "true" ? true : false
 
-        opts.sortDir = body.user.sort_dir
-        opts.sortType = body.user.sort_type
-        opts.commentsFrom = body.user.comments_from
-        opts.votesFrom = body.user.votes_from
-        opts.filterList = body.user.filter_list.split(',').filter(filter => filter != "")
-        opts.notFilterList = body.user.not_filter_list.split(',').filter(filter => filter != "")
+        opts.sortDir = sort_dir
+        opts.sortType = sort_type
+        opts.commentsFrom = comments_from
+        opts.votesFrom = votes_from
+        opts.filterList = filter_list.split(',').filter(filter => filter != "")
+        opts.notFilterList = not_filter_list.split(',').filter(filter => filter != "")
 
         this.setState({
           userSettings: oldUserSettings,
           followedUsers: body.user.followed_users,
           blockedUsers: body.user.blocked_users,
-          sortOpts: opts
+          sortOpts: opts,
+          censored: censorStatus
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -319,7 +323,7 @@ class CommentingContainer extends React.Component {
   render(){
 
     var { commentRoot } = this.props;
-    var { totalComments, comments, commentFormErrors, userSettings, sortOpts, followedUsers, blockedUsers} = this.state;
+    var { totalComments, comments, commentFormErrors, userSettings, sortOpts, followedUsers, blockedUsers, censored} = this.state;
     var endComments;
 
     if (totalComments === comments.length) {
@@ -356,6 +360,7 @@ class CommentingContainer extends React.Component {
           handleTopChange={this.handleTopChange}
           followedUsers={followedUsers}
           blockedUsers={blockedUsers}
+          censored={censored}
         />
       {endComments}
         <ScrollUpButton

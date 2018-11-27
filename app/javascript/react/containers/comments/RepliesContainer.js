@@ -135,7 +135,7 @@ class RepliesContainer extends React.Component {
   }
 
   render(){
-    var { followedUsers, blockedUsers, currentUserId } = this.props;
+    var { followedUsers, blockedUsers, currentUserId, censored } = this.props;
     var { replies } = this.state;
     var repliesList, anonModal, replyField, replyButton, cancelReplyButton, replyErrorText;
     var blockedCount = 0;
@@ -146,13 +146,18 @@ class RepliesContainer extends React.Component {
 
         var followed = followedUsers.includes(reply.user.user_id)
         var blocked = blockedUsers.includes(reply.user.user_id)
-        var { id, user, text, created_at, vote_percents, user_has_voted, current_users_votes } = reply
+        var { id, user, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text } = reply
         var lengthImage = CommentLengthSorter(text)
 
         var handleNewReplyBox = () => {
           this.props.handleReplyOpen(this.props.commentId)
         }
 
+        var shownText = text;
+        if (censored && censored_text) {
+          shownText = censored_text
+        }
+        
         if (!blocked) {
           return(
             <Reply
@@ -161,7 +166,7 @@ class RepliesContainer extends React.Component {
               replyId={id}
               user={user}
               lengthImage={lengthImage}
-              reply={text}
+              reply={shownText}
               posted={created_at}
               userFollowed={followed}
               userBlocked={blocked}
