@@ -10,7 +10,7 @@ export const VoteClick = (object, event) => {
   const bigFive = ['like', 'dislike', 'indifferent', 'like_a_lot', 'dislike_a_lot']
 
   var selectedVotes = object.state.selectedVotes;
-  
+
   if (name === "warn" && !selectedVotes.warn) {
     object.handleShowFlagModal()
   }
@@ -83,6 +83,7 @@ export const VoteClick = (object, event) => {
 }
 
 export const ImageSelector = (type) => {
+  
   if (type.includes('blank')) {
     return ''
   } else {

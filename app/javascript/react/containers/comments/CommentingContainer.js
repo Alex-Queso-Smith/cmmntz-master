@@ -56,10 +56,21 @@ class CommentingContainer extends React.Component {
         var oldUserSettings = this.state.userSettings
         oldUserSettings.font = body.user.font;
         oldUserSettings.colorTheme = body.user.color_theme
+
+        var opts = this.state.sortOpts
+
+        opts.sortDir = body.user.sort_dir
+        opts.sortType = body.user.sort_type
+        opts.commentsFrom = body.user.comments_from
+        opts.votesFrom = body.user.votes_from
+        opts.filterList = body.user.filter_list.split(',').filter(filter => filter != "")
+        opts.notFilterList = body.user.not_filter_list.split(',').filter(filter => filter != "")
+
         this.setState({
           userSettings: oldUserSettings,
           followedUsers: body.user.followed_users,
-          blockedUsers: body.user.blocked_users
+          blockedUsers: body.user.blocked_users,
+          sortOpts: opts
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -77,6 +88,9 @@ class CommentingContainer extends React.Component {
        comments: body.comments,
        totalComments: body.total_comments
       })
+    })
+    .then(dataUpdated => {
+      this.handleFilterSubmit()
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -185,6 +199,7 @@ class CommentingContainer extends React.Component {
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
     .then(body => {
+
       var append = this.state.sortOpts.page > 1
       var newComments;
       if (append) {
