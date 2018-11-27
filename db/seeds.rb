@@ -25,7 +25,8 @@ Fae::User.create(
   password_confirmation: "password",
   first_name: "Jesse",
   last_name: "Admin",
-  role_id: 1
+  role_id: 1,
+  active: true
 )
 
 User.create(
@@ -44,7 +45,8 @@ Fae::User.create(
   password_confirmation: "password",
   first_name: "Alex",
   last_name: "Admin",
-  role_id: 1
+  role_id: 1,
+  active: true
 )
 
 User.create(
