@@ -9,54 +9,50 @@ import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual } from '../
 import CommentEtiquette from '../../components/modals/CommentEtiquette';
 
 class CommentingContainer extends React.Component {
-  state = {
-    userSettings: {
-      font: 'serif',
-      colorTheme: 'light'
-    },
-    totalComments: 0,
-    followedUsers: [],
-    blockedUsers: [],
-    comments: [],
-    userId: '',
-    artId: '',
-    artType: '',
-    commentFormErrors: {},
-    sortOpts: {
-      sortDir: 'desc',
-      sortType: 'created_at',
-      notFilterList: [],
-      filterList: [],
-      page: 1,
-      commentsFrom: "",
-      votesFrom: ""
-    },
-    censored: false
+  constructor(props){
+    super(props);
+    this.state = {
+      userThemeSettings: this.props.userThemeSettings,
+      totalComments: 0,
+      followedUsers: [],
+      blockedUsers: [],
+      comments: [],
+      userId: this.props.userId,
+      artId: this.props.artId,
+      artType: this.props.artType,
+      commentFormErrors: {},
+      sortOpts: {
+        sortDir: 'desc',
+        sortType: 'created_at',
+        notFilterList: [],
+        filterList: [],
+        page: 1,
+        commentsFrom: "",
+        votesFrom: ""
+      },
+      censored: false
+    }
+    this.handleCommentForm = this.handleCommentForm.bind(this);
+    this.commentFormSubmitter = this.commentFormSubmitter.bind(this);
+    this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
+    this.handleTopChange = this.handleTopChange.bind(this);
+    this.handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
+    this.handleFilterByClick = this.handleFilterByClick.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
+    this.handleSortDirClick = this.handleSortDirClick.bind(this);
+    this.handleFilterClick = this.handleFilterClick.bind(this);
+    this.submitterMan = this.submitterMan.bind(this);
   }
 
-  handleCommentForm = this.handleCommentForm.bind(this);
-  commentFormSubmitter = this.commentFormSubmitter.bind(this);
-  handleFilterSubmit = this.handleFilterSubmit.bind(this);
-  handleTopChange = this.handleTopChange.bind(this);
-  handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
-  handleFilterByClick = this.handleFilterByClick.bind(this);
-
-  handleChange = this.handleChange.bind(this);
-  handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
-  handleSortDirClick = this.handleSortDirClick.bind(this);
-  handleFilterClick = this.handleFilterClick.bind(this);
-  submitterMan = this.submitterMan.bind(this);
 
   componentWillMount(){
-    var commentRoot = this.props.commentRoot
-    var userId = commentRoot.getAttribute('data-user-id')
+    var { userId } = this.state;
+
     if (userId.length > 0){
       FetchDidMount(this, `/api/v1/users/${userId}.json`)
       .then(body => {
-
-        var oldUserSettings = this.state.userSettings
-        oldUserSettings.font = body.user.font;
-        oldUserSettings.colorTheme = body.user.color_theme
 
         var opts = this.state.sortOpts
         var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor } = body.user
@@ -74,7 +70,6 @@ class CommentingContainer extends React.Component {
         }
 
         this.setState({
-          userSettings: oldUserSettings,
           followedUsers: body.user.followed_users,
           blockedUsers: body.user.blocked_users,
           sortOpts: opts,
@@ -86,9 +81,7 @@ class CommentingContainer extends React.Component {
   }
 
   componentDidMount(){
-    var commentRoot = this.props.commentRoot
-    var artType = commentRoot.getAttribute('data-art-type')
-    var artId = commentRoot.getAttribute('data-art-id')
+    var { commentRoot, artType, artId} = this.props
 
     FetchDidMount(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`)
     .then(body => {
@@ -327,7 +320,7 @@ class CommentingContainer extends React.Component {
   render(){
 
     var { commentRoot } = this.props;
-    var { totalComments, comments, commentFormErrors, userSettings, sortOpts, followedUsers, blockedUsers, censored} = this.state;
+    var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored} = this.state;
     var endComments;
 
     if (totalComments === comments.length) {
@@ -338,7 +331,7 @@ class CommentingContainer extends React.Component {
     }
 
     return(
-      <div id="cf-comments-main" className={`${userSettings.font} ${userSettings.colorTheme}`}>
+      <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         <CommentEtiquette />
 
         <CommentFormContainer
