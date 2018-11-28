@@ -253,8 +253,11 @@ a:hover {
   margin: 0 auto;
   text-align: center;
   color: #000;
-  h3 {
+  h2, h3, h4, h5 {
     margin: 0 auto;
+  }
+  h4 {
+    font-size: 1.5em;
   }
 }
 @media (min-width: $breakpoint-phone) {

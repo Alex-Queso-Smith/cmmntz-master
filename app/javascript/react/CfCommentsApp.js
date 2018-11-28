@@ -16,7 +16,7 @@ class CfCommentsApp extends React.Component {
         colorTheme: 'light'
       },
       artSettings: {
-        disabled: false,
+        disabled: true,
         deactivated: false
       }
     }
@@ -55,7 +55,7 @@ class CfCommentsApp extends React.Component {
     } else {
       displayContainer =
       <div className="deactivated-message">
-        <h3>This thread has been disabled by the site Admins.</h3>
+        <h3>This thread has been deactivated by the site Admins.</h3>
       </div>
     }
     return (

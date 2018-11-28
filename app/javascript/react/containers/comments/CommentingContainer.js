@@ -343,6 +343,7 @@ class CommentingContainer extends React.Component {
           commentRoot={commentRoot}
           handleSubmit={this.handleCommentForm}
           commentFormErrors={commentFormErrors}
+          artSettings={this.props.artSettings}
         />
         <hr />
         <CommentFilters
