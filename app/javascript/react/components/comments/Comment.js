@@ -76,7 +76,7 @@ class Comment extends React.Component {
         var artErrors = body.errors["art"]
         if (artErrors) {
           alert(artErrors[0])
-          
+
           this.setState({
             editStatus: false,
             text: this.props.text
