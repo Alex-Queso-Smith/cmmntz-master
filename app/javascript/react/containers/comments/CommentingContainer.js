@@ -154,7 +154,7 @@ class CommentingContainer extends React.Component {
           alert(artErrors[0])
         }
 
-        var voteErrors = body.errors["votes.base"]
+        var voteErrors = body.errors["votes.top"]
         if (voteErrors){
           var message = voteErrors[1]
           var r = confirm(message);

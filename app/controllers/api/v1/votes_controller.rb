@@ -11,7 +11,7 @@ class Api::V1::VotesController < ApiController
       set_comment
       render "api/v1/votes/all_returns"
     else
-      render json: { errors: @vote.errors.full_messages, status: :unprocessable_entity }
+      render json: { errors: @vote.errors, status: :unprocessable_entity }
     end
   end
 
@@ -21,7 +21,7 @@ class Api::V1::VotesController < ApiController
       set_comment
       render "api/v1/votes/all_returns"
     else
-      render json: { errors: @vote.errors.full_messages, status: :unprocessable_entity}
+      render json: { errors: @vote.errors, status: :unprocessable_entity}
     end
   end
 

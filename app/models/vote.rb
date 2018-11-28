@@ -12,6 +12,8 @@ class Vote < ApplicationRecord
   belongs_to :comment
   belongs_to :comment_vote_tabulation, primary_key: 'id', foreign_key: 'comment_id', optional: true
 
+  delegate :art, to: :comment
+
   before_validation :normalize_vote_type
 
   validates :vote_type, presence: true, inclusion: { in: TYPES }
@@ -39,8 +41,7 @@ class Vote < ApplicationRecord
   end
 
   def art_is_not_disabled
-    errors[:art] << "This Thread has been disabled."
-    errors[:art] << "This Thread has been disabled." if comment.art.disabled? || comment.art.deactivated?
+    errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated." if art.disabled? || art.deactivated?
   end
 
   def deal_with_duplicate_top_votes
@@ -63,8 +64,8 @@ class Vote < ApplicationRecord
 
     if top_votes_for_user.any?
       c = top_votes_for_user.first.comment
-      errors.add(:base) << "You have already voted the following as top (A):\n\n#{truncate(c.text, length: 100)}\n\nWould you like to change your top vote for this thread to (B):\n\n#{truncate(comment.text, length: 100)}"
-      errors.add(:base) << c.id
+      errors.add(:top) << "You have already voted the following as top (A):\n\n#{truncate(c.text, length: 100)}\n\nWould you like to change your top vote for this thread to (B):\n\n#{truncate(comment.text, length: 100)}"
+      errors.add(:top) << c.id
     end
   end
 

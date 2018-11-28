@@ -36,7 +36,6 @@ class Comment < ApplicationRecord
   end
 
   def art_is_not_disabled
-    # errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated."
     errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated." if art.disabled? || art.deactivated?
   end
 

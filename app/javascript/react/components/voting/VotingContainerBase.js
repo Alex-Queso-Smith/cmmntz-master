@@ -44,17 +44,21 @@ class VotingContainerBase extends React.Component {
   handlePost(payload){
     FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
     .then(body => {
-
       if (body.errors) {
-        var message = body.errors[1]
-        var r = confirm(message);
+        if (body.errors["art"]) {
+          alert(body.errors["art"])
+        } else {
+          var message = body.errors[1]
+          var r = confirm(message);
 
-        if (r == true) {
-          var old_top_id = body.errors[3]
-          payload.append("vote[force]", true)
-          payload.append("vote[old_top_id]",old_top_id )
-          this.handlePost(payload)
+          if (r == true) {
+            var old_top_id = body.errors[3]
+            payload.append("vote[force]", true)
+            payload.append("vote[old_top_id]",old_top_id )
+            this.handlePost(payload)
+          }
         }
+
       } else {
         var updateVotes = this.state.selectedVotes
         updateVotes[body.vote_type] = body.vote_id
