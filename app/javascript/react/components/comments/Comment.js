@@ -269,6 +269,7 @@ class Comment extends React.Component {
           votePercents={this.props.votePercents}
           userVoted={this.props.userVoted}
           handleTopChange={this.props.handleTopChange}
+          artSettings={artSettings}
         />
         <RepliesContainer
           replies={replies}

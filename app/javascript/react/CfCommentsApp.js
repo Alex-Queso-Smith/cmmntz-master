@@ -16,7 +16,7 @@ class CfCommentsApp extends React.Component {
         colorTheme: 'light'
       },
       artSettings: {
-        disabled: true,
+        disabled: false,
         deactivated: false
       }
     }
