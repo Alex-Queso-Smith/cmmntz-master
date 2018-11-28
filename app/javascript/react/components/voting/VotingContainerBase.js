@@ -44,17 +44,21 @@ class VotingContainerBase extends React.Component {
   handlePost(payload){
     FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
     .then(body => {
-
       if (body.errors) {
-        var message = body.errors[1]
-        var r = confirm(message);
+        if (body.errors["art"]) {
+          alert(body.errors["art"][0])
+        } else {
+          var message = body.errors[1]
+          var r = confirm(message);
 
-        if (r == true) {
-          var old_top_id = body.errors[3]
-          payload.append("vote[force]", true)
-          payload.append("vote[old_top_id]",old_top_id )
-          this.handlePost(payload)
+          if (r == true) {
+            var old_top_id = body.errors[3]
+            payload.append("vote[force]", true)
+            payload.append("vote[old_top_id]",old_top_id )
+            this.handlePost(payload)
+          }
         }
+
       } else {
         var updateVotes = this.state.selectedVotes
         updateVotes[body.vote_type] = body.vote_id
@@ -75,13 +79,19 @@ class VotingContainerBase extends React.Component {
   handleUpdate(payload, id){
     FetchBasic(this, `/api/v1/votes/${id}.json`, payload, 'PATCH')
     .then(body => {
-      var updateVotes = this.props.commentVotes
-      updateVotes[body.vote_type] = body.vote_id
+      if (body.errors) {
+        if (body.errors["art"]) {
+          alert(body.errors["art"][0])
+        }
+      } else {
+        var updateVotes = this.props.commentVotes
+        updateVotes[body.vote_type] = body.vote_id
 
-      this.setState({
-        selectedVotes: updateVotes,
-        votePercents: body.vote_percents
-      })
+        this.setState({
+          selectedVotes: updateVotes,
+          votePercents: body.vote_percents
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -89,7 +99,13 @@ class VotingContainerBase extends React.Component {
   handleDestroy(id){
     FetchDeleteBasic(this, `/api/v1/votes/${id}.json`)
     .then(body => {
-      this.setState({ votePercents: body.vote_percents })
+      if (body.errors) {
+        if (body.errors["art"]) {
+          alert(body.errors["art"][0])
+        }
+      } else {
+        this.setState({ votePercents: body.vote_percents })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }

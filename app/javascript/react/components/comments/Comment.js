@@ -71,12 +71,24 @@ class Comment extends React.Component {
     newText.append("comment[text]", this.state.text)
 
     FetchBasic(this, `/api/v1/comments/${this.props.commentId}.json`, newText, 'PATCH')
-    .then(resp => {
-      this.setState({
-        editStatus: false,
-        text: resp.comment.text,
-        edited: resp.comment.edited
-      })
+    .then(body => {
+      if (body.errors) {
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+
+          this.setState({
+            editStatus: false,
+            text: this.props.text
+          })
+        }
+      } else {
+        this.setState({
+          editStatus: false,
+          text: body.comment.text,
+          edited: body.comment.edited
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }

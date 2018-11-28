@@ -122,6 +122,11 @@ class RepliesContainer extends React.Component {
     FetchWithUpdate(this, `/api/v1/comments.json`, 'POST', newReply)
     .then(body => {
       if (body.errors) {
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+        }
+        
         this.setState({ replyErrors: body.errors})
       } else {
         var id = this.props.commentId
@@ -157,7 +162,7 @@ class RepliesContainer extends React.Component {
         if (censored && censored_text) {
           shownText = censored_text
         }
-        
+
         if (!blocked) {
           return(
             <Reply

@@ -12,6 +12,8 @@ class Vote < ApplicationRecord
   belongs_to :comment
   belongs_to :comment_vote_tabulation, primary_key: 'id', foreign_key: 'comment_id', optional: true
 
+  delegate :art, to: :comment
+
   before_validation :normalize_vote_type
 
   validates :vote_type, presence: true, inclusion: { in: TYPES }
@@ -19,6 +21,8 @@ class Vote < ApplicationRecord
   validate :vote_is_unique_from_exclusve_group, :art_is_not_disabled, :deal_with_duplicate_top_votes
 
   after_create_commit :add_comment_interaction_for_comment_and_user!, :update_last_interaction_at_for_art!
+
+  before_destroy :art_is_not_disabled_for_destory
 
   scope :for_user_and_comment, lambda {|user_id, comment_id| where(user_id: user_id, comment_id: comment_id)}
   scope :of_vote_type, lambda {|vote_type| where(vote_type: vote_type)}
@@ -39,8 +43,19 @@ class Vote < ApplicationRecord
   end
 
   def art_is_not_disabled
-    errors[:art] << "This Thread has been disabled."
-    errors[:art] << "This Thread has been disabled." if comment.art.disabled? || comment.art.deactivated?
+    if art.deactivated?
+      errors[:art] << "This Thread has been deactivated."
+      errors[:art] << "deactivated"
+    elsif art.disabled?
+      errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated.\n\nYou action has been cancelled."
+      errors[:art] << "disabled"
+    end
+  end
+
+  def art_is_not_disabled_for_destory
+    art_is_not_disabled
+    return true if errors.empty?
+    throw(:abort)
   end
 
   def deal_with_duplicate_top_votes
@@ -63,8 +78,8 @@ class Vote < ApplicationRecord
 
     if top_votes_for_user.any?
       c = top_votes_for_user.first.comment
-      errors.add(:base) << "You have already voted the following as top (A):\n\n#{truncate(c.text, length: 100)}\n\nWould you like to change your top vote for this thread to (B):\n\n#{truncate(comment.text, length: 100)}"
-      errors.add(:base) << c.id
+      errors.add(:top) << "You have already voted the following as top (A):\n\n#{truncate(c.text, length: 100)}\n\nWould you like to change your top vote for this thread to (B):\n\n#{truncate(comment.text, length: 100)}"
+      errors.add(:top) << c.id
     end
   end
 

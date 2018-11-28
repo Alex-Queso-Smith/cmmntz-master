@@ -142,7 +142,12 @@ class CommentingContainer extends React.Component {
     FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
     .then(body => {
       if (body.errors) {
-        var voteErrors = body.errors["votes.base"]
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+        }
+
+        var voteErrors = body.errors["votes.top"]
         if (voteErrors){
           var message = voteErrors[1]
           var r = confirm(message);
