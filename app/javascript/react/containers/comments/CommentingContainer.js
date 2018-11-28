@@ -12,7 +12,10 @@ class CommentingContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      userThemeSettings: this.props.userThemeSettings,
+      userThemeSettings: {
+        font: 'serif',
+        theme: 'light'
+        },
       totalComments: 0,
       followedUsers: [],
       blockedUsers: [],
@@ -44,6 +47,22 @@ class CommentingContainer extends React.Component {
     this.handleSortDirClick = this.handleSortDirClick.bind(this);
     this.handleFilterClick = this.handleFilterClick.bind(this);
     this.submitterMan = this.submitterMan.bind(this);
+  }
+
+  componentWillMount(){
+    var userId = this.state.userId
+    if (userId.length > 0){
+       FetchDidMount(this, `/api/v1/users/${userId}.json`)
+       .then(body => {
+
+         var oldUserThemeSettings = this.state.userThemeSettings
+         oldUserThemeSettings.font = body.user.font;
+         oldUserThemeSettings.colorTheme = body.user.color_theme
+
+         this.setState({ userThemeSettings: oldUserThemeSettings })
+       })
+       .catch(error => console.error(`Error in fetch: ${error.message}`));
+     }
   }
 
   componentDidMount(){
