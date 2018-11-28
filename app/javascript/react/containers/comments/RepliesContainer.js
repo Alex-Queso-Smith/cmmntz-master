@@ -126,7 +126,7 @@ class RepliesContainer extends React.Component {
         if (artErrors) {
           alert(artErrors[0])
         }
-        
+
         this.setState({ replyErrors: body.errors})
       } else {
         var id = this.props.commentId
@@ -140,7 +140,7 @@ class RepliesContainer extends React.Component {
   }
 
   render(){
-    var { followedUsers, blockedUsers, currentUserId, censored } = this.props;
+    var { followedUsers, blockedUsers, currentUserId, censored, artSettings } = this.props;
     var { replies } = this.state;
     var repliesList, anonModal, replyField, replyButton, cancelReplyButton, replyErrorText;
     var blockedCount = 0;
@@ -228,12 +228,14 @@ class RepliesContainer extends React.Component {
 
     if (this.state.replyErrors) { replyErrorText = CreateErrorElements(this.state.replyErrors.text, "Reply") }
 
-    if (this.state.replyActive) {
-      replyField = ReplyFieldActivated(this)
-      replyButton = ReplyButtonActive(this)
-      cancelReplyButton = ReplyCancelButton(this)
-    } else {
-      replyButton = ReplyButtonInactive(this)
+    if (!artSettings.disabled) {
+      if (this.state.replyActive) {
+        replyField = ReplyFieldActivated(this)
+        replyButton = ReplyButtonActive(this)
+        cancelReplyButton = ReplyCancelButton(this)
+      } else {
+        replyButton = ReplyButtonInactive(this)
+      }
     }
 
     return(

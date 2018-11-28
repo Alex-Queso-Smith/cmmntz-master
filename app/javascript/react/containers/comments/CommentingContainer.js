@@ -360,6 +360,7 @@ class CommentingContainer extends React.Component {
           followedUsers={followedUsers}
           blockedUsers={blockedUsers}
           censored={censored}
+          artSettings={this.props.artSettings}
         />
       {endComments}
         <ScrollUpButton

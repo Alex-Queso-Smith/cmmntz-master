@@ -73,6 +73,7 @@ class CommentsList extends React.Component {
                 currentUserId={commentRoot.getAttribute('data-user-id')}
                 artType={commentRoot.getAttribute('data-art-type')}
                 censored={censored}
+                artSettings={this.props.artSettings}
                 />
               <hr />
             </div>
