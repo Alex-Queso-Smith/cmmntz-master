@@ -199,50 +199,61 @@ class CommentFormContainer extends React.Component {
       </Modal>
     }
 
+    var commentForm;
+    if (this.props.artSettings.disabled) {
+      commentForm =
+      <div className="deactivated-message">
+        <h4>Commenting on this thread has been disabled by the site Admins.</h4>
+      </div>
+    } else {
+      commentForm =
+      <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
+        <div className="">
+          <Checkbox
+            name="anonymous"
+            onChange={this.handleChange}
+            label="Submit Anonymously"
+            className="row"
+            />
+        </div>
+        <div className="row">
+          <Textarea
+            maxLength="3000"
+            className="form-control margin-top-10px textarea"
+            name="text"
+            placeholder="Type your comment here"
+            value={this.state.text}
+            onChange={ this.handleChange }
+            rows={7}
+            />
+        </div>
+        {textError}
+        <div className="row">
+          <div className=" margin-top-10px float-left col-3">
+            <button className="btn btn-sm btn-primary" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
+          </div>
+          <div className="margin-top-10px col-9 col-sm-9">
+            <div className="float-right">
+              <button id="comments-button" type="submit" className="btn btn-sm btn-primary" value="Submit" disabled={formInvalid}>
+                Submit Comment
+              </button>
+            </div>
+          </div>
+          <div className="row">
+            {selfVoteButtonsRowOne}
+          </div>
+          <div className="row">
+            {selfVoteButtonsRowTwo}
+          </div>
+        </div>
+        <div className="clear"></div>
+      </form>
+    }
+
     return(
       <div className="container">
         {anonModal}
-        <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit} >
-          <div className="">
-            <Checkbox
-              name="anonymous"
-              onChange={this.handleChange}
-              label="Submit Anonymously"
-              className="row"
-              />
-          </div>
-          <div className="row">
-            <Textarea
-              maxLength="3000"
-              className="form-control margin-top-10px textarea"
-              name="text"
-              placeholder="Type your comment here"
-              value={this.state.text}
-              onChange={ this.handleChange }
-              rows={7}
-              />
-          </div>
-          {textError}
-          <div className="row">
-            <div className=" margin-top-10px float-left col-3">
-              <button className="btn btn-sm btn-primary" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
-            </div>
-            <div className="margin-top-10px col-9 col-sm-9">
-              <div className="float-right">
-                <button id="comments-button" type="submit" className="btn btn-sm btn-primary" value="Submit" disabled={formInvalid}>
-                  Submit Comment
-                </button>
-              </div>
-            </div>
-            <div className="row">
-              {selfVoteButtonsRowOne}
-            </div>
-            <div className="row">
-              {selfVoteButtonsRowTwo}
-            </div>
-          </div>
-          <div className="clear"></div>
-        </form>
+        {commentForm}
       </div>
     )
   }

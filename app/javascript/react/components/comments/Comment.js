@@ -152,15 +152,19 @@ class Comment extends React.Component {
   }
 
   render(){
-    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored } = this.props
+    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings } = this.props
     var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
     var textBox, editButton, cancelButton, lastEdited, userTile, starOpacity, blockOpacity, followStar, blockSym;
 
-    if (editStatus && currentUserId === commentUserId) {
-      editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
-      cancelButton = <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelEditComment}>Cancel Edit</button>
-    } else if (currentUserId === commentUserId) {
-      editButton = <button className="btn btn-primary btn-sm" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+    if (!artSettings.disabled) {
+      if (editStatus && currentUserId === commentUserId) {
+        editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
+        cancelButton = <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelEditComment}>Cancel Edit</button>
+      } else if (currentUserId === commentUserId) {
+        editButton = <button className="btn btn-primary btn-sm" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+      }
+    } else {
+      editButton = <div className="deactivated-message">Commenting on this thread has been disabled.</div>
     }
 
     if (edited) {
@@ -278,6 +282,7 @@ class Comment extends React.Component {
           handleReplyOpen={this.props.handleReplyOpen}
           replyParent={this.props.replyParent}
           censored={censored}
+          artSettings={artSettings}
         />
       </div>
     )
