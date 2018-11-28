@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
   def show
     url = @article.url(request)
     @art = Art.where(url: url).first_or_create do |art|
-      art.gallery = Gallery.first
+      art.gallery = Gallery.find_by(name: "Classibridge Times")
     end
   end
 
