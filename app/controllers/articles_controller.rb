@@ -13,6 +13,7 @@ class ArticlesController < ApplicationController
     url = @article.url(request)
     @art = Art.where(url: url).first_or_create do |art|
       art.gallery = Gallery.find_by(name: "Classibridge Times")
+      # art.set_topics = @article.topics
     end
   end
 
