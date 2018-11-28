@@ -39,6 +39,11 @@ class Vote < ApplicationRecord
     errors.add(:base) << "can not be from the exclusive group of #{EXCLUSIVE_VOTES.join(', ')}" if prev_votes.any?
   end
 
+  def art_is_not_disabled
+    errors[:art] << "This Thread has been disabled."
+    errors[:art] << "This Thread has been disabled." if comment.art.disabled? || comment.art.deactivated?
+  end
+
   def deal_with_duplicate_top_votes
     return unless comment
     return unless vote_type == "top"
