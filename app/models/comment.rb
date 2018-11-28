@@ -19,7 +19,7 @@ class Comment < ApplicationRecord
   validates :user_id, :text, presence: true
 
   validates :text, length: { in: 1..3000 }
-  validate :text_does_not_have_html; :art_is_not_disabled
+  validate :text_does_not_have_html, :art_is_not_disabled
 
   scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
 
@@ -36,8 +36,8 @@ class Comment < ApplicationRecord
   end
 
   def art_is_not_disabled
-    errors[:art] << "This Thread has been disabled."
-    errors[:art] << "This Thread has been disabled." if art.disabled? || art.deactivated?
+    # errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated."
+    errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated." if art.disabled? || art.deactivated?
   end
 
 
