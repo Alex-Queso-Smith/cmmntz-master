@@ -46,7 +46,7 @@ class VotingContainerBase extends React.Component {
     .then(body => {
       if (body.errors) {
         if (body.errors["art"]) {
-          alert(body.errors["art"])
+          alert(body.errors["art"][0])
         } else {
           var message = body.errors[1]
           var r = confirm(message);
@@ -79,13 +79,19 @@ class VotingContainerBase extends React.Component {
   handleUpdate(payload, id){
     FetchBasic(this, `/api/v1/votes/${id}.json`, payload, 'PATCH')
     .then(body => {
-      var updateVotes = this.props.commentVotes
-      updateVotes[body.vote_type] = body.vote_id
+      if (body.errors) {
+        if (body.errors["art"]) {
+          alert(body.errors["art"][0])
+        }
+      } else {
+        var updateVotes = this.props.commentVotes
+        updateVotes[body.vote_type] = body.vote_id
 
-      this.setState({
-        selectedVotes: updateVotes,
-        votePercents: body.vote_percents
-      })
+        this.setState({
+          selectedVotes: updateVotes,
+          votePercents: body.vote_percents
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
