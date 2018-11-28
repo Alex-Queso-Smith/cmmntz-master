@@ -18,6 +18,19 @@ class CfCommentsApp extends React.Component {
     }
   }
 
+  componentWillMount() {
+    FetchDidMount(this, `/api/v1/arts/${this.state.artId}.json`)
+    .then(body => {
+
+      var artSettings = this.state.artSettings
+      artSettings.disabled = body.art.disabled
+      artSettings.deactivated = body.art.deactivated
+
+      this.setState({ artSettings: artSettings })
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
   render(){
     var { commentRoot, userId, artType, artId, artSettings } = this.state;
     var displayContainer;
@@ -37,7 +50,7 @@ class CfCommentsApp extends React.Component {
         <h3>This thread has been deactivated by the site Admins.</h3>
       </div>
     }
-    
+
     return (
       <div id="cf-commenting-container" className="container-fluid">
         {displayContainer}
