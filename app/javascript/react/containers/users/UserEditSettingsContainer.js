@@ -36,10 +36,10 @@ class UserEditSettingsContainer extends React.Component {
       opts.sortType = sort_type
       opts.commentsFrom = comments_from
       opts.votesFrom = votes_from
-      if (filter_list) {
+      if (filter_list.length != 0 ) {
         opts.filterList = filter_list.split(',')
       }
-      if (not_filter_list) {
+      if (not_filter_list.length != 0) {
         opts.notFilterList = not_filter_list.split(',')
       }
 
@@ -63,7 +63,7 @@ class UserEditSettingsContainer extends React.Component {
       this.setState({
         [name]: value
       })
-      
+
     } else {
       if (target.getAttribute('data-value')) {
         value = target.getAttribute('data-value')

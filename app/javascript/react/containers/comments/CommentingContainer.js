@@ -66,8 +66,12 @@ class CommentingContainer extends React.Component {
         opts.sortType = sort_type
         opts.commentsFrom = comments_from
         opts.votesFrom = votes_from
-        opts.filterList = filter_list.split(',').filter(filter => filter != "")
-        opts.notFilterList = not_filter_list.split(',').filter(filter => filter != "")
+        if (filter_list.length != 0) {
+          opts.filterList = filter_list.split(',').filter(filter => filter != "")
+        }
+        if (not_filter_list.length != 0) {
+          opts.notFilterList = not_filter_list.split(',').filter(filter => filter != "")
+        }
 
         this.setState({
           userSettings: oldUserSettings,
