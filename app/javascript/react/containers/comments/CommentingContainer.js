@@ -46,9 +46,8 @@ class CommentingContainer extends React.Component {
     this.submitterMan = this.submitterMan.bind(this);
   }
 
-
-  componentWillMount(){
-    var { userId } = this.state;
+  componentDidMount(){
+    var { artType, artId, userId} = this.state
 
     if (userId.length > 0){
       FetchDidMount(this, `/api/v1/users/${userId}.json`)
@@ -78,13 +77,10 @@ class CommentingContainer extends React.Component {
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
     }
-  }
-
-  componentDidMount(){
-    var { commentRoot, artType, artId} = this.props
 
     FetchDidMount(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`)
     .then(body => {
+
      this.setState({
        comments: body.comments,
        totalComments: body.total_comments
