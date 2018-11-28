@@ -134,8 +134,8 @@ class CommentFormContainer extends React.Component {
 
   render(){
 
-    var { commentFormErrors } = this.props
-    var { text, formInvalid, selfVotes, selfVoteStatus } = this.state
+    var { commentFormErrors, artSettings } = this.props
+    var { text, formInvalid, selfVotes, selfVoteStatus, anonModalShow } = this.state
     var textError, timer, anonModal, selfVoteButtonsRowOne, selfVoteButtonsRowTwo;
 
     if (commentFormErrors.text) {
@@ -189,7 +189,7 @@ class CommentFormContainer extends React.Component {
       })
     }
 
-    if (this.state.anonModalShow) {
+    if (anonModalShow) {
       anonModal =
       <Modal
         handleClose={this.handleCloseAnonModal}
@@ -200,7 +200,7 @@ class CommentFormContainer extends React.Component {
     }
 
     var commentForm;
-    if (this.props.artSettings.disabled) {
+    if (artSettings.disabled) {
       commentForm =
       <div className="deactivated-message">
         <h4>Commenting on this thread has been disabled by the site Admins.</h4>
@@ -222,7 +222,7 @@ class CommentFormContainer extends React.Component {
             className="form-control margin-top-10px textarea"
             name="text"
             placeholder="Type your comment here"
-            value={this.state.text}
+            value={text}
             onChange={ this.handleChange }
             rows={7}
             />

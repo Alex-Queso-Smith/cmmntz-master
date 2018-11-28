@@ -21,7 +21,6 @@ export const VoteClick = (object, event) => {
       object.setState({ selectedBigFive: name })
 
       var newVote = new FormData();
-      var commentRoot = object.props.commentRoot;
 
       newVote.append("vote[comment_id]", object.props.commentId)
       newVote.append("vote[user_id]", object.props.currentUserId)
@@ -62,7 +61,6 @@ export const VoteClick = (object, event) => {
     if (!object.state.selectedVotes[name]) { // user clicks on non big five and is previously unselected
 
       var newVote = new FormData();
-      var commentRoot = object.props.commentRoot;
 
       newVote.append("vote[comment_id]", object.props.commentId)
       newVote.append("vote[user_id]", object.props.currentUserId)
@@ -83,7 +81,7 @@ export const VoteClick = (object, event) => {
 }
 
 export const ImageSelector = (type) => {
-  
+
   if (type.includes('blank')) {
     return ''
   } else {

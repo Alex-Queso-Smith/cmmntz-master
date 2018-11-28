@@ -41,7 +41,6 @@ class CfCommentsApp extends React.Component {
         userId={userId}
         artType={artType}
         artId={artId}
-        commentRoot={commentRoot}
         artSettings={artSettings}
         />
     } else {
