@@ -17,7 +17,7 @@ class CfCommentsApp extends React.Component {
       },
       artSettings: {
         disabled: false,
-        deactivated: false
+        deactivated: true
       }
     }
   }
@@ -41,17 +41,26 @@ class CfCommentsApp extends React.Component {
 
   render(){
     var { commentRoot, userId, artType, artId, userThemeSettings, artSettings } = this.state;
-
+    var displayContainer
+    if (!artSettings.deactivated) {
+      displayContainer =
+      <CommentingContainer
+        userId={userId}
+        artType={artType}
+        artId={artId}
+        commentRoot={commentRoot}
+        userThemeSettings={userThemeSettings}
+        artSettings={artSettings}
+        />
+    } else {
+      displayContainer =
+      <div className="deactivated-message">
+        <h3>This thread has been disabled by the site admin</h3>
+      </div>
+    }
     return (
       <div id="cf-commenting-container" className="container-fluid">
-        <CommentingContainer
-          userId={userId}
-          artType={artType}
-          artId={artId}
-          commentRoot={commentRoot}
-          userThemeSettings={userThemeSettings}
-          artSettings={artSettings}
-          />
+        {displayContainer}
       </div>
     )
   }

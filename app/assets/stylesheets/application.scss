@@ -142,7 +142,7 @@ $breakpoint-phone: 575px;
 }
 
 .margin-top-bottom-10px {
-  margin-top: 10px; 
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 .margin-top-bottom-15px {
@@ -245,4 +245,19 @@ h4 {
 
 a:hover {
   background-color: rgba(255,255,255,0.0)
+}
+@media (min-width: $breakpoint-phone) {
+  .deactivated-message {
+    margin: 0 auto;
+    width: 90%;
+    color: #000;
+  }
+}
+
+@media (max-width: $breakpoint-phone) {
+  .deactivated-message {
+    margin: 0 auto;
+    width: 500px;
+    color: #000;
+  }
 }
