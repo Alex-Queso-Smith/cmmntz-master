@@ -47,7 +47,7 @@ class Vote < ApplicationRecord
       errors[:art] << "This Thread has been deactivated."
       errors[:art] << "deactivated"
     elsif art.disabled?
-      errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated."
+      errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated.\n\nYou action has been cancelled."
       errors[:art] << "disabled"
     end
   end
