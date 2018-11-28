@@ -41,7 +41,11 @@ class Vote < ApplicationRecord
   end
 
   def art_is_not_disabled
-    errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated." if art.disabled? || art.deactivated?
+    if art.deactivated?
+      errors[:art] << "This Thread has been deactivated."
+    elsif art.disabled?
+      errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated."
+    end
   end
 
   def deal_with_duplicate_top_votes
