@@ -16,8 +16,7 @@ class Vote < ApplicationRecord
 
   validates :vote_type, presence: true, inclusion: { in: TYPES }
   validates :vote_type, uniqueness: { scope: [:user_id, :comment_id, :vote_type]}
-  validate :vote_is_unique_from_exclusve_group
-  validate :deal_with_duplicate_top_votes
+  validate :vote_is_unique_from_exclusve_group, :art_is_not_disabled, :deal_with_duplicate_top_votes
 
   after_create_commit :add_comment_interaction_for_comment_and_user!, :update_last_interaction_at_for_art!
 
