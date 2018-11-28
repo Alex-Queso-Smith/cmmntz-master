@@ -19,7 +19,7 @@ class Comment < ApplicationRecord
   validates :user_id, :text, presence: true
 
   validates :text, length: { in: 1..3000 }
-  validate :text_does_not_have_html
+  validate :text_does_not_have_html; :art_is_not_disabled
 
   scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
 
@@ -35,13 +35,11 @@ class Comment < ApplicationRecord
     errors[:text] << "HTML is not allowed in text" if strip_tags(text_hold) != text
   end
 
-  def censor_text!
-    text_hold = text
-    BAD_WORDS.each do |word|
-      text_hold = text_hold.gsub(/#{word}/i, ("*" * word.length)) || text_hold
-    end
-    self.censored_text = text_hold
+  def art_is_not_disabled
+    errors[:art] << "This Thread has been disabled."
+    errors[:art] << "This Thread has been disabled." if art.disabled? || art.deactivated?
   end
+
 
 
   ### before_validations actions
@@ -51,6 +49,13 @@ class Comment < ApplicationRecord
   end
 
   ### Preprocessors
+  def censor_text!
+    text_hold = text
+    BAD_WORDS.each do |word|
+      text_hold = text_hold.gsub(/#{word}/i, ("*" * word.length)) || text_hold
+    end
+    self.censored_text = text_hold
+  end
 
   def parse_and_build_votes
     return if vote_types.blank?
