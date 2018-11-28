@@ -3,6 +3,10 @@ class Article < ApplicationRecord
 
   belongs_to :article_category
   belongs_to :author
+
+  has_many :article_topics
+  has_many :ct_topics, through: :article_topics
+
   has_fae_file :banner
 
   before_validation :generate_slug!, on: :create
@@ -23,6 +27,16 @@ class Article < ApplicationRecord
       base_url = "#{request.base_url.gsub("http://", "")}"
     end
     "#{base_url}/#{self.class.to_s.pluralize.downcase}/#{slug}"
+  end
+
+  # dealing with topics
+  def topics=(list)
+    article_topics.destroy_all if article_topics
+    list.split(",").each { |t| ct_topics << CtTopic.find_or_create_by(name: t.strip) }
+  end
+
+  def topics
+    ct_topics.map(&:name).join(", ")
   end
 
   private
