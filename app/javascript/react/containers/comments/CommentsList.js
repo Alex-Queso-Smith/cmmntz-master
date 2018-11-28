@@ -18,7 +18,7 @@ class CommentsList extends React.Component {
   render(){
 
     var commentsArray;
-    var { allComments, percentShow, commentRoot, handleTopChange, followedUsers, blockedUsers, censored } = this.props
+    var { allComments, percentShow, handleTopChange, followedUsers, blockedUsers, censored, artType, artId, userId , artSettings} = this.props
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
@@ -26,6 +26,7 @@ class CommentsList extends React.Component {
         var { user_name, gender, age_range, user_id, show_censored} = comment.user
         var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted, censored_text } = comment
         var userName, commentLength;
+
         var shownText = text;
         var lengthImage = CommentLengthSorter(text)
         var userFollowed = followedUsers.includes(user_id)
@@ -40,7 +41,7 @@ class CommentsList extends React.Component {
 
         var showCensored = true;
 
-        if (censored && user_id != commentRoot.getAttribute('data-user-id')) {
+        if (censored && user_id != userId) {
           if (show_censored === "false") {
             showCensored = false
           }
@@ -69,11 +70,11 @@ class CommentsList extends React.Component {
                 handleTopChange={handleTopChange}
                 handleReplyOpen={this.handleReplyOpen}
                 replyParent={this.state.replyParent}
-                artId={commentRoot.getAttribute('data-art-id')}
-                currentUserId={commentRoot.getAttribute('data-user-id')}
-                artType={commentRoot.getAttribute('data-art-type')}
+                artId={artId}
+                currentUserId={userId}
+                artType={artType}
                 censored={censored}
-                artSettings={this.props.artSettings}
+                artSettings={artSettings}
                 />
               <hr />
             </div>

@@ -20,9 +20,6 @@ class CommentingContainer extends React.Component {
       followedUsers: [],
       blockedUsers: [],
       comments: [],
-      userId: this.props.userId,
-      artId: this.props.artId,
-      artType: this.props.artType,
       commentFormErrors: {},
       sortOpts: {
         sortDir: 'desc',
@@ -50,7 +47,8 @@ class CommentingContainer extends React.Component {
   }
 
   componentWillMount(){
-    var userId = this.state.userId
+    var { userId } = this.props;
+
     if (userId.length > 0){
        FetchDidMount(this, `/api/v1/users/${userId}.json`)
        .then(body => {
@@ -66,7 +64,7 @@ class CommentingContainer extends React.Component {
   }
 
   componentDidMount(){
-    var { artType, artId, userId} = this.state
+    var { artType, artId, userId} = this.props;
 
     if (userId.length > 0){
       FetchDidMount(this, `/api/v1/users/${userId}.json`)
@@ -135,12 +133,15 @@ class CommentingContainer extends React.Component {
   // repetetive with handleFilterSubmit
   handleCommentForm(event, text, anonymous, formInvalid, selfVotes = [], handleClear){
     event.preventDefault();
+
+    var { userId, artType, artId } = this.props;
+
     if (!formInvalid) {
       var newComment = new FormData();
-      var commentRoot = this.props.commentRoot
-      newComment.append("comment[user_id]", commentRoot.getAttribute('data-user-id'))
-      newComment.append("comment[art_type]", commentRoot.getAttribute('data-art-type'))
-      newComment.append("comment[art_id]", commentRoot.getAttribute('data-art-id'))
+
+      newComment.append("comment[user_id]", userId)
+      newComment.append("comment[art_type]", artType)
+      newComment.append("comment[art_id]", artId)
       newComment.append("comment[text]", text)
       newComment.append("comment[anonymous]", anonymous)
       newComment.append("comment[vote_types]", selfVotes.join(','))
@@ -150,9 +151,7 @@ class CommentingContainer extends React.Component {
   }
 
   commentFormSubmitter(newComment, handleClear) {
-    var commentRoot = this.props.commentRoot
-    var artType = commentRoot.getAttribute('data-art-type')
-    var artId = commentRoot.getAttribute('data-art-id')
+    var { artType, artId } = this.props;
 
     FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
     .then(body => {
@@ -202,10 +201,12 @@ class CommentingContainer extends React.Component {
   // repetetive with handleCommentForm
   handleFilterSubmit(){
     var search = new FormData();
-    var commentRoot = this.props.commentRoot
-    var {sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom } = this.state.sortOpts;
-    search.append("art_type", commentRoot.getAttribute('data-art-type'))
-    search.append("art_id", commentRoot.getAttribute('data-art-id'))
+
+    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom } = this.state.sortOpts;
+    var { artType, artId } = this.props;
+
+    search.append("art_type", artType)
+    search.append("art_id", artId)
     search.append("page", page);
     search.append("search[sort_dir]", sortDir);
     search.append("search[sort_type]", sortType);
@@ -339,7 +340,7 @@ class CommentingContainer extends React.Component {
 
   render(){
 
-    var { commentRoot } = this.props;
+    var { artId, artType, userId, artSettings } = this.props;
     var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored} = this.state;
     var endComments;
 
@@ -355,14 +356,13 @@ class CommentingContainer extends React.Component {
         <CommentEtiquette />
 
         <CommentFormContainer
-          commentRoot={commentRoot}
           handleSubmit={this.handleCommentForm}
           commentFormErrors={commentFormErrors}
-          artSettings={this.props.artSettings}
+          artSettings={artSettings}
         />
         <hr />
         <CommentFilters
-          sortOpts={this.state.sortOpts}
+          sortOpts={sortOpts}
           handleFilterSubmit={this.handleFilterSubmitMan}
           handleSortDirClick={this.handleSortDirClick}
           handleFilterClick={this.handleFilterClick}
@@ -373,13 +373,15 @@ class CommentingContainer extends React.Component {
           <p>{totalComments} comments for this article</p>
         </div>
         <CommentsList
+          artId={artId}
+          artType={artType}
+          userId={userId}
           allComments={comments}
-          commentRoot={commentRoot}
           handleTopChange={this.handleTopChange}
           followedUsers={followedUsers}
           blockedUsers={blockedUsers}
           censored={censored}
-          artSettings={this.props.artSettings}
+          artSettings={artSettings}
         />
       {endComments}
         <ScrollUpButton

@@ -28,7 +28,6 @@ class CfCommentsApp extends React.Component {
         userId={userId}
         artType={artType}
         artId={artId}
-        commentRoot={commentRoot}
         artSettings={artSettings}
         />
     } else {
@@ -37,7 +36,7 @@ class CfCommentsApp extends React.Component {
         <h3>This thread has been deactivated by the site Admins.</h3>
       </div>
     }
-    
+
     return (
       <div id="cf-commenting-container" className="container-fluid">
         {displayContainer}
