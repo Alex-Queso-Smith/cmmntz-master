@@ -47,8 +47,40 @@ class CommentingContainer extends React.Component {
   }
 
 
-  componentWillMount(){
-    var { userId } = this.state;
+  // componentWillMount(){
+  //
+  //   if (userId.length > 0){
+  //     FetchDidMount(this, `/api/v1/users/${userId}.json`)
+  //     .then(body => {
+  //
+  //       var opts = this.state.sortOpts
+  //       var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor } = body.user
+  //       var censorStatus = censor === "true" ? true : false
+  //
+  //       opts.sortDir = sort_dir
+  //       opts.sortType = sort_type
+  //       opts.commentsFrom = comments_from
+  //       opts.votesFrom = votes_from
+  //       if (filter_list.length != 0) {
+  //         opts.filterList = filter_list.split(',').filter(filter => filter != "")
+  //       }
+  //       if (not_filter_list.length != 0) {
+  //         opts.notFilterList = not_filter_list.split(',').filter(filter => filter != "")
+  //       }
+  //
+  //       this.setState({
+  //         followedUsers: body.user.followed_users,
+  //         blockedUsers: body.user.blocked_users,
+  //         sortOpts: opts,
+  //         censored: censorStatus
+  //       })
+  //     })
+  //     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  //   }
+  // }
+
+  componentDidMount(){
+    var { artType, artId, userId} = this.state
 
     if (userId.length > 0){
       FetchDidMount(this, `/api/v1/users/${userId}.json`)
@@ -78,13 +110,10 @@ class CommentingContainer extends React.Component {
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
     }
-  }
-
-  componentDidMount(){
-    var { commentRoot, artType, artId} = this.props
 
     FetchDidMount(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`)
     .then(body => {
+
      this.setState({
        comments: body.comments,
        totalComments: body.total_comments
