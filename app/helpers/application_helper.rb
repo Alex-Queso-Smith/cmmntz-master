@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def page_title(title = "")
+    t = "Classibridge Times"
+    if !title.blank?
+      t = "#{title} - #{t}"
+    end
+    return t
+  end
+
   def display_time_ago timestamp
     return "" if timestamp.blank?
     return display_date_mm_yy(timestamp) if 3.months.ago > timestamp
