@@ -22,6 +22,8 @@ class Vote < ApplicationRecord
 
   after_create_commit :add_comment_interaction_for_comment_and_user!, :update_last_interaction_at_for_art!
 
+  before_destroy :art_is_not_disabled_for_destory
+
   scope :for_user_and_comment, lambda {|user_id, comment_id| where(user_id: user_id, comment_id: comment_id)}
   scope :of_vote_type, lambda {|vote_type| where(vote_type: vote_type)}
 
@@ -43,9 +45,17 @@ class Vote < ApplicationRecord
   def art_is_not_disabled
     if art.deactivated?
       errors[:art] << "This Thread has been deactivated."
+      errors[:art] << "deactivated"
     elsif art.disabled?
       errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated."
+      errors[:art] << "disabled"
     end
+  end
+
+  def art_is_not_disabled_for_destory
+    art_is_not_disabled
+    return true if errors.empty?
+    throw(:abort)
   end
 
   def deal_with_duplicate_top_votes

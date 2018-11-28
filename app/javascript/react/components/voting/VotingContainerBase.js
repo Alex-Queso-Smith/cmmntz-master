@@ -99,7 +99,13 @@ class VotingContainerBase extends React.Component {
   handleDestroy(id){
     FetchDeleteBasic(this, `/api/v1/votes/${id}.json`)
     .then(body => {
-      this.setState({ votePercents: body.vote_percents })
+      if (body.errors) {
+        if (body.errors["art"]) {
+          alert(body.errors["art"][0])
+        }
+      } else {
+        this.setState({ votePercents: body.vote_percents })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }

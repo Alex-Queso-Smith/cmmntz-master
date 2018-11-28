@@ -30,6 +30,8 @@ class Api::V1::VotesController < ApiController
     if @vote.destroy
       set_comment
       render "api/v1/votes/all_returns"
+    else
+      render json: { errors: @vote.errors, status: :unprocessable_entity}
     end
   end
 
