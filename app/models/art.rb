@@ -19,7 +19,7 @@ class Art < ApplicationRecord
     Time.now > (created_at + default_art_thread_expiration_days.days)
   end
 
-  def comment_approval_needed?
+  def comment_requires_approval?
     gallery.comment_approval_needed
   end
 end
