@@ -18,7 +18,7 @@ class CommentsList extends React.Component {
   render(){
 
     var commentsArray;
-    var { allComments, percentShow, handleTopChange, followedUsers, blockedUsers, censored, artType, artId, userId , artSettings} = this.props
+    var { allComments, percentShow, handleTopChange, followedUsers, blockedUsers, censored, artType, artId, userId , artSettings, updateAppState} = this.props
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
@@ -75,6 +75,7 @@ class CommentsList extends React.Component {
                 artType={artType}
                 censored={censored}
                 artSettings={artSettings}
+                updateAppState={updateAppState}
                 />
               <hr />
             </div>

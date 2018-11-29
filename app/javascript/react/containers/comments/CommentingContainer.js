@@ -159,7 +159,9 @@ class CommentingContainer extends React.Component {
         var artErrors = body.errors["art"]
         if (artErrors) {
           alert(artErrors[0])
-          this.props.updateAppNestedState("artSettings", artErrors[1], true)
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
         }
 
         var voteErrors = body.errors["votes.top"]
@@ -341,7 +343,7 @@ class CommentingContainer extends React.Component {
 
   render(){
 
-    var { artId, artType, userId, artSettings } = this.props;
+    var { artId, artType, userId, artSettings, updateAppState } = this.props;
     var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored} = this.state;
     var endComments;
 
@@ -383,6 +385,7 @@ class CommentingContainer extends React.Component {
           blockedUsers={blockedUsers}
           censored={censored}
           artSettings={artSettings}
+          updateAppState={updateAppState}
         />
       {endComments}
         <ScrollUpButton

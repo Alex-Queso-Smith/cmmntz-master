@@ -81,6 +81,10 @@ class Comment extends React.Component {
             editStatus: false,
             text: this.props.text
           })
+
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
         }
       } else {
         this.setState({
@@ -152,7 +156,7 @@ class Comment extends React.Component {
   }
 
   render(){
-    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings } = this.props
+    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState } = this.props
     var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
     var textBox, editButton, cancelButton, lastEdited, userTile, starOpacity, blockOpacity, followStar, blockSym;
 
@@ -270,6 +274,7 @@ class Comment extends React.Component {
           userVoted={this.props.userVoted}
           handleTopChange={this.props.handleTopChange}
           artSettings={artSettings}
+          updateAppState={updateAppState}
         />
         <RepliesContainer
           replies={replies}
@@ -284,6 +289,7 @@ class Comment extends React.Component {
           replyParent={this.props.replyParent}
           censored={censored}
           artSettings={artSettings}
+          updateAppState={updateAppState}
         />
       </div>
     )

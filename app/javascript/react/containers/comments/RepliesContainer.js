@@ -125,6 +125,10 @@ class RepliesContainer extends React.Component {
         var artErrors = body.errors["art"]
         if (artErrors) {
           alert(artErrors[0])
+
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
         }
 
         this.setState({ replyErrors: body.errors})

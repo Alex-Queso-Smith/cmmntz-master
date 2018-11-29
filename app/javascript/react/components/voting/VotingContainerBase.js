@@ -45,8 +45,13 @@ class VotingContainerBase extends React.Component {
     FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
     .then(body => {
       if (body.errors) {
-        if (body.errors["art"]) {
-          alert(body.errors["art"][0])
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
         } else {
           var message = body.errors[1]
           var r = confirm(message);
@@ -80,8 +85,13 @@ class VotingContainerBase extends React.Component {
     FetchBasic(this, `/api/v1/votes/${id}.json`, payload, 'PATCH')
     .then(body => {
       if (body.errors) {
-        if (body.errors["art"]) {
-          alert(body.errors["art"][0])
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
         }
       } else {
         var updateVotes = this.props.commentVotes
@@ -100,8 +110,13 @@ class VotingContainerBase extends React.Component {
     FetchDeleteBasic(this, `/api/v1/votes/${id}.json`)
     .then(body => {
       if (body.errors) {
-        if (body.errors["art"]) {
-          alert(body.errors["art"][0])
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
         }
       } else {
         this.setState({ votePercents: body.vote_percents })
