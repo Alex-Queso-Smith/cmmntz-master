@@ -40,6 +40,8 @@ module CommentSearchs
       where(parent_id: nil)
     }
 
+    scope :approved, -> { where(approved: true) }
+
     scope :comments_from_followed, lambda { |user_ids|
       where(comments: {user_id: user_ids})
     }
@@ -157,7 +159,7 @@ module CommentSearchs
     end
 
     def self.base_search(scope, user, filter_opts = {})
-      scope = scope.select_tabulation.includes(:user)
+      scope = scope.select_tabulation.includes(:user).approved
       scope = self.filter_by_list(scope, filter_opts[:filter_list]) if filter_opts[:filter_list]
       scope = self.filter_by_not_list(scope, filter_opts[:not_filter_list]) if filter_opts[:not_filter_list]
       scope = self.geo_filtering(scope, filter_opts[:some_data]) if filter_opts[:some_data]

@@ -18,4 +18,8 @@ class Art < ApplicationRecord
     return false unless default_art_thread_expiration_days.is_a? Integer
     Time.now > (created_at + default_art_thread_expiration_days.days)
   end
+
+  def comment_approval_needed?
+    gallery.comment_approval_needed
+  end
 end
