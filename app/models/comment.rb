@@ -12,6 +12,8 @@ class Comment < ApplicationRecord
   has_many :votes
   has_many :comment_interactions
 
+  delegate :gallery, to: :art
+
   accepts_nested_attributes_for :votes
 
   before_validation :sanitize_text
@@ -23,7 +25,7 @@ class Comment < ApplicationRecord
 
   scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
 
-  before_save :censor_text!
+  before_save :censor_text!, :set_approval!
   after_create_commit :update_last_interaction_at_for_art!
 
   private
@@ -60,6 +62,10 @@ class Comment < ApplicationRecord
       text_hold = text_hold.gsub(/#{word}/i, ("*" * word.length)) || text_hold
     end
     self.censored_text = text_hold
+  end
+
+  def set_approval!
+    self.approved = gallery.comment_approval_needed ? false : true
   end
 
   def parse_and_build_votes
