@@ -26,7 +26,16 @@ $grayline: #D3D3D3;
         }
         .article-preview {
           padding-top: 15px;
-          .article-preview-image {}
+          .article-preview-image {
+            padding: 15px;
+
+            .article-thumb {
+              max-width: 125px;
+              max-height: 125px;
+              width: auto;
+              height: auto;
+            }
+          }
           .article-preview-text {
             border-left: 1px solid $grey;
             padding-left: 5px;
@@ -36,4 +45,30 @@ $grayline: #D3D3D3;
     }
   }
 
+}
+
+.article-wrapper {
+  .article-header {
+    .article-header-image {
+      margin: 0 auto;
+
+      .article-banner {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+      }
+    }
+  }
+
+  .article-body {
+    .article-middle-image {
+      margin-left:15px;
+
+      max-width: 300px;
+      max-height: 300px;
+      width: auto;
+      height: auto;
+    }
+  }
 }
