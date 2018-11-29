@@ -8,7 +8,8 @@ class Gallery < ApplicationRecord
     sort_dir: :string,
     sort_type: :string,
     votes_from: :string,
-    censor: :bool
+    censor: :bool,
+    default_art_thread_expiration_days: :integer
   }
 
   def checker_settings
