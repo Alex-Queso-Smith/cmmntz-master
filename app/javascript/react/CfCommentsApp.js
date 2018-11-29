@@ -16,6 +16,16 @@ class CfCommentsApp extends React.Component {
         deactivated: false
       }
     }
+
+    this.handleAppNestedSetState = this.handleAppNestedSetState.bind(this)
+  }
+
+  handleAppNestedSetState(key, vari, val) {
+    var nested = this.state[key]
+    nested[vari] = val
+    this.setState({
+      [key]: nested
+    })
   }
 
   componentWillMount() {
@@ -42,6 +52,7 @@ class CfCommentsApp extends React.Component {
         artType={artType}
         artId={artId}
         artSettings={artSettings}
+        updateAppNestedState={this.handleAppNestedSetState}
         />
     } else {
       displayContainer =

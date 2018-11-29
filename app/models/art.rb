@@ -13,4 +13,9 @@ class Art < ApplicationRecord
   def is_disabled?
     disabled? ? true : thread_expired? ? true : false
   end
+
+  def thread_expired?
+    return false unless default_art_thread_expiration_days.is_a? Integer
+    Time.now > (created_at + default_art_thread_expiration_days.days)
+  end
 end

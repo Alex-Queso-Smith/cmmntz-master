@@ -159,6 +159,7 @@ class CommentingContainer extends React.Component {
         var artErrors = body.errors["art"]
         if (artErrors) {
           alert(artErrors[0])
+          this.props.updateAppNestedState("artSettings", artErrors[1], true)
         }
 
         var voteErrors = body.errors["votes.top"]
