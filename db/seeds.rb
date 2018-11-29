@@ -192,7 +192,8 @@ num_articles.times do
       text: RANDOM_TEXT.sample,
       created_at: time,
       updated_at: time,
-      anonymous: [false, true, false, false, false].sample
+      anonymous: [false, true, false, false, false].sample,
+      approved: true
     )
 
     #generate random number of replies
@@ -208,7 +209,8 @@ num_articles.times do
           created_at: time,
           updated_at: time,
           anonymous: [false, true, false, false, false].sample,
-          parent_id: comment.id
+          parent_id: comment.id,
+          approved: true
         )
 
         num_votes = rand(25)
