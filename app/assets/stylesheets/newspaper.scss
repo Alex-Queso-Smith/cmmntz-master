@@ -21,8 +21,10 @@ $grayline: #D3D3D3;
 
 
   .articles-wrapper {
-    margin: 15px;
+    margin: 10px;
     .article-container {
+      margin-bottom: 5px;
+
       .article {
         padding: 5px;
         border: 1px solid $grey;
