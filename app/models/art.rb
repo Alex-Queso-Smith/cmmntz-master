@@ -16,7 +16,7 @@ class Art < ApplicationRecord
 
   def thread_expired?
     return false unless default_art_thread_expiration_days.is_a? Integer
-    Time.now > (created_at + default_art_thread_expiration_days.days)
+    Time.now > (published_at + default_art_thread_expiration_days.days)
   end
 
   def comment_requires_approval?
