@@ -88,7 +88,7 @@ class CommentingContainer extends React.Component {
         .then(userData => {
 
           var newUserSettings = this.state.userSettings;
-          var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, settings_updated } = userData.user
+          var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, settings_updated, followed_users, blocked_users } = userData.user
           var settingsUpdated = settings_updated === "true" ? true : false
 
           newUserSettings.sort_dir = sort_dir
@@ -97,9 +97,10 @@ class CommentingContainer extends React.Component {
           newUserSettings.votes_from = votes_from
           newUserSettings.filter_list = filter_list.length != 0 ? filter_list.split(',') : []
           newUserSettings.not_filter_list = not_filter_list.length != 0 ? not_filter_list.split(',') : []
-          newUserSettings.followedUsers = userData.user.followed_users
-          newUserSettings.blockedUsers = userData.user.blocked_users
+          newUserSettings.followedUsers = followed_users
+          newUserSettings.blockedUsers = blocked_users
           newUserSettings.settings_updated = settingsUpdated
+          newUserSettings.censor = censor
 
           this.setState({
             userSettings: newUserSettings
@@ -159,7 +160,6 @@ class CommentingContainer extends React.Component {
 
     FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
     .then(body => {
-      debugger
       if (body.errors) {
         var artErrors = body.errors["art"]
         if (artErrors) {
@@ -209,7 +209,6 @@ class CommentingContainer extends React.Component {
   // repetetive with handleCommentForm
   handleFilterSubmit(){
     var search = new FormData();
-    // debugger
 
     var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom } = this.state.sortOpts;
     var { artType, artId } = this.props;
@@ -354,7 +353,7 @@ class CommentingContainer extends React.Component {
     var censorComments;
 
     if (userSettings.settings_updated) {
-      censorComments = censor
+      censorComments = censor === "true" ? true : false
       newSortOpts.sortDir = sort_dir
       newSortOpts.sortType = sort_type
       newSortOpts.filterList = filter_list
@@ -362,7 +361,7 @@ class CommentingContainer extends React.Component {
       newSortOpts.commentsFrom = comments_from
       newSortOpts.votesFrom = votes_from
     } else {
-      censorComments = gallery_censor
+      censorComments = gallery_censor === "true" ? true : false
       newSortOpts.sortDir = gallery_sort_dir
       newSortOpts.sortType = gallery_sort_type
       newSortOpts.filterList = gallery_filter_list

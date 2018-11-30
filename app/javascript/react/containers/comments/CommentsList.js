@@ -18,7 +18,7 @@ class CommentsList extends React.Component {
   render(){
 
     var commentsArray;
-    var { allComments, percentShow, handleTopChange, followedUsers, blockedUsers, censored, artType, artId, userId , artSettings, updateAppState} = this.props
+    var { allComments, percentShow, handleTopChange, followedUsers, blockedUsers, artType, artId, userId , artSettings, updateAppState} = this.props
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
@@ -26,13 +26,14 @@ class CommentsList extends React.Component {
         var { user_name, gender, age_range, user_id, show_censored} = comment.user
         var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted, censored_text } = comment
         var userName, commentLength;
+        var censored = censored === "true" ? true : false;
 
         var shownText = text;
         var lengthImage = CommentLengthSorter(text)
         var userFollowed = followedUsers.includes(user_id)
         var userBlocked = blockedUsers.includes(user_id)
 
-        if (censored && censored_text) {
+        if (this.props.censored) {
           shownText = censored_text
         }
         if (user_name) {
@@ -46,7 +47,7 @@ class CommentsList extends React.Component {
             showCensored = false
           }
         }
-
+        
         if (!userBlocked && showCensored ) {
           return(
             <div className="cf-comment-div" key={id}>

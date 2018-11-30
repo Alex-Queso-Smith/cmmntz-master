@@ -90,7 +90,7 @@ class UserEditSettingsContainer extends React.Component {
     const target = event.target;
     const name = target.getAttribute('data-value');
     var opts = this.state.sortOpts
-    // debugger
+
     if (opts.filterList.includes(name)){
       var newFilters = opts.filterList.filter(v => v != name)
       opts.filterList = newFilters
