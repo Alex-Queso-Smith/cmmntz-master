@@ -2,7 +2,7 @@
 num_users = 100
 
 # set the number of articles we want in this pass
-num_articles = 4
+num_articles = 2
 time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
 puts "Starting process at #{Time.now}"
@@ -144,7 +144,7 @@ num_articles.times do
   time += rand(100..1000)
 
   # generate a random number of comments
-  num_comments = rand(10..40)
+  num_comments = rand(10..30)
   puts "generating #{num_comments} comments"
   num_comments.times do
     comment = Comment.create(
@@ -173,7 +173,7 @@ num_articles.times do
           parent_id: comment.id
         )
 
-        num_votes = rand(25)
+        num_votes = rand(20)
         puts "generating #{num_votes} reply votes"
         num_votes.times do
           # seed some Votes
@@ -196,7 +196,7 @@ num_articles.times do
     end
 
     # generate a random number of votes
-    num_votes = rand(25)
+    num_votes = rand(20)
     puts "generating #{num_votes} votes"
     num_votes.times do
       # seed some Votes
