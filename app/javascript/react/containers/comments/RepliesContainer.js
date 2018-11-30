@@ -146,7 +146,7 @@ class RepliesContainer extends React.Component {
   render(){
     var { followedUsers, blockedUsers, currentUserId, censored, artSettings } = this.props;
     var { replies } = this.state;
-    var repliesList, anonModal, replyField, replyButton, cancelReplyButton, replyErrorText;
+    var repliesList, anonModal, replyField, replyButton, cancelReplyButton, replyErrorText, repliesWrapper;
     var blockedCount = 0;
 
 
@@ -242,17 +242,22 @@ class RepliesContainer extends React.Component {
       }
     }
 
+    if (replies.length != 0) {
+      repliesWrapper =
+      <div className="cf-comment-replies-wrapper">
+        {repliesCount}
+        {showRepliesButton}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span >
+          {showBlockedCount}
+        </span>
+        {repliesList}
+      </div>
+    }
+
     return(
       <div className="cf-comment-replies-container">
-        <div className="cf-comment-replies-wrapper">
-          {repliesCount}
-          {showRepliesButton}
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span >
-            {showBlockedCount}
-          </span>
-          {repliesList}
-        </div>
+        {repliesWrapper}
         <div className="cf-comment-reply-field  margin-top-10px">
         {replyField}
           <div>
