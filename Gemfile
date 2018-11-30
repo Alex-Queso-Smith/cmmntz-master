@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
-gem 'fae-rails'
 
 
 
@@ -95,3 +94,10 @@ gem 'sidekiq'
 
 # foreman to load all processes from a single procfile
 gem 'foreman'
+
+# storage hookup
+gem 'carrierwave'
+gem 'carrierwave-azure'
+
+###### for newspaper mock
+gem 'fae-rails'

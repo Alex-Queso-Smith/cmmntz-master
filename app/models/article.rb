@@ -7,7 +7,9 @@ class Article < ApplicationRecord
   has_many :article_topics
   has_many :ct_topics, through: :article_topics
 
-  has_fae_file :banner
+  has_fae_image :banner
+  has_fae_image :thumbnail
+  has_fae_image :middle_image
 
   before_validation :generate_slug!, on: :create
 

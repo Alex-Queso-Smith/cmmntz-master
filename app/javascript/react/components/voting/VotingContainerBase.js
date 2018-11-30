@@ -53,11 +53,11 @@ class VotingContainerBase extends React.Component {
           artSettings[artErrors[1]] = true
           this.props.updateAppState("artSettings", artSettings)
         } else {
-          var message = body.errors[1]
+          var message = body.errors["base"][1]
           var r = confirm(message);
 
           if (r == true) {
-            var old_top_id = body.errors[3]
+            var old_top_id = body.errors["base"][3]
             payload.append("vote[force]", true)
             payload.append("vote[old_top_id]",old_top_id )
             this.handlePost(payload)

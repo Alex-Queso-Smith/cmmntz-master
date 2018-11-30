@@ -1,0 +1,18 @@
+%p Dear Admin,
+
+- if @thread.comment_requires_approval?
+  %p There is a new comment that requires your approval to be displayed on your thread at #{@thread.url}.
+- else
+  %p There is a new comment on your thread at #{@thread.url}. No action on your part is needed.
+
+
+%p Comment
+
+%p From: #{comment_user_user_name(@comment)}
+
+%p Time: #{display_date @comment.created_at}
+
+%p Text: #{@comment.text}
+
+- if @comment.censored_text != @comment.text
+  %p Censored Text: #{@comment.censored_text}

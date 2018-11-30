@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.all
+    @articles = Article.order(publish_date: :desc)
   end
 
   # GET /articles/1
@@ -13,6 +13,8 @@ class ArticlesController < ApplicationController
     url = @article.url(request)
     @art = Art.where(url: url).first_or_create do |art|
       art.gallery = Gallery.find_by(name: "Classibridge Times")
+      art.topics_list = @article.topics
+      art.published_at = @article.publish_date
       # art.set_topics = @article.topics
     end
   end

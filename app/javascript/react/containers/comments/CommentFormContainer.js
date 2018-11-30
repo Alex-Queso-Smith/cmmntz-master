@@ -136,7 +136,7 @@ class CommentFormContainer extends React.Component {
 
     var { commentFormErrors, artSettings } = this.props
     var { text, formInvalid, selfVotes, selfVoteStatus, anonModalShow } = this.state
-    var textError, timer, anonModal, selfVoteButtonsRowOne, selfVoteButtonsRowTwo;
+    var textError, timer, anonModal, selfVoteButtonsRowOne, selfVoteButtonsRowTwo, approvalMsg;
 
     if (commentFormErrors.text) {
       textError = CreateErrorElements(commentFormErrors.text, "Comment text")
@@ -198,6 +198,10 @@ class CommentFormContainer extends React.Component {
       If you wish to take advantage of ...... please do not post anonymously, thanks pal!
       </Modal>
     }
+    if (artSettings.disabled) {
+      approvalMsg = 
+      <span className="helper-text">Note: This thread requires approval of all comments before they will be displayed.</span>
+    }
 
     var commentForm;
     if (artSettings.disabled) {
@@ -228,6 +232,7 @@ class CommentFormContainer extends React.Component {
             />
         </div>
         {textError}
+        {approvalMsg}
         <div className="row">
           <div className=" margin-top-10px float-left col-3">
             <button className="btn btn-sm btn-primary" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
