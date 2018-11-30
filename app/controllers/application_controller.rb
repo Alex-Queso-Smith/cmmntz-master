@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   private
 
   def require_office_ip_prod
-    # return true
+    return true unless ENV['LOCK_STATUS'] && ENV['LOCK_STATUS'] = "true"
     if Rails.env.production? && request.remote_ip != '96.227.61.123'
       raise "You are not Authorized to be here!"
     end
