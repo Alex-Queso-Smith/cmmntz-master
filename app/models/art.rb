@@ -2,6 +2,9 @@ class Art < ApplicationRecord
   belongs_to :gallery
   delegate :checker_settings, :default_art_thread_expiration_days, to: :gallery
 
+  has_many :art_topics
+  has_many :topics, through: :art_topics
+
   scope :for_url, -> (url) {
     where(url: url)
   }
@@ -21,5 +24,14 @@ class Art < ApplicationRecord
 
   def comment_requires_approval?
     gallery.comment_approval_needed
+  end
+
+  def topics_list=(list)
+    art_topics.destroy_all if art_topics
+    list.split(",").each { |t| topics << Topic.find_or_create_by(name: t.strip) }
+  end
+
+  def topics_list
+    topics.map(&:name).join(", ")
   end
 end
