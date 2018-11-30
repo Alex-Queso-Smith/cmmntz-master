@@ -30,7 +30,9 @@ class CommentingContainer extends React.Component {
         commentsFrom: "",
         votesFrom: ""
       },
-      censored: false
+      gallerySettings: { },
+      userSettings: { },
+      censored: false,
     }
     this.handleCommentForm = this.handleCommentForm.bind(this);
     this.commentFormSubmitter = this.commentFormSubmitter.bind(this);
@@ -44,6 +46,7 @@ class CommentingContainer extends React.Component {
     this.handleSortDirClick = this.handleSortDirClick.bind(this);
     this.handleFilterClick = this.handleFilterClick.bind(this);
     this.submitterMan = this.submitterMan.bind(this);
+    this.handleSettingsUpdate = this.handleSettingsUpdate.bind(this);
   }
 
   componentWillMount(){
@@ -64,47 +67,48 @@ class CommentingContainer extends React.Component {
   }
 
   componentDidMount(){
-    var { artType, artId, userId} = this.props;
+    FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
+    .then(artData => {
 
-    if (userId.length > 0){
-      FetchDidMount(this, `/api/v1/users/${userId}.json`)
-      .then(body => {
+      var newGallerySettings = artData.art.gallery_settings
 
-        var opts = this.state.sortOpts
-        var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor } = body.user
-        var censorStatus = censor === "true" ? true : false
+      var { gallery_filter_list, gallery_not_filter_list } = artData.art.gallery_settings
 
-        opts.sortDir = sort_dir
-        opts.sortType = sort_type
-        opts.commentsFrom = comments_from
-        opts.votesFrom = votes_from
-        if (filter_list.length != 0) {
-          opts.filterList = filter_list.split(',').filter(filter => filter != "")
-        }
-        if (not_filter_list.length != 0) {
-          opts.notFilterList = not_filter_list.split(',').filter(filter => filter != "")
-        }
+      newGallerySettings.gallery_filter_list = gallery_filter_list.length != 0 ? gallery_filter_list.split(',') : []
+      newGallerySettings.gallery_not_filter_list = gallery_not_filter_list.length != 0 ? gallery_not_filter_list.split(',') : []
 
-        this.setState({
-          followedUsers: body.user.followed_users,
-          blockedUsers: body.user.blocked_users,
-          sortOpts: opts,
-          censored: censorStatus
-        })
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
-    }
-
-    FetchDidMount(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`)
-    .then(body => {
-
-     this.setState({
-       comments: body.comments,
-       totalComments: body.total_comments
+      this.setState({
+        gallerySettings: newGallerySettings
       })
     })
-    .then(dataUpdated => {
-      this.handleFilterSubmit()
+    .then(stuff => {
+      var { userId } = this.props;
+      if (userId.length > 0){
+        FetchDidMount(this, `/api/v1/users/${userId}.json`)
+        .then(userData => {
+
+          var newUserSettings = this.state.userSettings;
+          var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, settings_updated } = userData.user
+          var settingsUpdated = settings_updated === "true" ? true : false
+
+          newUserSettings.sort_dir = sort_dir
+          newUserSettings.sort_type = sort_type
+          newUserSettings.comments_from = comments_from
+          newUserSettings.votes_from = votes_from
+          newUserSettings.filter_list = filter_list.length != 0 ? filter_list.split(',') : []
+          newUserSettings.not_filter_list = not_filter_list.length != 0 ? not_filter_list.split(',') : []
+          newUserSettings.followedUsers = userData.user.followed_users
+          newUserSettings.blockedUsers = userData.user.blocked_users
+          newUserSettings.settings_updated = settingsUpdated
+
+          this.setState({
+            userSettings: newUserSettings
+          })
+        })
+        .then(finished => { this.handleSettingsUpdate() })
+        .then(finished => { this.handleFilterSubmit() })
+        .catch(error => console.error(`Error in fetch: ${error.message}`));
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -155,6 +159,7 @@ class CommentingContainer extends React.Component {
 
     FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
     .then(body => {
+      debugger
       if (body.errors) {
         var artErrors = body.errors["art"]
         if (artErrors) {
@@ -204,17 +209,17 @@ class CommentingContainer extends React.Component {
   // repetetive with handleCommentForm
   handleFilterSubmit(){
     var search = new FormData();
+    // debugger
 
     var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom } = this.state.sortOpts;
     var { artType, artId } = this.props;
-
     search.append("art_type", artType)
     search.append("art_id", artId)
     search.append("page", page);
     search.append("search[sort_dir]", sortDir);
     search.append("search[sort_type]", sortType);
-    search.append("search[filter_list]", filterList.join());
-    search.append("search[not_filter_list]", notFilterList.join());
+    search.append("search[filter_list]", filterList);
+    search.append("search[not_filter_list]", notFilterList);
     if (commentsFrom) {
       search.append("search[comments_from]", commentsFrom)
     }
@@ -223,18 +228,19 @@ class CommentingContainer extends React.Component {
     }
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
-    .then(body => {
+    .then(commentData => {
 
       var append = this.state.sortOpts.page > 1
       var newComments;
       if (append) {
-        newComments = this.state.comments.concat(body.comments)
+        newComments = this.state.comments.concat(commentData.comments)
       } else {
-        newComments = body.comments
+        newComments = commentData.comments
       }
+
       this.setState({
         comments: newComments,
-        totalComments: body.total_comments
+        totalComments: commentData.total_comments
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -275,9 +281,7 @@ class CommentingContainer extends React.Component {
     opts[name] = value;
     opts.page = 1
 
-    this.setState({
-      sortOpts: opts
-    })
+    this.setState({ sortOpts: opts })
 
     this.submitterMan(event);
   }
@@ -301,24 +305,24 @@ class CommentingContainer extends React.Component {
 
     opts.page = 1
 
-    this.setState({
-      sortOpts: opts
-    })
+    this.setState({ sortOpts: opts })
 
     this.submitterMan(event)
   }
 
   handleLoadMoreClick(event){
     var opts = this.state.sortOpts
-    opts.page += 1
+    if (this.state.totalComments != this.state.comments.length) {
+      opts.page += 1
 
-    this.setState({
-      sortOpts: opts
-    })
+      this.setState({
+        sortOpts: opts
+      })
 
-    setTimeout(function() { //Start the timer
-      this.handleFilterSubmit();
-    }.bind(this), 1)
+      setTimeout(function() { //Start the timer
+        this.handleFilterSubmit();
+      }.bind(this), 1)
+    }
   }
 
   handleTopChange(oldTopCommentId){
@@ -341,8 +345,41 @@ class CommentingContainer extends React.Component {
     }.bind(this), 50)
   }
 
-  render(){
+  handleSettingsUpdate(){
+    var { sortOpts } = this.state;
+    var { userSettings, gallerySettings } = this.state;
+    var { sort_dir, sort_type, filter_list, not_filter_list, comments_from, votes_from, followedUsers, blockedUsers, settings_updated, censor } = userSettings
+    var { gallery_sort_dir, gallery_sort_type, gallery_filter_list, gallery_not_filter_list, gallery_comments_from, gallery_votes_from, gallery_censor } = gallerySettings
+    var newSortOpts = sortOpts
+    var censorComments;
 
+    if (userSettings.settings_updated) {
+      censorComments = censor
+      newSortOpts.sortDir = sort_dir
+      newSortOpts.sortType = sort_type
+      newSortOpts.filterList = filter_list
+      newSortOpts.notFilterList = not_filter_list
+      newSortOpts.commentsFrom = comments_from
+      newSortOpts.votesFrom = votes_from
+    } else {
+      censorComments = gallery_censor
+      newSortOpts.sortDir = gallery_sort_dir
+      newSortOpts.sortType = gallery_sort_type
+      newSortOpts.filterList = gallery_filter_list
+      newSortOpts.notFilterList = gallery_not_filter_list
+      newSortOpts.commentsFrom = gallery_comments_from
+      newSortOpts.votesFrom = gallery_votes_from
+    }
+
+    this.setState({
+      sortOpts: newSortOpts,
+      followedUsers: followedUsers,
+      blockedUsers: blockedUsers,
+      censored: censorComments
+    })
+  }
+
+  render(){
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
     var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored} = this.state;
     var endComments;
@@ -387,7 +424,7 @@ class CommentingContainer extends React.Component {
           artSettings={artSettings}
           updateAppState={updateAppState}
         />
-      {endComments}
+        {endComments}
         <ScrollUpButton
           ToggledStyle={{left: '75px'}}
         />

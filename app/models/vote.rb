@@ -78,8 +78,8 @@ class Vote < ApplicationRecord
 
     if top_votes_for_user.any?
       c = top_votes_for_user.first.comment
-      errors.add(:top) << "You have already voted the following as top (A):\n\n#{truncate(c.text, length: 100)}\n\nWould you like to change your top vote for this thread to (B):\n\n#{truncate(comment.text, length: 100)}"
-      errors.add(:top) << c.id
+      errors.add(:base) << "You have already voted the following as top (A):\n\n#{truncate(c.text, length: 100)}\n\nWould you like to change your top vote for this thread to (B):\n\n#{truncate(comment.text, length: 100)}"
+      errors.add(:base) << c.id
     end
   end
 
@@ -101,7 +101,6 @@ class Vote < ApplicationRecord
   def update_last_interaction_at_for_art!
     Art.find(comment.art_id).update_attribute("last_interaction_at", Time.now())
   end
-
 
   ### searches
 

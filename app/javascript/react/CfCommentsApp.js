@@ -21,26 +21,26 @@ class CfCommentsApp extends React.Component {
   }
 
   handleAppSetState(key, val) {
-    this.setState({
-      [key]: val
-    })
+    this.setState({ [key]: val })
   }
 
-  componentWillMount() {
+  componentDidMount() {
     FetchDidMount(this, `/api/v1/arts/${this.state.artId}.json`)
-    .then(body => {
+    .then(artData => {
 
-      var artSettings = this.state.artSettings
-      artSettings.disabled = body.art.disabled
-      artSettings.deactivated = body.art.deactivated
+      var newArtSettings = this.state.artSettings
+      newArtSettings.disabled = artData.art.disabled
+      newArtSettings.deactivated = artData.art.deactivated
 
-      this.setState({ artSettings: artSettings })
+      this.setState({
+        artSettings: newArtSettings
+      })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   render(){
-    var { commentRoot, userId, artType, artId, artSettings } = this.state;
+    var { commentRoot, userId, artType, artId, artSettings, gallerySettings, userSettings } = this.state;
     var displayContainer;
 
     if (!artSettings.deactivated) {
@@ -50,7 +50,10 @@ class CfCommentsApp extends React.Component {
         artType={artType}
         artId={artId}
         artSettings={artSettings}
+        gallerySettings={gallerySettings}
+        userSettings={userSettings}
         updateAppState={this.handleAppSetState}
+        gallerySettings={gallerySettings}
         />
     } else {
       displayContainer =

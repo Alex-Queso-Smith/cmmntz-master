@@ -14,7 +14,7 @@ class UserEditSettingsContainer extends React.Component {
       commentsFrom: "",
       votesFrom: ""
     },
-    censor: false,
+    censor: "",
     showCensoredComments: true
   }
 
@@ -32,16 +32,12 @@ class UserEditSettingsContainer extends React.Component {
       var censored = censor === "true" ? true : false;
       var showCenComment = show_censored_comments === "false" ? false : true;
 
-      opts.sortDir = sort_dir
-      opts.sortType = sort_type
+      opts.sortDir = sort_dir.length != 0 ? sort_dir : "desc"
+      opts.sortType = sort_type.length != 0 ? sort_type : "created_at"
       opts.commentsFrom = comments_from
       opts.votesFrom = votes_from
-      if (filter_list.length != 0 ) {
-        opts.filterList = filter_list.split(',')
-      }
-      if (not_filter_list.length != 0) {
-        opts.notFilterList = not_filter_list.split(',')
-      }
+      opts.filterList = filter_list.length != 0 ? filter_list.split(',') : []
+      opts.notFilterList = not_filter_list.length != 0 ? not_filter_list.split(',') : []
 
       this.setState({
         sortOpts: opts,
@@ -60,9 +56,7 @@ class UserEditSettingsContainer extends React.Component {
     if (target.type === "checkbox") {
       value = target.checked
 
-      this.setState({
-        [name]: value
-      })
+      this.setState({ [name]: value })
 
     } else {
       if (target.getAttribute('data-value')) {
@@ -83,13 +77,12 @@ class UserEditSettingsContainer extends React.Component {
     const name = target.name;
     const value = target.value;
 
-    var opts = this.state.sortOpts
+    var opts = this.state.sortOpts;
+
     opts[name] = value;
     opts.page = 1
 
-    this.setState({
-      sortOpts: opts
-    })
+    this.setState({ sortOpts: opts })
   }
 
   handleFilterClick(event){
@@ -97,7 +90,7 @@ class UserEditSettingsContainer extends React.Component {
     const target = event.target;
     const name = target.getAttribute('data-value');
     var opts = this.state.sortOpts
-
+    // debugger
     if (opts.filterList.includes(name)){
       var newFilters = opts.filterList.filter(v => v != name)
       opts.filterList = newFilters
@@ -143,6 +136,7 @@ class UserEditSettingsContainer extends React.Component {
     user.append("user[votes_from]", votesFrom);
     user.append("user[censor]", censor);
     user.append("user[show_censored_comments]", showCensoredComments)
+    user.append("user[settings_updated]", true)
 
     FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'saveErrors', user)
     .then(redirect => window.location = '/articles')
@@ -169,7 +163,7 @@ class UserEditSettingsContainer extends React.Component {
           name={"censor"}
           label={"Censor all text?"}
           checked={this.state.censor}
-          />
+        />
         <Checkbox
           className={"col-6"}
           onChange={this.handleChange}

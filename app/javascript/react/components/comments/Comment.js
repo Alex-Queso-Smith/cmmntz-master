@@ -212,7 +212,6 @@ class Comment extends React.Component {
         </div>
       }
     }
-
     if (commentUserId != currentUserId && userName != "Anonymous") {
       if (!userFollowed) { starOpacity = "translucent" }
       followStar =
