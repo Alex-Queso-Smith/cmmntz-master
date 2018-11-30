@@ -13,6 +13,7 @@
                 .article-preview-image.text-center.col-5
                   = article_thumbnail_or_placeholder article
                 .article-preview-text.col-7
+                  %p= display_date article.publish_date, false
                   = article.introduction
                   %br/
                   = link_to "read more", article_path(article.slug)

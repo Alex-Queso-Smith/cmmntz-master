@@ -5,3 +5,78 @@
 #cf-nav-bar {
   background-color: rgba(255,255,255, 0.0)
 }
+
+$grey: #D3D3D3;
+$grayline: #D3D3D3;
+
+.articles-container {
+  width: 90%;
+  margin: 0 auto;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, .95);
+  color: black;
+
+  border: 1px solid $grayline;
+  border-radius: 25px;
+
+
+  .articles-wrapper {
+    margin: 15px;
+    .article-container {
+      .article {
+        padding: 5px;
+        border: 1px solid $grey;
+        border-radius: 25px;
+        padding: 5px;
+
+        .article-title {
+          border-bottom: 1px solid $grey;
+        }
+        .article-preview {
+          padding-top: 15px;
+          .article-preview-image {
+            padding: 15px;
+
+            .article-thumb {
+              max-width: 115px;
+              max-height: 115px;
+              width: auto;
+              height: auto;
+            }
+          }
+          .article-preview-text {
+            border-left: 1px solid $grey;
+            padding-left: 5px;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+.article-wrapper {
+  .article-header {
+    .article-header-image {
+      margin: 0 auto;
+
+      .article-banner {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+      }
+    }
+  }
+
+  .article-body {
+    .article-middle-image {
+      margin-left:15px;
+
+      max-width: 300px;
+      max-height: 300px;
+      width: auto;
+      height: auto;
+    }
+  }
+}
