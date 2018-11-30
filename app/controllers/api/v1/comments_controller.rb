@@ -3,6 +3,15 @@ class Api::V1::CommentsController < ApiController
 
   before_action :set_comment, only: [:update, :destroy]
 
+  def index
+      @comments = Comment.filter_and_sort(current_user, params[:art_id], params[:art_type], {}, 1)
+      comment_ids = @comments.map(&:id)
+      @replies = Comment.tabulation_for_comments_list(current_user, comment_ids, {})
+      comment_ids += @replies.map(&:id)
+      @current_users_votes = Vote.for_user_and_comment(current_user.id, comment_ids)
+      @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, comment_ids)
+    end
+
   def show
     @comment = Comment.tabulation_for_individual_comment(current_user, params[:id], {})
     @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
