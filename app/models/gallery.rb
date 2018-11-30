@@ -15,7 +15,9 @@ class Gallery < ApplicationRecord
     votes_from: :string,
     censor: :bool,
     default_art_thread_expiration_days: :integer,
-    comment_approval_needed: :bool
+    comment_approval_needed: :bool,
+    notify_on_comment_approval_needed: :bool,
+    notify_on_new_comment: :bool
   }
 
   def checker_settings

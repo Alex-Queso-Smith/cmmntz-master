@@ -14,7 +14,7 @@ class AdminMailer < ApplicationMailer
     mail(to: email, subject: "Classifilter: Activity exceeding thresholds for thread: #{@thread.url}")
   end
 
-  def notify_of_new_comment_needing_approval(thread, comment)
+  def notify_of_new_comment(thread, comment)
     @thread = thread
     @comment = comment
     mail(to: @thread.moderator.email, subject: "Classifilter: New comment pending approval: #{@thread.url}")

@@ -87,7 +87,7 @@ class Comment < ApplicationRecord
   end
 
   def alert_admin_of_comment!
-    return if approved?
-    AdminMailer.notify_of_new_comment_needing_approval(art, self).deliver_later
+    return unless art.moderators_request_notification?(self)
+    AdminMailer.notify_of_new_comment(art, self).deliver_later
   end
 end

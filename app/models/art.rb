@@ -30,6 +30,12 @@ class Art < ApplicationRecord
     gallery.comment_approval_needed
   end
 
+  def moderators_request_notification?(comment)
+    return true if (gallery.notify_on_comment_approval_needed && !comment.approved?)
+    return true if gallery.notify_on_new_comment
+    false
+  end
+
   def topics_list=(list)
     art_topics.destroy_all if art_topics
     list.split(",").each { |t| topics << Topic.find_or_create_by(name: t.strip) }
