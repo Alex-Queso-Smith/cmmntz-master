@@ -189,7 +189,7 @@ class VotingContainerBase extends React.Component {
     }
 
     return(
-      <div className="cf-votes-container margin-top-10px" >
+      <div className="cf-votes-container" >
         {flagModal}
         <div className="cf-votes-top-row row ">
           {voteButtonsRowOne}
