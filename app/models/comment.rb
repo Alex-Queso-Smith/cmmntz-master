@@ -27,6 +27,7 @@ class Comment < ApplicationRecord
 
   before_save :censor_text!, :set_approval!
   after_create_commit :update_last_interaction_at_for_art!
+  after_commit :alert_admin_of_comment!
 
   private
 
@@ -65,7 +66,7 @@ class Comment < ApplicationRecord
   end
 
   def set_approval!
-    self.approved = art.comment_approval_needed? ? false : true
+    self.approved = art.comment_requires_approval? ? false : true
   end
 
   def parse_and_build_votes
@@ -83,5 +84,10 @@ class Comment < ApplicationRecord
 
   def update_last_interaction_at_for_art!
     Art.find(art_id).update_attribute("last_interaction_at", Time.now())
+  end
+
+  def alert_admin_of_comment!
+    return if approved?
+    AdminMailer.notify_of_new_comment_needing_approval(art, self).deliver_later
   end
 end

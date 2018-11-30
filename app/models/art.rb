@@ -13,6 +13,10 @@ class Art < ApplicationRecord
     where(arel_table[:last_interaction_at].gteq(datetime))
   }
 
+  def moderator
+    gallery.super_admin
+  end
+
   def is_disabled?
     disabled? ? true : thread_expired? ? true : false
   end

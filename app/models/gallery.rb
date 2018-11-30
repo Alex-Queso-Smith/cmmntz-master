@@ -1,5 +1,10 @@
 class Gallery < ApplicationRecord
   has_many :arts
+  has_many :customers
+
+  def super_admin
+    customers.where(role: "super_admin").order(created_at: :desc).first
+  end
 
   vstr 'settings', {
     comments_from: :string,
