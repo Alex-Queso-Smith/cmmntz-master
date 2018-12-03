@@ -25,7 +25,7 @@ class Ability
     can [:crud, :edit_password, :edit_settings], User, { id: user.id } # can crud self
     can :read, User # can view other users in list or individual
     can :crud, Comment, { user_id: user.id } # can crud own comments
-    can :read, Comment # can view other user's comments in list or individual
+    can [:read, :destroy], Comment # can view other user's comments in list or individual
     can :crud, Vote, { user_id: user.id } # can crud own votes
     can :read, Vote # can view other user's votes in list or individual
     can :crud, Following, { follower_id: user.id } # can follower other users
@@ -34,5 +34,9 @@ class Ability
     # TODO: move this to admin app
     # this is only here until this feature gets moved to the admin app
     can :create, AdminMail
+  end
+
+  def admin_permissions
+
   end
 end

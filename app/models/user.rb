@@ -114,4 +114,8 @@ class User < ApplicationRecord
     scope = scope.where_check_does_not_exist(last_check, check_name)
     scope
   end
+
+  def customer_for?(gallery_id)
+    Customer.account_for_gallery_and_user(gallery_id, id).size > 0
+  end
 end

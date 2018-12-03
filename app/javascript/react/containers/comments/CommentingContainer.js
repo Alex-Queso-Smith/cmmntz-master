@@ -1,11 +1,11 @@
 import React from 'react';
 import BottomScollListener from 'react-bottom-scroll-listener';
-import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
+import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 
 import CommentFormContainer from './CommentFormContainer';
 import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
-import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual } from '../../util/CoreUtil';
+import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual, FetchDeleteBasic } from '../../util/CoreUtil';
 import CommentEtiquette from '../../components/modals/CommentEtiquette';
 
 class CommentingContainer extends React.Component {
@@ -32,6 +32,7 @@ class CommentingContainer extends React.Component {
       },
       gallerySettings: { },
       userSettings: { },
+      commentEtiquette: null,
       censored: false,
     }
     this.handleCommentForm = this.handleCommentForm.bind(this);
@@ -47,20 +48,26 @@ class CommentingContainer extends React.Component {
     this.handleFilterClick = this.handleFilterClick.bind(this);
     this.submitterMan = this.submitterMan.bind(this);
     this.handleSettingsUpdate = this.handleSettingsUpdate.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
   }
 
   componentWillMount(){
-    var { userId } = this.props;
+    var { userId, galleryId } = this.props;
 
     if (userId.length > 0){
-       FetchDidMount(this, `/api/v1/users/${userId}.json`)
-       .then(body => {
+       FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
+       .then(userData => {
 
-         var oldUserThemeSettings = this.state.userThemeSettings
-         oldUserThemeSettings.font = body.user.font;
-         oldUserThemeSettings.colorTheme = body.user.color_theme
+         var oldUserThemeSettings = this.state.userThemeSettings;
+         oldUserThemeSettings.font = userData.user.font;
+         oldUserThemeSettings.colorTheme = userData.user.color_theme;
+         var oldUserSettings = this.state.userSettings;
+         oldUserSettings.admin = userData.user.admin;
 
-         this.setState({ userThemeSettings: oldUserThemeSettings })
+         this.setState({
+           userThemeSettings: oldUserThemeSettings,
+           userSettings: oldUserSettings
+         })
        })
        .catch(error => console.error(`Error in fetch: ${error.message}`));
      }
@@ -72,13 +79,14 @@ class CommentingContainer extends React.Component {
 
       var newGallerySettings = artData.art.gallery_settings
 
-      var { gallery_filter_list, gallery_not_filter_list } = artData.art.gallery_settings
+      var { gallery_filter_list, gallery_not_filter_list, gallery_comment_etiquette } = artData.art.gallery_settings
 
       newGallerySettings.gallery_filter_list = gallery_filter_list.length != 0 ? gallery_filter_list.split(',') : []
       newGallerySettings.gallery_not_filter_list = gallery_not_filter_list.length != 0 ? gallery_not_filter_list.split(',') : []
 
       this.setState({
-        gallerySettings: newGallerySettings
+        gallerySettings: newGallerySettings,
+        commentEtiquette: gallery_comment_etiquette
       })
     })
     .then(stuff => {
@@ -102,9 +110,7 @@ class CommentingContainer extends React.Component {
           newUserSettings.settings_updated = settingsUpdated
           newUserSettings.censor = censor
 
-          this.setState({
-            userSettings: newUserSettings
-          })
+          this.setState({ userSettings: newUserSettings })
         })
         .then(finished => { this.handleSettingsUpdate() })
         .then(finished => { this.handleFilterSubmit() })
@@ -378,9 +384,20 @@ class CommentingContainer extends React.Component {
     })
   }
 
+  deleteComment(commentId){
+    var { galleryId } = this.props;
+    FetchDeleteBasic(this, `/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`)
+    .then(success => {
+      var allComments = this.state.comments;
+      var filteredComments = allComments.filter(comment => comment.id != commentId)
+      this.setState({ comments: filteredComments })
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
   render(){
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
-    var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored} = this.state;
+    var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored, commentEtiquette} = this.state;
     var endComments;
 
     if (totalComments === comments.length) {
@@ -392,7 +409,7 @@ class CommentingContainer extends React.Component {
 
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
-        <CommentEtiquette />
+        <CommentEtiquette galleryCommentEtiquette={commentEtiquette} />
 
         <CommentFormContainer
           handleSubmit={this.handleCommentForm}
@@ -422,6 +439,8 @@ class CommentingContainer extends React.Component {
           censored={censored}
           artSettings={artSettings}
           updateAppState={updateAppState}
+          adminStatus={this.state.userSettings.admin}
+          deleteComment={this.deleteComment}
         />
         {endComments}
         <ScrollUpButton

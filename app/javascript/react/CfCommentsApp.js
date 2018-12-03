@@ -11,6 +11,7 @@ class CfCommentsApp extends React.Component {
       userId: document.getElementById('cf-comments-app').getAttribute('data-user-id'),
       artType: document.getElementById('cf-comments-app').getAttribute('data-art-type'),
       artId: document.getElementById('cf-comments-app').getAttribute('data-art-id'),
+      galleryId: document.getElementById('cf-comments-app').getAttribute('data-gallery-id'),
       artSettings: {
         disabled: false,
         deactivated: false
@@ -40,7 +41,7 @@ class CfCommentsApp extends React.Component {
   }
 
   render(){
-    var { commentRoot, userId, artType, artId, artSettings, gallerySettings, userSettings } = this.state;
+    var { commentRoot, userId, artType, artId, artSettings, gallerySettings, userSettings, galleryId } = this.state;
     var displayContainer;
 
     if (!artSettings.deactivated) {
@@ -49,6 +50,7 @@ class CfCommentsApp extends React.Component {
         userId={userId}
         artType={artType}
         artId={artId}
+        galleryId={galleryId}
         artSettings={artSettings}
         gallerySettings={gallerySettings}
         userSettings={userSettings}

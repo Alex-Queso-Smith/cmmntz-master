@@ -167,3 +167,8 @@ $bootstrap-blue: #0069D9;
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
   }
 }
+
+.comment-delete-button {
+  border: 1px red solid;
+  color: red;
+}

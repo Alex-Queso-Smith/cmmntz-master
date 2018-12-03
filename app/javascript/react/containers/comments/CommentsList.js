@@ -18,10 +18,14 @@ class CommentsList extends React.Component {
   render(){
 
     var commentsArray;
-    var { allComments, percentShow, handleTopChange, followedUsers, blockedUsers, artType, artId, userId , artSettings, updateAppState} = this.props
+    var { allComments, percentShow, handleTopChange, followedUsers, blockedUsers, artType, artId, userId , artSettings, updateAppState, adminStatus } = this.props
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
+
+        var handleDeleteComment = () => {
+          this.props.deleteComment(comment.id)
+        }
 
         var { user_name, gender, age_range, user_id, show_censored} = comment.user
         var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted, censored_text } = comment
@@ -47,11 +51,12 @@ class CommentsList extends React.Component {
             showCensored = false
           }
         }
-        
+
         if (!userBlocked && showCensored ) {
           return(
             <div className="cf-comment-div" key={id}>
               <Comment
+                adminStatus={adminStatus}
                 edited={edited}
                 userFollowed={userFollowed}
                 userBlocked={userBlocked}
@@ -77,6 +82,7 @@ class CommentsList extends React.Component {
                 censored={censored}
                 artSettings={artSettings}
                 updateAppState={updateAppState}
+                handleDeleteComment={handleDeleteComment}
                 />
               <hr />
             </div>
