@@ -4,6 +4,7 @@ class Art < ApplicationRecord
 
   has_many :art_topics
   has_many :topics, through: :art_topics
+  has_many :comments
 
   scope :for_url, -> (url) {
     where(url: url)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_03_144135) do
+ActiveRecord::Schema.define(version: 2018_12_03_184607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -159,6 +159,7 @@ ActiveRecord::Schema.define(version: 2018_12_03_144135) do
     t.boolean "active", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_account_id"
     t.index ["gallery_id"], name: "index_customers_on_gallery_id"
     t.index ["perishable_token"], name: "index_customers_on_perishable_token", unique: true
     t.index ["persistence_token"], name: "index_customers_on_persistence_token", unique: true

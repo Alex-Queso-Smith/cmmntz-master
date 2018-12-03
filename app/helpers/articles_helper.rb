@@ -2,9 +2,9 @@ module ArticlesHelper
   def article_thumbnail_or_placeholder article
     if article.thumbnail.present?
       image_tag article.thumbnail.asset.thumb.url, class: "article-thumb"
-    else
-      "[img]"
     end
+  rescue
+    ""
   end
 
   def article_banner article
