@@ -3,6 +3,11 @@ module CommentSearchs
 
   included do
     FILTER_PERCENT = '.2000'
+    GEO_BOXES = {'1000' => {lat: 14.5, lon: 15.15},
+      '500' => {lat: 7.25, lon: 7.57},
+      '100' => {lat: 1.45, lon: 1.51}
+    }
+
     self.per_page = 10
 
     scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
@@ -52,6 +57,14 @@ module CommentSearchs
       where(arel_table[:created_at].gteq(datetime))
     }
 
+    scope :lat_bound_box, -> (lat, bound) {
+      where("users.latitude BETWEEN #{lat - bound} AND #{lat + bound}")
+    }
+
+    scope :lon_bound_box, -> (lon, bound) {
+      where("users.longitude BETWEEN #{lon - bound} AND #{lon + bound}")
+    }
+
     # Meta Scoping
 
     Vote::TYPES.each do |type|
@@ -98,20 +111,10 @@ module CommentSearchs
       # see https://www.movable-type.co.uk/scripts/latlong-db.html
       # lat 69 per degree
       # long 66 per degree
-      if lat && lon && radius
-        case radius
-        when 1000
-          # lat 14.5
-          # lon 15.15
-
-        when 500
-          # lat 7.25
-          # lon 7.57
-        when 100
-          # lat 1.45
-          # lon 1.51
-        end
-      end
+      bounds = GEO_BOXES[radius.to_s]
+      scope = scope.joins(:user)
+      scope = scope.lat_bound_box(lat, bounds[:lat])
+      scope = scope.lon_bound_box(lon, bounds[:lon])
       scope
     end
 
