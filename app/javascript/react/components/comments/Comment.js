@@ -158,8 +158,9 @@ class Comment extends React.Component {
   render(){
     var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState } = this.props
     var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
-    var textBox, editButton, cancelButton, lastEdited, userTile, starOpacity, blockOpacity, followStar, blockSym;
+    var userTile, starOpacity, blockOpacity;
 
+    var editButton, cancelButton;
     if (!artSettings.disabled) {
       if (editStatus && currentUserId === commentUserId) {
         editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
@@ -171,6 +172,7 @@ class Comment extends React.Component {
       editButton = <div className="deactivated-message">Commenting on this thread has been disabled.</div>
     }
 
+    var lastEdited;
     if (edited) {
       lastEdited =
       <div className="cf-comment-edit">
@@ -178,6 +180,7 @@ class Comment extends React.Component {
       </div>
     }
 
+    var textBox;
     if (editStatus) {
       textBox =
         <Textarea
@@ -212,6 +215,8 @@ class Comment extends React.Component {
         </div>
       }
     }
+
+    var followStar, blockSym;
     if (commentUserId != currentUserId && userName != "Anonymous") {
       if (!userFollowed) { starOpacity = "translucent" }
       followStar =
@@ -228,6 +233,14 @@ class Comment extends React.Component {
     } else {
       followStar = <div className={`col-1 col-sm-1`} />
       blockSym = <div className={`col-1 col-sm-1`} />
+    }
+
+    var deleteCommentButton;
+    if (this.props.adminStatus) {
+      deleteCommentButton =
+      <button className="btn btn-sm comment-delete-button" onClick={this.props.handleDeleteComment}>
+        Delete Comment
+      </button>
     }
 
     return(
@@ -262,6 +275,7 @@ class Comment extends React.Component {
             <div className="margin-top-5px">
               {editButton}
               {cancelButton}
+              {deleteCommentButton}
             </div>
           </div>
         </div>

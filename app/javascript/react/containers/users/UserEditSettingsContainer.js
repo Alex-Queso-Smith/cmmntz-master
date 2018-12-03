@@ -15,7 +15,8 @@ class UserEditSettingsContainer extends React.Component {
       votesFrom: ""
     },
     censor: "",
-    showCensoredComments: true
+    showCensoredComments: true,
+    useGalleryDefault: false
   }
 
   handleFilterByClick = this.handleFilterByClick.bind(this);
@@ -23,6 +24,7 @@ class UserEditSettingsContainer extends React.Component {
   handleSortDirClick = this.handleSortDirClick.bind(this);
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
+  handleRevertSettings = this.handleRevertSettings.bind(this);
 
   componentDidMount(){
     FetchDidMount(this, `/api/v1/users/${this.props.match.params.id}.json`)
@@ -56,7 +58,10 @@ class UserEditSettingsContainer extends React.Component {
     if (target.type === "checkbox") {
       value = target.checked
 
-      this.setState({ [name]: value })
+      this.setState({
+        [name]: value,
+        useGalleryDefault: false
+      })
 
     } else {
       if (target.getAttribute('data-value')) {
@@ -68,9 +73,31 @@ class UserEditSettingsContainer extends React.Component {
       var opts = this.state.sortOpts
       opts[name] = value
 
-      this.setState({ sortOpts: opts })
+      this.setState({
+        sortOpts: opts,
+        useGalleryDefault: false
+      })
     }
   };
+
+  handleRevertSettings(event){
+    const target = event.target;
+    const name = target.name;
+
+    this.setState({
+      useGalleryDefault: !this.state.useGalleryDefault,
+      sortOpts: {
+        sortDir: 'desc',
+        sortType: 'created_at',
+        notFilterList: [],
+        filterList: [],
+        commentsFrom: "",
+        votesFrom: ""
+      },
+      censor: "",
+      showCensoredComments: true
+    })
+  }
 
   handleFilterByClick(event){
     const target = event.target;
@@ -82,7 +109,10 @@ class UserEditSettingsContainer extends React.Component {
     opts[name] = value;
     opts.page = 1
 
-    this.setState({ sortOpts: opts })
+    this.setState({
+      sortOpts: opts,
+      useGalleryDefault: false
+    })
   }
 
   handleFilterClick(event){
@@ -105,7 +135,8 @@ class UserEditSettingsContainer extends React.Component {
     opts.page = 1
 
     this.setState({
-      sortOpts: opts
+      sortOpts: opts,
+      useGalleryDefault: false
     })
   }
 
@@ -117,7 +148,8 @@ class UserEditSettingsContainer extends React.Component {
     opts.sortDir = value
 
     this.setState({
-      sortOpts: opts
+      sortOpts: opts,
+      useGalleryDefault: false
     })
   }
 
@@ -125,7 +157,7 @@ class UserEditSettingsContainer extends React.Component {
     event.preventDefault();
 
     var { sortDir, sortType, notFilterList, filterList, commentsFrom, votesFrom } = this.state.sortOpts;
-    var { censor, showCensoredComments } = this.state;
+    var { censor, showCensoredComments, useGalleryDefault } = this.state;
 
     var user = new FormData();
     user.append("user[sort_dir]", sortDir);
@@ -136,7 +168,7 @@ class UserEditSettingsContainer extends React.Component {
     user.append("user[votes_from]", votesFrom);
     user.append("user[censor]", censor);
     user.append("user[show_censored_comments]", showCensoredComments)
-    user.append("user[settings_updated]", true)
+    user.append("user[settings_updated]", !useGalleryDefault)
 
     FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'saveErrors', user)
     .then(redirect => window.location = '/articles')
@@ -149,14 +181,21 @@ class UserEditSettingsContainer extends React.Component {
       <div id="user-edit-settings-container">
         <h5 className="text-center">Choose default sort and filter settings</h5>
         <br />
+        <Checkbox
+          onChange={this.handleRevertSettings}
+          name={"useGalleryDefault"}
+          label={"Check to use Websites default settings"}
+          checked={this.state.useGalleryDefault}
+        />
         <CommentFilters
+          className={"margin-top-10px"}
           sortOpts={this.state.sortOpts}
           handleFilterSubmit={this.handleChange}
           handleSortDirClick={this.handleSortDirClick}
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
         />
-      <div className="row">
+        <div className="row">
         <Checkbox
           className={"col-6"}
           onChange={this.handleChange}

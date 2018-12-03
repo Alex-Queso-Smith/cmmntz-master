@@ -199,7 +199,7 @@ class CommentFormContainer extends React.Component {
       </Modal>
     }
     if (artSettings.disabled) {
-      approvalMsg = 
+      approvalMsg =
       <span className="helper-text">Note: This thread requires approval of all comments before they will be displayed.</span>
     }
 
@@ -227,7 +227,7 @@ class CommentFormContainer extends React.Component {
             name="text"
             placeholder="Type your comment here"
             value={text}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
             rows={7}
             />
         </div>

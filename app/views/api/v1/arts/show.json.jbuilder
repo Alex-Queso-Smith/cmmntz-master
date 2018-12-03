@@ -11,5 +11,6 @@ json.art do
     json.gallery_sort_type @art.gallery.sort_type
     json.gallery_censor @art.gallery.censor
     json.gallery_thread_expiration_days @art.gallery.default_art_thread_expiration_days
+    json.gallery_comment_etiquette @art.gallery.comment_etiquette
   end
 end

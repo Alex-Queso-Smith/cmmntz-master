@@ -12,7 +12,7 @@ class CommentFilters extends React.Component {
     var filterButtonsRowTwo = FilterButtonsRowTwo(this)
 
     return(
-      <div className="cf-filter-block">
+      <div className={`cf-filter-block ${this.props.className}`}>
         <div className="row vote-row" >
           <h4 className="col-2 col-sm-2 col-md-2">Sort</h4>
 
