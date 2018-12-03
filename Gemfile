@@ -97,7 +97,8 @@ gem 'foreman'
 
 # storage hookup
 gem 'carrierwave'
-gem 'carrierwave-azure'
+gem "azure-storage"
+gem 'fog-azure-rm'
 
 ###### for newspaper mock
 gem 'fae-rails'
