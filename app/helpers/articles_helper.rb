@@ -11,11 +11,15 @@ module ArticlesHelper
     if article.banner.present?
       image_tag article.banner.asset.url, class: "article-banner"
     end
+  rescue
+    ""
   end
 
   def article_middle_image article
     if article.middle_image.present?
       image_tag article.middle_image.asset.url, class: "article-middle-image"
     end
+  rescue
+    ""
   end
 end
