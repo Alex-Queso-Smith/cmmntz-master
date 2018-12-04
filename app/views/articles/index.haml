@@ -10,10 +10,13 @@
             .right-pane.col-7.col-sm-8.col-md-9.col-lg-10
               .article-title
                 %h3= link_to "#{display_date article.publish_date, false} - #{article.title}", article_path(article.slug)
-                .text-right
-                  Comments/Replies #{article.comments.size}
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  Votes #{article.votes.size}
+                .row
+                  .col-sm-6
+                    Source: #{article.author.name}
+                  .col-sm-6
+                    Comments/Replies: #{article.comments.size}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Votes: #{article.votes.size}
               .article-preview-text
                 = article.introduction
                 %br/
