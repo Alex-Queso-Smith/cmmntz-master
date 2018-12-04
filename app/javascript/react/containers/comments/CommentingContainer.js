@@ -386,7 +386,11 @@ class CommentingContainer extends React.Component {
 
   deleteComment(commentId){
     var { galleryId } = this.props;
-    FetchDeleteBasic(this, `/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`)
+
+    var updateComment = new FormData()
+    updateComment.append("comment[deleted]", true)
+
+    FetchWithUpdate(this, `/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
     .then(success => {
       var allComments = this.state.comments;
       var filteredComments = allComments.filter(comment => comment.id != commentId)

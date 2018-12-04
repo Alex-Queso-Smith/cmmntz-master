@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 2018_12_03_184607) do
     t.uuid "parent_id"
     t.text "censored_text"
     t.boolean "approved", default: false, null: false
+    t.boolean "deleted", default: false
     t.index ["approved"], name: "index_comments_on_approved"
     t.index ["art_id", "art_type"], name: "index_comments_on_art_id_and_art_type"
     t.index ["interactions_count"], name: "index_comments_on_interactions_count"

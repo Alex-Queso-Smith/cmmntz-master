@@ -48,7 +48,7 @@ class Api::V1::CommentsController < ApiController
   # DELETE /comments/1.json
   def destroy
     raise "not authorized" unless current_user.customer_for?(params[:gallery_id])
-    if @comment.destroy
+    if @comment.update(comment_params)
       render json: { message: "Destroy successfull" }
     else
       render json: { errors: @comment.errors, status: :unprocessable_entity }
@@ -63,7 +63,18 @@ class Api::V1::CommentsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:user_id, :art_id, :art_type, :text, :anonymous, :vote_types, :parent_id, :force, :old_top_id)
+      params.require(:comment).permit(
+        :user_id,
+        :art_id,
+        :art_type,
+        :text,
+        :anonymous,
+        :vote_types,
+        :parent_id,
+        :force,
+        :old_top_id,
+        :deleted
+      )
     end
 
     def admin?
