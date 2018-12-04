@@ -50,7 +50,7 @@ class Api::V1::CommentsController < ApiController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
-    raise "not authorized" unless current_user.customer_for?(params[:gallery_id])
+    raise "not authorized" unless admin?
     if @comment.update(comment_params)
       render json: { message: "Destroy successfull" }
     else
