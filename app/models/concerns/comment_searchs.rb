@@ -95,6 +95,12 @@ module CommentSearchs
       select_top_percent.select_love_percent.select_like_a_lot_percent.select_like_percent.select_indifferent_percent.select_dislike_percent.select_dislike_a_lot_percent.select_trash_percent.select_warn_percent.select_smart_percent.select_funny_percent.select_happy_percent.select_shocked_percent.select_sad_percent.select_boring_percent.select_angry_percent
     }
 
+    scope :for_non_blocked_users, -> {
+      joins(:art)
+      .joins("left join gallery_blacklistings on gallery_blacklistings.user_id = comments.user_id AND gallery_blacklistings.gallery_id = arts.gallery_id")
+      .where("gallery_blacklistings.id IS NULL")
+    }
+
     def self.filter_by_list(scope, filter_list)
       filter_list.split(",").each do |item|
         scope = scope.send("having_#{item}_gteq", FILTER_PERCENT)
@@ -164,7 +170,7 @@ module CommentSearchs
     end
 
     def self.base_search(scope, user, filter_opts = {})
-      scope = scope.select_tabulation.includes(:user).approved.not_deleted
+      scope = scope.select_tabulation.includes(:user).approved.not_deleted.for_non_blocked_users
       scope = self.filter_by_list(scope, filter_opts[:filter_list]) if filter_opts[:filter_list]
       scope = self.filter_by_not_list(scope, filter_opts[:not_filter_list]) if filter_opts[:not_filter_list]
       scope = self.geo_filtering(scope, filter_opts[:some_data]) if filter_opts[:some_data]
