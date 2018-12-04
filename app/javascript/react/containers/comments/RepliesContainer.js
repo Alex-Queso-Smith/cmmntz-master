@@ -184,6 +184,8 @@ class RepliesContainer extends React.Component {
               currentUserId={currentUserId}
               commentVotes={current_users_votes}
               votePercents={vote_percents}
+              artSettings={this.props.artSettings}
+              updateAppState={this.props.updateAppState}
               />
           )
         } else {
