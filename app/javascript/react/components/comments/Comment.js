@@ -163,10 +163,10 @@ class Comment extends React.Component {
     var editButton, cancelButton;
     if (!artSettings.disabled) {
       if (editStatus && currentUserId === commentUserId) {
-        editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
-        cancelButton = <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelEditComment}>Cancel Edit</button>
+        editButton = <button className="btn btn-primary btn-sm comment-button" onClick={this.handleEditSubmit}>Edit Comment</button>
+        cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditComment}>Cancel Edit</button>
       } else if (currentUserId === commentUserId) {
-        editButton = <button className="btn btn-primary btn-sm" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+        editButton = <button className="btn btn-primary btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
       }
     } else {
       editButton = <div className="deactivated-message">Commenting on this thread has been disabled.</div>
@@ -272,7 +272,7 @@ class Comment extends React.Component {
 
             {textBox}
             {lastEdited}
-            <div className="margin-top-5px">
+            <div className="cf-comment-button-group">
               {editButton}
               {cancelButton}
               {deleteCommentButton}

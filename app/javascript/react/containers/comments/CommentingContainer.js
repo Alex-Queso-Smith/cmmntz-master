@@ -386,17 +386,19 @@ class CommentingContainer extends React.Component {
 
   deleteComment(commentId){
     var { galleryId } = this.props;
+    var c = confirm("Are you sure you want to delete this comment?")
+    if (c) {
+      var updateComment = new FormData()
+      updateComment.append("comment[deleted]", true)
 
-    var updateComment = new FormData()
-    updateComment.append("comment[deleted]", true)
-
-    FetchWithUpdate(this, `/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
-    .then(success => {
-      var allComments = this.state.comments;
-      var filteredComments = allComments.filter(comment => comment.id != commentId)
-      this.setState({ comments: filteredComments })
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
+      FetchWithUpdate(this, `/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
+      .then(success => {
+        var allComments = this.state.comments;
+        var filteredComments = allComments.filter(comment => comment.id != commentId)
+        this.setState({ comments: filteredComments })
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
   }
 
   render(){
