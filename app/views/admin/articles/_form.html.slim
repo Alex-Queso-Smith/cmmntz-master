@@ -6,7 +6,7 @@
     = fae_input f, :title
     - unless f.object.new_record?
       = fae_input f, :slug, helper_text: 'Populated from publish date and name'
-    = fae_association f, :author
+    = fae_association f, :author, {label: "Source"}
     = fae_association f, :article_category
     = fae_input f, :topics
     = fae_image_form f, :thumbnail
