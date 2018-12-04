@@ -243,6 +243,12 @@ class Comment extends React.Component {
       </button>
     }
 
+    var adminFlag;
+    if (this.props.userInfo.gallery_admin) {
+      adminFlag =
+      " - Mod"
+    }
+
     return(
       <div className="cf-comment">
         <div className="cf-comment-wrapper">
@@ -258,7 +264,7 @@ class Comment extends React.Component {
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
               <div className="cf-comment-user-name col-4">
-                {this.props.userName}
+                {this.props.userName}{adminFlag}
               </div>
               <div className="cf-comment-at col-6" >
                 {createdAt}

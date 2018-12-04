@@ -22,17 +22,20 @@ $grayline: #D3D3D3;
 
   .articles-wrapper {
     margin: 10px;
+
     .article-container {
       margin-bottom: 5px;
 
-      .article {
+      .article-row {
         padding: 5px;
-        border: 1px solid $grey;
-        border-radius: 25px;
-        padding: 5px;
-
-        .article-title {
-          border-bottom: 1px solid $grey;
+        min-height: 150px;
+        .right-pane {
+          .article-title {
+            border-bottom: 1px solid $grey;
+            h3 {
+              font-size: 1.5em;
+            }
+          }
         }
         .article-preview {
           padding-top: 15px;
@@ -40,8 +43,8 @@ $grayline: #D3D3D3;
             padding: 15px;
 
             .article-thumb {
-              max-width: 115px;
-              max-height: 115px;
+              max-width: 130px;
+              max-height: 130px;
               width: auto;
               height: auto;
             }

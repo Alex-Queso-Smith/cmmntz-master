@@ -128,6 +128,12 @@ class Reply extends React.Component {
       </div>
     }
 
+    var adminFlag;
+    if (this.props.user.gallery_admin) {
+      adminFlag =
+      " - Mod"
+    }
+
     return(
       <div className="cf-comment cf-comment-reply margin-top-10px">
         <div className="cf-comment-wrapper">
@@ -143,7 +149,7 @@ class Reply extends React.Component {
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
               <div className="cf-comment-user-name col-4">
-                {user_name}
+                {user_name}{adminFlag}
               </div>
               <div className="cf-comment-at col-6" >
                 {this.props.posted}
@@ -164,6 +170,8 @@ class Reply extends React.Component {
           votePercents={this.props.votePercents}
           handleTopChange={this.props.handleTopChange}
           userVoted={this.props.userVoted}
+          artSettings={this.props.artSettings}
+          updateAppState={this.props.updateAppState}
         />
       </div>
     )

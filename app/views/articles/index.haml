@@ -4,16 +4,20 @@
     - @articles.each do |article|
       .row.margin-top-bottom-15px
         .article-container.col-sm-12
-          .article
-            .article-title.text-center
-              %h3= link_to "#{display_date article.publish_date, false} - #{article.title}", article_path(article.slug)
-              Comments/Replies #{article.comments.size}
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              Votes #{article.votes.size}
-            .article-preview.row
-              .article-preview-image.text-center.col-5
-                = article_thumbnail_or_placeholder article
-              .article-preview-text.col-7
+          .article-row.row
+            .left-pane.col-5.col-sm-4.col-md-3.col-lg-2
+              = article_thumbnail_or_placeholder article
+            .right-pane.col-7.col-sm-8.col-md-9.col-lg-10
+              .article-title
+                %h3= link_to "#{display_date article.publish_date, false} - #{article.title}", article_path(article.slug)
+                .row
+                  .col-sm-6
+                    Source: #{article.author.name}
+                  .col-sm-6
+                    Comments/Replies: #{article.comments.size}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Votes: #{article.votes.size}
+              .article-preview-text
                 = article.introduction
                 %br/
                 = link_to "read more", article_path(article.slug)
