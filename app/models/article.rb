@@ -20,6 +20,18 @@ class Article < ApplicationRecord
     title
   end
 
+  def art
+    @art ||= Art.includes(comments: :votes).find_by(url: url)
+  end
+
+  def comments
+    @comments ||= art.blank? ? [] : art.comments
+  end
+
+  def votes
+    @votes ||= art.blank? ? [] : comments.map(&:votes).flatten
+  end
+
   def url(request = {})
     if Rails.env.production?
       base_url = "classifilter-master.herokuapp.com"

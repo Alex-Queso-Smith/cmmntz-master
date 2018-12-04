@@ -1,19 +1,19 @@
 .articles-container
   %h3 Articles
   .articles-wrapper
-    .row
-    - @articles.in_groups_of(3, false) do |group|
+    - @articles.each do |article|
       .row.margin-top-bottom-15px
-        - group.each do |article|
-          .article-container.col-sm-4
-            .article
-              .article-title.text-center
-                %h3= link_to article.title, article_path(article.slug)
-              .article-preview.row
-                .article-preview-image.text-center.col-5
-                  = article_thumbnail_or_placeholder article
-                .article-preview-text.col-7
-                  %p= display_date article.publish_date, false
-                  = article.introduction
-                  %br/
-                  = link_to "read more", article_path(article.slug)
+        .article-container.col-sm-12
+          .article
+            .article-title.text-center
+              %h3= link_to "#{display_date article.publish_date, false} - #{article.title}", article_path(article.slug)
+              Comments/Replies #{article.comments.size}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Votes #{article.votes.size}
+            .article-preview.row
+              .article-preview-image.text-center.col-5
+                = article_thumbnail_or_placeholder article
+              .article-preview-text.col-7
+                = article.introduction
+                %br/
+                = link_to "read more", article_path(article.slug)

@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.order(publish_date: :desc)
+    @articles = Article.order(publish_date: :desc).where("publish_date <= '#{Date.today}'")
   end
 
   # GET /articles/1
