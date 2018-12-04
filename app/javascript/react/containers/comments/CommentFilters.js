@@ -33,23 +33,31 @@ class CommentFilters extends React.Component {
         </div>
         <br/>
         <div className="row">
-          <h4>Show only comments from:</h4>
+          <div className="col-12">
+            <h4>Show only comments from:</h4>
+          </div>
         </div>
         <div className="row">
-          <FilterCommentsBy
-            commentsFrom={this.props.sortOpts.commentsFrom}
-            onClick={this.props.handleFilterByClick}
-          />
+          <div className="col-12">
+            <FilterCommentsBy
+              commentsFrom={this.props.sortOpts.commentsFrom}
+              onClick={this.props.handleFilterByClick}
+              />
+          </div>
         </div>
         <br />
         <div className="row">
-          <h4>Show only Votes By:</h4>
+          <div className="col-12">
+            <h4>Show only Votes By:</h4>
+          </div>
         </div>
         <div className="row">
-          <FilterVotesBy
-            votesFrom={this.props.sortOpts.votesFrom}
-            onClick={this.props.handleFilterByClick}
-          />
+          <div className="col-12">
+            <FilterVotesBy
+              votesFrom={this.props.sortOpts.votesFrom}
+              onClick={this.props.handleFilterByClick}
+              />
+          </div>
         </div>
 
       </div>
