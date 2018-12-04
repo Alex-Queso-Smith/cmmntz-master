@@ -17,4 +17,4 @@
       .col-sm-5
         = article_middle_image @article
 
-<div id="cf-comments-app" data-gallery-id="= @art.gallery_id" data-art-id="= @art.id" data-art-type="art" data-user-id="= current_user.id if current_user"/>
+<div id="cf-comments-app" data-gallery-id="#{@art.gallery_id}" data-art-id="#{@art.id}" data-art-type="art" data-user-id="#{current_user.id if current_user}"/>
