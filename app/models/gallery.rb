@@ -30,4 +30,8 @@ class Gallery < ApplicationRecord
       }
     }
   end
+
+  def admin_user_account_ids
+    customers.map(&:user_account_id).reject{|id| id.blank? }
+  end
 end

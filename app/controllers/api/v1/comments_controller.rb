@@ -10,12 +10,14 @@ class Api::V1::CommentsController < ApiController
       comment_ids += @replies.map(&:id)
       @current_users_votes = Vote.for_user_and_comment(current_user.id, comment_ids)
       @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, comment_ids)
+      @gallery_admins = Art.find(params[:art_id]).gallery_admin_user_account_ids
     end
 
   def show
     @comment = Comment.tabulation_for_individual_comment(current_user, params[:id], {})
     @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
     @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
+    @gallery_admins = Art.find(@comment.art_id).gallery_admin_user_account_ids
   end
 
   # POST /comments
@@ -37,6 +39,7 @@ class Api::V1::CommentsController < ApiController
       @comment = Comment.tabulation_for_individual_comment(current_user, params[:id], {})
       @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
       @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
+      @gallery_admins = Art.find(@comment.art_id).gallery_admin_user_account_ids
 
       render "api/v1/comments/show"
     else

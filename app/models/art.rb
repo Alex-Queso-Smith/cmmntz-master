@@ -14,6 +14,10 @@ class Art < ApplicationRecord
     where(arel_table[:last_interaction_at].gteq(datetime))
   }
 
+  def gallery_admin_user_account_ids
+    gallery.admin_user_account_ids
+  end
+
   def moderator
     gallery.super_admin
   end
