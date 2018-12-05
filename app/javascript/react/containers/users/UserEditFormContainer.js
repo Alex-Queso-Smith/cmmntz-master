@@ -48,8 +48,8 @@ class UserEditFormContainer extends React.Component {
         latitude: user.latitude,
         longitude: user.longitude,
         geoPin: {
-          x: x,
-          y: y
+          x: x - 6,
+          y: y - 6
         },
         font: user.font,
         colorTheme: user.color_theme,
@@ -108,7 +108,7 @@ class UserEditFormContainer extends React.Component {
     this.setState({
       latitude: latitude,
       longitude: longitude,
-      geoPin: { x: x, y: y }
+      geoPin: { x: x - 6, y: y - 6 }
      })
   }
 

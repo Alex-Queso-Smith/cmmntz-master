@@ -39,8 +39,8 @@ class GeoSelect extends React.Component {
     var latitude = Math.round(((y * (180 / 100)) - 180) * -1)
     var newGeoPin = this.state.geoPin
 
-    newGeoPin.x =  x
-    newGeoPin.y = y
+    newGeoPin.x =  x - 6
+    newGeoPin.y = y - 6
 
     this.setState({
       latitude: latitude,
@@ -87,7 +87,7 @@ class GeoSelect extends React.Component {
 
     return(
       <div className="geo-select-container">
-        
+
         <div className="row">
           <div className="col-sm-12">
             Click an Area of the map to center your search
