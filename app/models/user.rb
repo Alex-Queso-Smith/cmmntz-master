@@ -48,6 +48,9 @@ class User < ApplicationRecord
   has_many :blockers, class_name: 'Blocking', foreign_key: "blocking_id"
   has_many :blocker_users, through: :blockers, source: :blocker
 
+  # galleries where the user can not post
+  has_many :gallery_blacklistings
+
   validates :user_name, presence: true, uniqueness: { case_sensitive: false }
 
   validates :gender, numericality: true, inclusion: { in: GENDERS }, unless: Proc.new { |u| u.gender.nil? }
@@ -117,5 +120,9 @@ class User < ApplicationRecord
 
   def customer_for?(gallery_id)
     Customer.account_for_gallery_and_user(gallery_id, id).size > 0
+  end
+
+  def user_blacklisted_for?(gallery_id)
+    gallery_blacklistings.where(gallery_id: gallery_id).size > 0
   end
 end
