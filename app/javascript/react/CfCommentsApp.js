@@ -14,7 +14,8 @@ class CfCommentsApp extends React.Component {
       galleryId: document.getElementById('cf-comments-app').getAttribute('data-gallery-id'),
       artSettings: {
         disabled: false,
-        deactivated: false
+        deactivated: false,
+        blacklisted: false
       }
     }
 
@@ -32,6 +33,7 @@ class CfCommentsApp extends React.Component {
       var newArtSettings = this.state.artSettings
       newArtSettings.disabled = artData.art.disabled
       newArtSettings.deactivated = artData.art.deactivated
+      newArtSettings.userBlacklisted = artData.art.user_blacklisted
 
       this.setState({
         artSettings: newArtSettings
@@ -44,7 +46,12 @@ class CfCommentsApp extends React.Component {
     var { commentRoot, userId, artType, artId, artSettings, gallerySettings, userSettings, galleryId } = this.state;
     var displayContainer;
 
-    if (!artSettings.deactivated) {
+    if (artSettings.userBlacklisted) {
+      displayContainer =
+      <div className="deactivated-message">
+        <h3>You have been blacklisted from this site by the Admins.</h3>
+      </div>
+    } else if (!artSettings.deactivated) {
       displayContainer =
       <CommentingContainer
         userId={userId}

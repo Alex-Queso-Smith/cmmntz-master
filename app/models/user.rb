@@ -121,4 +121,8 @@ class User < ApplicationRecord
   def customer_for?(gallery_id)
     Customer.account_for_gallery_and_user(gallery_id, id).size > 0
   end
+
+  def user_blacklisted_for?(gallery_id)
+    gallery_blacklistings.where(gallery_id: gallery_id).size > 0
+  end
 end
