@@ -1,6 +1,8 @@
 class Article < ApplicationRecord
   include Fae::BaseModelConcern
 
+  self.per_page = 5
+
   belongs_to :article_category
   belongs_to :author
 

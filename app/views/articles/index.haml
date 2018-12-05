@@ -5,9 +5,9 @@
       .row.margin-top-bottom-15px
         .article-container.col-sm-12
           .article-row.row
-            .left-pane.col-5.col-sm-4.col-md-3.col-lg-2
+            .left-pane.col-sm-4.col-md-3.col-lg-2
               = article_thumbnail_or_placeholder article
-            .right-pane.col-7.col-sm-8.col-md-9.col-lg-10
+            .right-pane.col-sm-8.col-md-9.col-lg-10
               .article-title
                 %h3= link_to "#{display_date article.publish_date, false} - #{article.title}", article_path(article.slug)
                 .row
@@ -21,3 +21,4 @@
                 = article.introduction
                 %br/
                 = link_to "read more", article_path(article.slug)
+  = will_paginate @articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
