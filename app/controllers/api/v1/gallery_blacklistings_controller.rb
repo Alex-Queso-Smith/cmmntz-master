@@ -3,7 +3,8 @@ class Api::V1::GalleryBlacklistingsController < ApiController
 
   def create
     get_user
-    current_gallery.blacklisted_users << @user if admin?
+    gallery = Gallery.find(params[:gallery_id])
+    gallery.blacklisted_users << @user if admin?
     render json: { message: "Success" }
   end
 

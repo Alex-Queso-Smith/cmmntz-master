@@ -152,14 +152,16 @@ class Reply extends React.Component {
       " - Mod"
     }
 
-    var deleteReplyButton;
+    var deleteReplyButton, banUserButton;
     if (this.props.adminStatus) {
       deleteReplyButton =
-      <div className="text-center">
-        <button className="btn btn-sm comment-delete-button margin-top-5px" onClick={this.props.handleDeleteReply}>
+        <button className="btn btn-sm red-outline-button margin-top-5px" onClick={this.props.handleDeleteReply}>
           Delete Reply
         </button>
-      </div>
+        banUserButton =
+        <button className="btn btn-sm red-outline-button margin-top-5px" onClick={this.props.handleBanUser}>
+          Ban User
+        </button>
     }
 
     return(
@@ -191,6 +193,7 @@ class Reply extends React.Component {
             {textBox}
           </div>
           {deleteReplyButton}
+          {banUserButton}
         </div>
         <VotingContainerBase
           commentId={this.props.replyId}
