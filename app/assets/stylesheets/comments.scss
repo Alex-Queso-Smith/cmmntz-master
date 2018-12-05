@@ -54,12 +54,37 @@ $bootstrap-blue: #0069D9;
 
   .cf-comment-wrapper {
     width: 100%;
-    height: auto; overflow: hidden;
+    height: auto; overflow: visible;
 
 
     .cf-comment-user-meta {
+      position: relative;
       width: 75px;
       float: left;
+      overflow: visible;
+
+      .cf-avatar-infoTile {
+        position: absolute;
+        top: 0px;
+        left: 75px;
+        z-index: 300;
+
+        background-color: #fff;
+        border: 1px solid $grayline;
+        height: 150px;
+        width: 200px;
+        border-radius: 10px;
+
+        .cf-avatar-infoTile-content {
+          margin: 5px;
+
+          h4 {
+            font-size: 1.25em;
+            padding-bottom: 3px;
+            font-weight: bold;
+          }
+        }
+      }
 
       .cf-comment-user-avatar {
         border: 1px solid $grayline;

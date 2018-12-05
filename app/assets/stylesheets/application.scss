@@ -269,6 +269,11 @@ a:hover {
     font-size: 1.5em;
   }
 }
+
+.border-1px-bot {
+    border-bottom: 1px solid $grayline;
+}
+
 @media (min-width: $breakpoint-phone) {
   .deactivated-message {
     width: 90%;
