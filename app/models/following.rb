@@ -9,6 +9,6 @@ class Following < ApplicationRecord
   private
 
   def remove_previous_blockings
-    follower.blockeded_users.delete(following) if follower.blocked_users.include?(following)
+    follower.blocked_users.delete(following) if follower.blocked_users.include?(following)
   end
 end

@@ -17,7 +17,6 @@ class CfCommentsApp extends React.Component {
         deactivated: false
       }
     }
-
     this.handleAppSetState = this.handleAppSetState.bind(this)
   }
 

@@ -156,7 +156,7 @@ class Comment extends React.Component {
   }
 
   render(){
-    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState } = this.props
+    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState, galleryId } = this.props
     var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
     var userTile, starOpacity, blockOpacity;
 
@@ -235,11 +235,15 @@ class Comment extends React.Component {
       blockSym = <div className={`col-1 col-sm-1`} />
     }
 
-    var deleteCommentButton;
+    var deleteCommentButton, banUserButton;
     if (this.props.adminStatus) {
       deleteCommentButton =
-      <button className="btn btn-sm comment-delete-button" onClick={this.props.handleDeleteComment}>
+      <button className="btn btn-sm red-outline-button" onClick={this.props.handleDeleteComment}>
         Delete Comment
+      </button>
+      banUserButton =
+      <button className="btn btn-sm red-outline-button" onClick={this.props.handleBanUser}>
+        Ban User
       </button>
     }
 
@@ -282,6 +286,7 @@ class Comment extends React.Component {
               {editButton}
               {cancelButton}
               {deleteCommentButton}
+              {banUserButton}
             </div>
           </div>
         </div>
@@ -309,6 +314,9 @@ class Comment extends React.Component {
           censored={censored}
           artSettings={artSettings}
           updateAppState={updateAppState}
+          banUser={this.props.banUser}
+          adminStatus={this.props.adminStatus}
+          galleryId={galleryId}
         />
       </div>
     )
