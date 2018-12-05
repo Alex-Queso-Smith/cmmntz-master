@@ -89,6 +89,7 @@ class CommentsList extends React.Component {
                 handleDeleteComment={handleDeleteComment}
                 banCommentUser={handleBanUser}
                 banUser={this.props.banUser}
+                handleBanUser={handleBanUser}
                 galleryId={this.props.galleryId}
                 />
               <hr />

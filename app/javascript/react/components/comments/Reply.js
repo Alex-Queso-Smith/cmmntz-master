@@ -35,7 +35,7 @@ class Reply extends React.Component {
 
     var path;
     var newFollow = new FormData();
-    newFollow.append("following[following_id]", this.props.user.user_id)
+    newFollow.append("following[following_id]", this.props.replyUserId)
     newFollow.append("following[follower_id]", this.props.currentUserId)
 
     if (this.state.userFollowed) {
@@ -45,7 +45,16 @@ class Reply extends React.Component {
     }
     FetchWithUpdate(this, path, 'POST', newFollow)
     .then(body => {
-      this.setState({ userFollowed: !this.state.userFollowed })
+      if (this.state.userBlocked) {
+        this.setState({
+          userFollowed: !this.state.userFollowed,
+          userBlocked: !this.state.userBlocked
+        })
+      } else {
+        this.setState({
+          userFollowed: !this.state.userFollowed
+        })
+      }
     })
   }
 
@@ -64,7 +73,16 @@ class Reply extends React.Component {
     }
     FetchWithUpdate(this, path, 'POST', newBlock)
     .then(body => {
-      this.setState({ userBlocked: !this.state.userBlocked })
+      if (this.state.userFollowed) {
+        this.setState({
+          userBlocked: !this.state.userBlocked,
+          userFollowed: !this.state.userFollowed
+        })
+      } else {
+        this.setState({
+          userBlocked: !this.state.userBlocked
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -134,6 +152,18 @@ class Reply extends React.Component {
       " - Mod"
     }
 
+    var deleteReplyButton, banUserButton;
+    if (this.props.adminStatus) {
+      deleteReplyButton =
+        <button className="btn btn-sm red-outline-button margin-top-5px" onClick={this.props.handleDeleteReply}>
+          Delete Reply
+        </button>
+        banUserButton =
+        <button className="btn btn-sm red-outline-button margin-top-5px" onClick={this.props.handleBanUser}>
+          Ban User
+        </button>
+    }
+
     return(
       <div className="cf-comment cf-comment-reply margin-top-10px">
         <div className="cf-comment-wrapper">
@@ -162,6 +192,8 @@ class Reply extends React.Component {
             </div>
             {textBox}
           </div>
+          {deleteReplyButton}
+          {banUserButton}
         </div>
         <VotingContainerBase
           commentId={this.props.replyId}

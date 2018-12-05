@@ -25,6 +25,8 @@ class RepliesContainer extends React.Component {
   handleCancelReply = this.handleCancelReply.bind(this);
   handleSuccessfulReply = this.handleSuccessfulReply.bind(this);
   handleReplySubmit = this.handleReplySubmit.bind(this);
+  deleteReply = this.deleteReply.bind(this);
+
 
   componentDidUpdate(prevProps, prevState){
     if (prevState.replyText != this.state.replyText) {
@@ -143,6 +145,25 @@ class RepliesContainer extends React.Component {
 
   }
 
+  deleteReply(replyId){
+    var { galleryId } = this.props;
+    var c = confirm("Are you sure you want to delete this reply?")
+    if (c) {
+      var updateComment = new FormData()
+      updateComment.append("comment[deleted]", true)
+
+      FetchWithUpdate(this, `/api/v1/comments/${replyId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
+      .then(success => {
+        var allReplies = this.state.replies;
+        var filteredReplies = allReplies.filter(reply => reply.id != replyId)
+        this.setState({ replies: filteredReplies })
+        var test = this.state.replies
+
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
+  }
+
   render(){
     var { followedUsers, blockedUsers, currentUserId, censored, artSettings } = this.props;
     var { replies } = this.state;
@@ -168,7 +189,7 @@ class RepliesContainer extends React.Component {
 
         var handleDeleteReply = () => {
 
-          this.props.deleteReply(reply.id)
+          this.deleteReply(reply.id)
         }
 
         var shownText = text;

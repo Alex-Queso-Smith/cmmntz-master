@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CommentingContainer from './containers/comments/CommentingContainer';
-import { FetchDidMount } from './util/CoreUtil';
+import { FetchDidMount, FetchIndividual } from './util/CoreUtil';
 
 class CfCommentsApp extends React.Component {
   constructor(props){
@@ -18,7 +18,6 @@ class CfCommentsApp extends React.Component {
         blacklisted: false
       }
     }
-
     this.handleAppSetState = this.handleAppSetState.bind(this)
   }
 
@@ -42,6 +41,8 @@ class CfCommentsApp extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+
+
   render(){
     var { commentRoot, userId, artType, artId, artSettings, gallerySettings, userSettings, galleryId } = this.state;
     var displayContainer;
@@ -63,6 +64,7 @@ class CfCommentsApp extends React.Component {
         userSettings={userSettings}
         updateAppState={this.handleAppSetState}
         gallerySettings={gallerySettings}
+        banUser={this.banUser}
         />
     } else {
       displayContainer =

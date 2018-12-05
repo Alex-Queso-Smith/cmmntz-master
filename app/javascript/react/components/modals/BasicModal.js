@@ -11,12 +11,16 @@ class BasicModal extends React.Component {
       this.hideModal = this.hideModal.bind(this)
     }
 
-    showModal(){
+    showModal(event){
+      event.preventDefault();
+
       this.setState({ show: true });
       document.body.classList.add("cf-modal-locked");
     }
 
-    hideModal(){
+    hideModal(event){
+      event.preventDefault();
+      
       this.setState({ show: false });
       document.body.classList.remove("cf-modal-locked");
     }
