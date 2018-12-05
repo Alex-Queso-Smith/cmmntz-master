@@ -139,6 +139,10 @@ class CommentingContainer extends React.Component {
     this.setState({
       sortOpts:  newSortOpts
      })
+
+     setTimeout(function() { //Start the timer
+       this.handleFilterSubmit();
+     }.bind(this), 1)
   }
 
   handleAdvancedFiltershow(event){
@@ -244,7 +248,7 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit(){
     var search = new FormData();
 
-    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom } = this.state.sortOpts;
+    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius } = this.state.sortOpts;
     var { artType, artId } = this.props;
     search.append("art_type", artType)
     search.append("art_id", artId)
@@ -258,6 +262,11 @@ class CommentingContainer extends React.Component {
     }
     if (votesFrom) {
       search.append("search[votes_from]", votesFrom)
+    }
+    if (radius) {
+      search.append("search[radius]", radius)
+      search.append("search[lat]", latitude)
+      search.append("search[lon]", longitude)
     }
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
