@@ -238,11 +238,11 @@ class Comment extends React.Component {
     var deleteCommentButton, banUserButton;
     if (this.props.adminStatus) {
       deleteCommentButton =
-      <button className="btn btn-sm red-outline-button" onClick={this.props.handleDeleteComment}>
+      <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteComment}>
         Delete Comment
       </button>
       banUserButton =
-      <button className="btn btn-sm red-outline-button" onClick={this.props.handleBanUser}>
+      <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleBanUser}>
         Ban User
       </button>
     }

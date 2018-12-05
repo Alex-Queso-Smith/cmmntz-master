@@ -155,11 +155,11 @@ class Reply extends React.Component {
     var deleteReplyButton, banUserButton;
     if (this.props.adminStatus) {
       deleteReplyButton =
-        <button className="btn btn-sm red-outline-button margin-top-5px" onClick={this.props.handleDeleteReply}>
+        <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteReply}>
           Delete Reply
         </button>
         banUserButton =
-        <button className="btn btn-sm red-outline-button margin-top-5px" onClick={this.props.handleBanUser}>
+        <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleBanUser}>
           Ban User
         </button>
     }
@@ -191,9 +191,11 @@ class Reply extends React.Component {
               </div>
             </div>
             {textBox}
+            <div className="cf-reply-button-group">
+              {deleteReplyButton}
+              {banUserButton}
+            </div>
           </div>
-          {deleteReplyButton}
-          {banUserButton}
         </div>
         <VotingContainerBase
           commentId={this.props.replyId}
