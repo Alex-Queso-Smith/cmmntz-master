@@ -1,6 +1,9 @@
 class Gallery < ApplicationRecord
   has_many :arts
   has_many :customers
+  has_many :gallery_blacklistings
+  has_many :blacklisted_users, through: :gallery_blacklistings, source: :user
+
 
   def super_admin
     customers.where(role: "super_admin").order(created_at: :desc).first
