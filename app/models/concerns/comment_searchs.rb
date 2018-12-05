@@ -120,9 +120,9 @@ module CommentSearchs
       # lat 69 per degree
       # long 66 per degree
       bounds = GEO_BOXES[radius.to_s]
-      scope = scope.joins(:user)
-      scope = scope.lat_bound_box(lat, bounds[:lat])
-      scope = scope.lon_bound_box(lon, bounds[:lon])
+      scope = scope.joins("left join users on users.id = comments.user_id")
+      scope = scope.lat_bound_box(lat.to_i, bounds[:lat])
+      scope = scope.lon_bound_box(lon.to_i, bounds[:lon])
       scope
     end
 
@@ -173,7 +173,7 @@ module CommentSearchs
       scope = scope.select_tabulation.includes(:user).approved.not_deleted.for_non_blocked_users
       scope = self.filter_by_list(scope, filter_opts[:filter_list]) if filter_opts[:filter_list]
       scope = self.filter_by_not_list(scope, filter_opts[:not_filter_list]) if filter_opts[:not_filter_list]
-      scope = self.geo_filtering(scope, filter_opts[:some_data]) if filter_opts[:some_data]
+      scope = self.geo_filtering(scope, filter_opts[:lat], filter_opts[:lon], filter_opts[:radius]) if filter_opts[:radius]
       scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
       scope = self.get_comments_from(scope, user, filter_opts[:comments_from])
       scope = self.eliminate_blocked(scope, user)

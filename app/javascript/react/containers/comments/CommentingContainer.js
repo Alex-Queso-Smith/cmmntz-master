@@ -22,13 +22,17 @@ class CommentingContainer extends React.Component {
       comments: [],
       commentFormErrors: {},
       sortOpts: {
+        showAdvancedFilters: true,
         sortDir: 'desc',
         sortType: 'created_at',
         notFilterList: [],
         filterList: [],
         page: 1,
         commentsFrom: "",
-        votesFrom: ""
+        votesFrom: "",
+        radius: '',
+        latitude: '',
+        longitude: ''
       },
       gallerySettings: { },
       userSettings: { },
@@ -41,6 +45,8 @@ class CommentingContainer extends React.Component {
     this.handleTopChange = this.handleTopChange.bind(this);
     this.handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
     this.handleFilterByClick = this.handleFilterByClick.bind(this);
+    this.handleAdvancedFiltershow = this.handleAdvancedFiltershow.bind(this);
+    this.setLatLongClick = this.setLatLongClick.bind(this);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
@@ -119,6 +125,31 @@ class CommentingContainer extends React.Component {
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  setLatLongClick(x, y, radius){
+    var longitude = Math.round((x * (180 / 150)) - 180)
+    var latitude = Math.round(((y * (180 / 100)) - 180) * -1)
+    var newSortOpts = this.state.sortOpts
+
+    newSortOpts.latitude = latitude
+    newSortOpts.longitude =  longitude
+    newSortOpts.radius = radius
+
+    this.setState({
+      sortOpts:  newSortOpts
+     })
+
+     setTimeout(function() { //Start the timer
+       this.handleFilterSubmit();
+     }.bind(this), 1)
+  }
+
+  handleAdvancedFiltershow(event){
+    event.preventDefault()
+    var newOpts = this.state.sortOpts
+    newOpts.showAdvancedFilters = !newOpts.showAdvancedFilters
+    this.setState({ sortOpts: newOpts })
   }
 
   handleChange(event){
@@ -217,7 +248,7 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit(){
     var search = new FormData();
 
-    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom } = this.state.sortOpts;
+    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius } = this.state.sortOpts;
     var { artType, artId } = this.props;
     search.append("art_type", artType)
     search.append("art_id", artId)
@@ -231,6 +262,11 @@ class CommentingContainer extends React.Component {
     }
     if (votesFrom) {
       search.append("search[votes_from]", votesFrom)
+    }
+    if (radius) {
+      search.append("search[radius]", radius)
+      search.append("search[lat]", latitude)
+      search.append("search[lon]", longitude)
     }
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
@@ -443,6 +479,8 @@ class CommentingContainer extends React.Component {
           handleSortDirClick={this.handleSortDirClick}
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
+          parentSetLatLongClick={this.setLatLongClick}
+          handleAdvancedFiltershow={this.handleAdvancedFiltershow}
         />
         <hr />
         <div>
