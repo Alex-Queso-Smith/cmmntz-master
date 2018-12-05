@@ -49,6 +49,7 @@ class CommentingContainer extends React.Component {
     this.submitterMan = this.submitterMan.bind(this);
     this.handleSettingsUpdate = this.handleSettingsUpdate.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
+    this.banUser = this.banUser.bind(this);
   }
 
   componentWillMount(){
@@ -401,7 +402,12 @@ class CommentingContainer extends React.Component {
     }
   }
 
+  banUser(userId){
+
+  }
+
   render(){
+
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
     var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored, commentEtiquette} = this.state;
     var endComments;
@@ -447,6 +453,8 @@ class CommentingContainer extends React.Component {
           updateAppState={updateAppState}
           adminStatus={this.state.userSettings.admin}
           deleteComment={this.deleteComment}
+          banUser={this.banUser}
+          galleryId={this.props.galleryId}
         />
         {endComments}
         <ScrollUpButton

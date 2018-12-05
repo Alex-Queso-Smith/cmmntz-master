@@ -27,6 +27,10 @@ class CommentsList extends React.Component {
           this.props.deleteComment(comment.id)
         }
 
+        var handleBanUser = () => {
+          this.props.banUser(comment.user.user_id)
+        }
+
         var { user_name, gender, age_range, user_id, show_censored} = comment.user
         var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted, censored_text } = comment
         var userName, commentLength;
@@ -83,6 +87,9 @@ class CommentsList extends React.Component {
                 artSettings={artSettings}
                 updateAppState={updateAppState}
                 handleDeleteComment={handleDeleteComment}
+                banCommentUser={handleBanUser}
+                banUser={this.props.banUser}
+                galleryId={this.props.galleryId}
                 />
               <hr />
             </div>

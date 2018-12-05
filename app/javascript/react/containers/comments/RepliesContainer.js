@@ -162,6 +162,15 @@ class RepliesContainer extends React.Component {
           this.props.handleReplyOpen(this.props.commentId)
         }
 
+        var handleBanUser = () => {
+          this.props.banUser(reply.user.user_id)
+        }
+
+        var handleDeleteReply = () => {
+
+          this.props.deleteReply(reply.id)
+        }
+
         var shownText = text;
         if (censored && censored_text) {
           shownText = censored_text
@@ -186,6 +195,9 @@ class RepliesContainer extends React.Component {
               votePercents={vote_percents}
               artSettings={this.props.artSettings}
               updateAppState={this.props.updateAppState}
+              handleBanUser={handleBanUser}
+              handleDeleteReply={handleDeleteReply}
+              adminStatus={this.props.adminStatus}
               />
           )
         } else {

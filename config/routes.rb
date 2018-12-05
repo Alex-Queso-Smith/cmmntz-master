@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       resources :blockings, only: [:create]
       resources :unblockings, only: [:create]
       resources :arts, only: [:show]
+      resources :gallery_blacklistings, only: [:create]
 
       # this only lives here temporarily
       resources :admin_mails, only: [:create]
