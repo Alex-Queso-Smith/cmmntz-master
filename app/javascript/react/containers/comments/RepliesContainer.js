@@ -190,7 +190,7 @@ class RepliesContainer extends React.Component {
 
         var followed = followedUsers.includes(reply.user.user_id)
         var blocked = blockedUsers.includes(reply.user.user_id)
-        var { id, user, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text } = reply
+        var { id, edited, user, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text } = reply
         var lengthImage = CommentLengthSorter(text)
 
         var handleNewReplyBox = () => {
@@ -219,7 +219,8 @@ class RepliesContainer extends React.Component {
               replyId={id}
               user={user}
               lengthImage={lengthImage}
-              reply={shownText}
+              edited={edited}
+              text={shownText}
               posted={created_at}
               userFollowed={followed}
               userBlocked={blocked}
@@ -233,6 +234,7 @@ class RepliesContainer extends React.Component {
               handleBanUser={handleBanUser}
               handleDeleteReply={handleDeleteReply}
               adminStatus={this.props.adminStatus}
+              updateAppState={this.props.updateAppState}
               />
           )
         } else {

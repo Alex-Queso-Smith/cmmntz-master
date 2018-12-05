@@ -317,6 +317,7 @@ class Comment extends React.Component {
           banUser={this.props.banUser}
           adminStatus={this.props.adminStatus}
           galleryId={galleryId}
+          updateAppState={this.props.updateAppState}
         />
       </div>
     )
