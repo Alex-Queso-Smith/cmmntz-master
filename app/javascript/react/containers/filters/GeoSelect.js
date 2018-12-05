@@ -12,7 +12,6 @@ class GeoSelect extends React.Component {
     }
   }
 
-
   _onMouseMove = this._onMouseMove.bind(this);
   setLatLongClick = this.setLatLongClick.bind(this);
   handleChange = this.handleChange.bind(this);
@@ -74,13 +73,13 @@ class GeoSelect extends React.Component {
     ]
 
     var radiusButtons = buttonTypes.map((type) => {
-      var btnClass = 'btn-secondary'
+      var btnClass = 'translucent'
       if (this.state.radius === type[0]) {
-        btnClass = "btn-primary"
+        btnClass = ""
       }
 
       return(
-        <button key={type[0]} className={`btn ${btnClass}`} name="radius" value={type[0]} onClick={this.handleChange}>
+        <button key={type[0]} className={`btn-sm btn-primary ${btnClass} cf-geo-filter-button`} name="radius" value={type[0]} onClick={this.handleChange}>
           {type[1]}
         </button>
       )
@@ -88,10 +87,17 @@ class GeoSelect extends React.Component {
 
     return(
       <div className="geo-select-container">
+        
         <div className="row">
           <div className="col-sm-12">
+            Click an Area of the map to center your search
+          </div>
+        </div>
+
+        <div className="row margin-top-5px">
+          <div className="col-sm-12">
             <div className="cf-geomap-wrapper">
-              <div className="cf-geomap-container" onMouseMove={this._onMouseMove} onClick={this.setLatLongClick}>
+              <div className="cf-geomap-container margin-0" onMouseMove={this._onMouseMove} onClick={this.setLatLongClick}>
                 {geoMarker}
               </div>
             </div>
@@ -104,7 +110,7 @@ class GeoSelect extends React.Component {
           </div>
         </div>
 
-        <div className="row margin-top-10px">
+        <div className="row margin-top-5px">
           <div className="col-sm-12">
             {radiusButtons}
           </div>
