@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FetchWithUpdate, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
+import { FetchWithUpdate, FetchIndividual, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
 import { CommentLengthSorter } from '../../util/CommentUtil';
 import { ReplyFieldActivated, ReplyButtonActive, ReplyButtonInactive, ReplyCancelButton } from '../../components/comments/CommentComponents';
 import Modal from '../../components/modals/Modal';
@@ -26,7 +26,6 @@ class RepliesContainer extends React.Component {
   handleSuccessfulReply = this.handleSuccessfulReply.bind(this);
   handleReplySubmit = this.handleReplySubmit.bind(this);
   deleteReply = this.deleteReply.bind(this);
-
 
   componentDidUpdate(prevProps, prevState){
     if (prevState.replyText != this.state.replyText) {
@@ -158,7 +157,22 @@ class RepliesContainer extends React.Component {
         var filteredReplies = allReplies.filter(reply => reply.id != replyId)
         this.setState({ replies: filteredReplies })
         var test = this.state.replies
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
+  }
 
+  banUser(userId){
+    var c = confirm("Do you wish to ban this user? You may unban from the admin console at any time.")
+    var { galleryId, artId } = this.props;
+
+    if (c) {
+      FetchIndividual(this, `/api/v1/gallery_blacklistings.json?gallery_id=${galleryId}&user_id=${userId}`, "POST")
+      .then(success => { alert("This user has been banned, login to admin console if you wish to unban at a future date.") })
+      .then(finished => {
+        var allReplies = this.state.replies;
+        var filteredReplies = allReplies.filter(reply => reply.user.user_id != userId)
+        this.setState({ replies: filteredReplies })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
     }
@@ -184,7 +198,7 @@ class RepliesContainer extends React.Component {
         }
 
         var handleBanUser = () => {
-          this.props.banUser(reply.user.user_id)
+          this.banUser(reply.user.user_id)
         }
 
         var handleDeleteReply = () => {
