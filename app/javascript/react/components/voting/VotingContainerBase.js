@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
-import { VoteClick, ImageSelector, RowOneVoteButtons, RowTwoVoteButtons } from '../../util/VoteUtil';
+import { VoteClick, ImageSelector, RowOneVoteButtons, RowTwoVoteButtons, bigFive } from '../../util/VoteUtil';
 import { Timeout } from '../../util/CommentUtil';
+import Modal from '../modals/Modal';
 
 class VotingContainerBase extends React.Component {
   constructor(props){
@@ -12,11 +13,14 @@ class VotingContainerBase extends React.Component {
       selectedVotes: this.props.commentVotes,
       votePercents: this.props.votePercents,
       userVoted: this.props.userVoted,
-      percentShow: this.props.userVoted
+      percentShow: this.props.userVoted,
+      flagModalShow: false
     }
     this.handleClickVote = this.handleClickVote.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
+    this.handleShowFlagModal = this.handleShowFlagModal.bind(this);
+    this.handleFlagCommentModal = this.handleFlagCommentModal.bind(this);
   }
 
   componentDidMount(){
@@ -37,28 +41,46 @@ class VotingContainerBase extends React.Component {
     }
   }
 
-  handlePost(payload){
+  handlePost(payload, name){
     FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
     .then(body => {
-
       if (body.errors) {
-        var message = body.errors[1]
-        var r = confirm(message);
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
 
-        if (r == true) {
-          var old_top_id = body.errors[3]
-          payload.append("vote[force]", true)
-          payload.append("vote[old_top_id]",old_top_id )
-          this.handlePost(payload)
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
+        } else {
+          var message = body.errors["base"][1]
+          var r = confirm(message);
+
+          if (r == true) {
+            var old_top_id = body.errors["base"][3]
+            payload.append("vote[force]", true)
+            payload.append("vote[old_top_id]",old_top_id )
+            this.handlePost(payload, name)
+          }
         }
       } else {
         var updateVotes = this.state.selectedVotes
         updateVotes[body.vote_type] = body.vote_id
 
-        this.setState({
-          selectedVotes: updateVotes,
-          votePercents: body.vote_percents
-        })
+        if (bigFive.includes(name)) {
+          this.setState({
+            selectedBigFive: name,
+            selectedVotes: updateVotes,
+            votePercents: body.vote_percents,
+            userVoted: true
+          })
+        } else {
+          this.setState({
+            selectedVotes: updateVotes,
+            votePercents: body.vote_percents,
+            userVoted: true
+          })
+        }
 
         if (body.old_top_id){
           this.props.handleTopChange(body.old_top_id)
@@ -71,21 +93,89 @@ class VotingContainerBase extends React.Component {
   handleUpdate(payload, id){
     FetchBasic(this, `/api/v1/votes/${id}.json`, payload, 'PATCH')
     .then(body => {
-      var updateVotes = this.props.commentVotes
-      updateVotes[body.vote_type] = body.vote_id
+      if (body.errors) {
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
 
-      this.setState({
-        selectedVotes: updateVotes,
-        votePercents: body.vote_percents
-      })
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
+        }
+      } else {
+        this.setState({ votePercents: body.vote_percents })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleDestroy(id){
+  handleDestroy(id, name){
     FetchDeleteBasic(this, `/api/v1/votes/${id}.json`)
     .then(body => {
-      this.setState({ votePercents: body.vote_percents })
+      if (body.errors) {
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
+        }
+      } else {
+        if (bigFive.includes(name)) {
+          var updateVotes = this.state.selectedVotes
+          updateVotes[this.state.selectedBigFive] = null
+
+          this.setState({
+            votePercents: body.vote_percents,
+            selectedVotes: updateVotes,
+            selectedBigFive: ""
+          })
+        } else {
+          var updateVotes = this.state.selectedVotes
+          updateVotes[name] = null
+
+          this.setState({
+            votePercents: body.vote_percents,
+            selectedVotes: updateVotes
+          })
+        }
+      }
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+  handleDestroy(id, name){
+    FetchDeleteBasic(this, `/api/v1/votes/${id}.json`)
+    .then(body => {
+      if (body.errors) {
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
+        }
+      } else {
+        if (bigFive.includes(name)) {
+          var updateVotes = this.state.selectedVotes
+          updateVotes[this.state.selectedBigFive] = null
+
+          this.setState({
+            votePercents: body.vote_percents,
+            selectedVotes: updateVotes,
+            selectedBigFive: ""
+          })
+        } else {
+          var updateVotes = this.state.selectedVotes
+          updateVotes[name] = null
+
+          this.setState({
+            votePercents: body.vote_percents,
+            selectedVotes: updateVotes
+          })
+        }
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -104,29 +194,64 @@ class VotingContainerBase extends React.Component {
       Timeout.clear(`timer${unique}`)
       Timeout.set(`timer${unique}`, percentShowSet, 1500)
     } else {
-      this.setState({ userVoted: true })
 
       Timeout.clear(`timer${unique}`)
       Timeout.set(`timer${unique}`, percentShowSet, 3000)
     }
   }
 
+  handleShowFlagModal(){
+    if (this.state.flagModalShow) {
+      this.setState({ flagModalShow: !this.state.flagModalShow })
+      document.body.classList.remove("cf-modal-locked");
+    } else {
+      this.setState({ flagModalShow: !this.state.flagModalShow })
+      document.body.classList.add("cf-modal-locked");
+    }
+  }
+
+  handleFlagCommentModal(){
+    this.handleShowFlagModal()
+    alert('Comment Flagged!')
+  }
+
   render(){
 
     var voteButtonsRowOne = RowOneVoteButtons(this)
-    var voteButtonsRowTwo;
+    var voteButtonsRowTwo, flagModal;
+
     if (this.state.userVoted) {
       voteButtonsRowTwo = RowTwoVoteButtons(this)
     }
 
+    if (this.state.flagModalShow) {
+      flagModal =
+      <Modal
+        handleClose={this.handleShowFlagModal}
+        modalTitle={"Flag this comment?"}
+        actionButton={this.handleFlagCommentModal}
+      >
+      If you wish to flag this comment please click flag comment button !
+      </Modal>
+    }
+
+    var disabledOverlay;
+
+    if (this.props.artSettings.disabled) {
+      disabledOverlay =
+      <div className="disabled-voting-overlay"></div>
+    }
+
     return(
-      <div className="cf-votes-container margin-top-10px" >
+      <div className="cf-votes-container" >
+        {flagModal}
         <div className="cf-votes-top-row row ">
           {voteButtonsRowOne}
         </div>
         <div className="cf-votes-bot-row row ">
           {voteButtonsRowTwo}
         </div>
+        {disabledOverlay}
       </div>
     );
   }

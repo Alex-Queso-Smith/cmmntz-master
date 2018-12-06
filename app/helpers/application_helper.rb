@@ -1,4 +1,35 @@
+require 'redcarpet'
+
 module ApplicationHelper
+  # Convert markdown to HTML
+  def markdown(text)
+    options = {
+      filter_html:     true,
+      hard_wrap:       true,
+      link_attributes: { rel: 'nofollow', target: "_blank" },
+      space_after_headers: true,
+      fenced_code_blocks: true
+    }
+
+    extensions = {
+      autolink:           true,
+      superscript:        true,
+      disable_indented_code_blocks: true
+    }
+
+    renderer    = Redcarpet::Render::HTML.new(options)
+    @markdown ||= Redcarpet::Markdown.new(renderer, extensions)
+    @markdown.render(text).html_safe
+  end    
+
+  def page_title(title = "")
+    t = "Classibridge Times"
+    if !title.blank?
+      t = "#{title} - #{t}"
+    end
+    return t
+  end
+
   def display_time_ago timestamp
     return "" if timestamp.blank?
     return display_date_mm_yy(timestamp) if 3.months.ago > timestamp

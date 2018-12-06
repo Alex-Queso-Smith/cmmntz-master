@@ -1,5 +1,6 @@
 json.id comment.id
 json.text comment.text
+json.censored_text comment.censored_text
 json.created_at display_time_ago(comment.created_at)
 json.edited has_been_edited(comment)
 json.user do
@@ -8,6 +9,8 @@ json.user do
   json.gender comment_user_gender(comment)
   json.age_range comment_user_age_range(comment)
   json.base_image comment_user_base_image(comment)
+  json.show_censored comment_user_show_censored(comment)
+  json.gallery_admin comment.by_admin_of?(gallery_admins)
 end
 
   user_has_interacted = current_users_interactions.detect { |i| i.comment_id == comment.id }.present?

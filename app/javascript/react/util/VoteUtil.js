@@ -3,27 +3,29 @@ import React from 'react';
 import VoteButtonRowOne from '../components/voting/VoteButtonRowOne';
 import VoteButtonRowTwo from '../components/voting/VoteButtonRowTwo';
 
+export const bigFive = ['like', 'dislike', 'indifferent', 'like_a_lot', 'dislike_a_lot']
+
 export const VoteClick = (object, event) => {
 
   const target = event.target;
   const name = target.name;
-  const bigFive = ['like', 'dislike', 'indifferent', 'like_a_lot', 'dislike_a_lot']
 
   var selectedVotes = object.state.selectedVotes;
+
+  if (name === "warn" && !selectedVotes.warn) {
+    object.handleShowFlagModal()
+  }
 
   if (bigFive.includes(name)) {
     if (object.state.selectedBigFive === '') { // if there is no selected big five
 
-      object.setState({ selectedBigFive: name })
-
       var newVote = new FormData();
-      var commentRoot = object.props.commentRoot;
 
       newVote.append("vote[comment_id]", object.props.commentId)
       newVote.append("vote[user_id]", object.props.currentUserId)
       newVote.append("vote[vote_type]", name)
 
-      object.handlePost(newVote)
+      object.handlePost(newVote, name)
 
     } else if (object.state.selectedBigFive != name) { // if there is a different selected big five
 
@@ -44,41 +46,31 @@ export const VoteClick = (object, event) => {
     } else { // if user clicks on same big five
 
       var voteId = object.state.selectedVotes[object.state.selectedBigFive]
-      var updateVotes = object.state.selectedVotes
-      updateVotes[object.state.selectedBigFive] = null
 
-      object.setState({
-        selectedVotes: updateVotes,
-        selectedBigFive: ''
-      })
-
-      object.handleDestroy(voteId)
+      object.handleDestroy(voteId, name)
     }
   } else {
     if (!object.state.selectedVotes[name]) { // user clicks on non big five and is previously unselected
 
       var newVote = new FormData();
-      var commentRoot = object.props.commentRoot;
 
       newVote.append("vote[comment_id]", object.props.commentId)
       newVote.append("vote[user_id]", object.props.currentUserId)
       newVote.append("vote[vote_type]", name)
 
-      object.handlePost(newVote)
+      object.handlePost(newVote, name)
 
     } else { // user clicks on non big five and is previously selected
 
       var voteId = object.state.selectedVotes[name]
-      var updateVotes = object.state.selectedVotes
-      updateVotes[name] = null
 
-      object.setState({ selectedVotes: updateVotes })
-      object.handleDestroy(voteId)
+      object.handleDestroy(voteId, name)
     }
   }
 }
 
 export const ImageSelector = (type) => {
+
   if (type.includes('blank')) {
     return ''
   } else {

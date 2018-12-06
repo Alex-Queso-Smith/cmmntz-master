@@ -7,7 +7,7 @@ import { Checkbox } from '../form/FormComponents';
 import Modal from '../modals/Modal';
 import Reply from './Reply';
 import RepliesContainer from '../../containers/comments/RepliesContainer';
-import UserInfoTile from './UserInfoTile';
+import UserAvatar from '../../containers/comments/UserAvatar';
 import VotingContainerBase from '../voting/VotingContainerBase';
 
 class Comment extends React.Component {
@@ -71,12 +71,28 @@ class Comment extends React.Component {
     newText.append("comment[text]", this.state.text)
 
     FetchBasic(this, `/api/v1/comments/${this.props.commentId}.json`, newText, 'PATCH')
-    .then(resp => {
-      this.setState({
-        editStatus: false,
-        text: resp.comment.text,
-        edited: resp.comment.edited
-      })
+    .then(body => {
+      if (body.errors) {
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+
+          this.setState({
+            editStatus: false,
+            text: this.props.text
+          })
+
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
+        }
+      } else {
+        this.setState({
+          editStatus: false,
+          text: body.comment.text,
+          edited: body.comment.edited
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -140,17 +156,23 @@ class Comment extends React.Component {
   }
 
   render(){
-    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers } = this.props
+    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState, galleryId } = this.props
     var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
-    var textBox, editButton, cancelButton, lastEdited, userTile, starOpacity, blockOpacity, followStar, blockSym;
+    var userTile, starOpacity, blockOpacity;
 
-    if (editStatus && currentUserId === commentUserId) {
-      editButton = <button className="btn btn-primary btn-sm" onClick={this.handleEditSubmit}>Edit Comment</button>
-      cancelButton = <button className="btn btn-light btn-sm margin-left-5px" onClick={this.handleCancelEditComment}>Cancel Edit</button>
-    } else if (currentUserId === commentUserId) {
-      editButton = <button className="btn btn-primary btn-sm" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+    var editButton, cancelButton;
+    if (!artSettings.disabled) {
+      if (editStatus && currentUserId === commentUserId) {
+        editButton = <button className="btn btn-primary btn-sm comment-button" onClick={this.handleEditSubmit}>Edit Comment</button>
+        cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditComment}>Cancel Edit</button>
+      } else if (currentUserId === commentUserId) {
+        editButton = <button className="btn btn-primary btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+      }
+    } else {
+      editButton = <div className="deactivated-message">Commenting on this thread has been disabled.</div>
     }
 
+    var lastEdited;
     if (edited) {
       lastEdited =
       <div className="cf-comment-edit">
@@ -158,6 +180,7 @@ class Comment extends React.Component {
       </div>
     }
 
+    var textBox;
     if (editStatus) {
       textBox =
         <Textarea
@@ -193,6 +216,7 @@ class Comment extends React.Component {
       }
     }
 
+    var followStar, blockSym;
     if (commentUserId != currentUserId && userName != "Anonymous") {
       if (!userFollowed) { starOpacity = "translucent" }
       followStar =
@@ -211,10 +235,28 @@ class Comment extends React.Component {
       blockSym = <div className={`col-1 col-sm-1`} />
     }
 
+    var deleteCommentButton, banUserButton;
+    if (this.props.adminStatus) {
+      deleteCommentButton =
+      <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteComment}>
+        Delete Comment
+      </button>
+      banUserButton =
+      <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleBanUser}>
+        Ban User
+      </button>
+    }
+
+    var adminFlag;
+    if (this.props.userInfo.gallery_admin) {
+      adminFlag =
+      " - Mod"
+    }
+
     return(
       <div className="cf-comment">
         <div className="cf-comment-wrapper">
-          <UserInfoTile
+          <UserAvatar
             userTileHover={userTileHover}
             userInfo={userInfo}
             onMouseEnter={this.onUserHover}
@@ -226,7 +268,7 @@ class Comment extends React.Component {
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
               <div className="cf-comment-user-name col-4">
-                {this.props.userName}
+                {this.props.userName}{adminFlag}
               </div>
               <div className="cf-comment-at col-6" >
                 {createdAt}
@@ -240,9 +282,11 @@ class Comment extends React.Component {
 
             {textBox}
             {lastEdited}
-            <div className="margin-top-5px">
+            <div className="cf-comment-button-group">
               {editButton}
               {cancelButton}
+              {deleteCommentButton}
+              {banUserButton}
             </div>
           </div>
         </div>
@@ -253,6 +297,8 @@ class Comment extends React.Component {
           votePercents={this.props.votePercents}
           userVoted={this.props.userVoted}
           handleTopChange={this.props.handleTopChange}
+          artSettings={artSettings}
+          updateAppState={updateAppState}
         />
         <RepliesContainer
           replies={replies}
@@ -265,6 +311,13 @@ class Comment extends React.Component {
           handleTopChange={this.props.handleTopChange}
           handleReplyOpen={this.props.handleReplyOpen}
           replyParent={this.props.replyParent}
+          censored={censored}
+          artSettings={artSettings}
+          updateAppState={updateAppState}
+          banUser={this.props.banUser}
+          adminStatus={this.props.adminStatus}
+          galleryId={galleryId}
+          updateAppState={this.props.updateAppState}
         />
       </div>
     )

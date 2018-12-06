@@ -46,8 +46,18 @@ $breakpoint-phone: 575px;
   color: #000000;
 }
 
+#user-edit-settings-container {
+  margin: 60px auto;
+  border: 1px solid grey;
+  padding: 30px;
+  border-radius: 20px;
+  width: 500px;
+  background: rgba(255, 255, 255, .9 );
+  color: #000000;
+}
+
 @media (max-width: $breakpoint-phone) {
-  #user-edit-form, #password-form, #user-registration-form, #user-login-container {
+  #user-edit-form, #password-form, #user-registration-form, #user-login-container, #user-edit-settings-container {
     width: 100%;
   }
 }

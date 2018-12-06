@@ -19,6 +19,16 @@ User.create(
   latitude: 40
 )
 
+Fae::User.create(
+  email: "jesse@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  first_name: "Jesse",
+  last_name: "Admin",
+  role_id: 1,
+  active: true
+)
+
 User.create(
   user_name: "Alex",
   email: "alex@classibridge.com",
@@ -27,6 +37,16 @@ User.create(
   base_image: "gi",
   longitude: -75,
   latitude: 40
+)
+
+Fae::User.create(
+  email: "alex@classibridge.com",
+  password: "password",
+  password_confirmation: "password",
+  first_name: "Alex",
+  last_name: "Admin",
+  role_id: 1,
+  active: true
 )
 
 User.create(
@@ -126,6 +146,19 @@ users.each do |user|
   end
 end
 
+["Alber Einstein", "Douglas Adams", "Lore", "Newt Scamander"].each do |a|
+  Author.create(name: a)
+end
+authors = Author.all
+
+["Cars", "Politics", "Weather", "Sports", "Science and Nature"].each do |c|
+  ArticleCategory.create(name: c)
+end
+
+article_categories = ArticleCategory.all
+
+gallery = Gallery.create(name: "Classibridge Times")
+
 # generate desired number of articles
 puts "generating #{num_articles} articles"
 iter = 1
@@ -134,12 +167,16 @@ num_articles.times do
   time = Time.now - rand(150000..10000000)
   article_one = Article.create(
     title: "Demo Article #{iter}",
-    text: RANDOM_TEXT.sample,
+    slug: "demo-article-#{iter}",
+    introduction: "This is demo article #{iter}. Read more to find out all about it!",
+    author: authors.sample,
+    article_category: article_categories.sample,
+    body: RANDOM_TEXT.sample,
+    publish_date: time,
     created_at: time,
     updated_at: time
   )
-  url = article_one.url
-  art = Art.create(url: url)
+  art = Art.create(url: article_one.url, gallery: gallery, published_at: article_one.publish_date )
 
   time += rand(100..1000)
 
@@ -154,7 +191,8 @@ num_articles.times do
       text: RANDOM_TEXT.sample,
       created_at: time,
       updated_at: time,
-      anonymous: [false, true, false, false, false].sample
+      anonymous: [false, true, false, false, false].sample,
+      approved: true
     )
 
     #generate random number of replies
@@ -170,7 +208,8 @@ num_articles.times do
           created_at: time,
           updated_at: time,
           anonymous: [false, true, false, false, false].sample,
-          parent_id: comment.id
+          parent_id: comment.id,
+          approved: true
         )
 
         num_votes = rand(20)

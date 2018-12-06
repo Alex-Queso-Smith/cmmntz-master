@@ -1,0 +1,16 @@
+= simple_form_for(['admin', @item]) do |f|
+  == render 'fae/shared/form_header', header: @klass_name
+
+  main.content
+    = fae_datepicker f, :publish_date
+    = fae_input f, :title
+    - unless f.object.new_record?
+      = fae_input f, :slug, helper_text: 'Populated from publish date and name'
+    = fae_association f, :author, {label: "Source"}
+    = fae_association f, :article_category
+    = fae_input f, :topics
+    = fae_image_form f, :thumbnail
+    = fae_input f, :introduction, markdown: true
+    = fae_image_form f, :banner
+    = fae_input f, :body, markdown: true
+    = fae_image_form f, :middle_image

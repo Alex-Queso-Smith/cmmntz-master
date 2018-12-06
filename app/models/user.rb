@@ -11,7 +11,16 @@ class User < ApplicationRecord
   # general settings v-attrs
   vstr 'settings', {
     color_theme: :string,
-    font: :string
+    font: :string,
+    comments_from: :string,
+    filter_list: :array,
+    not_filter_list: :array,
+    sort_dir: :string,
+    sort_type: :string,
+    votes_from: :string,
+    censor: :string,
+    show_censored_comments: :bool,
+    settings_updated: :bool
   }
 
   GENDERS = [0, 1, 2]
@@ -38,6 +47,9 @@ class User < ApplicationRecord
   # define users that are blocking the users
   has_many :blockers, class_name: 'Blocking', foreign_key: "blocking_id"
   has_many :blocker_users, through: :blockers, source: :blocker
+
+  # galleries where the user can not post
+  has_many :gallery_blacklistings
 
   validates :user_name, presence: true, uniqueness: { case_sensitive: false }
 
@@ -104,5 +116,13 @@ class User < ApplicationRecord
     scope = where(arel_table[:user_name].matches("#{letter}%"))
     scope = scope.where_check_does_not_exist(last_check, check_name)
     scope
+  end
+
+  def customer_for?(gallery_id)
+    Customer.account_for_gallery_and_user(gallery_id, id).size > 0
+  end
+
+  def user_blacklisted_for?(gallery_id)
+    gallery_blacklistings.where(gallery_id: gallery_id).size > 0
   end
 end

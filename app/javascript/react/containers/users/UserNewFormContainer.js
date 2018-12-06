@@ -62,7 +62,7 @@ class UserNewFormContainer extends React.Component {
     this.setState({
       latitude: latitude,
       longitude: longitude,
-      geoPin: { x: x, y: y }
+      geoPin: { x: x - 6, y: y - 6 }
      })
   }
 

@@ -3,6 +3,7 @@ import React from 'react'
 import { SortDir, SortButton } from '../../components/filters/SortSelect'
 import { ImageSelector } from '../../util/VoteUtil';
 import { SortButtons, FilterButtonsRowOne, FilterButtonsRowTwo, FilterCommentsBy, FilterVotesBy } from '../../util/FilterUtil'
+import GeoSelect from '../filters/GeoSelect'
 
 class CommentFilters extends React.Component {
   render(){
@@ -11,8 +12,38 @@ class CommentFilters extends React.Component {
     var filterButtonsRowOne = FilterButtonsRowOne(this)
     var filterButtonsRowTwo = FilterButtonsRowTwo(this)
 
+    const { showAdvancedFilters, radius, x, y, latitude, longitude, geoPin } = this.props.sortOpts
+
+
+
+    var advancedFilters, advancedFiltersToggle;
+
+    if (showAdvancedFilters == true) {
+      advancedFilters =
+      <div id="advanced-filters">
+        <GeoSelect
+          parentSetLatLongClick={this.props.parentSetLatLongClick}
+        />
+      </div>
+
+      advancedFiltersToggle =
+      <div className="row">
+        <button onClick={this.props.handleAdvancedFiltershow} className="btn btn-link">
+          hide advanced filters
+        </button>
+      </div>
+    } else {
+      advancedFiltersToggle =
+      <div className="row">
+        <button onClick={this.props.handleAdvancedFiltershow}  className="btn btn-link">
+          show advanced filters
+        </button>
+      </div>
+    }
+
+
     return(
-      <div className="cf-filter-block">
+      <div className={`cf-filter-block ${this.props.className}`}>
         <div className="row vote-row" >
           <h4 className="col-2 col-sm-2 col-md-2">Sort</h4>
 
@@ -33,25 +64,34 @@ class CommentFilters extends React.Component {
         </div>
         <br/>
         <div className="row">
-          <h4>Show only comments from:</h4>
+          <div className="col-12">
+            <h4>Show only comments from:</h4>
+          </div>
         </div>
         <div className="row">
-          <FilterCommentsBy
-            commentsFrom={this.props.sortOpts.commentsFrom}
-            onClick={this.props.handleFilterByClick}
-          />
+          <div className="col-12">
+            <FilterCommentsBy
+              commentsFrom={this.props.sortOpts.commentsFrom}
+              onClick={this.props.handleFilterByClick}
+              />
+          </div>
         </div>
         <br />
         <div className="row">
-          <h4>Show only Votes By:</h4>
+          <div className="col-12">
+            <h4>Show only Votes By:</h4>
+          </div>
         </div>
         <div className="row">
-          <FilterVotesBy
-            votesFrom={this.props.sortOpts.votesFrom}
-            onClick={this.props.handleFilterByClick}
-          />
+          <div className="col-12">
+            <FilterVotesBy
+              votesFrom={this.props.sortOpts.votesFrom}
+              onClick={this.props.handleFilterByClick}
+              />
+          </div>
         </div>
-
+        {advancedFiltersToggle}
+        {advancedFilters}
       </div>
     )
   }

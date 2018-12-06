@@ -3,21 +3,21 @@ class Api::V1::CommentsController < ApiController
 
   before_action :set_comment, only: [:update, :destroy]
 
-  # GET /comments
-  # GET /comments.json
   def index
-    @comments = Comment.filter_and_sort(current_user, params[:art_id], params[:art_type], {}, 1)
-    comment_ids = @comments.map(&:id)
-    @replies = Comment.tabulation_for_comments_list(current_user, comment_ids, {})
-    comment_ids += @replies.map(&:id)
-    @current_users_votes = Vote.for_user_and_comment(current_user.id, comment_ids)
-    @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, comment_ids)
-  end
+      @comments = Comment.filter_and_sort(current_user, params[:art_id], params[:art_type], {}, 1)
+      comment_ids = @comments.map(&:id)
+      @replies = Comment.tabulation_for_comments_list(current_user, comment_ids, {})
+      comment_ids += @replies.map(&:id)
+      @current_users_votes = Vote.for_user_and_comment(current_user.id, comment_ids)
+      @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, comment_ids)
+      @gallery_admins = Art.find(params[:art_id]).gallery_admin_user_account_ids
+    end
 
   def show
-    @comment = CommentVoteTabulation.where(id: params[:id]).first
+    @comment = Comment.tabulation_for_individual_comment(current_user, params[:id], {})
     @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
     @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
+    @gallery_admins = Art.find(@comment.art_id).gallery_admin_user_account_ids
   end
 
   # POST /comments
@@ -36,20 +36,26 @@ class Api::V1::CommentsController < ApiController
   # PATCH/PUT /comments/1.json
   def update
     if @comment.update(comment_params)
-      @comment = CommentVoteTabulation.find(@comment.id)
+      @comment = Comment.tabulation_for_individual_comment(current_user, params[:id], {})
       @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
       @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
+      @gallery_admins = Art.find(@comment.art_id).gallery_admin_user_account_ids
 
       render "api/v1/comments/show"
     else
-      render json: { errors: @comment.errors, status: :unprocessable_entity}
+      render json: { errors: @comment.errors, status: :unprocessable_entity }
     end
   end
 
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
-    render json: { message: "Destroy successfull" } if @comment.destroy
+    raise "not authorized" unless admin?
+    if @comment.update(comment_params)
+      render json: { message: "Destroy successfull" }
+    else
+      render json: { errors: @comment.errors, status: :unprocessable_entity }
+    end
   end
 
   private
@@ -60,6 +66,21 @@ class Api::V1::CommentsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:user_id, :art_id, :art_type, :text, :anonymous, :vote_types, :parent_id, :force, :old_top_id)
+      params.require(:comment).permit(
+        :user_id,
+        :art_id,
+        :art_type,
+        :text,
+        :anonymous,
+        :vote_types,
+        :parent_id,
+        :force,
+        :old_top_id,
+        :deleted
+      )
+    end
+
+    def admin?
+      current_user.customer_for?(params[:gallery_id])
     end
 end

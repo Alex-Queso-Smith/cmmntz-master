@@ -1,83 +1,155 @@
 import React from 'react';
-import BottomScollListener from 'react-bottom-scroll-listener'
+import BottomScollListener from 'react-bottom-scroll-listener';
+import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 
 import CommentFormContainer from './CommentFormContainer';
 import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
-import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual } from '../../util/CoreUtil';
-import CommentEtiquette from '../../components/modals/CommentEtiquette'
+import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual, FetchDeleteBasic } from '../../util/CoreUtil';
+import CommentEtiquette from '../../components/modals/CommentEtiquette';
 
 class CommentingContainer extends React.Component {
-  state = {
-    userSettings: {
-      font: 'serif',
-      colorTheme: 'light'
-    },
-    totalComments: 0,
-    followedUsers: [],
-    blockedUsers: [],
-    comments: [],
-    userId: '',
-    artId: '',
-    artType: '',
-    commentFormErrors: {},
-    sortOpts: {
-      sortDir: 'desc',
-      sortType: 'created_at',
-      notFilterList: [],
-      filterList: [],
-      page: 1,
-      commentsFrom: "",
-      votesFrom: ""
+  constructor(props){
+    super(props);
+    this.state = {
+      userThemeSettings: {
+        font: 'serif',
+        theme: 'light'
+        },
+      totalComments: 0,
+      followedUsers: [],
+      blockedUsers: [],
+      comments: [],
+      commentFormErrors: {},
+      sortOpts: {
+        showAdvancedFilters: false,
+        sortDir: 'desc',
+        sortType: 'created_at',
+        notFilterList: [],
+        filterList: [],
+        page: 1,
+        commentsFrom: "",
+        votesFrom: "",
+        radius: '',
+        latitude: '',
+        longitude: ''
+      },
+      gallerySettings: { },
+      userSettings: { },
+      commentEtiquette: null,
+      censored: false,
     }
+    this.handleCommentForm = this.handleCommentForm.bind(this);
+    this.commentFormSubmitter = this.commentFormSubmitter.bind(this);
+    this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
+    this.handleTopChange = this.handleTopChange.bind(this);
+    this.handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
+    this.handleFilterByClick = this.handleFilterByClick.bind(this);
+    this.handleAdvancedFiltershow = this.handleAdvancedFiltershow.bind(this);
+    this.setLatLongClick = this.setLatLongClick.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
+    this.handleSortDirClick = this.handleSortDirClick.bind(this);
+    this.handleFilterClick = this.handleFilterClick.bind(this);
+    this.submitterMan = this.submitterMan.bind(this);
+    this.handleSettingsUpdate = this.handleSettingsUpdate.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
+    this.banUser = this.banUser.bind(this);
   }
 
-  handleCommentForm = this.handleCommentForm.bind(this);
-  commentFormSubmitter = this.commentFormSubmitter.bind(this);
-  handleFilterSubmit = this.handleFilterSubmit.bind(this);
-  handleTopChange = this.handleTopChange.bind(this);
-  handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
-  handleFilterByClick = this.handleFilterByClick.bind(this);
-
-  handleChange = this.handleChange.bind(this);
-  handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
-  handleSortDirClick = this.handleSortDirClick.bind(this);
-  handleFilterClick = this.handleFilterClick.bind(this);
-  submitterMan = this.submitterMan.bind(this);
-
   componentWillMount(){
-    var commentRoot = this.props.commentRoot
-    var userId = commentRoot.getAttribute('data-user-id')
-    if (userId.length > 0){
-      FetchDidMount(this, `/api/v1/users/${userId}.json`)
-      .then(body => {
+    var { userId, galleryId } = this.props;
 
-        var oldUserSettings = this.state.userSettings
-        oldUserSettings.font = body.user.font;
-        oldUserSettings.colorTheme = body.user.color_theme
-        this.setState({
-          userSettings: oldUserSettings,
-          followedUsers: body.user.followed_users,
-          blockedUsers: body.user.blocked_users
-        })
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
-    }
+    if (userId.length > 0){
+       FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
+       .then(userData => {
+
+         var oldUserThemeSettings = this.state.userThemeSettings;
+         oldUserThemeSettings.font = userData.user.font;
+         oldUserThemeSettings.colorTheme = userData.user.color_theme;
+         var oldUserSettings = this.state.userSettings;
+         oldUserSettings.admin = userData.user.admin;
+
+         this.setState({
+           userThemeSettings: oldUserThemeSettings,
+           userSettings: oldUserSettings
+         })
+       })
+       .catch(error => console.error(`Error in fetch: ${error.message}`));
+     }
   }
 
   componentDidMount(){
-    var commentRoot = this.props.commentRoot
-    var artType = commentRoot.getAttribute('data-art-type')
-    var artId = commentRoot.getAttribute('data-art-id')
+    FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
+    .then(artData => {
 
-    FetchDidMount(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`)
-    .then(body => {
-     this.setState({
-       comments: body.comments,
-       totalComments: body.total_comments
+      var newGallerySettings = artData.art.gallery_settings
+
+      var { gallery_filter_list, gallery_not_filter_list, gallery_comment_etiquette } = artData.art.gallery_settings
+
+      newGallerySettings.gallery_filter_list = gallery_filter_list.length != 0 ? gallery_filter_list.split(',') : []
+      newGallerySettings.gallery_not_filter_list = gallery_not_filter_list.length != 0 ? gallery_not_filter_list.split(',') : []
+
+      this.setState({
+        gallerySettings: newGallerySettings,
+        commentEtiquette: gallery_comment_etiquette
       })
     })
+    .then(stuff => {
+      var { userId } = this.props;
+      if (userId.length > 0){
+        FetchDidMount(this, `/api/v1/users/${userId}.json`)
+        .then(userData => {
+
+          var newUserSettings = this.state.userSettings;
+          var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, settings_updated, followed_users, blocked_users } = userData.user
+          var settingsUpdated = settings_updated === "true" ? true : false
+
+          newUserSettings.sort_dir = sort_dir
+          newUserSettings.sort_type = sort_type
+          newUserSettings.comments_from = comments_from
+          newUserSettings.votes_from = votes_from
+          newUserSettings.filter_list = filter_list.length != 0 ? filter_list.split(',') : []
+          newUserSettings.not_filter_list = not_filter_list.length != 0 ? not_filter_list.split(',') : []
+          newUserSettings.followedUsers = followed_users
+          newUserSettings.blockedUsers = blocked_users
+          newUserSettings.settings_updated = settingsUpdated
+          newUserSettings.censor = censor
+
+          this.setState({ userSettings: newUserSettings })
+        })
+        .then(finished => { this.handleSettingsUpdate() })
+        .then(finished => { this.handleFilterSubmit() })
+        .catch(error => console.error(`Error in fetch: ${error.message}`));
+      }
+    })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  setLatLongClick(x, y, radius){
+    var longitude = Math.round((x * (180 / 150)) - 180)
+    var latitude = Math.round(((y * (180 / 100)) - 180) * -1)
+    var newSortOpts = this.state.sortOpts
+
+    newSortOpts.latitude = latitude
+    newSortOpts.longitude =  longitude
+    newSortOpts.radius = radius
+
+    this.setState({
+      sortOpts:  newSortOpts
+     })
+
+     setTimeout(function() { //Start the timer
+       this.handleFilterSubmit();
+     }.bind(this), 1)
+  }
+
+  handleAdvancedFiltershow(event){
+    event.preventDefault()
+    var newOpts = this.state.sortOpts
+    newOpts.showAdvancedFilters = !newOpts.showAdvancedFilters
+    this.setState({ sortOpts: newOpts })
   }
 
   handleChange(event){
@@ -104,12 +176,15 @@ class CommentingContainer extends React.Component {
   // repetetive with handleFilterSubmit
   handleCommentForm(event, text, anonymous, formInvalid, selfVotes = [], handleClear){
     event.preventDefault();
+
+    var { userId, artType, artId } = this.props;
+
     if (!formInvalid) {
       var newComment = new FormData();
-      var commentRoot = this.props.commentRoot
-      newComment.append("comment[user_id]", commentRoot.getAttribute('data-user-id'))
-      newComment.append("comment[art_type]", commentRoot.getAttribute('data-art-type'))
-      newComment.append("comment[art_id]", commentRoot.getAttribute('data-art-id'))
+
+      newComment.append("comment[user_id]", userId)
+      newComment.append("comment[art_type]", artType)
+      newComment.append("comment[art_id]", artId)
       newComment.append("comment[text]", text)
       newComment.append("comment[anonymous]", anonymous)
       newComment.append("comment[vote_types]", selfVotes.join(','))
@@ -119,13 +194,19 @@ class CommentingContainer extends React.Component {
   }
 
   commentFormSubmitter(newComment, handleClear) {
-    var commentRoot = this.props.commentRoot
-    var artType = commentRoot.getAttribute('data-art-type')
-    var artId = commentRoot.getAttribute('data-art-id')
+    var { artType, artId } = this.props;
 
     FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
     .then(body => {
       if (body.errors) {
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
+        }
+
         var voteErrors = body.errors["votes.base"]
         if (voteErrors){
           var message = voteErrors[1]
@@ -166,34 +247,42 @@ class CommentingContainer extends React.Component {
   // repetetive with handleCommentForm
   handleFilterSubmit(){
     var search = new FormData();
-    var commentRoot = this.props.commentRoot
-    var {sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom } = this.state.sortOpts;
-    search.append("art_type", commentRoot.getAttribute('data-art-type'))
-    search.append("art_id", commentRoot.getAttribute('data-art-id'))
+
+    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius } = this.state.sortOpts;
+    var { artType, artId } = this.props;
+    search.append("art_type", artType)
+    search.append("art_id", artId)
     search.append("page", page);
     search.append("search[sort_dir]", sortDir);
     search.append("search[sort_type]", sortType);
-    search.append("search[filter_list]", filterList.join());
-    search.append("search[not_filter_list]", notFilterList.join());
+    search.append("search[filter_list]", filterList);
+    search.append("search[not_filter_list]", notFilterList);
     if (commentsFrom) {
       search.append("search[comments_from]", commentsFrom)
     }
     if (votesFrom) {
       search.append("search[votes_from]", votesFrom)
     }
+    if (radius) {
+      search.append("search[radius]", radius)
+      search.append("search[lat]", latitude)
+      search.append("search[lon]", longitude)
+    }
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
-    .then(body => {
+    .then(commentData => {
+
       var append = this.state.sortOpts.page > 1
       var newComments;
       if (append) {
-        newComments = this.state.comments.concat(body.comments)
+        newComments = this.state.comments.concat(commentData.comments)
       } else {
-        newComments = body.comments
+        newComments = commentData.comments
       }
+
       this.setState({
         comments: newComments,
-        totalComments: body.total_comments
+        totalComments: commentData.total_comments
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -202,6 +291,12 @@ class CommentingContainer extends React.Component {
   handleFilterSubmitMan(event){
     this.handleChange(event)
     this.submitterMan(event)
+  }
+
+  submitterMan(event){
+    setTimeout(function() { //Start the timer
+      this.handleFilterSubmit();
+    }.bind(this), 1)
   }
 
   handleSortDirClick(event){
@@ -219,12 +314,6 @@ class CommentingContainer extends React.Component {
     this.submitterMan(event)
   }
 
-  submitterMan(event){
-    setTimeout(function() { //Start the timer
-      this.handleFilterSubmit();
-    }.bind(this), 1)
-  }
-
   handleFilterByClick(event){
     const target = event.target;
     const name = target.name;
@@ -234,9 +323,7 @@ class CommentingContainer extends React.Component {
     opts[name] = value;
     opts.page = 1
 
-    this.setState({
-      sortOpts: opts
-    })
+    this.setState({ sortOpts: opts })
 
     this.submitterMan(event);
   }
@@ -260,24 +347,24 @@ class CommentingContainer extends React.Component {
 
     opts.page = 1
 
-    this.setState({
-      sortOpts: opts
-    })
+    this.setState({ sortOpts: opts })
 
     this.submitterMan(event)
   }
 
   handleLoadMoreClick(event){
     var opts = this.state.sortOpts
-    opts.page += 1
+    if (this.state.totalComments != this.state.comments.length) {
+      opts.page += 1
 
-    this.setState({
-      sortOpts: opts
-    })
+      this.setState({
+        sortOpts: opts
+      })
 
-    setTimeout(function() { //Start the timer
-      this.handleFilterSubmit();
-    }.bind(this), 1)
+      setTimeout(function() { //Start the timer
+        this.handleFilterSubmit();
+      }.bind(this), 1)
+    }
   }
 
   handleTopChange(oldTopCommentId){
@@ -300,41 +387,125 @@ class CommentingContainer extends React.Component {
     }.bind(this), 50)
   }
 
+  handleSettingsUpdate(){
+    var { sortOpts } = this.state;
+    var { userSettings, gallerySettings } = this.state;
+    var { sort_dir, sort_type, filter_list, not_filter_list, comments_from, votes_from, followedUsers, blockedUsers, settings_updated, censor } = userSettings
+    var { gallery_sort_dir, gallery_sort_type, gallery_filter_list, gallery_not_filter_list, gallery_comments_from, gallery_votes_from, gallery_censor } = gallerySettings
+    var newSortOpts = sortOpts
+    var censorComments;
+
+    if (userSettings.settings_updated) {
+      censorComments = censor === "true" ? true : false
+      newSortOpts.sortDir = sort_dir
+      newSortOpts.sortType = sort_type
+      newSortOpts.filterList = filter_list
+      newSortOpts.notFilterList = not_filter_list
+      newSortOpts.commentsFrom = comments_from
+      newSortOpts.votesFrom = votes_from
+    } else {
+      censorComments = gallery_censor === "true" ? true : false
+      newSortOpts.sortDir = gallery_sort_dir
+      newSortOpts.sortType = gallery_sort_type
+      newSortOpts.filterList = gallery_filter_list
+      newSortOpts.notFilterList = gallery_not_filter_list
+      newSortOpts.commentsFrom = gallery_comments_from
+      newSortOpts.votesFrom = gallery_votes_from
+    }
+
+    this.setState({
+      sortOpts: newSortOpts,
+      followedUsers: followedUsers,
+      blockedUsers: blockedUsers,
+      censored: censorComments
+    })
+  }
+
+  deleteComment(commentId){
+    var { galleryId } = this.props;
+    var c = confirm("Are you sure you want to delete this comment?")
+    if (c) {
+      var updateComment = new FormData()
+      updateComment.append("comment[deleted]", true)
+
+      FetchWithUpdate(this, `/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
+      .then(success => {
+        var allComments = this.state.comments;
+        var filteredComments = allComments.filter(comment => comment.id != commentId)
+        this.setState({ comments: filteredComments })
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
+  }
+
+  banUser(userId){
+    var c = confirm("Do you wish to ban this user? You may unban from the admin console at any time.")
+    var { galleryId, artId } = this.props;
+
+    if (c) {
+      FetchIndividual(this, `/api/v1/gallery_blacklistings.json?gallery_id=${galleryId}&user_id=${userId}`, "POST")
+      .then(success => { alert("This user has been banned, login to admin console if you wish to unban at a future date.") })
+      .then(finished => { this.handleFilterSubmit() })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
+  }
+
   render(){
 
-    var { commentRoot } = this.props;
-    var { totalComments, comments, commentFormErrors, userSettings, sortOpts, followedUsers, blockedUsers} = this.state;
+    var { artId, artType, userId, artSettings, updateAppState } = this.props;
+    var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored, commentEtiquette} = this.state;
+    var endComments;
+
+    if (totalComments === comments.length) {
+      endComments =
+      <div className="text-center">
+        ---  end of comments ---
+      </div>
+    }
 
     return(
-      <div id="cf-comments-main" className={`${userSettings.font} ${userSettings.colorTheme}`}>
-        <CommentEtiquette />
+      <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
+        <CommentEtiquette galleryCommentEtiquette={commentEtiquette} />
 
         <CommentFormContainer
-          commentRoot={commentRoot}
           handleSubmit={this.handleCommentForm}
           commentFormErrors={commentFormErrors}
+          artSettings={artSettings}
         />
         <hr />
         <CommentFilters
-          sortOpts={this.state.sortOpts}
+          sortOpts={sortOpts}
           handleFilterSubmit={this.handleFilterSubmitMan}
           handleSortDirClick={this.handleSortDirClick}
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
+          parentSetLatLongClick={this.setLatLongClick}
+          handleAdvancedFiltershow={this.handleAdvancedFiltershow}
         />
         <hr />
         <div>
           <p>{totalComments} comments for this article</p>
         </div>
         <CommentsList
+          artId={artId}
+          artType={artType}
+          userId={userId}
           allComments={comments}
-          commentRoot={commentRoot}
           handleTopChange={this.handleTopChange}
           followedUsers={followedUsers}
           blockedUsers={blockedUsers}
+          censored={censored}
+          artSettings={artSettings}
+          updateAppState={updateAppState}
+          adminStatus={this.state.userSettings.admin}
+          deleteComment={this.deleteComment}
+          banUser={this.banUser}
+          galleryId={this.props.galleryId}
         />
-
-        <button className="btn btn-block btn-large btn-primary" onClick={this.handleLoadMoreClick}>Load More</button>
+        {endComments}
+        <ScrollUpButton
+          ToggledStyle={{left: '75px'}}
+        />
         <BottomScollListener
           onBottom={this.handleLoadMoreClick}
           offset={500}

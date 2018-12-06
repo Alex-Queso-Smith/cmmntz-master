@@ -3,6 +3,11 @@ module CommentSearchs
 
   included do
     FILTER_PERCENT = '.2000'
+    GEO_BOXES = {'1000' => {lat: 14.5, lon: 15.15},
+      '500' => {lat: 7.25, lon: 7.57},
+      '100' => {lat: 1.45, lon: 1.51}
+    }
+
     self.per_page = 10
 
     scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
@@ -40,6 +45,8 @@ module CommentSearchs
       where(parent_id: nil)
     }
 
+    scope :approved, -> { where(approved: true) }
+
     scope :comments_from_followed, lambda { |user_ids|
       where(comments: {user_id: user_ids})
     }
@@ -49,6 +56,16 @@ module CommentSearchs
     scope :created_since, -> (datetime) {
       where(arel_table[:created_at].gteq(datetime))
     }
+
+    scope :lat_bound_box, -> (lat, bound) {
+      where("users.latitude BETWEEN #{lat - bound} AND #{lat + bound}")
+    }
+
+    scope :lon_bound_box, -> (lon, bound) {
+      where("users.longitude BETWEEN #{lon - bound} AND #{lon + bound}")
+    }
+
+    scope :not_deleted, -> { where(deleted: false) }
 
     # Meta Scoping
 
@@ -78,6 +95,12 @@ module CommentSearchs
       select_top_percent.select_love_percent.select_like_a_lot_percent.select_like_percent.select_indifferent_percent.select_dislike_percent.select_dislike_a_lot_percent.select_trash_percent.select_warn_percent.select_smart_percent.select_funny_percent.select_happy_percent.select_shocked_percent.select_sad_percent.select_boring_percent.select_angry_percent
     }
 
+    scope :for_non_blocked_users, -> {
+      joins(:art)
+      .joins("left join gallery_blacklistings on gallery_blacklistings.user_id = comments.user_id AND gallery_blacklistings.gallery_id = arts.gallery_id")
+      .where("gallery_blacklistings.id IS NULL")
+    }
+
     def self.filter_by_list(scope, filter_list)
       filter_list.split(",").each do |item|
         scope = scope.send("having_#{item}_gteq", FILTER_PERCENT)
@@ -96,20 +119,10 @@ module CommentSearchs
       # see https://www.movable-type.co.uk/scripts/latlong-db.html
       # lat 69 per degree
       # long 66 per degree
-      if lat && lon && radius
-        case radius
-        when 1000
-          # lat 14.5
-          # lon 15.15
-
-        when 500
-          # lat 7.25
-          # lon 7.57
-        when 100
-          # lat 1.45
-          # lon 1.51
-        end
-      end
+      bounds = GEO_BOXES[radius.to_s]
+      scope = scope.joins("left join users on users.id = comments.user_id")
+      scope = scope.lat_bound_box(lat.to_i, bounds[:lat])
+      scope = scope.lon_bound_box(lon.to_i, bounds[:lon])
       scope
     end
 
@@ -157,10 +170,10 @@ module CommentSearchs
     end
 
     def self.base_search(scope, user, filter_opts = {})
-      scope = scope.select_tabulation.includes(:user)
+      scope = scope.select_tabulation.includes(:user).approved.not_deleted.for_non_blocked_users
       scope = self.filter_by_list(scope, filter_opts[:filter_list]) if filter_opts[:filter_list]
       scope = self.filter_by_not_list(scope, filter_opts[:not_filter_list]) if filter_opts[:not_filter_list]
-      scope = self.geo_filtering(scope, filter_opts[:some_data]) if filter_opts[:some_data]
+      scope = self.geo_filtering(scope, filter_opts[:lat], filter_opts[:lon], filter_opts[:radius]) if filter_opts[:radius]
       scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
       scope = self.get_comments_from(scope, user, filter_opts[:comments_from])
       scope = self.eliminate_blocked(scope, user)

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FetchWithUpdate, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
+import { FetchWithUpdate, FetchIndividual, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
 import { CommentLengthSorter } from '../../util/CommentUtil';
 import { ReplyFieldActivated, ReplyButtonActive, ReplyButtonInactive, ReplyCancelButton } from '../../components/comments/CommentComponents';
 import Modal from '../../components/modals/Modal';
@@ -25,6 +25,7 @@ class RepliesContainer extends React.Component {
   handleCancelReply = this.handleCancelReply.bind(this);
   handleSuccessfulReply = this.handleSuccessfulReply.bind(this);
   handleReplySubmit = this.handleReplySubmit.bind(this);
+  deleteReply = this.deleteReply.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (prevState.replyText != this.state.replyText) {
@@ -122,6 +123,15 @@ class RepliesContainer extends React.Component {
     FetchWithUpdate(this, `/api/v1/comments.json`, 'POST', newReply)
     .then(body => {
       if (body.errors) {
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
+        }
+
         this.setState({ replyErrors: body.errors})
       } else {
         var id = this.props.commentId
@@ -134,10 +144,44 @@ class RepliesContainer extends React.Component {
 
   }
 
+  deleteReply(replyId){
+    var { galleryId } = this.props;
+    var c = confirm("Are you sure you want to delete this reply?")
+    if (c) {
+      var updateComment = new FormData()
+      updateComment.append("comment[deleted]", true)
+
+      FetchWithUpdate(this, `/api/v1/comments/${replyId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
+      .then(success => {
+        var allReplies = this.state.replies;
+        var filteredReplies = allReplies.filter(reply => reply.id != replyId)
+        this.setState({ replies: filteredReplies })
+        var test = this.state.replies
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
+  }
+
+  banUser(userId){
+    var c = confirm("Do you wish to ban this user? You may unban from the admin console at any time.")
+    var { galleryId, artId } = this.props;
+
+    if (c) {
+      FetchIndividual(this, `/api/v1/gallery_blacklistings.json?gallery_id=${galleryId}&user_id=${userId}`, "POST")
+      .then(success => { alert("This user has been banned, login to admin console if you wish to unban at a future date.") })
+      .then(finished => {
+        var allReplies = this.state.replies;
+        var filteredReplies = allReplies.filter(reply => reply.user.user_id != userId)
+        this.setState({ replies: filteredReplies })
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
+  }
+
   render(){
-    var { followedUsers, blockedUsers, currentUserId } = this.props;
+    var { followedUsers, blockedUsers, currentUserId, censored, artSettings } = this.props;
     var { replies } = this.state;
-    var repliesList, anonModal, replyField, replyButton, cancelReplyButton, replyErrorText;
+    var repliesList, anonModal, replyField, replyButton, cancelReplyButton, replyErrorText, repliesWrapper;
     var blockedCount = 0;
 
 
@@ -146,11 +190,25 @@ class RepliesContainer extends React.Component {
 
         var followed = followedUsers.includes(reply.user.user_id)
         var blocked = blockedUsers.includes(reply.user.user_id)
-        var { id, user, text, created_at, vote_percents, user_has_voted, current_users_votes } = reply
+        var { id, edited, user, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text } = reply
         var lengthImage = CommentLengthSorter(text)
 
         var handleNewReplyBox = () => {
           this.props.handleReplyOpen(this.props.commentId)
+        }
+
+        var handleBanUser = () => {
+          this.banUser(reply.user.user_id)
+        }
+
+        var handleDeleteReply = () => {
+
+          this.deleteReply(reply.id)
+        }
+
+        var shownText = text;
+        if (censored && censored_text) {
+          shownText = censored_text
         }
 
         if (!blocked) {
@@ -161,7 +219,8 @@ class RepliesContainer extends React.Component {
               replyId={id}
               user={user}
               lengthImage={lengthImage}
-              reply={text}
+              edited={edited}
+              text={shownText}
               posted={created_at}
               userFollowed={followed}
               userBlocked={blocked}
@@ -170,6 +229,12 @@ class RepliesContainer extends React.Component {
               currentUserId={currentUserId}
               commentVotes={current_users_votes}
               votePercents={vote_percents}
+              artSettings={this.props.artSettings}
+              updateAppState={this.props.updateAppState}
+              handleBanUser={handleBanUser}
+              handleDeleteReply={handleDeleteReply}
+              adminStatus={this.props.adminStatus}
+              updateAppState={this.props.updateAppState}
               />
           )
         } else {
@@ -218,25 +283,32 @@ class RepliesContainer extends React.Component {
 
     if (this.state.replyErrors) { replyErrorText = CreateErrorElements(this.state.replyErrors.text, "Reply") }
 
-    if (this.state.replyActive) {
-      replyField = ReplyFieldActivated(this)
-      replyButton = ReplyButtonActive(this)
-      cancelReplyButton = ReplyCancelButton(this)
-    } else {
-      replyButton = ReplyButtonInactive(this)
+    if (!artSettings.disabled) {
+      if (this.state.replyActive) {
+        replyField = ReplyFieldActivated(this)
+        replyButton = ReplyButtonActive(this)
+        cancelReplyButton = ReplyCancelButton(this)
+      } else {
+        replyButton = ReplyButtonInactive(this)
+      }
+    }
+
+    if (replies.length != 0) {
+      repliesWrapper =
+      <div className="cf-comment-replies-wrapper">
+        {repliesCount}
+        {showRepliesButton}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span >
+          {showBlockedCount}
+        </span>
+        {repliesList}
+      </div>
     }
 
     return(
       <div className="cf-comment-replies-container">
-        <div className="cf-comment-replies-wrapper">
-          {repliesCount}
-          {showRepliesButton}
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span >
-            {showBlockedCount}
-          </span>
-          {repliesList}
-        </div>
+        {repliesWrapper}
         <div className="cf-comment-reply-field  margin-top-10px">
         {replyField}
           <div>

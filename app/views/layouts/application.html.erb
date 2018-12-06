@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ClassifilterMaster</title>
+    <title><%= page_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -34,6 +34,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   <%= link_to "Edit Account", edit_user_path(current_user), class: "dropdown-item" %>
                   <%= link_to "Change Password", edit_password_user_path(current_user), class: "dropdown-item" %>
+                  <%= link_to "Settings", edit_settings_user_path(current_user), class: "dropdown-item" %>
                   <div class="dropdown-divider"></div>
                   <%= link_to  "Logout", logout_path, class: "dropdown-item" %>
                 </div>

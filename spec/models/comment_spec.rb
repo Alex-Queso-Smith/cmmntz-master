@@ -119,4 +119,16 @@ RSpec.describe Comment, type: :model do
       end
     end
   end
+
+  describe "callbacks" do
+    it "should censor its text appropriately when bad words are present" do
+      comment = FactoryBot.create(:comment, text: "I am a fucking Wombat!")
+      expect(comment.censored_text).to eq("I am a ****ing ******!")
+    end
+
+    it "should censor its text appropriately when bad words are present" do
+      comment = FactoryBot.create(:comment, text: "I am a Horse!")
+      expect(comment.censored_text).to eq("I am a Horse!")
+    end
+  end
 end

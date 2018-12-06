@@ -4,73 +4,25 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.all
+    page = params[:page] || 1
+    @articles = Article.order(publish_date: :desc).where("publish_date <= '#{Date.today}'").page(page)
   end
 
   # GET /articles/1
   # GET /articles/1.json
   def show
     url = @article.url(request)
-    @art = Art.find_or_create_by(url: url)
-  end
-
-  # GET /articles/new
-  def new
-    @article = Article.new
-  end
-
-  # GET /articles/1/edit
-  def edit
-  end
-
-  # POST /articles
-  # POST /articles.json
-  def create
-    @article = Article.new(article_params)
-
-    respond_to do |format|
-      if @article.save
-        format.html { redirect_to @article, notice: 'Article was successfully created.' }
-        format.json { render :show, status: :created, location: @article }
-      else
-        format.html { render :new }
-        format.json { render json: @article.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /articles/1
-  # PATCH/PUT /articles/1.json
-  def update
-    respond_to do |format|
-      if @article.update(article_params)
-        format.html { redirect_to @article, notice: 'Article was successfully updated.' }
-        format.json { render :show, status: :ok, location: @article }
-      else
-        format.html { render :edit }
-        format.json { render json: @article.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /articles/1
-  # DELETE /articles/1.json
-  def destroy
-    @article.destroy
-    respond_to do |format|
-      format.html { redirect_to articles_url, notice: 'Article was successfully destroyed.' }
-      format.json { head :no_content }
+    @art = Art.where(url: url).first_or_create do |art|
+      art.gallery = Gallery.find_by(name: "Classibridge Times")
+      art.topics_list = @article.topics
+      art.published_at = @article.publish_date
+      # art.set_topics = @article.topics
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_article
-      @article = Article.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def article_params
-      params.require(:article).permit(:title, :text, :author_name, :author_id)
+      @article = Article.find_by(slug: params[:slug])
     end
 end
