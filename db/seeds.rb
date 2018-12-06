@@ -2,11 +2,7 @@
 num_users = 100
 
 # set the number of articles we want in this pass
-<<<<<<< HEAD
-num_articles = 7
-=======
 num_articles = 2
->>>>>>> master
 time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
 puts "Starting process at #{Time.now}"
