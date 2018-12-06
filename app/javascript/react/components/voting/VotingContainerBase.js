@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
-import { VoteClick, ImageSelector, RowOneVoteButtons, RowTwoVoteButtons } from '../../util/VoteUtil';
+import { VoteClick, ImageSelector, RowOneVoteButtons, RowTwoVoteButtons, bigFive } from '../../util/VoteUtil';
 import { Timeout } from '../../util/CommentUtil';
 import Modal from '../modals/Modal';
 
@@ -41,7 +41,7 @@ class VotingContainerBase extends React.Component {
     }
   }
 
-  handlePost(payload){
+  handlePost(payload, name){
     FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
     .then(body => {
       if (body.errors) {
@@ -60,18 +60,27 @@ class VotingContainerBase extends React.Component {
             var old_top_id = body.errors["base"][3]
             payload.append("vote[force]", true)
             payload.append("vote[old_top_id]",old_top_id )
-            this.handlePost(payload)
+            this.handlePost(payload, name)
           }
         }
-
       } else {
         var updateVotes = this.state.selectedVotes
         updateVotes[body.vote_type] = body.vote_id
 
-        this.setState({
-          selectedVotes: updateVotes,
-          votePercents: body.vote_percents
-        })
+        if (bigFive.includes(name)) {
+          this.setState({
+            selectedBigFive: name,
+            selectedVotes: updateVotes,
+            votePercents: body.vote_percents,
+            userVoted: true
+          })
+        } else {
+          this.setState({
+            selectedVotes: updateVotes,
+            votePercents: body.vote_percents,
+            userVoted: true
+          })
+        }
 
         if (body.old_top_id){
           this.props.handleTopChange(body.old_top_id)
@@ -94,19 +103,13 @@ class VotingContainerBase extends React.Component {
           this.props.updateAppState("artSettings", artSettings)
         }
       } else {
-        var updateVotes = this.props.commentVotes
-        updateVotes[body.vote_type] = body.vote_id
-
-        this.setState({
-          selectedVotes: updateVotes,
-          votePercents: body.vote_percents
-        })
+        this.setState({ votePercents: body.vote_percents })
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleDestroy(id){
+  handleDestroy(id, name){
     FetchDeleteBasic(this, `/api/v1/votes/${id}.json`)
     .then(body => {
       if (body.errors) {
@@ -119,7 +122,59 @@ class VotingContainerBase extends React.Component {
           this.props.updateAppState("artSettings", artSettings)
         }
       } else {
-        this.setState({ votePercents: body.vote_percents })
+        if (bigFive.includes(name)) {
+          var updateVotes = this.state.selectedVotes
+          updateVotes[this.state.selectedBigFive] = null
+
+          this.setState({
+            votePercents: body.vote_percents,
+            selectedVotes: updateVotes,
+            selectedBigFive: ""
+          })
+        } else {
+          var updateVotes = this.state.selectedVotes
+          updateVotes[name] = null
+
+          this.setState({
+            votePercents: body.vote_percents,
+            selectedVotes: updateVotes
+          })
+        }
+      }
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+  handleDestroy(id, name){
+    FetchDeleteBasic(this, `/api/v1/votes/${id}.json`)
+    .then(body => {
+      if (body.errors) {
+        var artErrors = body.errors["art"]
+        if (artErrors) {
+          alert(artErrors[0])
+
+          var artSettings = this.props.artSettings
+          artSettings[artErrors[1]] = true
+          this.props.updateAppState("artSettings", artSettings)
+        }
+      } else {
+        if (bigFive.includes(name)) {
+          var updateVotes = this.state.selectedVotes
+          updateVotes[this.state.selectedBigFive] = null
+
+          this.setState({
+            votePercents: body.vote_percents,
+            selectedVotes: updateVotes,
+            selectedBigFive: ""
+          })
+        } else {
+          var updateVotes = this.state.selectedVotes
+          updateVotes[name] = null
+
+          this.setState({
+            votePercents: body.vote_percents,
+            selectedVotes: updateVotes
+          })
+        }
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -139,7 +194,6 @@ class VotingContainerBase extends React.Component {
       Timeout.clear(`timer${unique}`)
       Timeout.set(`timer${unique}`, percentShowSet, 1500)
     } else {
-      this.setState({ userVoted: true })
 
       Timeout.clear(`timer${unique}`)
       Timeout.set(`timer${unique}`, percentShowSet, 3000)

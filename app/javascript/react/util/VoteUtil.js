@@ -46,15 +46,8 @@ export const VoteClick = (object, event) => {
     } else { // if user clicks on same big five
 
       var voteId = object.state.selectedVotes[object.state.selectedBigFive]
-      var updateVotes = object.state.selectedVotes
-      updateVotes[object.state.selectedBigFive] = null
 
-      object.setState({
-        selectedVotes: updateVotes,
-        selectedBigFive: ''
-      })
-
-      object.handleDestroy(voteId)
+      object.handleDestroy(voteId, name)
     }
   } else {
     if (!object.state.selectedVotes[name]) { // user clicks on non big five and is previously unselected
@@ -65,16 +58,13 @@ export const VoteClick = (object, event) => {
       newVote.append("vote[user_id]", object.props.currentUserId)
       newVote.append("vote[vote_type]", name)
 
-      object.handlePost(newVote)
+      object.handlePost(newVote, name)
 
     } else { // user clicks on non big five and is previously selected
 
       var voteId = object.state.selectedVotes[name]
-      var updateVotes = object.state.selectedVotes
-      updateVotes[name] = null
 
-      object.setState({ selectedVotes: updateVotes })
-      object.handleDestroy(voteId)
+      object.handleDestroy(voteId, name)
     }
   }
 }
