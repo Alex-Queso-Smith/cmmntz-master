@@ -10,7 +10,7 @@ json.user do
   json.age_range comment_user_age_range(comment)
   json.base_image comment_user_base_image(comment)
   json.show_censored comment_user_show_censored(comment)
-  json.gallery_admin gallery_admins.include?(comment.user_id)
+  json.gallery_admin comment.by_admin_of?(gallery_admins)
 end
 
   user_has_interacted = current_users_interactions.detect { |i| i.comment_id == comment.id }.present?

@@ -2,7 +2,7 @@ import React from 'react'
 
 class UserAvatar extends React.Component {
   state = {
-    showInfoTile: true
+    showInfoTile: false
   }
 
   handleAvatarClick = this.handleAvatarClick.bind(this);
@@ -25,8 +25,8 @@ class UserAvatar extends React.Component {
     if (this.state.showInfoTile) {
       infoTile=
       <div className="cf-avatar-infoTile">
-        <div className="cf-avatar-infoTile-content">  
-          <div className="text-center border-1px-bot">
+        <div className="cf-avatar-infoTile-content">
+          <div className="border-1px-bot">
             <div className="row">
               <div className="col-7">
                 <h4>{user_name}</h4>
@@ -35,10 +35,10 @@ class UserAvatar extends React.Component {
               {blockSym}
             </div>
           </div>
-          <div className="text-center">
+          <div className="text-center margin-top-10px">
             {gender}
           </div>
-          <div className="text-center">
+          <div className="text-center margin-top-10px">
             {age_range}
           </div>
         </div>

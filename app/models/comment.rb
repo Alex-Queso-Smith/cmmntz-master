@@ -29,6 +29,11 @@ class Comment < ApplicationRecord
   after_create_commit :update_last_interaction_at_for_art!
   after_commit :alert_admin_of_comment!
 
+  def by_admin_of?(gallery_admin_ids)
+    return false if anonymous?
+    gallery_admin_ids.include?(user_id)
+  end
+
   private
 
   ### Custom Validations be here

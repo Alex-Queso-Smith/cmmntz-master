@@ -1,9 +1,9 @@
 import React from 'react';
 import Textarea from 'react-expanding-textarea'
 
-import UserInfoTile from './UserInfoTile';
 import { FetchWithUpdate, FetchBasic } from '../../util/CoreUtil';
 import VotingContainerBase from '../voting/VotingContainerBase';
+import UserAvatar from '../../containers/comments/UserAvatar';
 
 class Reply extends React.Component {
   state = {
@@ -255,7 +255,7 @@ class Reply extends React.Component {
     return(
       <div className="cf-comment cf-comment-reply margin-top-10px">
         <div className="cf-comment-wrapper">
-          <UserInfoTile
+          <UserAvatar
             userTileHover={this.state.userTileHover}
             userInfo={this.props.user}
             onMouseEnter={this.onUserHover}

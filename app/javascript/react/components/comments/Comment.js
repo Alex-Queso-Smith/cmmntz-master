@@ -8,7 +8,6 @@ import Modal from '../modals/Modal';
 import Reply from './Reply';
 import RepliesContainer from '../../containers/comments/RepliesContainer';
 import UserAvatar from '../../containers/comments/UserAvatar';
-import UserInfoTile from './UserInfoTile';
 import VotingContainerBase from '../voting/VotingContainerBase';
 
 class Comment extends React.Component {
