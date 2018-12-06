@@ -5,10 +5,8 @@ import { ImageSelector } from './VoteUtil';
 
 export const OpacityHandlerIncludes = (filterList, notFilterList, type) => {
 
-  if (filterList.includes(type)) {
+  if (filterList.includes(type) || notFilterList.includes(type)) {
     return ""
-  } else if (notFilterList.includes(type)) {
-    return  "exclude-translucent"
   } else {
     return "translucent"
   }
@@ -85,9 +83,12 @@ export const FilterButtonsRowOne = (object) => {
       blankClass = type[0]
     }
 
+    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
+
     return(
       <SortButton
         key={`filter_${type[1]}`}
+        opacity={opacity}
         className={`${blankClass}`}
         value={`${type[0]}_percent`}
         onClick={object.props.handleFilterClick}
@@ -125,9 +126,12 @@ export const FilterButtonsRowTwo = (object) => {
       blankClass = type[0]
     }
 
+    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
+
     return(
       <SortButton
         key={`filter_${type[1]}`}
+        opacity={opacity}
         className={`${blankClass}`}
         value={`${type[0]}_percent`}
         onClick={object.props.handleFilterClick}
