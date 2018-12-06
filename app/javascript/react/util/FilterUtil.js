@@ -32,7 +32,7 @@ export const SortTypes = [
   ["smart_count", "smart"],
   ["funny_count", "funny"],
   ["created_at", "created_at"],
-  ["comment_length", "length"]
+  ["comment_length", "length2"]
 ]
 
 export const SortButtons = (object) => {
@@ -75,7 +75,6 @@ export const RowOneFilterTypes = [
 export const FilterButtonsRowOne = (object) => {
   return RowOneFilterTypes.map((type) => {
     var image, visibility, blankClass;
-    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
 
     if (!type[0].includes('blank')) {
       image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
@@ -91,7 +90,6 @@ export const FilterButtonsRowOne = (object) => {
         key={`filter_${type[1]}`}
         className={`${blankClass}`}
         value={`${type[0]}_percent`}
-        opacity={opacity}
         onClick={object.props.handleFilterClick}
         image={image}
         visibility={visibility}
@@ -117,7 +115,6 @@ export const RowTwoFilterTypes = [
 export const FilterButtonsRowTwo = (object) => {
   return RowTwoFilterTypes.map((type) => {
     var image, visibility, blankClass;
-    // var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
 
     if (!type[0].includes('blank')) {
       image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
