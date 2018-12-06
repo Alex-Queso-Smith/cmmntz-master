@@ -47,8 +47,8 @@ class UserAvatar extends React.Component {
 
     return(
       <div className="user-avatar-container">
-        <div className="cf-comment-user-meta" onClick={this.handleAvatarClick}>
-          <div className="cf-comment-user-avatar">
+        <div className="cf-comment-user-meta">
+          <div className="cf-comment-user-avatar" onClick={this.handleAvatarClick}>
             <span className="avatar-helper"></span>
             <img className="avatar-image" src={avatarImage} />
           </div>
