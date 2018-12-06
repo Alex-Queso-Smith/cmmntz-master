@@ -18,7 +18,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Votes: #{article.votes.size}
               .article-preview-text
-                = article.introduction
+                = markdown(article.introduction)
                 %br/
                 = link_to "read more", article_path(article.slug)
   = will_paginate @articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

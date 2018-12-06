@@ -284,6 +284,7 @@ GEM
     multi_json (1.13.1)
     multipart-post (2.0.0)
     nenv (0.3.0)
+    net-http-persistent (2.9.4)
     netrc (0.11.0)
     nio4r (2.3.1)
     nokogiri (1.8.5)
@@ -308,6 +309,10 @@ GEM
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
+    rack-wwwhisper (1.1.12)
+      addressable (~> 2.0)
+      net-http-persistent (< 3.0)
+      rack (>= 1.0)
     rails (5.2.1)
       actioncable (= 5.2.1)
       actionmailer (= 5.2.1)
@@ -342,6 +347,7 @@ GEM
       execjs
       railties (>= 3.2)
       tilt
+    redcarpet (3.4.0)
     redis (4.0.3)
     remotipart (1.4.2)
     request_store (1.4.1)
@@ -482,8 +488,10 @@ DEPENDENCIES
   pg
   pry-rails
   puma (~> 3.11)
+  rack-wwwhisper (~> 1.0)
   rails (~> 5.2.1)
   react-rails
+  redcarpet
   rspec-rails
   sass-rails (~> 5.0)
   scenic

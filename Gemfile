@@ -103,3 +103,8 @@ gem 'fog-azure-rm'
 ###### for newspaper mock
 gem 'fae-rails'
 gem 'will_paginate-bootstrap4'
+gem 'redcarpet'
+
+
+# Access control for alpha testing!!!!!
+gem 'rack-wwwhisper', '~> 1.0'

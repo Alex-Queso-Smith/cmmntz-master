@@ -13,7 +13,7 @@
   %br/
   .article-body.row
     %div{class: article_body_display_class(@article)}
-      = @article.body
+      = markdown(@article.body)
     - if @article.middle_image.present? && @article.middle_image.asset.present?
       .col-sm-5
         = article_middle_image @article
