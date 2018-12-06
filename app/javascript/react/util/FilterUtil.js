@@ -14,6 +14,17 @@ export const OpacityHandlerIncludes = (filterList, notFilterList, type) => {
   }
 }
 
+export const ImageSelectorTemp = (filterList, notFilterList, type) => {
+
+  if (filterList.includes(`${type}_percent`)) {
+    return `/assets/${type}-selected`
+  } else if (notFilterList.includes(`${type}_percent`)) {
+    return  `/assets/${type}-unselected`
+  } else {
+    return `/assets/${type}`
+  }
+}
+
 export const SortTypes = [
   ["top_count", "top"],
   ["love_count", "love"],
@@ -67,7 +78,7 @@ export const FilterButtonsRowOne = (object) => {
     var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
 
     if (!type[0].includes('blank')) {
-      image = ImageSelector(type[0])
+      image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
     }
 
     if (type[0].includes('blank')) {
@@ -106,10 +117,10 @@ export const RowTwoFilterTypes = [
 export const FilterButtonsRowTwo = (object) => {
   return RowTwoFilterTypes.map((type) => {
     var image, visibility, blankClass;
-    var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
+    // var opacity = OpacityHandlerIncludes(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, `${type[0]}_percent`)
 
     if (!type[0].includes('blank')) {
-      image = ImageSelector(type[0])
+      image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
     }
 
     if (type[0].includes('blank')){
@@ -122,7 +133,6 @@ export const FilterButtonsRowTwo = (object) => {
         key={`filter_${type[1]}`}
         className={`${blankClass}`}
         value={`${type[0]}_percent`}
-        opacity={opacity}
         onClick={object.props.handleFilterClick}
         image={image}
         visibility={visibility}
