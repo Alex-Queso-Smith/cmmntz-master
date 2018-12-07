@@ -5,13 +5,6 @@ class UserAvatar extends React.Component {
     showInfoTile: false
   }
 
-  handleAvatarClick = this.handleAvatarClick.bind(this);
-
-  handleAvatarClick(event) {
-    event.preventDefault()
-
-    this.setState({ showInfoTile: !this.state.showInfoTile })
-  }
 
   render(){
     var { user_name, gender, age_range, base_image } = this.props.userInfo
@@ -47,8 +40,11 @@ class UserAvatar extends React.Component {
 
     return(
       <div className="user-avatar-container">
-        <div className="cf-comment-user-meta">
-          <div className="cf-comment-user-avatar" onClick={this.handleAvatarClick}>
+        <div className="cf-comment-user-meta"
+          onMouseEnter={() => this.setState({ showInfoTile: true })}
+          onMouseLeave={() => this.setState({ showInfoTile: false })}
+        >
+          <div className="cf-comment-user-avatar">
             <span className="avatar-helper"></span>
             <img className="avatar-image" src={avatarImage} />
           </div>
