@@ -57,9 +57,9 @@ class GeoSelect extends React.Component {
 
     var buttonTypes = [
       ['', 'Anywhere'],
-      ['1000', "Huge Circle"],
-      ['500', "Big Circle"],
-      ['100', "This Circle"]
+      ['huge', "Huge Circle"],
+      ['medium', "Big Circle"],
+      ['small', "This Circle"]
     ]
 
     if (latitude && longitude) {

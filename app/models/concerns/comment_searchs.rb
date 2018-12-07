@@ -3,9 +3,9 @@ module CommentSearchs
 
   included do
     FILTER_PERCENT = '.2000'
-    GEO_BOXES = {'1000' => {lat: 14.5, lon: 15.15},
-      '500' => {lat: 7.25, lon: 7.57},
-      '100' => {lat: 1.45, lon: 1.51}
+    GEO_BOXES = {'huge' => {lat: 14.5, lon: 15.15},
+      'medium' => {lat: 7.25, lon: 7.57},
+      'small' => {lat: 1.45, lon: 1.51}
     }
 
     self.per_page = 10
