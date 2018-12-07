@@ -32,7 +32,7 @@ class Art < ApplicationRecord
   end
 
   def comment_requires_approval?
-    gallery.comment_approval_needed
+    !gallery.comment_approval_needed.blank? && gallery.comment_approval_needed == "true"
   end
 
   def moderators_request_notification?(comment)
