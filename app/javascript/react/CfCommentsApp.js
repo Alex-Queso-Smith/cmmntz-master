@@ -25,6 +25,10 @@ class CfCommentsApp extends React.Component {
     this.setState({ [key]: val })
   }
 
+  componentWillMount() {
+    document.getElementById("body").classList.add("purple-bg")
+  }
+
   componentDidMount() {
     FetchDidMount(this, `/api/v1/arts/${this.state.artId}.json`)
     .then(artData => {
