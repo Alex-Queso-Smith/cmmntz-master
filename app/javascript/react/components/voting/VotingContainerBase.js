@@ -179,7 +179,6 @@ class VotingContainerBase extends React.Component {
   handleFlagCommentModal(event){
     this.handleShowFlagModal()
     this.handleClickVote(event)
-    alert('Comment Flagged!')
   }
 
   render(){
