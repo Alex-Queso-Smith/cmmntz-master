@@ -101,6 +101,7 @@ export const UserRegPageTwo = props => {
         value={props.gender}
       />
       <hr />
+      <h4 className="text-center">Choose your location</h4>
       <div className="cf-geomap-wrapper">
         <div className="cf-geomap-container" onMouseMove={props.onMouseMove} onClick={props.setLatLongClick}>
           {geoMarker}
