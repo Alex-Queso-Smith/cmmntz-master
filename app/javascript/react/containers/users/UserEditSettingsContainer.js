@@ -184,7 +184,7 @@ class UserEditSettingsContainer extends React.Component {
         <Checkbox
           onChange={this.handleRevertSettings}
           name={"useGalleryDefault"}
-          label={"Check to use Websites default settings"}
+          label={"Check to use the settings chosen by the websites I visit"}
           checked={this.state.useGalleryDefault}
         />
         <CommentFilters
