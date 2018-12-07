@@ -3,9 +3,9 @@ module CommentSearchs
 
   included do
     FILTER_PERCENT = '.2000'
-    GEO_BOXES = {'1000' => {lat: 14.5, lon: 15.15},
-      '500' => {lat: 7.25, lon: 7.57},
-      '100' => {lat: 1.45, lon: 1.51}
+    GEO_BOXES = {'huge' => {factor: 43.2},
+      'medium' => {factor: 21.6},
+      'small' => {factor: 10.8}
     }
 
     self.per_page = 10
@@ -121,8 +121,8 @@ module CommentSearchs
       # long 66 per degree
       bounds = GEO_BOXES[radius.to_s]
       scope = scope.joins("left join users on users.id = comments.user_id")
-      scope = scope.lat_bound_box(lat.to_i, bounds[:lat])
-      scope = scope.lon_bound_box(lon.to_i, bounds[:lon])
+      scope = scope.lat_bound_box(lat.to_i, bounds[:factor])
+      scope = scope.lon_bound_box(lon.to_i, bounds[:factor])
       scope
     end
 

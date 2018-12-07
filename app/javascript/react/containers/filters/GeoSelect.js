@@ -53,24 +53,34 @@ class GeoSelect extends React.Component {
   }
 
   render() {
-    const { x, y, latitude, longitude, geoPin } = this.state
-
-    if (latitude && longitude) {
-      const style = {
-        top: geoPin.y,
-        left: geoPin.x
-      }
-
-      var geoMarker =
-        <div className="cf-geomarker" style={style} />
-    }
+    const { x, y, latitude, longitude, geoPin, radius } = this.state
 
     var buttonTypes = [
-      ['', 'Anywhere'],
-      ['1000', "1000 Miles"],
-      ['500', "500 Miles"],
-      ['100', "100 Miles"]
+      ['', 'Anywhere', 0],
+      ['huge', "Huge Circle", 48],
+      ['medium', "Big Circle", 24],
+      ['small', "Small Circle", 0]
     ]
+
+    if (latitude && longitude) {
+      var style;
+      if (radius != "" && radius != "small") {
+        var type = buttonTypes.find(t => t[0] == radius)
+        style = {
+          top: (geoPin.y + 6) - (type[2]/2),
+          left: (geoPin.x + 6) - (type[2]/2)
+        }
+      } else {
+        style = {
+          top: geoPin.y,
+          left: geoPin.x
+        }
+      }
+
+
+      var geoMarker =
+        <div className={`cf-geomarker ${radius}`} style={style} />
+    }
 
     var radiusButtons = buttonTypes.map((type) => {
       var btnClass = 'translucent'

@@ -22,7 +22,7 @@ class CommentingContainer extends React.Component {
       comments: [],
       commentFormErrors: {},
       sortOpts: {
-        showAdvancedFilters: false,
+        showAdvancedFilters: true,
         sortDir: 'desc',
         sortType: 'created_at',
         notFilterList: [],
