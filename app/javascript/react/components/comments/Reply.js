@@ -241,7 +241,7 @@ class Reply extends React.Component {
     }
 
     var deleteReplyButton, banUserButton;
-    if (this.props.adminStatus) {
+    if (this.props.adminStatus && currentUserId != replyUserId) {
       deleteReplyButton =
         <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteReply}>
           Delete Reply
