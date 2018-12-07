@@ -67,9 +67,9 @@ class GeoSelect extends React.Component {
 
     var buttonTypes = [
       ['', 'Anywhere'],
-      ['1000', "1000 Miles"],
-      ['500', "500 Miles"],
-      ['100', "100 Miles"]
+      ['1000', "Huge Circle"],
+      ['500', "Big Circle"],
+      ['100', "This Circle"]
     ]
 
     var radiusButtons = buttonTypes.map((type) => {
