@@ -56,6 +56,7 @@ class CommentingContainer extends React.Component {
     this.handleSettingsUpdate = this.handleSettingsUpdate.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
     this.banUser = this.banUser.bind(this);
+    this.handleClearFilters = this.handleClearFilters.bind(this);
   }
 
   componentWillMount(){
@@ -152,6 +153,16 @@ class CommentingContainer extends React.Component {
     this.setState({ sortOpts: newOpts })
   }
 
+  handleClearFilters(){
+    var opts = this.state.sortOpts;
+    opts.sortDir = 'desc';
+    opts.sortType = "created_at";
+    opts.notFilterList = [];
+    opts.filterList = [];
+    this.setState({ sortOpts: opts })
+    this.handleFilterSubmit()
+  }
+
   handleChange(event){
     event.preventDefault();
     const target = event.target;
@@ -199,7 +210,7 @@ class CommentingContainer extends React.Component {
     FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
     .then(body => {
       if (body.errors) {
-        
+
         var artErrors = body.errors["art"]
         if (artErrors) {
           alert(artErrors[0])
@@ -482,6 +493,7 @@ class CommentingContainer extends React.Component {
           handleFilterByClick={this.handleFilterByClick}
           parentSetLatLongClick={this.setLatLongClick}
           handleAdvancedFiltershow={this.handleAdvancedFiltershow}
+          clearFilters={this.handleClearFilters}
         />
         <hr />
         <div>
