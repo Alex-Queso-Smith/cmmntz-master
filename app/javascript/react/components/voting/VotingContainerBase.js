@@ -192,7 +192,7 @@ class VotingContainerBase extends React.Component {
     if (this.state.userVoted) {
 
       Timeout.clear(`timer${unique}`)
-      Timeout.set(`timer${unique}`, percentShowSet, 1500)
+      Timeout.set(`timer${unique}`, percentShowSet, 1000)
     } else {
 
       Timeout.clear(`timer${unique}`)

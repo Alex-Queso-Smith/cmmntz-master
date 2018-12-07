@@ -55,6 +55,7 @@ $bootstrap-blue: #0069D9;
   .cf-comment-wrapper {
     width: 100%;
     height: auto; overflow: visible;
+    min-height: 75px;
 
 
     .cf-comment-user-meta {
@@ -144,6 +145,7 @@ $bootstrap-blue: #0069D9;
         background-color: #fafafa;
         height: auto;
         margin-top: 10px;
+        word-wrap: break-word;
       }
     }
   }

@@ -1,9 +1,3 @@
-// $breakpoint-tablet: 768px;
-// @media (max-width: $breakpoint-tablet) {
-//   #user-age-range{
-//     position: relative;
-//   }
-// }
 $breakpoint-phone: 575px;
 
 #user-edit-form {
@@ -12,7 +6,7 @@ $breakpoint-phone: 575px;
   padding: 30px;
   border-radius: 20px;
   width: 500px;
-  background: rgba(255, 255, 255, .9 );
+  background: rgba(255, 255, 255, .95 );
   color: #000000;
 }
 
@@ -42,7 +36,7 @@ $breakpoint-phone: 575px;
   padding: 30px;
   border-radius: 20px;
   width: 500px;
-  background: rgba(255, 255, 255, .9 );
+  background: rgba(255, 255, 255, .95 );
   color: #000000;
 }
 
@@ -52,7 +46,7 @@ $breakpoint-phone: 575px;
   padding: 30px;
   border-radius: 20px;
   width: 500px;
-  background: rgba(255, 255, 255, .9 );
+  background: rgba(255, 255, 255, 1 );
   color: #000000;
 }
 
@@ -180,7 +174,6 @@ $breakpoint-phone: 575px;
     background: #4CAF50;
     cursor: pointer;
 }
-
 
 .cf-geomap-wrapper {
   width: 100%;

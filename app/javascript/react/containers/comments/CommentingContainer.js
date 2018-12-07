@@ -78,6 +78,11 @@ class CommentingContainer extends React.Component {
        })
        .catch(error => console.error(`Error in fetch: ${error.message}`));
      }
+
+     var body = document.getElementById("body")
+
+     body.style.background = ""
+     body.style.backgroundColor = "#800080"
   }
 
   componentDidMount(){
@@ -125,6 +130,12 @@ class CommentingContainer extends React.Component {
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+
+    var body = document.getElementById("body")
+
+    body.style.background = ""
+    body.style.backgroundColor = "#800080"
+    debugger
   }
 
   setLatLongClick(x, y, radius){
