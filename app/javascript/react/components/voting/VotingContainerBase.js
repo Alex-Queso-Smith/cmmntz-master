@@ -44,6 +44,7 @@ class VotingContainerBase extends React.Component {
   handlePost(payload, name){
     FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
     .then(body => {
+
       if (body.errors) {
         var artErrors = body.errors["art"]
         if (artErrors) {
@@ -144,41 +145,6 @@ class VotingContainerBase extends React.Component {
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
-  handleDestroy(id, name){
-    FetchDeleteBasic(this, `/api/v1/votes/${id}.json`)
-    .then(body => {
-      if (body.errors) {
-        var artErrors = body.errors["art"]
-        if (artErrors) {
-          alert(artErrors[0])
-
-          var artSettings = this.props.artSettings
-          artSettings[artErrors[1]] = true
-          this.props.updateAppState("artSettings", artSettings)
-        }
-      } else {
-        if (bigFive.includes(name)) {
-          var updateVotes = this.state.selectedVotes
-          updateVotes[this.state.selectedBigFive] = null
-
-          this.setState({
-            votePercents: body.vote_percents,
-            selectedVotes: updateVotes,
-            selectedBigFive: ""
-          })
-        } else {
-          var updateVotes = this.state.selectedVotes
-          updateVotes[name] = null
-
-          this.setState({
-            votePercents: body.vote_percents,
-            selectedVotes: updateVotes
-          })
-        }
-      }
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
 
   handleClickVote(event){
     const unique = this.props.commentId
@@ -210,8 +176,9 @@ class VotingContainerBase extends React.Component {
     }
   }
 
-  handleFlagCommentModal(){
+  handleFlagCommentModal(event){
     this.handleShowFlagModal()
+    this.handleClickVote(event)
     alert('Comment Flagged!')
   }
 
@@ -230,6 +197,7 @@ class VotingContainerBase extends React.Component {
         handleClose={this.handleShowFlagModal}
         modalTitle={"Flag this comment?"}
         actionButton={this.handleFlagCommentModal}
+        buttonName={"warn"}
       >
       If you wish to flag this comment please click flag comment button !
       </Modal>

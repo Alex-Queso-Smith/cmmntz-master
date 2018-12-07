@@ -12,10 +12,6 @@ export const VoteClick = (object, event) => {
 
   var selectedVotes = object.state.selectedVotes;
 
-  if (name === "warn" && !selectedVotes.warn) {
-    object.handleShowFlagModal()
-  }
-
   if (bigFive.includes(name)) {
     if (object.state.selectedBigFive === '') { // if there is no selected big five
 
@@ -147,6 +143,11 @@ export const RowOneVoteButtons = (object) => {
       blankClass = type[0]
     }
 
+    var clickFunction = object.handleClickVote;
+
+    if (type[0] === "warn") {
+      clickFunction = object.handleShowFlagModal;
+    }
 
     return(
       <VoteButtonRowOne
@@ -154,7 +155,7 @@ export const RowOneVoteButtons = (object) => {
         className={`margin-top-bottom-10px ${blankClass}`}
         name={type[0]}
         label={type[1]}
-        onClick={object.handleClickVote}
+        onClick={clickFunction}
         visibility={visibility}
         opacity={opacity}
         percentage={percentage}
