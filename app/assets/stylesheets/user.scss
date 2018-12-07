@@ -199,6 +199,19 @@ $breakpoint-phone: 575px;
   height: 12px;
   width: 12px;
   pointer-events: none;
+  z-index: 10;
+}
+
+.cf-geomarker.small {}
+
+.cf-geomarker.medium {
+  display: block;
+  height: 24px; width: 24px;
+}
+
+.cf-geomarker.huge {
+  display: block;
+  height: 48px; width: 48px;
 }
 
 .gender-btn {
