@@ -236,7 +236,7 @@ class Comment extends React.Component {
     }
 
     var deleteCommentButton, banUserButton;
-    if (this.props.adminStatus) {
+    if (this.props.adminStatus && commentUserId != currentUserId) {
       deleteCommentButton =
       <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteComment}>
         Delete Comment
