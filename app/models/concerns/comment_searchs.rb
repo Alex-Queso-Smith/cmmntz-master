@@ -83,7 +83,20 @@ module CommentSearchs
       }
 
       scope "select_#{type}_percent", -> {
-        select("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as #{type}_percent")
+        select(
+          "(
+            case when comments.interactions_count > 0 then (
+              sum(case when votes.vote_type  = '#{type}' then 1 else 0 end
+            )::DECIMAL * (
+              case when comments.interactions_count <= 1 then .50
+                when comments.interactions_count = 2 then .75
+                when comments.interactions_count >= 3 then 1.00
+                else 0
+              end
+            )
+            /(comments.interactions_count)::DECIMAL) else 0 end
+          )::DECIMAL(5,4) as #{type}_percent"
+        )
       }
     end
 
