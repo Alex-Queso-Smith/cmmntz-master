@@ -71,11 +71,25 @@ module CommentSearchs
 
     Vote::TYPES.each do |type|
       scope "having_#{type}_percent_gteq", ->(value) {
-        having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) >= '#{value}'")
+        having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL * (
+          case when comments.interactions_count <= 1 then .50
+            when comments.interactions_count = 2 then .75
+            when comments.interactions_count >= 3 then 1.00
+            else 0
+          end
+        )
+        /(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) >= '#{value}'")
       }
 
       scope "having_#{type}_percent_lt", ->(value) {
-        having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) < '#{value}'")
+        having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL * (
+          case when comments.interactions_count <= 1 then .50
+            when comments.interactions_count = 2 then .75
+            when comments.interactions_count >= 3 then 1.00
+            else 0
+          end
+        )
+        /(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) < '#{value}'")
       }
 
       scope "select_#{type}_count", -> {
@@ -87,14 +101,7 @@ module CommentSearchs
           "(
             case when comments.interactions_count > 0 then (
               sum(case when votes.vote_type  = '#{type}' then 1 else 0 end
-            )::DECIMAL * (
-              case when comments.interactions_count <= 1 then .50
-                when comments.interactions_count = 2 then .75
-                when comments.interactions_count >= 3 then 1.00
-                else 0
-              end
-            )
-            /(comments.interactions_count)::DECIMAL) else 0 end
+            )::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end
           )::DECIMAL(5,4) as #{type}_percent"
         )
       }
