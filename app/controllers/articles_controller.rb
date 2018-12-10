@@ -16,7 +16,7 @@ class ArticlesController < ApplicationController
       art.gallery = Gallery.find_by(name: "Classibridge Times")
       art.topics_list = @article.topics
       art.published_at = @article.publish_date
-      # art.set_topics = @article.topics
+      art.art_type = "article"
     end
   end
 
