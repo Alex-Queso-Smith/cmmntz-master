@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   # temp routes
   resources :admin_mails, only: [:new]
 
+  resources :app_accesses, only: [:new, :create]
+
   ### named routes be here
   get 'register' => "users#new",           as: :register
   get 'login' => "user_sessions#new",      as: :login

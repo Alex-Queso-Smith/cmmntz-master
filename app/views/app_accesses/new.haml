@@ -1,0 +1,12 @@
+#user-login-container.container.login-container
+  = form_for @app_access do |f|
+    %h3 Halt!
+
+    %p In order to proceed, thou must answer this question:
+
+    %p What is the Password?
+
+    .form-group
+      = f.password_field :password, class: "form-control"
+    .form-group.actions
+      = f.submit "Authorize Me!", class: "btn btn-secondary"

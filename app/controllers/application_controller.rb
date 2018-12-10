@@ -1,12 +1,20 @@
 class ApplicationController < ActionController::Base
   # include ControllerIncludes::CurrentUser # methods regarding current_user
 
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user, :app_passcode
   ALL_FILTERS = [:require_user, :current_user, :current_user_session]
   before_action *ALL_FILTERS
 
   private
-  
+
+  def app_passcode
+    if ENV['APPLICATION_PASSCODE']
+      ENV['APPLICATION_PASSCODE']
+    else
+      "123456"
+    end
+  end
+
   def store_location
     session[:return_to] = request[:REQUEST_URI]
   end
