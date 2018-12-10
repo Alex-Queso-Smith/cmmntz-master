@@ -24,7 +24,9 @@ export const FetchWithPush = (object, path, push, method, errors, payload) => {
          object.props.history.push(push)
        }
      }
+     return body
    })
+
 }
 
 export const FetchDidMount = (object, path) => {
@@ -146,7 +148,7 @@ export const CheckInputValidation = (object, state) => {
   state.forEach((item) => {
     if (item.length === 0) {
       valid = true
-    }
+    } 
   })
 
   object.setState({ formInvalid: valid })

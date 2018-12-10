@@ -38,13 +38,13 @@ class UserNewFormContainer extends React.Component {
 
   componentDidUpdate(prevProps, prevState){
     if (
-      prevState.text != this.state.text ||
+      prevState.userName != this.state.userName ||
       prevState.password != this.state.password ||
       prevState.passwordConfirmation != this.state.passwordConfirmation ||
       prevState.email != this.state.email
     ) {
       var { userName, password, passwordConfirmation, email } = this.state
-
+      
       CheckInputValidation(this, [userName, password, passwordConfirmation, email])
     }
   }
@@ -119,7 +119,13 @@ class UserNewFormContainer extends React.Component {
       newUser.append("user[base_image]", this.state.avatar)
 
       FetchWithPush(this, '/api/v1/users.json', '/', 'POST', 'registrationErrors', newUser)
-      .then(redirect => window.location = '/articles')
+      .then(body =>{
+        if (body.errors) {
+          this.setState({currentPage: 1})
+        } else {
+          window.location = '/articles'
+        }
+      })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
 
     }
