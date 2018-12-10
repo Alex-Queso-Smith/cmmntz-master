@@ -147,7 +147,7 @@ module CommentSearchs
     end
 
     def self.vote_scoping(scope, user, votes_from = "")
-      if user && user.followed_users && votes_from
+      if user && !user.followed_users.blank? && votes_from
         if votes_from == "friends"
           user_ids = user.followed_user_ids
         elsif votes_from == "network"
@@ -162,7 +162,7 @@ module CommentSearchs
     end
 
     def self.get_comments_from(scope, user, comments_from = "")
-      if user && user.followed_users && comments_from
+      if user && !user.followed_users.blank? && comments_from
         if comments_from == "friends"
           user_ids = user.followed_user_ids
         elsif comments_from == "network"
