@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  skip_before_action *ALL_FILTERS - [:require_app_access]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   # GET /articles
