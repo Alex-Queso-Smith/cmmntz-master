@@ -7,7 +7,6 @@ import VoteButtonRowOne from '../../components/voting/VoteButtonRowOne';
 import { CreateErrorElements, CheckInputValidation, FetchWithUpdate } from '../../util/CoreUtil';
 import { Timeout } from '../../util/CommentUtil';
 import { ImageSelector, RowOneVoteTypes, RowTwoVoteTypes } from '../../util/VoteUtil';
-import { OpacityHandlerIncludes } from '../../util/FilterUtil';
 
 class CommentFormContainer extends React.Component {
   state = {
@@ -148,7 +147,7 @@ class CommentFormContainer extends React.Component {
       RowOneVoteTypes.map((type) => {
         var visibility;
         var image = ImageSelector(type[0])
-        var opacity = OpacityHandlerIncludes(selfVotes, [], type[0])
+        var opacity = selfVotes.includes(type[0]) ? "" : "translucent"
 
         if (type[0].includes('blank')) {
           visibility = "hidden"
@@ -170,7 +169,7 @@ class CommentFormContainer extends React.Component {
       RowTwoVoteTypes.map((type) => {
         var visibility;
         var image = ImageSelector(type[0])
-        var opacity = OpacityHandlerIncludes(selfVotes, [], type[0])
+        var opacity = selfVotes.includes(type[0]) ? "" : "translucent"
 
         if (type[0].includes('blank')) {
           visibility = "hidden"
