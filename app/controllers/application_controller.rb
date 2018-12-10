@@ -2,10 +2,16 @@ class ApplicationController < ActionController::Base
   # include ControllerIncludes::CurrentUser # methods regarding current_user
 
   helper_method :current_user_session, :current_user
-  ALL_FILTERS = [:require_user, :current_user, :current_user_session]
+  ALL_FILTERS = [:require_app_access, :require_user, :current_user, :current_user_session]
   before_action *ALL_FILTERS
 
   private
+
+  def require_app_access
+    unless cookies['cf-super-secure-app'] && cookies['cf-super-secure-app'] == "a"
+      redirect_to authorize_access_url
+    end
+  end
 
   def store_location
     session[:return_to] = request[:REQUEST_URI]

@@ -8,11 +8,18 @@ class AppAccessesController < ApplicationController
   def create
     @app_access = AppAccess.new(app_access_params)
     if @app_access.valid?
+      # set cookie
+      cookies['cf-super-secure-app'] = "a"
       flash[:notice] = "Login successful!"
       redirect_to root_url
     else
       render :action => :new
     end
+  end
+
+  def destroy
+    cookies.delete('cf-super-secure-app')
+    redirect_to root_url
   end
 
   private
