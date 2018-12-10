@@ -71,11 +71,25 @@ module CommentSearchs
 
     Vote::TYPES.each do |type|
       scope "having_#{type}_percent_gteq", ->(value) {
-        having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) >= '#{value}'")
+        having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL * (
+          case when comments.interactions_count <= 1 then .50
+            when comments.interactions_count = 2 then .75
+            when comments.interactions_count >= 3 then 1.00
+            else 0
+          end
+        )
+        /(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) >= '#{value}'")
       }
 
       scope "having_#{type}_percent_lt", ->(value) {
-        having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) < '#{value}'")
+        having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL * (
+          case when comments.interactions_count <= 1 then .50
+            when comments.interactions_count = 2 then .75
+            when comments.interactions_count >= 3 then 1.00
+            else 0
+          end
+        )
+        /(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) < '#{value}'")
       }
 
       scope "select_#{type}_count", -> {
@@ -83,7 +97,13 @@ module CommentSearchs
       }
 
       scope "select_#{type}_percent", -> {
-        select("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end)::DECIMAL(5,4) as #{type}_percent")
+        select(
+          "(
+            case when comments.interactions_count > 0 then (
+              sum(case when votes.vote_type  = '#{type}' then 1 else 0 end
+            )::DECIMAL/(comments.interactions_count)::DECIMAL) else 0 end
+          )::DECIMAL(5,4) as #{type}_percent"
+        )
       }
     end
 
@@ -127,7 +147,7 @@ module CommentSearchs
     end
 
     def self.vote_scoping(scope, user, votes_from = "")
-      if user && user.followed_users && votes_from
+      if user && !user.followed_users.blank? && votes_from
         if votes_from == "friends"
           user_ids = user.followed_user_ids
         elsif votes_from == "network"
@@ -142,7 +162,7 @@ module CommentSearchs
     end
 
     def self.get_comments_from(scope, user, comments_from = "")
-      if user && user.followed_users && comments_from
+      if user && !user.followed_users.blank? && comments_from
         if comments_from == "friends"
           user_ids = user.followed_user_ids
         elsif comments_from == "network"
