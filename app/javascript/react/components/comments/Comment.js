@@ -163,8 +163,8 @@ class Comment extends React.Component {
     var editButton, cancelButton;
     if (!artSettings.disabled) {
       if (editStatus && currentUserId === commentUserId) {
-        editButton = <button className="btn btn-primary btn-sm comment-button" onClick={this.handleEditSubmit}>Edit Comment</button>
-        cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditComment}>Cancel Edit</button>
+        editButton = <button className="btn btn-primary btn-sm comment-button" onClick={this.handleEditSubmit}>Save</button>
+        cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditComment}>Cancel</button>
       } else if (currentUserId === commentUserId) {
         editButton = <button className="btn btn-primary btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
       }
