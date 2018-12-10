@@ -7,7 +7,12 @@ class AppAccessesController < ApplicationController
 
   def create
     @app_access = AppAccess.new(app_access_params)
-    raise "Code: #{app_passcode} \n\n#{@app_access.inspect}"
+    if @app_access.valid?
+      flash[:notice] = "Login successful!"
+      redirect_to root_url
+    else
+      render :action => :new
+    end
   end
 
   private
