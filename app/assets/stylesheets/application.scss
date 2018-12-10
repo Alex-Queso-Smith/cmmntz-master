@@ -70,17 +70,8 @@ $breakpoint-phone: 575px;
 }
 
 #body {
-  background: url('/assets/philly.jpg') no-repeat center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  color: #ffffff;
+  background: #000000;
   margin: 0;
-}
-
-.purple-bg {
-  background: #5B3592 !important;
 }
 
 #body-container {
