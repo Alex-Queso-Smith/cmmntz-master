@@ -221,7 +221,7 @@ $bootstrap-blue: #0069D9;
   margin: 5px 0px 5px 0px;
   color: #777777;
   background: #ffffff;
-  
+
   &:hover {
     color: #777777;
     background: #f8f9fa;
@@ -267,4 +267,8 @@ $bootstrap-blue: #0069D9;
 
 .user-name-avatar {
   margin-bottom: 0 !important;
+}
+
+.gender-image-box {
+  min-width: 150px !important;
 }
