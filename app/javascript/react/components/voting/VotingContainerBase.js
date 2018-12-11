@@ -39,6 +39,13 @@ class VotingContainerBase extends React.Component {
         votePercents: this.props.votePercents
       })
     }
+
+    if (prevProps.userVoted != this.props.userVoted) {
+        this.setState({
+          userVoted: this.props.userVoted,
+          percentShow: this.props.userVoted
+        })
+    }
   }
 
   handlePost(payload, name){
@@ -153,6 +160,7 @@ class VotingContainerBase extends React.Component {
 
     var percentShowSet = () => {
       this.setState({ percentShow: true })
+      this.props.showVotes()
     }
 
     if (this.state.userVoted) {

@@ -194,6 +194,7 @@ class UserEditSettingsContainer extends React.Component {
           handleSortDirClick={this.handleSortDirClick}
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
+          hideAdvancedLink={true}
         />
         <div className="row">
         <Checkbox

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_10_163323) do
+ActiveRecord::Schema.define(version: 2018_12_10_180333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -185,7 +185,6 @@ ActiveRecord::Schema.define(version: 2018_12_10_163323) do
     t.string "name"
     t.string "asset"
     t.string "fileable_type"
-    t.integer "fileable_id"
     t.integer "file_size"
     t.integer "position", default: 0
     t.string "attached_as"
@@ -194,15 +193,14 @@ ActiveRecord::Schema.define(version: 2018_12_10_163323) do
     t.boolean "required", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.uuid "fileable_id"
     t.index ["attached_as"], name: "index_fae_files_on_attached_as"
-    t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable_type_and_fileable_id"
   end
 
   create_table "fae_images", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "asset"
     t.string "imageable_type"
-    t.integer "imageable_id"
     t.string "alt"
     t.string "caption"
     t.integer "position", default: 0
@@ -213,8 +211,8 @@ ActiveRecord::Schema.define(version: 2018_12_10_163323) do
     t.boolean "required", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.uuid "imageable_id"
     t.index ["attached_as"], name: "index_fae_images_on_attached_as"
-    t.index ["imageable_type", "imageable_id"], name: "index_fae_images_on_imageable_type_and_imageable_id"
   end
 
   create_table "fae_options", id: :serial, force: :cascade do |t|

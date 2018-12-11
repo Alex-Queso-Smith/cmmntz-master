@@ -17,28 +17,30 @@ class CommentFilters extends React.Component {
 
 
     var advancedFilters, advancedFiltersToggle;
+    if (!this.props.hideAdvancedLink == true) {
 
-    if (showAdvancedFilters == true) {
-      advancedFilters =
-      <div id="advanced-filters">
-        <GeoSelect
-          parentSetLatLongClick={this.props.parentSetLatLongClick}
-        />
-      </div>
+      if (showAdvancedFilters == true) {
+        advancedFilters =
+        <div id="advanced-filters">
+          <GeoSelect
+            parentSetLatLongClick={this.props.parentSetLatLongClick}
+            />
+        </div>
 
-      advancedFiltersToggle =
-      <div className="row">
-        <button onClick={this.props.handleAdvancedFiltershow} className="btn btn-link">
-          hide advanced filters
-        </button>
-      </div>
-    } else {
-      advancedFiltersToggle =
-      <div className="row">
-        <button onClick={this.props.handleAdvancedFiltershow}  className="btn btn-link">
-          show advanced filters
-        </button>
-      </div>
+        advancedFiltersToggle =
+        <div className="row">
+          <button onClick={this.props.handleAdvancedFiltershow} className="btn btn-link">
+            hide advanced filters
+          </button>
+        </div>
+      } else {
+        advancedFiltersToggle =
+        <div className="row">
+          <button onClick={this.props.handleAdvancedFiltershow}  className="btn btn-link">
+            show advanced filters
+          </button>
+        </div>
+      }
     }
 
 

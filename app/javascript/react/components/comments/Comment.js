@@ -21,6 +21,7 @@ class Comment extends React.Component {
         replies: this.props.replies,
         userFollowed: this.props.userFollowed,
         userBlocked: this.props.userBlocked,
+        userVoted: this.props.userVoted,
         formInvalid: true,
         userTileHover: false,
         showFullText: false
@@ -32,6 +33,7 @@ class Comment extends React.Component {
     this.handleStateFlip = this.handleStateFlip.bind(this);
     this.handleFollow = this.handleFollow.bind(this);
     this.handleBlock = this.handleBlock.bind(this);
+    this.showVotes = this.showVotes.bind(this);
   }
 
   onUserHover(){
@@ -155,16 +157,20 @@ class Comment extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  showVotes(){
+    this.setState({ userVoted: true })
+  }
+
   render(){
     var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState, galleryId } = this.props
-    var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
+    var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid, userVoted } = this.state
     var userTile, starOpacity, blockOpacity;
 
     var editButton, cancelButton;
     if (!artSettings.disabled) {
       if (editStatus && currentUserId === commentUserId) {
-        editButton = <button className="btn btn-primary btn-sm comment-button" onClick={this.handleEditSubmit}>Edit Comment</button>
-        cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditComment}>Cancel Edit</button>
+        editButton = <button className="btn btn-primary btn-sm comment-button" onClick={this.handleEditSubmit}>Save</button>
+        cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditComment}>Cancel</button>
       } else if (currentUserId === commentUserId) {
         editButton = <button className="btn btn-primary btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
       }
@@ -253,6 +259,15 @@ class Comment extends React.Component {
       " - Mod"
     }
 
+    var showVotesButton;
+    if (!userVoted) {
+      showVotesButton =
+      <div className="row">
+        <div className="col-sm-9"/>
+        <button onClick={this.showVotes} className="btn btn-sm btn-primary col-sm-3">Show Results</button>
+      </div>
+    }
+
     return(
       <div className="cf-comment">
         <div className="cf-comment-wrapper">
@@ -290,15 +305,17 @@ class Comment extends React.Component {
             </div>
           </div>
         </div>
+        {showVotesButton}
         <VotingContainerBase
           commentId={this.props.commentId}
           currentUserId={currentUserId}
           commentVotes={this.props.commentVotes}
           votePercents={this.props.votePercents}
-          userVoted={this.props.userVoted}
+          userVoted={this.state.userVoted}
           handleTopChange={this.props.handleTopChange}
           artSettings={artSettings}
           updateAppState={updateAppState}
+          showVotes={this.showVotes}
         />
         <RepliesContainer
           replies={replies}
