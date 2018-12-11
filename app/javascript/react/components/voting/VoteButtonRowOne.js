@@ -1,12 +1,22 @@
 import React from 'react';
 
 class VoteButtonRowOne extends React.Component {
-  state = {
-    shownNumber: this.props.percentage
+  constructor(props){
+    super(props);
+    this.state = {
+      shownNumber: this.props.percentage
+    }
+
+    this._onMouseEnter = this._onMouseEnter.bind(this);
+    this._onMouseLeave = this._onMouseLeave.bind(this);
+
   }
 
-  _onMouseEnter = this._onMouseEnter.bind(this);
-  _onMouseLeave = this._onMouseLeave.bind(this);
+  componentDidUpdate(prevProps, prevState){
+    if (prevProps.percentage != this.props.percentage) {
+      this.setState({ shownNumber: this.props.percentage })
+    }
+  }
 
   _onMouseEnter(){
     this.setState({ shownNumber: this.props.voteFraction })
