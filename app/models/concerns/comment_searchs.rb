@@ -157,6 +157,7 @@ module CommentSearchs
         elsif votes_from == "network"
           user_ids = user.network_user_ids
         end
+        user_ids << user.id
         scope = scope.joins_votes_with_user_list(user_ids.map{|id| "'#{id}'"}.join(", "))
       else
         scope = scope.joins_votes
