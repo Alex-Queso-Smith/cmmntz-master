@@ -46,7 +46,16 @@ export const AgeSlider = props => {
       ageRange = "55-59"
       break;
     case "60":
-      ageRange = "60+"
+      ageRange = "60-64"
+      break;
+    case "65":
+      ageRange = "65-69"
+      break;
+    case "70":
+      ageRange = "70-74"
+      break;
+    case "75":
+      ageRange = "75+"
       break;
   }
 
@@ -54,21 +63,21 @@ export const AgeSlider = props => {
     props.value != "" &&
     props.value != "10"
   ) {
-    if (ageRange === "60+") {
+    if (ageRange === "75+") {
       ageImage =
       <div>
-        <img className="cf-age-image" src={`/assets/60-plus.png`} />
+        <img className="cf-age-image" src={`/assets/age-ranges/75-plus.png`} />
       </div>
     } else {
       ageImage =
       <div>
-        <img className="cf-age-image" src={`/assets/${ageRange}`} />
+        <img className="cf-age-image" src={`/assets/age-ranges/${ageRange}`} />
       </div>
     }
   } else {
     ageImage =
     <div>
-      <img className="cf-age-image" src={`/assets/age-range-none.png`} />
+      <img className="cf-age-image" src={`/assets/block.png`} />
     </div>
   }
 
@@ -78,7 +87,7 @@ export const AgeSlider = props => {
         {ageImage}
         Age Range: {ageRange}
       </label>
-      <input onChange={props.onChange} type="range" min="10" max="60" step="5" value={selectedRange} name={props.name} className="slider" id="age-range-slider" />
+      <input onChange={props.onChange} type="range" min="10" max="75" step="5" value={selectedRange} name={props.name} className="slider" id="age-range-slider" />
     </div>
 
   )
