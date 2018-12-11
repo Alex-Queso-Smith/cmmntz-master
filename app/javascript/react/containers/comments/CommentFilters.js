@@ -62,7 +62,7 @@ class CommentFilters extends React.Component {
             <h4>Filters</h4>
           </div>
           <div className="col-sm-6">
-            <button className="btn-sm float-right" onClick={this.props.clearFilters}>Clear</button>
+            <button className="cf-clear-button btn btn-sm float-right" onClick={this.props.clearFilters}>Clear</button>
           </div>
         </div>
         <div className="row vote-row">
