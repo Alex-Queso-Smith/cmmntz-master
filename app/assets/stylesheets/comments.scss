@@ -213,6 +213,19 @@ $bootstrap-blue: #0069D9;
   }
 }
 
+.show-votes-button {
+  margin: 5px 0px 5px 0px;
+  color: #777777;
+  &:hover {
+    color: #777777;
+    background: #f8f9fa;
+    border: 1px solid #777777;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
 .comment-cancel-button, .cancel-reply-button {
   margin: 5px 5px 5px 0px;
   color: #777777;

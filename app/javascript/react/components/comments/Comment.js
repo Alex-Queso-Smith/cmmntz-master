@@ -261,10 +261,14 @@ class Comment extends React.Component {
 
     var showVotesButton;
     if (!userVoted) {
+      const rowStyle = {
+        width: '100%'
+      };
+
       showVotesButton =
-      <div className="row">
+      <div style={rowStyle} className="row">
         <div className="col-sm-9"/>
-        <button onClick={this.showVotes} className="btn btn-sm btn-primary col-sm-3">Show Results</button>
+        <button onClick={this.showVotes} className="btn btn-sm col-sm-3 show-votes-button">Show Results</button>
       </div>
     }
 
