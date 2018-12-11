@@ -74,7 +74,9 @@ module CommentSearchs
         having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL * (
           case when comments.interactions_count <= 1 then .50
             when comments.interactions_count = 2 then .75
-            when comments.interactions_count >= 3 then 1.00
+            when comments.interactions_count <= 4 then 1.00
+            when comments.interactions_count <= 9 then 1.25
+            when comments.interactions_count >= 10 then 1.50
             else 0
           end
         )
@@ -85,7 +87,9 @@ module CommentSearchs
         having("(case when comments.interactions_count > 0 then (sum(case when votes.vote_type  = '#{type}' then 1 else 0 end)::DECIMAL * (
           case when comments.interactions_count <= 1 then .50
             when comments.interactions_count = 2 then .75
-            when comments.interactions_count >= 3 then 1.00
+            when comments.interactions_count <= 4 then 1.00
+            when comments.interactions_count <= 9 then 1.25
+            when comments.interactions_count >= 10 then 1.50
             else 0
           end
         )
