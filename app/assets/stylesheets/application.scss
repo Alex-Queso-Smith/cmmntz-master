@@ -23,8 +23,16 @@ $breakpoint-phone: 575px;
     height: 200px;
     width: 350px;
     margin-bottom: 20px;
-    border: 1px solid $grayline;
     text-align: center;
+
+    img {
+      max-height: 200px;
+      max-width: 350px;
+      height: auto;
+      width: auto;
+      display: block;
+      margin: auto;
+    }
   }
 }
 
@@ -39,8 +47,16 @@ $breakpoint-phone: 575px;
     height: 150px;
     width: 150px;
     margin-bottom: 20px;
-    border: 1px solid $grayline;
     text-align: center;
+
+    img {
+      max-height: 150px;
+      max-width: 150px;
+      height: auto;
+      width: auto;
+      display: block;
+      margin: auto;
+    }
   }
 }
 

@@ -502,7 +502,7 @@ class CommentingContainer extends React.Component {
           <div className="col-sm-0 col-md-6 video-container">
             <h4>Tutorial</h4>
             <div className="video-wrapper">
-              Vid Here
+              <img src="/assets/vid1.jpg"/>
             </div>
           </div>
         </div>
@@ -532,10 +532,10 @@ class CommentingContainer extends React.Component {
           </div>
           <div className="col-md-6 adverts-container">
             <div className="ad-container">
-              This is an advert
+              <img src="/assets/ad.jpg"/>
             </div>
             <div className="ad-container">
-              This is another advert
+              <img src="/assets/ad.jpg"/>
             </div>
           </div>
         </div>
