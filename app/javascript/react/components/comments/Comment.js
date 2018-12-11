@@ -331,6 +331,8 @@ class Comment extends React.Component {
           artSettings={artSettings}
           updateAppState={updateAppState}
           showVotes={this.showVotes}
+          voteCounts={this.props.voteCounts}
+          totalInteractions={this.props.totalInteractions}
         />
         <RepliesContainer
           replies={replies}
