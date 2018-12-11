@@ -18,11 +18,11 @@ class Vote < ApplicationRecord
 
   validates :vote_type, presence: true, inclusion: { in: TYPES }
   validates :vote_type, uniqueness: { scope: [:user_id, :comment_id, :vote_type]}
-  validate :vote_is_unique_from_exclusve_group, :art_is_not_disabled, :deal_with_duplicate_top_votes
+  validate :vote_is_unique_from_exclusve_group, :art_is_not_deactivated, :deal_with_duplicate_top_votes
 
   after_create_commit :add_comment_interaction_for_comment_and_user!, :update_last_interaction_at_for_art!
 
-  before_destroy :art_is_not_disabled_for_destory
+  before_destroy :art_is_not_deactivated_for_destroy
 
   scope :for_user_and_comment, lambda {|user_id, comment_id| where(user_id: user_id, comment_id: comment_id)}
   scope :of_vote_type, lambda {|vote_type| where(vote_type: vote_type)}
@@ -42,18 +42,15 @@ class Vote < ApplicationRecord
     errors.add(:base) << "can not be from the exclusive group of #{EXCLUSIVE_VOTES.join(', ')}" if prev_votes.any?
   end
 
-  def art_is_not_disabled
+  def art_is_not_deactivated
     if art.deactivated?
       errors[:art] << "This Thread has been deactivated."
       errors[:art] << "deactivated"
-    elsif art.disabled?
-      errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated.\n\nYou action has been cancelled."
-      errors[:art] << "disabled"
     end
   end
 
-  def art_is_not_disabled_for_destory
-    art_is_not_disabled
+  def art_is_not_deactivated_for_destroy
+    art_is_not_deactivated
     return true if errors.empty?
     throw(:abort)
   end
