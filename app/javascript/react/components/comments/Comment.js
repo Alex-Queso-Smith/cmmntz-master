@@ -265,9 +265,10 @@ class Comment extends React.Component {
 
       showVotesButton =
       <div className="row">
-        <div className="col-sm-9 comment-interaction-line">
-          <div>
-            {`Comment has ${totalInteractions} votes`}
+        <div className="col-sm-2" />
+        <div className="col-sm-7 comment-interaction-line">
+          <div className="comment-interaction-line-div">
+            {`  Comment has ${totalInteractions} votes`}
           </div>
         </div>
         <div className="col-sm-3">

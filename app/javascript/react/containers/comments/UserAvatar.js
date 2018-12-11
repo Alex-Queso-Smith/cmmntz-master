@@ -21,7 +21,7 @@ class UserAvatar extends React.Component {
         <div className="cf-avatar-infoTile-content">
           <div className="border-1px-bot">
             <div className="row">
-              <div className="col-7">
+              <div className="col-sm-10">
                 <h4>{user_name}</h4>
               </div>
               {followStar}

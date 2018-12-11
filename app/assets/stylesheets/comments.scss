@@ -73,7 +73,7 @@ $bootstrap-blue: #0069D9;
         background-color: #fff;
         border: 1px solid $grayline;
         height: 150px;
-        width: 200px;
+        min-width: 200px;
         border-radius: 10px;
 
         .cf-avatar-infoTile-content {
@@ -252,4 +252,8 @@ $bootstrap-blue: #0069D9;
 
 .comment-interaction-line {
   line-height: 3.25em;
+}
+
+.comment-interaction-line-div {
+  padding-left: .9em !important;
 }
