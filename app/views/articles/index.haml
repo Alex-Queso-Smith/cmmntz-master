@@ -14,7 +14,7 @@
                   .col-sm-6
                     Source: #{article.author.name}
                   .col-sm-6
-                    Comments/Replies: #{article.art.grand_total_comments.size}
+                    Comments/Replies: #{article.art.grand_total_comments(current_user).size}
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Votes: #{article.votes.size}
               .article-preview-text
