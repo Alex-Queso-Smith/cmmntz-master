@@ -155,8 +155,6 @@ class CommentingContainer extends React.Component {
 
   handleClearFilters(){
     var opts = this.state.sortOpts;
-    opts.sortDir = 'desc';
-    opts.sortType = "created_at";
     opts.notFilterList = [];
     opts.filterList = [];
     this.setState({ sortOpts: opts })
