@@ -202,13 +202,6 @@ class VotingContainerBase extends React.Component {
       </Modal>
     }
 
-    var disabledOverlay;
-
-    if (this.props.artSettings.disabled) {
-      disabledOverlay =
-      <div className="disabled-voting-overlay"></div>
-    }
-
     return(
       <div className="cf-votes-container" >
         {flagModal}
@@ -218,7 +211,6 @@ class VotingContainerBase extends React.Component {
         <div className="cf-votes-bot-row row ">
           {voteButtonsRowTwo}
         </div>
-        {disabledOverlay}
       </div>
     );
   }
