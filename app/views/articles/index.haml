@@ -9,7 +9,7 @@
               = article_thumbnail_or_placeholder article
             .right-pane.col-sm-8.col-md-9.col-lg-10
               .article-title
-                %h3= link_to "#{display_date article.publish_date, false} - #{article.title}", article_path(article.slug)
+                %h3= link_to "#{display_date article.publish_date, false} - #{article.title}", article_path(article.slug), class: "cf-link"
                 .row
                   .col-sm-6
                     Source: #{article.author.name}
@@ -20,5 +20,5 @@
               .article-preview-text
                 = markdown(article.introduction)
                 %br/
-                = link_to "read more", article_path(article.slug)
+                = link_to "read more", article_path(article.slug), class: "cf-link"
   = will_paginate @articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
