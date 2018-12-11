@@ -11,7 +11,7 @@ class UserAvatar extends React.Component {
     var { followStar, blockSym } = this.props
     var avatarImage = '/assets/avatar-default';
     if (base_image) {
-      avatarImage = `/assets/avatar-${base_image}`
+      avatarImage = `/assets/${base_image}`
     }
 
     var infoTile;
