@@ -199,21 +199,63 @@ export const Avatars = [
   "whale"
 ]
 
+const newAvatars = [
+  "bat",
+  "bunny",
+  "cactus",
+  "cat",
+  "c_mas_tree",
+  "c_nut_tree",
+  "cow",
+  "crab",
+  "deer",
+  "dog",
+  "duck",
+  "flower",
+  "goat",
+  "lamb",
+  "owl",
+  "pig",
+  "pot_plant",
+  "rat",
+  "rooster",
+  "snake",
+  "tree",
+  "turtle"
+]
+
 export const NukaCarousel = props => {
 
-  var avatarImages = Avatars.map((a) => {
+  var avatarImages = newAvatars.map((a) => {
     var style = {
       height: '55px',
       width: '55px'
     }
     return(
-      <img style={style} onClick={props.onChange} name={`${a}`} key ={a} src={`/assets/avatar-${a}`} />
+      <img style={style} onClick={props.onChange} name={`${a}_ffffff_000000`} key ={a} src={`/assets/${a}_ffffff_000000`} />
     )
   })
 
+  var redImages = newAvatars.map((a) => {
+    var style = {
+      height: '55px',
+      width: '55px'
+    }
+    return(
+      <img style={style} onClick={props.onChange} name={`${a}_ffffff_ff0000`} key ={a} src={`/assets/${a}_ffffff_ff0000`} />
+    )
+  })
+
+  var allImages = []
+
+  for (var i = 0; i < avatarImages.length; i++) {
+    allImages.push(avatarImages[i])
+    allImages.push(redImages[i])
+  }
+
   return(
     <Carousel slidesToShow={7} renderBottomCenterControls={function(){}} slidesToScroll={4} wrapAround={true}>
-      {avatarImages}
+      {allImages}
     </Carousel>
   )
 }

@@ -13,10 +13,16 @@ const UserEditForm = props => {
   emailClass = ErrorClassValidation(props.emailError);
 
   if (props.avatar) {
+    var style = {
+      height: '110px',
+      width: '110px',
+      marginBottom: '10px'
+    }
+
     selectedAvatar =
     <div className="text-center">
       <h5>Selected Avatar</h5>
-      <img src={`/assets/avatar-${props.avatar}`} />
+      <img style={style} src={`/assets/${props.avatar}`} />
     </div>
   }
 

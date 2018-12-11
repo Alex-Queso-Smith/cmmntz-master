@@ -138,9 +138,15 @@ export const UserRegPageTwo = props => {
 export const UserRegPageThree = props => {
   var selectedAvatar;
   if (props.avatar) {
+    var style = {
+      height: '110px',
+      width: '110px',
+      marginBottom: '10px'
+    }
+
     selectedAvatar =
     <div className="text-center">
-      <img src={`/assets/avatar-${props.avatar}`} />
+      <img style={style} src={`/assets/${props.avatar}`} />
     </div>
   }
 
