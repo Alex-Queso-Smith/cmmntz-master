@@ -27,7 +27,7 @@ $breakpoint-phone: 575px;
 
 @media (min-width: $breakpoint-phone) {
   #cf-comments-main {
-    max-width: 400px;
+    max-width: 100%;
     margin-left: 5px;
   }
   .vote-row {
