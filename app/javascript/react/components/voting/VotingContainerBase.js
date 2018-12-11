@@ -82,12 +82,14 @@ class VotingContainerBase extends React.Component {
             selectedBigFive: name,
             selectedVotes: updateVotes,
             votePercents: body.vote_percents,
+            voteCounts: body.vote_counts,
             userVoted: true
           })
         } else {
           this.setState({
             selectedVotes: updateVotes,
             votePercents: body.vote_percents,
+            voteCounts: body.vote_counts,
             userVoted: true
           })
         }
@@ -113,7 +115,10 @@ class VotingContainerBase extends React.Component {
           this.props.updateAppState("artSettings", artSettings)
         }
       } else {
-        this.setState({ votePercents: body.vote_percents })
+        this.setState({
+          votePercents: body.vote_percents,
+          voteCounts: body.vote_counts
+        })
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -138,6 +143,7 @@ class VotingContainerBase extends React.Component {
 
           this.setState({
             votePercents: body.vote_percents,
+            voteCounts: body.vote_counts,
             selectedVotes: updateVotes,
             selectedBigFive: ""
           })
@@ -147,6 +153,7 @@ class VotingContainerBase extends React.Component {
 
           this.setState({
             votePercents: body.vote_percents,
+            voteCounts: body.vote_counts,
             selectedVotes: updateVotes
           })
         }
