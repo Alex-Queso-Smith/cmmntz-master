@@ -11,9 +11,12 @@ module VirtualStore
       end
 
       # add setter
-      case type
+      case type.to_s
       when "bool"
         define_method "#{attr}=" do |val|
+          if val.is_a? String
+            val = val == "true" ? 1 : 0
+          end
           self[loc.to_sym] ||= {}
           val = (val == 1 || val == true) ? 1 : 0
           self[loc.to_sym][attr.to_sym] = val
@@ -33,7 +36,7 @@ module VirtualStore
       end
 
       # Add getter
-      case type
+      case type.to_s
       when "bool"
         define_method "#{attr}" do
           return false unless self.send(loc)

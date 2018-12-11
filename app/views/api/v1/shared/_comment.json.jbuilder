@@ -22,4 +22,4 @@ end
     end
   end
 
-  json.partial! 'api/v1/shared/vote_percents', comment: comment, user_has_interacted: user_has_interacted
+  json.partial! 'api/v1/shared/vote_breakdown', comment: comment, user_has_interacted: user_has_interacted
