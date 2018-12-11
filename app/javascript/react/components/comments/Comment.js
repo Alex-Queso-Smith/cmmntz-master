@@ -260,15 +260,21 @@ class Comment extends React.Component {
     }
 
     var showVotesButton;
+    var { totalInteractions } = this.props;
     if (!userVoted) {
-      const rowStyle = {
-        width: '100%'
-      };
 
       showVotesButton =
-      <div style={rowStyle} className="row">
-        <div className="col-sm-9"/>
-        <button onClick={this.showVotes} className="btn btn-sm col-sm-3 show-votes-button">Show Results</button>
+      <div className="row">
+        <div className="col-sm-9 comment-interaction-line">
+          <div>
+            {`Comment has ${totalInteractions} votes`}
+          </div>
+        </div>
+        <div className="col-sm-3">
+          <button onClick={this.showVotes} className="btn btn-sm float-right show-votes-button">
+            Show Results
+          </button>
+        </div>
       </div>
     }
 

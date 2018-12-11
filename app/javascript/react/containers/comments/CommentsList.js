@@ -32,7 +32,7 @@ class CommentsList extends React.Component {
         }
 
         var { user_name, gender, age_range, user_id, show_censored} = comment.user
-        var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted, censored_text } = comment
+        var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted, censored_text, total_interactions, vote_counts } = comment
         var userName, commentLength;
 
         var shownText = text;
@@ -90,6 +90,8 @@ class CommentsList extends React.Component {
                 banUser={this.props.banUser}
                 handleBanUser={handleBanUser}
                 galleryId={this.props.galleryId}
+                totalInteractions={total_interactions}
+                voteCounts={vote_counts}
                 />
               <hr />
             </div>
