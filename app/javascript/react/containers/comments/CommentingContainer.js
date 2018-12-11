@@ -155,8 +155,6 @@ class CommentingContainer extends React.Component {
 
   handleClearFilters(){
     var opts = this.state.sortOpts;
-    opts.sortDir = 'desc';
-    opts.sortType = "created_at";
     opts.notFilterList = [];
     opts.filterList = [];
     this.setState({ sortOpts: opts })
@@ -478,44 +476,69 @@ class CommentingContainer extends React.Component {
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         <CommentEtiquette galleryCommentEtiquette={commentEtiquette} />
-
-        <CommentFormContainer
-          handleSubmit={this.handleCommentForm}
-          commentFormErrors={commentFormErrors}
-          artSettings={artSettings}
-        />
+        <div className="row">
+          <div className="col-sm-12 col-md-6">
+            <CommentFormContainer
+              handleSubmit={this.handleCommentForm}
+              commentFormErrors={commentFormErrors}
+              artSettings={artSettings}
+              />
+          </div>
+        </div>
         <hr />
-        <CommentFilters
-          sortOpts={sortOpts}
-          handleFilterSubmit={this.handleFilterSubmitMan}
-          handleSortDirClick={this.handleSortDirClick}
-          handleFilterClick={this.handleFilterClick}
-          handleFilterByClick={this.handleFilterByClick}
-          parentSetLatLongClick={this.setLatLongClick}
-          handleAdvancedFiltershow={this.handleAdvancedFiltershow}
-          clearFilters={this.handleClearFilters}
-        />
+        <div className="row">
+          <div className="col-sm-12 col-md-6">
+            <CommentFilters
+              sortOpts={sortOpts}
+              handleFilterSubmit={this.handleFilterSubmitMan}
+              handleSortDirClick={this.handleSortDirClick}
+              handleFilterClick={this.handleFilterClick}
+              handleFilterByClick={this.handleFilterByClick}
+              parentSetLatLongClick={this.setLatLongClick}
+              handleAdvancedFiltershow={this.handleAdvancedFiltershow}
+              clearFilters={this.handleClearFilters}
+              />
+          </div>
+          <div className="col-sm-0 col-md-6 video-container">
+            <h4>Tutorial</h4>
+            <div className="video-wrapper">
+              Vid Here
+            </div>
+          </div>
+        </div>
         <hr />
         <div>
           <p>{totalComments} comments for this article</p>
         </div>
-        <CommentsList
-          artId={artId}
-          artType={artType}
-          userId={userId}
-          allComments={comments}
-          handleTopChange={this.handleTopChange}
-          followedUsers={followedUsers}
-          blockedUsers={blockedUsers}
-          censored={censored}
-          artSettings={artSettings}
-          updateAppState={updateAppState}
-          adminStatus={this.state.userSettings.admin}
-          deleteComment={this.deleteComment}
-          banUser={this.banUser}
-          galleryId={this.props.galleryId}
-        />
-        {endComments}
+        <div className="row">
+          <div className="col-sm-12 col-md-6">
+            <CommentsList
+              artId={artId}
+              artType={artType}
+              userId={userId}
+              allComments={comments}
+              handleTopChange={this.handleTopChange}
+              followedUsers={followedUsers}
+              blockedUsers={blockedUsers}
+              censored={censored}
+              artSettings={artSettings}
+              updateAppState={updateAppState}
+              adminStatus={this.state.userSettings.admin}
+              deleteComment={this.deleteComment}
+              banUser={this.banUser}
+              galleryId={this.props.galleryId}
+              />
+            {endComments}
+          </div>
+          <div className="col-md-6 adverts-container">
+            <div className="ad-container">
+              This is an advert
+            </div>
+            <div className="ad-container">
+              This is another advert
+            </div>
+          </div>
+        </div>
         <ScrollUpButton
           ToggledStyle={{left: '75px'}}
         />

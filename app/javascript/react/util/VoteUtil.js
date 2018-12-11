@@ -119,8 +119,8 @@ const OpacityHandler = (selectedVotes, type) => {
 
 export const RowOneVoteButtons = (object) => {
   return RowOneVoteTypes.map((type) => {
-    var visibility, image, percentage, blankClass;
-    var { userVoted, percentShow, votePercents, selectedVotes } = object.state
+    var visibility, image, percentage, blankClass, voteFraction;
+    var { userVoted, percentShow, votePercents, selectedVotes, voteCounts, totalInteractions } = object.state
     var opacity = OpacityHandler(selectedVotes, type[0]);
 
     if (
@@ -128,6 +128,7 @@ export const RowOneVoteButtons = (object) => {
       !type[0].includes('blank') &&
       percentShow
     ) {
+      voteFraction = `${voteCounts[type[0]]}/${totalInteractions}`
       percentage = `${votePercents[type[0]]}%`
     }
 
@@ -159,6 +160,7 @@ export const RowOneVoteButtons = (object) => {
         visibility={visibility}
         opacity={opacity}
         percentage={percentage}
+        voteFraction={voteFraction}
         image={image}
         />
     )
@@ -167,8 +169,8 @@ export const RowOneVoteButtons = (object) => {
 
 export const RowTwoVoteButtons = (object) => {
   return RowTwoVoteTypes.map((type) => {
-    var visibility, image, percentage, blankClass;
-    var { userVoted, percentShow, votePercents, selectedVotes } = object.state
+    var visibility, image, percentage, blankClass, voteFraction;
+    var { userVoted, percentShow, votePercents, selectedVotes, voteCounts, totalInteractions } = object.state
     var opacity = OpacityHandler(selectedVotes, type[0])
 
     if ( // show percentage if user has voted and div is not blank
@@ -176,6 +178,7 @@ export const RowTwoVoteButtons = (object) => {
       !type[0].includes('blank') &&
       percentShow
     ) {
+      voteFraction = `${voteCounts[type[0]]}/${totalInteractions}`
       percentage = `${votePercents[type[0]]}%`
     }
 
@@ -200,6 +203,7 @@ export const RowTwoVoteButtons = (object) => {
         visibility={visibility}
         opacity={opacity}
         percentage={percentage}
+        voteFraction={voteFraction}
         image={image}
         />
     )

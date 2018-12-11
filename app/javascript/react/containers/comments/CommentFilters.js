@@ -14,8 +14,6 @@ class CommentFilters extends React.Component {
 
     const { showAdvancedFilters, radius, x, y, latitude, longitude, geoPin } = this.props.sortOpts
 
-
-
     var advancedFilters, advancedFiltersToggle;
     if (!this.props.hideAdvancedLink == true) {
 
@@ -29,20 +27,23 @@ class CommentFilters extends React.Component {
 
         advancedFiltersToggle =
         <div className="row">
-          <button onClick={this.props.handleAdvancedFiltershow} className="btn btn-link">
-            hide advanced filters
-          </button>
+          <div className="col-sm-12">
+            <button onClick={this.props.handleAdvancedFiltershow} className="btn show-filters-button float-left">
+              hide advanced filters
+            </button>
+          </div>
         </div>
       } else {
         advancedFiltersToggle =
         <div className="row">
-          <button onClick={this.props.handleAdvancedFiltershow}  className="btn btn-link">
-            show advanced filters
-          </button>
+          <div className="col-sm-12">
+            <button onClick={this.props.handleAdvancedFiltershow}  className="btn show-filters-button float-left">
+              show advanced filters
+            </button>
+          </div>
         </div>
       }
     }
-
 
     return(
       <div className={`cf-filter-block ${this.props.className}`}>
@@ -62,7 +63,7 @@ class CommentFilters extends React.Component {
             <h4>Filters</h4>
           </div>
           <div className="col-sm-6">
-            <button className="btn-sm float-right" onClick={this.props.clearFilters}>Clear</button>
+            <button className="cf-clear-button btn btn-sm float-right" onClick={this.props.clearFilters}>Clear</button>
           </div>
         </div>
         <div className="row vote-row">

@@ -12,6 +12,8 @@ class VotingContainerBase extends React.Component {
       selectedBigFive: '',
       selectedVotes: this.props.commentVotes,
       votePercents: this.props.votePercents,
+      voteCounts: this.props.voteCounts,
+      totalInteractions: this.props.totalInteractions,
       userVoted: this.props.userVoted,
       percentShow: this.props.userVoted,
       flagModalShow: false
@@ -38,6 +40,13 @@ class VotingContainerBase extends React.Component {
       this.setState({
         votePercents: this.props.votePercents
       })
+    }
+
+    if (prevProps.userVoted != this.props.userVoted) {
+        this.setState({
+          userVoted: this.props.userVoted,
+          percentShow: this.props.userVoted
+        })
     }
   }
 
@@ -153,6 +162,7 @@ class VotingContainerBase extends React.Component {
 
     var percentShowSet = () => {
       this.setState({ percentShow: true })
+      this.props.showVotes()
     }
 
     if (this.state.userVoted) {

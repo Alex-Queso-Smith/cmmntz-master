@@ -9,7 +9,9 @@ class Api::V1::CommentFiltersController < ApiController
     comment_ids += @replies.map(&:id)
     @current_users_votes = Vote.for_user_and_comment(current_user.id, comment_ids)
     @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, comment_ids)
-    @gallery_admins = Art.find(params[:art_id]).gallery_admin_user_account_ids
+    @art =  Art.find(params[:art_id])
+    @gallery_admins = @art.gallery_admin_user_account_ids
+    @all_comments_size = @art.grand_total_comments(current_user).size
   end
 
   private

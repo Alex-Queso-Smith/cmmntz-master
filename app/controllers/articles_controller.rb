@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  skip_before_action *ALL_FILTERS - [:require_app_access]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   # GET /articles
@@ -16,7 +17,7 @@ class ArticlesController < ApplicationController
       art.gallery = Gallery.find_by(name: "Classibridge Times")
       art.topics_list = @article.topics
       art.published_at = @article.publish_date
-      # art.set_topics = @article.topics
+      art.art_type = "article"
     end
   end
 

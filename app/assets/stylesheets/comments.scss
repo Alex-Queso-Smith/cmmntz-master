@@ -73,7 +73,7 @@ $bootstrap-blue: #0069D9;
         background-color: #fff;
         border: 1px solid $grayline;
         height: 150px;
-        width: 200px;
+        width: auto;
         border-radius: 10px;
 
         .cf-avatar-infoTile-content {
@@ -179,6 +179,8 @@ $bootstrap-blue: #0069D9;
 .vote-btn {
   height: 25px;
   width: 25px;
+  display: block;
+  margin: auto;
 }
 
 .cf-votes-container {
@@ -200,15 +202,64 @@ $bootstrap-blue: #0069D9;
   color: red;
 }
 
-.comment-button {
+.comment-button, .reply-button, .show-replies-button, .show-filters-button {
   margin: 5px 5px 5px 0px;
+  color: #777777;
+  &:hover {
+    color: #777777;
+    background: #f8f9fa;
+    border: 1px solid #777777;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
+.show-votes-button {
+  margin: 5px 0px 5px 0px;
+  color: #777777;
+  &:hover {
+    color: #777777;
+    background: #f8f9fa;
+    border: 1px solid #777777;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
+.comment-cancel-button, .cancel-reply-button {
+  margin: 5px 5px 5px 0px;
+  color: #777777;
+  &:hover {
+    background: #f8f9fa;
+    border: 1px solid #777777;
+  }
+}
+
+.cf-clear-button {
+  background: #f0f0f0;
+  border: 1px solid $grayline;
+  cursor: pointer;
 }
 
 .cf-geo-filter-button {
   border-radius: 0px;
 }
 
-.vote-button-box {
+.vote-button-box,  {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+.comment-interaction-line {
+  line-height: 3.25em;
+}
+
+.comment-interaction-line-div {
+  padding-left: .9em !important;
+}
+
+.user-name-avatar {
+  margin-bottom: 0 !important;
 }

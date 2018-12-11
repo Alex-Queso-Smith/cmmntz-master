@@ -21,6 +21,7 @@ class Comment extends React.Component {
         replies: this.props.replies,
         userFollowed: this.props.userFollowed,
         userBlocked: this.props.userBlocked,
+        userVoted: this.props.userVoted,
         formInvalid: true,
         userTileHover: false,
         showFullText: false
@@ -32,6 +33,7 @@ class Comment extends React.Component {
     this.handleStateFlip = this.handleStateFlip.bind(this);
     this.handleFollow = this.handleFollow.bind(this);
     this.handleBlock = this.handleBlock.bind(this);
+    this.showVotes = this.showVotes.bind(this);
   }
 
   onUserHover(){
@@ -155,18 +157,22 @@ class Comment extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  showVotes(){
+    this.setState({ userVoted: true })
+  }
+
   render(){
     var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState, galleryId } = this.props
-    var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid } = this.state
+    var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid, userVoted } = this.state
     var userTile, starOpacity, blockOpacity;
 
     var editButton, cancelButton;
     if (!artSettings.disabled) {
       if (editStatus && currentUserId === commentUserId) {
-        editButton = <button className="btn btn-primary btn-sm comment-button" onClick={this.handleEditSubmit}>Save</button>
-        cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditComment}>Cancel</button>
+        editButton = <button className="btn btn-sm comment-button" onClick={this.handleEditSubmit}>Edit Comment</button>
+        cancelButton = <button className="btn btn-sm comment-cancel-button" onClick={this.handleCancelEditComment}>Cancel</button>
       } else if (currentUserId === commentUserId) {
-        editButton = <button className="btn btn-primary btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+        editButton = <button className="btn btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
       }
     }
 
@@ -218,19 +224,19 @@ class Comment extends React.Component {
     if (commentUserId != currentUserId && userName != "Anonymous") {
       if (!userFollowed) { starOpacity = "translucent" }
       followStar =
-      <div className={`col-1 col-sm-1 cursor-pointer ${starOpacity}`}>
+      <div className={`col-sm-1 block-follow-box cursor-pointer ${starOpacity}`}>
         <img onClick={this.handleFollow} src="/assets/star" height="20px" width="20px" />
       </div>
 
       if (!userBlocked) { blockOpacity = "translucent" }
       blockSym =
-      <div className={`col-1 col-sm-1 cursor-pointer ${blockOpacity}`}>
+      <div className={`col-sm-1 block-follow-box cursor-pointer ${blockOpacity}`}>
         <img onClick={this.handleBlock} src="/assets/block" height="20px" width="20px" />
       </div>
 
     } else {
-      followStar = <div className={`col-1 col-sm-1`} />
-      blockSym = <div className={`col-1 col-sm-1`} />
+      followStar = <div className={`col-sm-1 block-follow-box`} />
+      blockSym = <div className={`col-sm-1 block-follow-box`} />
     }
 
     var deleteCommentButton, banUserButton;
@@ -251,6 +257,26 @@ class Comment extends React.Component {
       " - Mod"
     }
 
+    var showVotesButton;
+    var { totalInteractions } = this.props;
+    if (!userVoted) {
+
+      showVotesButton =
+      <div className="row">
+        <div className="col-sm-2" />
+        <div className="col-sm-7 comment-interaction-line">
+          <div className="comment-interaction-line-div">
+            {`Comment has ${totalInteractions} votes`}
+          </div>
+        </div>
+        <div className="col-sm-3">
+          <button onClick={this.showVotes} className="btn btn-sm float-right show-votes-button">
+            Show Results
+          </button>
+        </div>
+      </div>
+    }
+
     return(
       <div className="cf-comment">
         <div className="cf-comment-wrapper">
@@ -265,16 +291,20 @@ class Comment extends React.Component {
           />
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
-              <div className="cf-comment-user-name col-4">
+              <div className="cf-comment-user-name col-10">
                 {this.props.userName}{adminFlag}
-              </div>
-              <div className="cf-comment-at col-6" >
-                {createdAt}
               </div>
               <div className="cf-comment-length col-2">
                 <div className="float-right">
                   <img src={lengthImage} height="20px" width="20px"/>
                 </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-6">
+                {createdAt}
+              </div>
+              <div className="col-sm-6">
               </div>
             </div>
 
@@ -288,15 +318,19 @@ class Comment extends React.Component {
             </div>
           </div>
         </div>
+        {showVotesButton}
         <VotingContainerBase
           commentId={this.props.commentId}
           currentUserId={currentUserId}
           commentVotes={this.props.commentVotes}
           votePercents={this.props.votePercents}
-          userVoted={this.props.userVoted}
+          userVoted={this.state.userVoted}
           handleTopChange={this.props.handleTopChange}
           artSettings={artSettings}
           updateAppState={updateAppState}
+          showVotes={this.showVotes}
+          voteCounts={this.props.voteCounts}
+          totalInteractions={this.props.totalInteractions}
         />
         <RepliesContainer
           replies={replies}

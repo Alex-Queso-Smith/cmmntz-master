@@ -21,11 +21,14 @@ class UserAvatar extends React.Component {
         <div className="cf-avatar-infoTile-content">
           <div className="border-1px-bot">
             <div className="row">
-              <div className="col-7">
-                <h4>{user_name}</h4>
+              <div className="col-sm-12">
+                <h4 className="user-name-avatar">{user_name}</h4>
               </div>
-              {followStar}
-              {blockSym}
+            </div>
+            <div className="row">
+                {followStar}
+                {blockSym}
+              <div className="col-sm-10" />
             </div>
           </div>
           <div className="text-center margin-top-10px">

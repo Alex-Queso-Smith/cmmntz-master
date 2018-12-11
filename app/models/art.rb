@@ -4,7 +4,18 @@ class Art < ApplicationRecord
 
   has_many :art_topics
   has_many :topics, through: :art_topics
+
   has_many :comments
+  has_many :pending_comments, -> { where(approved: false, deleted: false) }, class_name: "Comment", foreign_key: "art_id"
+  has_many :deleted_comments, -> { where(deleted: true) }, class_name: "Comment", foreign_key: "art_id"
+  has_many :approved_comments, -> { where(approved: true, deleted: false) }, class_name: "Comment", foreign_key: "art_id"
+
+  def grand_total_comments(user)
+    scope = approved_comments.not_replies.for_non_blocked_users
+    scope = scope.eliminate_blocked(scope, user)
+    scope
+  end
+
 
   scope :for_url, -> (url) {
     where(url: url)

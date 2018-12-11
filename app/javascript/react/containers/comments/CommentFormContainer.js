@@ -7,7 +7,6 @@ import VoteButtonRowOne from '../../components/voting/VoteButtonRowOne';
 import { CreateErrorElements, CheckInputValidation, FetchWithUpdate } from '../../util/CoreUtil';
 import { Timeout } from '../../util/CommentUtil';
 import { ImageSelector, RowOneVoteTypes, RowTwoVoteTypes } from '../../util/VoteUtil';
-import { OpacityHandlerIncludes } from '../../util/FilterUtil';
 
 class CommentFormContainer extends React.Component {
   state = {
@@ -148,7 +147,7 @@ class CommentFormContainer extends React.Component {
       RowOneVoteTypes.map((type) => {
         var visibility;
         var image = ImageSelector(type[0])
-        var opacity = OpacityHandlerIncludes(selfVotes, [], type[0])
+        var opacity = selfVotes.includes(type[0]) ? "" : "translucent"
 
         if (type[0].includes('blank')) {
           visibility = "hidden"
@@ -170,7 +169,7 @@ class CommentFormContainer extends React.Component {
       RowTwoVoteTypes.map((type) => {
         var visibility;
         var image = ImageSelector(type[0])
-        var opacity = OpacityHandlerIncludes(selfVotes, [], type[0])
+        var opacity = selfVotes.includes(type[0]) ? "" : "translucent"
 
         if (type[0].includes('blank')) {
           visibility = "hidden"
@@ -235,11 +234,11 @@ class CommentFormContainer extends React.Component {
         {approvalMsg}
         <div className="row">
           <div className=" margin-top-10px float-left col-3">
-            <button className="btn btn-sm btn-primary" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
+            <button className="btn btn-sm btn-dark" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
           </div>
           <div className="margin-top-10px col-9 col-sm-9">
             <div className="float-right">
-              <button id="comments-button" type="submit" className="btn btn-sm btn-primary" value="Submit" disabled={formInvalid}>
+              <button id="comments-button" type="submit" className="btn btn-sm btn-dark" value="Submit" disabled={formInvalid}>
                 Submit Comment
               </button>
             </div>

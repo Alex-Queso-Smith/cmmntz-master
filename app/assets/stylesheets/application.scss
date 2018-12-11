@@ -14,9 +14,41 @@ $bootstrap-blue: #0069D9;
 $breakpoint-tablet: 900px;
 $breakpoint-phone: 575px;
 
+/* Side panels */
+.video-container {
+  h4 {
+  font-weight: bold;
+  }
+  .video-wrapper {
+    height: 200px;
+    width: 350px;
+    margin-bottom: 20px;
+    border: 1px solid $grayline;
+    text-align: center;
+  }
+}
+
+.adverts-container {
+  padding-left: 25px;
+  height: 500px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 70px;
+
+  .ad-container {
+    height: 150px;
+    width: 150px;
+    margin-bottom: 20px;
+    border: 1px solid $grayline;
+    text-align: center;
+  }
+}
+
+/* end Side panels */
+
 @media (min-width: $breakpoint-phone) {
   #cf-comments-main {
-    max-width: 400px;
+    max-width: 100%;
     margin-left: 5px;
   }
   .vote-row {
@@ -70,17 +102,8 @@ $breakpoint-phone: 575px;
 }
 
 #body {
-  background: url('/assets/philly.jpg') no-repeat center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  color: #ffffff;
+  background: #000000;
   margin: 0;
-}
-
-.purple-bg {
-  background: #5B3592 !important;
 }
 
 #body-container {
