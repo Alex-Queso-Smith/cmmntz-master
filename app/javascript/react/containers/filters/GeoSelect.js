@@ -89,7 +89,7 @@ class GeoSelect extends React.Component {
       }
 
       return(
-        <button key={type[0]} className={`btn-sm btn-primary ${btnClass} cf-geo-filter-button`} name="radius" value={type[0]} onClick={this.handleChange}>
+        <button key={type[0]} className={`btn-sm btn-dark ${btnClass} cf-geo-filter-button`} name="radius" value={type[0]} onClick={this.handleChange}>
           {type[1]}
         </button>
       )

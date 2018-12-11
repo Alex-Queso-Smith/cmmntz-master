@@ -250,7 +250,7 @@ class RepliesContainer extends React.Component {
     if (replies.length > 0){ // will alway show without the explicit len check
       var buttonText = this.state.showReplies ? "Hide" : "Show"
       var showBlockedCount, repliesCount;
-      var showRepliesButton = <button className="btn btn-primary btn-sm margin-left-10px" name="showReplies" onClick={this.handleStateFlip}>{buttonText}</button>
+      var showRepliesButton = <button className="btn show-replies-button btn-sm margin-left-10px" name="showReplies" onClick={this.handleStateFlip}>{buttonText}</button>
 
       if (blockedCount > 1) {
         showBlockedCount = `${blockedCount} replies have been blocked`

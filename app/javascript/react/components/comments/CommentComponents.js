@@ -26,7 +26,7 @@ export const ReplyFieldActivated = (object) => {
 
 export const ReplyButtonActive = (object) => {
   var replyButton =
-  <button className="btn btn-primary btn-sm" onClick={object.handleReplySubmit} disabled={object.state.formInvalid}>
+  <button className="btn reply-button btn-sm" onClick={object.handleReplySubmit} disabled={object.state.formInvalid}>
     Submit Reply
   </button>
   return replyButton
@@ -34,12 +34,12 @@ export const ReplyButtonActive = (object) => {
 
 export const ReplyButtonInactive = (object) => {
   var replyButton =
-  <button className="btn btn-primary btn-sm" name="replyActive" onClick={object.handleStateFlip}>Reply</button>
+  <button className="btn reply-button btn-sm" name="replyActive" onClick={object.handleStateFlip}>Reply</button>
   return replyButton
 }
 
 export const ReplyCancelButton = (object) => {
   var replyCancelButton =
-  <button className="btn btn-light btn-sm margin-left-5px" onClick={object.handleCancelReply}>Cancel Reply</button>
+  <button className="btn cancel-reply-button btn-sm margin-left-5px" onClick={object.handleCancelReply}>Cancel Reply</button>
   return replyCancelButton
 }

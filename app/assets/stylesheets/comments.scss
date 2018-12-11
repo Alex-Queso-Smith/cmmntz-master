@@ -200,8 +200,32 @@ $bootstrap-blue: #0069D9;
   color: red;
 }
 
-.comment-button {
+.comment-button, .reply-button, .show-replies-button {
   margin: 5px 5px 5px 0px;
+  color: #777777;
+  &:hover {
+    color: #777777;
+    background: #f8f9fa;
+    border: 1px solid #777777;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
+.comment-cancel-button, .cancel-reply-button {
+  margin: 5px 5px 5px 0px;
+  color: #777777;
+  &:hover {
+    background: #f8f9fa;
+    border: 1px solid #777777;
+  }
+}
+
+.cf-clear-button {
+  background: #f0f0f0;
+  border: 1px solid $grayline;
+  cursor: pointer;
 }
 
 .cf-geo-filter-button {

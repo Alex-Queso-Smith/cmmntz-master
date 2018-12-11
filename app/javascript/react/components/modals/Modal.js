@@ -6,7 +6,7 @@ const Modal = props => {
   if (props.actionButton) {
     actionButton =
     <div className="">
-      <button className="btn btn-med btn-primary" name="warn" onClick={props.actionButton}>
+      <button className="btn btn-med btn-dark" name="warn" onClick={props.actionButton}>
         Flag Comment
       </button>
     </div>
