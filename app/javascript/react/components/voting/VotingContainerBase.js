@@ -83,12 +83,14 @@ class VotingContainerBase extends React.Component {
             selectedVotes: updateVotes,
             votePercents: body.vote_percents,
             voteCounts: body.vote_counts,
+            totalInteractions: body.total_interactions,
             userVoted: true
           })
         } else {
           this.setState({
             selectedVotes: updateVotes,
             votePercents: body.vote_percents,
+            totalInteractions: body.total_interactions,
             voteCounts: body.vote_counts,
             userVoted: true
           })
@@ -117,7 +119,8 @@ class VotingContainerBase extends React.Component {
       } else {
         this.setState({
           votePercents: body.vote_percents,
-          voteCounts: body.vote_counts
+          voteCounts: body.vote_counts,
+          totalInteractions: body.total_interactions
         })
       }
     })
@@ -144,6 +147,7 @@ class VotingContainerBase extends React.Component {
           this.setState({
             votePercents: body.vote_percents,
             voteCounts: body.vote_counts,
+            totalInteractions: body.total_interactions,
             selectedVotes: updateVotes,
             selectedBigFive: ""
           })
@@ -153,6 +157,7 @@ class VotingContainerBase extends React.Component {
 
           this.setState({
             votePercents: body.vote_percents,
+            totalInteractions: body.total_interactions,
             voteCounts: body.vote_counts,
             selectedVotes: updateVotes
           })
