@@ -226,19 +226,19 @@ class Comment extends React.Component {
     if (commentUserId != currentUserId && userName != "Anonymous") {
       if (!userFollowed) { starOpacity = "translucent" }
       followStar =
-      <div className={`col-1 col-sm-1 cursor-pointer ${starOpacity}`}>
+      <div className={`col-sm-1 block-follow-box cursor-pointer ${starOpacity}`}>
         <img onClick={this.handleFollow} src="/assets/star" height="20px" width="20px" />
       </div>
 
       if (!userBlocked) { blockOpacity = "translucent" }
       blockSym =
-      <div className={`col-1 col-sm-1 cursor-pointer ${blockOpacity}`}>
+      <div className={`col-sm-1 block-follow-box cursor-pointer ${blockOpacity}`}>
         <img onClick={this.handleBlock} src="/assets/block" height="20px" width="20px" />
       </div>
 
     } else {
-      followStar = <div className={`col-1 col-sm-1`} />
-      blockSym = <div className={`col-1 col-sm-1`} />
+      followStar = <div className={`col-sm-1 block-follow-box`} />
+      blockSym = <div className={`col-sm-1 block-follow-box`} />
     }
 
     var deleteCommentButton, banUserButton;
@@ -268,7 +268,7 @@ class Comment extends React.Component {
         <div className="col-sm-2" />
         <div className="col-sm-7 comment-interaction-line">
           <div className="comment-interaction-line-div">
-            {`  Comment has ${totalInteractions} votes`}
+            {`Comment has ${totalInteractions} votes`}
           </div>
         </div>
         <div className="col-sm-3">

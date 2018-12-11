@@ -73,7 +73,7 @@ $bootstrap-blue: #0069D9;
         background-color: #fff;
         border: 1px solid $grayline;
         height: 150px;
-        min-width: 200px;
+        width: auto;
         border-radius: 10px;
 
         .cf-avatar-infoTile-content {
@@ -245,7 +245,7 @@ $bootstrap-blue: #0069D9;
   border-radius: 0px;
 }
 
-.vote-button-box {
+.vote-button-box,  {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
@@ -256,4 +256,8 @@ $bootstrap-blue: #0069D9;
 
 .comment-interaction-line-div {
   padding-left: .9em !important;
+}
+
+.user-name-avatar {
+  margin-bottom: 0 !important;
 }
