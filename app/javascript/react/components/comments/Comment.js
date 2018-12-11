@@ -168,8 +168,6 @@ class Comment extends React.Component {
       } else if (currentUserId === commentUserId) {
         editButton = <button className="btn btn-primary btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
       }
-    } else {
-      editButton = <div className="deactivated-message">Commenting on this thread has been disabled.</div>
     }
 
     var lastEdited;
