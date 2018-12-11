@@ -14,6 +14,17 @@ $bootstrap-blue: #0069D9;
 $breakpoint-tablet: 900px;
 $breakpoint-phone: 575px;
 
+/* Side panels */
+.video-container {
+  border: 1px solid red;
+}
+
+.adverts-container {
+  border: 1px solid green;
+}
+
+/* end Side panels */
+
 @media (min-width: $breakpoint-phone) {
   #cf-comments-main {
     max-width: 400px;
