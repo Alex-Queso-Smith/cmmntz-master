@@ -51,7 +51,7 @@ class User < ApplicationRecord
   # galleries where the user can not post
   has_many :gallery_blacklistings
 
-  validates :user_name, presence: true, uniqueness: { case_sensitive: false }
+  validates :user_name, presence: true, uniqueness: { case_sensitive: false }, length: { maximum: 33 }
 
   validates :gender, numericality: true, inclusion: { in: GENDERS }, unless: Proc.new { |u| u.gender.nil? }
   validates :age_range, numericality: true, inclusion: { in: AGES }, unless: Proc.new { |u| u.age_range.nil? }
