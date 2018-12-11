@@ -202,11 +202,11 @@ $bootstrap-blue: #0069D9;
 
 .comment-button, .reply-button, .show-replies-button {
   margin: 5px 5px 5px 0px;
-  color: #2073f9;
+  color: #777777;
   &:hover {
-    color: #2073f9;
+    color: #777777;
     background: #f8f9fa;
-    border: 1px solid #2073f9;
+    border: 1px solid #777777;
   }
   &:focus {
     box-shadow: 0 0 0 0;
@@ -215,15 +215,15 @@ $bootstrap-blue: #0069D9;
 
 .comment-cancel-button, .cancel-reply-button {
   margin: 5px 5px 5px 0px;
-  color: #000000;
+  color: #777777;
   &:hover {
     background: #f8f9fa;
-    border: 1px solid #000000;
+    border: 1px solid #777777;
   }
 }
 
 .cf-clear-button {
-  background: #ffffff;
+  background: #f0f0f0;
   border: 1px solid $grayline;
   cursor: pointer;
 }
