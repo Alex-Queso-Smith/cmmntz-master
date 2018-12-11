@@ -205,6 +205,8 @@ $bootstrap-blue: #0069D9;
 .comment-button, .reply-button, .show-replies-button, .show-filters-button {
   margin: 5px 5px 5px 0px;
   color: #777777;
+  background: #ffffff;
+
   &:hover {
     color: #777777;
     background: #f8f9fa;
@@ -218,6 +220,8 @@ $bootstrap-blue: #0069D9;
 .show-votes-button {
   margin: 5px 0px 5px 0px;
   color: #777777;
+  background: #ffffff;
+  
   &:hover {
     color: #777777;
     background: #f8f9fa;
@@ -231,6 +235,7 @@ $bootstrap-blue: #0069D9;
 .comment-cancel-button, .cancel-reply-button {
   margin: 5px 5px 5px 0px;
   color: #777777;
+  background: #ffffff;
   &:hover {
     background: #f8f9fa;
     border: 1px solid #777777;
