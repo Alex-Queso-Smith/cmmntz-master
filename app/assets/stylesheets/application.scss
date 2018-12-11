@@ -16,11 +16,32 @@ $breakpoint-phone: 575px;
 
 /* Side panels */
 .video-container {
-  border: 1px solid red;
+  h4 {
+  font-weight: bold;
+  }
+  .video-wrapper {
+    height: 200px;
+    width: 350px;
+    margin-bottom: 20px;
+    border: 1px solid $grayline;
+    text-align: center;
+  }
 }
 
 .adverts-container {
-  border: 1px solid green;
+  padding-left: 25px;
+  height: 500px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 70px;
+
+  .ad-container {
+    height: 150px;
+    width: 150px;
+    margin-bottom: 20px;
+    border: 1px solid $grayline;
+    text-align: center;
+  }
 }
 
 /* end Side panels */

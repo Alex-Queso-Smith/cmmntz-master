@@ -502,6 +502,7 @@ class CommentingContainer extends React.Component {
               />
           </div>
           <div className="col-sm-0 col-md-6 video-container">
+            <h4>Tutorial</h4>
             <div className="video-wrapper">
               Vid Here
             </div>
@@ -532,8 +533,11 @@ class CommentingContainer extends React.Component {
             {endComments}
           </div>
           <div className="col-md-6 adverts-container">
-            <div className="ad-wrapper">
+            <div className="ad-container">
               This is an advert
+            </div>
+            <div className="ad-container">
+              This is another advert
             </div>
           </div>
         </div>
