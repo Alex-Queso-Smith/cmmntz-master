@@ -12,7 +12,7 @@ class Api::V1::CommentsController < ApiController
       @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, comment_ids)
       @art =  Art.find(params[:art_id])
       @gallery_admins = @art.gallery_admin_user_account_ids
-      @all_comments_size = @art.grand_total_comments.size
+      @all_comments_size = @art.grand_total_comments(current_user).size
     end
 
   def show
@@ -21,7 +21,7 @@ class Api::V1::CommentsController < ApiController
     @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
     @art =  Art.find(params[:art_id])
     @gallery_admins = @art.gallery_admin_user_account_ids
-    @all_comments_size = @art.grand_total_comments.size
+    @all_comments_size = @art.grand_total_comments(current_user).size
   end
 
   # POST /comments
@@ -45,7 +45,7 @@ class Api::V1::CommentsController < ApiController
       @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
       @art =  Art.find(params[:art_id])
       @gallery_admins = @art.gallery_admin_user_account_ids
-      @all_comments_size = @art.grand_total_comments.size
+      @all_comments_size = @art.grand_total_comments(current_user).size
 
       render "api/v1/comments/show"
     else
