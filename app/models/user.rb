@@ -25,7 +25,7 @@ class User < ApplicationRecord
 
   GENDERS = [0, 1, 2]
   DISPLAY_GENDERS = ["female", "other", "male"]
-  AGES = [nil, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\
+  AGES = [nil, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75]
 
   has_many :comments
   has_many :votes

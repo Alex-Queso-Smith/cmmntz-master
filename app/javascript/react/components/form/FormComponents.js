@@ -1,84 +1,29 @@
 import React from 'react';
 import Carousel from 'nuka-carousel';
+import { AgeRangeImageSelector } from '../general/General'
 
 
 export const AgeSlider = props => {
-  var ageRange;
   var selectedRange = props.value
-  var ageImage;
+  var ageRange;
+  var ageImage =
+  <AgeRangeImageSelector
+    age={selectedRange}
+  />
 
-  switch (selectedRange.toString()) {
-    case "":
-      ageRange = "None of your business"
-      selectedRange = "10"
-      break;
-    case "10":
-      ageRange = "None of your business"
-      break;
-    case "13":
-      ageRange = "13-19"
-      break;
-    case "15":
-      ageRange = "13-19"
-      break;
-    case "20":
-      ageRange = "20-24"
-      break;
-    case "25":
-      ageRange = "25-29"
-      break;
-    case "30":
-      ageRange = "30-34"
-      break;
-    case "35":
-      ageRange = "35-39"
-      break;
-    case "40":
-      ageRange = "40-44"
-      break;
-    case "45":
-      ageRange = "45-49"
-      break;
-    case "50":
-      ageRange = "50-54"
-      break;
-    case "55":
-      ageRange = "55-59"
-      break;
-    case "60":
-      ageRange = "60-64"
-      break;
-    case "65":
-      ageRange = "65-69"
-      break;
-    case "70":
-      ageRange = "70-74"
-      break;
-    case "75":
-      ageRange = "75+"
-      break;
-  }
-
-  if (
-    props.value != "" &&
-    props.value != "10"
-  ) {
-    if (ageRange === "75+") {
-      ageImage =
-      <div>
-        <img className="cf-age-image" src={`/assets/age-ranges/75-plus.png`} />
-      </div>
-    } else {
-      ageImage =
-      <div>
-        <img className="cf-age-image" src={`/assets/age-ranges/${ageRange}`} />
-      </div>
-    }
+  if (selectedRange == "") {
+    ageRange = "None of your business"
+    selectedRange = "10"
   } else {
-    ageImage =
-    <div>
-      <img className="cf-age-image" src={`/assets/block.png`} />
-    </div>
+    var age = parseInt(selectedRange)
+
+    if (age === 75) {
+      ageRange = "75+"
+    } else if (age === 13){
+      ageRange = "13-19"
+    } else {
+      ageRange = `${age}-${age+4}`
+    }
   }
 
   return(
