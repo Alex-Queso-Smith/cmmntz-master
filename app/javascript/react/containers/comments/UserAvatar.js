@@ -2,7 +2,7 @@ import React from 'react'
 
 class UserAvatar extends React.Component {
   state = {
-    showInfoTile: true
+    showInfoTile: false
   }
 
 
