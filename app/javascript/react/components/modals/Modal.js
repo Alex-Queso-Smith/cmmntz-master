@@ -15,7 +15,7 @@ const Modal = props => {
   return (
     <div className="cf-modal">
       <section className="cf-modal-main">
-        <img src="/assets/interface/modal/modal-close.png" onClick={props.handleClose} className="cf-modal-close" />
+        <div className="cf-modal-close sans-serif" onClick={props.handleClose} >&times;</div>
         <h3>{props.modalTitle}</h3>
         <hr />
         <div className="cf-modal-contents">
