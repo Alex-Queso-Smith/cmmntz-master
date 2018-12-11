@@ -55,7 +55,7 @@ export const UserRegPageOne = props => {
       {props.passwordConfirmationError}
       <div className="row actions margin-top-10px text-center">
         <div className="col-sm-6">
-          <button id="user-registration-button" type="submit" className="btn btn-block btn-sm btn-primary" value="Submit" disabled={props.disabled}>
+          <button id="user-registration-button" type="submit" className="btn btn-block btn-sm btn-dark" value="Submit" disabled={props.disabled}>
             Register
           </button>
         </div>
@@ -126,7 +126,7 @@ export const UserRegPageTwo = props => {
       <div className="row text-center">
         <div className="col-sm-3" />
         <div className="col-sm-6" >
-          <button id="user-registration-button" type="submit" className="btn btn-block btn-sm btn-primary" value="Submit" disabled={props.disabled}>
+          <button id="user-registration-button" type="submit" className="btn btn-block btn-sm btn-dark" value="Submit" disabled={props.disabled}>
             Register
           </button>
         </div>
@@ -164,7 +164,7 @@ export const UserRegPageThree = props => {
           </button>
         </div>
         <div className="col-sm-6" >
-          <button id="user-registration-button" type="submit" className="btn btn-block btn-sm btn-primary" value="Submit" disabled={props.disabled}>
+          <button id="user-registration-button" type="submit" className="btn btn-block btn-sm btn-dark" value="Submit" disabled={props.disabled}>
             Register
           </button>
         </div>
