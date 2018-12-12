@@ -293,7 +293,7 @@ class RepliesContainer extends React.Component {
 
     if (this.state.replyErrors) { replyErrorText = CreateErrorElements(this.state.replyErrors.text, "Reply") }
 
-    if (!artSettings.disabled) {
+    if (!artSettings.disabled && artSettings.userCanPost) {
       if (this.state.replyActive) {
         replyField = ReplyFieldActivated(this)
         replyButton = ReplyButtonActive(this)
