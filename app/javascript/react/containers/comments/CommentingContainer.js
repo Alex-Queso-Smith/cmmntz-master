@@ -7,6 +7,7 @@ import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
 import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual, FetchDeleteBasic } from '../../util/CoreUtil';
 import CommentEtiquette from '../../components/modals/CommentEtiquette';
+import Modal from '../../components/modals/Modal';
 
 class CommentingContainer extends React.Component {
   constructor(props){
@@ -18,6 +19,8 @@ class CommentingContainer extends React.Component {
         },
       totalComments: 0,
       grandTotalComments: 0,
+      showVoteCount: 0,
+      showVoteModal: false,
       followedUsers: [],
       blockedUsers: [],
       comments: [],
@@ -58,6 +61,8 @@ class CommentingContainer extends React.Component {
     this.deleteComment = this.deleteComment.bind(this);
     this.banUser = this.banUser.bind(this);
     this.handleClearFilters = this.handleClearFilters.bind(this);
+    this.showVoteCountTrigger = this.showVoteCountTrigger.bind(this);
+    this.handleShowVoteModal = this.handleShowVoteModal.bind(this);
   }
 
   componentWillMount(){
@@ -462,6 +467,25 @@ class CommentingContainer extends React.Component {
     }
   }
 
+  showVoteCountTrigger(){
+    var { showVoteCount } = this.state;
+    showVoteCount++
+    this.setState({ showVoteCount: showVoteCount })
+    if (this.state.showVoteCount === 4) {
+      this.handleShowVoteModal()
+    }
+  }
+
+  handleShowVoteModal(){
+    if (this.state.showVoteModal) {
+      document.body.classList.remove("cf-modal-locked");
+      this.setState({ showVoteModal: false })
+    } else {
+      document.body.classList.add("cf-modal-locked");
+      this.setState({ showVoteModal: true })
+    }
+  }
+
   render(){
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
@@ -476,10 +500,22 @@ class CommentingContainer extends React.Component {
       </div>
     }
 
+    var showVoteModal;
+    if (this.state.showVoteModal) {
+      showVoteModal =
+      <Modal
+        handleClose={this.handleShowVoteModal}
+        modalTitle={"Please consider voting!"}
+      >
+      "Hey now maybe you should vote so everything will be more awesome!"
+      </Modal>
+    }
+
     var filteredCount = this.state.grandTotalComments - this.state.totalComments
 
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
+        {showVoteModal}
         <CommentEtiquette galleryCommentEtiquette={commentEtiquette} />
         <div className="row">
           <div className="col-sm-12 col-md-6">
@@ -532,6 +568,7 @@ class CommentingContainer extends React.Component {
               deleteComment={this.deleteComment}
               banUser={this.banUser}
               galleryId={this.props.galleryId}
+              showVoteCountTrigger={this.showVoteCountTrigger}
               />
             {endComments}
           </div>

@@ -34,6 +34,7 @@ class Comment extends React.Component {
     this.handleFollow = this.handleFollow.bind(this);
     this.handleBlock = this.handleBlock.bind(this);
     this.showVotes = this.showVotes.bind(this);
+    this.updateUserVoted = this.updateUserVoted.bind(this);
   }
 
   onUserHover(){
@@ -158,6 +159,11 @@ class Comment extends React.Component {
   }
 
   showVotes(){
+    this.setState({ userVoted: true })
+    this.props.showVoteCountTrigger()
+  }
+
+  updateUserVoted(){
     this.setState({ userVoted: true })
   }
 
@@ -330,6 +336,7 @@ class Comment extends React.Component {
           updateAppState={updateAppState}
           showVotes={this.showVotes}
           voteCounts={this.props.voteCounts}
+          updateUserVoted={this.updateUserVoted}
           totalInteractions={this.props.totalInteractions}
         />
         <RepliesContainer
