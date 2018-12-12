@@ -174,7 +174,7 @@ class VotingContainerBase extends React.Component {
 
     var percentShowSet = () => {
       this.setState({ percentShow: true })
-      this.props.showVotes()
+      this.props.updateUserVoted()
     }
 
     if (this.state.userVoted) {

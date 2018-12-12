@@ -92,6 +92,7 @@ class CommentsList extends React.Component {
                 galleryId={this.props.galleryId}
                 totalInteractions={total_interactions}
                 voteCounts={vote_counts}
+                showVoteCountTrigger={this.props.showVoteCountTrigger}
                 />
               <hr />
             </div>
