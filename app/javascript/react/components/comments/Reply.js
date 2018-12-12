@@ -236,8 +236,6 @@ class Reply extends React.Component {
       cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditReply}>Cancel Edit</button>
     } else if (currentUserId === replyUserId) {
       editButton = <button className="btn btn-dark btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
-    } else {
-      editButton = <div className="deactivated-message">Replying on this thread has been disabled.</div>
     }
 
     var adminFlag;

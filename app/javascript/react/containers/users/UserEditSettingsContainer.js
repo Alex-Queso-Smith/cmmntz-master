@@ -32,7 +32,7 @@ class UserEditSettingsContainer extends React.Component {
     .then(userData => {
       var opts = this.state.sortOpts
       var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, show_censored_comments } = userData.user
-      var censored = censor === "true" ? true : false;
+      var censored = censor === "true" || censor == true ? true : false;
       var showCenComment = show_censored_comments === "false" ? false : true;
 
       opts.sortDir = sort_dir.length != 0 ? sort_dir : "desc"
