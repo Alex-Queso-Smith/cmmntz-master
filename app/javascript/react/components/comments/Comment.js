@@ -200,14 +200,14 @@ class Comment extends React.Component {
         if (!this.state.showFullText) {
           textBox =
           <div className="cf-comment-text" >
-            {text.substring(0, text_length) + "..."}
+            <div dangerouslySetInnerHTML={{__html: text.substring(0, text_length) + "..."}} />
             <br />
             <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show more</a>
           </div>
         } else {
           textBox =
           <div className="cf-comment-text" >
-            {text}
+            <div dangerouslySetInnerHTML={{__html: text}} />
             <br />
             <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show less</a>
           </div>
@@ -215,7 +215,7 @@ class Comment extends React.Component {
       } else {
         textBox =
         <div className="cf-comment-text" >
-          {text}
+          <div dangerouslySetInnerHTML={{__html: text}} />
         </div>
       }
     }
@@ -307,7 +307,6 @@ class Comment extends React.Component {
               <div className="col-sm-6">
               </div>
             </div>
-
             {textBox}
             {lastEdited}
             <div className="cf-comment-button-group">
