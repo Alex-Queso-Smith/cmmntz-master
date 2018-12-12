@@ -76,6 +76,12 @@ class User < ApplicationRecord
     where( CheckLog.where("check_logs.checkable_id = users.id AND check_logs.checkable_type = 'user' AND check_logs.created_at >= ? AND check_logs.check_name = ?", datetime, check_name).exists.not )
   }
 
+  ### Some Bool checks
+  def post_eligible?
+    min_interactions = 5
+    comment_interactions.limit(min_interactions).size >= min_interactions
+  end
+
   ### re gender
   # display gender
   def gender_display

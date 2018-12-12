@@ -21,7 +21,7 @@ class Comment < ApplicationRecord
   validates :user_id, :text, presence: true
 
   validates :text, length: { in: 1..3000 }
-  validate :text_does_not_have_html, :art_is_not_disabled
+  validate :text_does_not_have_html, :art_is_not_disabled, :user_has_min_interactions
 
   scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
 
@@ -53,6 +53,12 @@ class Comment < ApplicationRecord
       errors[:art] << "disabled"
       errors[:art] << art.disabled_message if art.disabled_message
     end
+  end
+
+  def user_has_min_interactions
+    min_interactions = 5
+    user_interactions = user.comment_interactions.limit(min_interactions).size
+    errors[:user] << "You must have 5 votes to comment.\n\nPlease vote on #{min_interactions - user_interactions} more comments or replies. " unless user_interactions >= min_interactions
   end
 
 
