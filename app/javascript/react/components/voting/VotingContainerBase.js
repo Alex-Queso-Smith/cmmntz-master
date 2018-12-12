@@ -96,6 +96,13 @@ class VotingContainerBase extends React.Component {
           })
         }
 
+        // update app
+        var artSettings = this.props.artSettings
+        if (artSettings.userCanPost != body.user_can_post) {
+          artSettings["userCanPost"] = body.user_can_post
+          this.props.updateAppState("artSettings", artSettings)
+        }
+
         if (body.old_top_id){
           this.props.handleTopChange(body.old_top_id)
         }
