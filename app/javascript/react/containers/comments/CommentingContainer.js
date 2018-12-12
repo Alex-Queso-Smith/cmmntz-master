@@ -221,6 +221,12 @@ class CommentingContainer extends React.Component {
           this.props.updateAppState("artSettings", artSettings)
         }
 
+        var userErrors = body.errors["user"]
+        if (userErrors) {
+          var message = userErrors[0]
+          alert(message)
+        }
+
         var voteErrors = body.errors["votes.base"]
         if (voteErrors){
           var message = voteErrors[1]

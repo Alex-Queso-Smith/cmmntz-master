@@ -135,6 +135,13 @@ class RepliesContainer extends React.Component {
           this.props.updateAppState("artSettings", artSettings)
         }
 
+
+        var userErrors = body.errors["user"]
+        if (userErrors) {
+          var message = userErrors[0]
+          alert(message)
+        }
+
         this.setState({ replyErrors: body.errors})
       } else {
         var id = this.props.commentId
