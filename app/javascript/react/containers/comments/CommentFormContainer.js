@@ -206,7 +206,7 @@ class CommentFormContainer extends React.Component {
     if (artSettings.disabled) {
       var msg = "Commenting on this thread has been disabled by the site Admins."
 
-      if (artSettings.disabledMessage != "") {
+      if (artSettings.disabledMessage) {
         msg = artSettings.disabledMessage
       }
       commentForm =
