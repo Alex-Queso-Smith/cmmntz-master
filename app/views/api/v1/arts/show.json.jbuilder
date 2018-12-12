@@ -2,7 +2,8 @@ json.art do
   json.disabled @art.is_disabled?
   json.deactivated @art.deactivated
 
-  json.user_blacklisted current_user.user_blacklisted_for?(@art.gallery_id) || false
+  blacklisted = current_user ? current_user.user_blacklisted_for?(@art.gallery_id) : false
+  json.user_blacklisted blacklisted
 
   json.comment_requires_approval @art.comment_requires_approval? || false
   json.gallery_settings do
