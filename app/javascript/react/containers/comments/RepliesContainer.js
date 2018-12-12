@@ -135,7 +135,9 @@ class RepliesContainer extends React.Component {
         this.setState({ replyErrors: body.errors})
       } else {
         var id = this.props.commentId
-        var commentReplies = body.comments.find(c => c.id === id).replies
+        var commentReplies = this.state.replies
+        commentReplies.unshift(body.comment)
+        debugger
         this.setState({ replies: commentReplies })
         this.handleSuccessfulReply()
       }

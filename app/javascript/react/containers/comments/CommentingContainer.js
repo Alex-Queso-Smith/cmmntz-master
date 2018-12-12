@@ -232,17 +232,13 @@ class CommentingContainer extends React.Component {
         }
         this.setState({ commentFormErrors: body.errors})
       } else {
-        var append = this.state.sortOpts.page > 1
-        var newComments;
-        if (append) {
-          newComments = this.state.comments.concat(body.comments)
-        } else {
-          newComments = body.comments
-        }
+        var newComments = this.state.comments
+        newComments.unshift(body.comment)
+        var totalComments = this.state.totalComments
 
         this.setState({
           comments: newComments,
-          totalComments: body.total_comments
+          totalComments: totalComments++
         })
 
         if (body.old_top_id){

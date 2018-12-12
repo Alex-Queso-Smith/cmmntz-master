@@ -30,7 +30,7 @@ class CommentsList extends React.Component {
         var handleBanUser = () => {
           this.props.banUser(comment.user.user_id)
         }
-
+        
         var { user_name, gender, age_range, user_id, show_censored} = comment.user
         var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted, censored_text, total_interactions, vote_counts } = comment
         var userName, commentLength;
