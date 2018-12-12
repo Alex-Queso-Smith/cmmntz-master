@@ -11,6 +11,7 @@ class Reply extends React.Component {
     editStatus: false,
     edited: this.props.edited,
     userTileHover: false,
+    userVoted: this.props.userVoted,
     showFullText: false,
     userFollowed: this.props.userFollowed,
     userBlocked: this.props.userBlocked
@@ -23,6 +24,7 @@ class Reply extends React.Component {
   handleChange = this.handleChange.bind(this);
   handleCancelEditReply = this.handleCancelEditReply.bind(this);
   handleEditSubmit = this.handleEditSubmit.bind(this);
+  showVotes = this.showVotes.bind(this);
 
   handleChange(event){
     const target = event.target;
@@ -144,6 +146,10 @@ class Reply extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  showVotes(){
+    this.setState({ userVoted: true })
+  }
+
   render(){
     var { currentUserId, user, lengthImage, replyUserId } = this.props;
     var { text, editStatus, edited } = this.state;
@@ -252,6 +258,26 @@ class Reply extends React.Component {
         </button>
     }
 
+    var showVotesButton;
+    var { totalInteractions } = this.props;
+    if (!this.state.userVoted) {
+
+      showVotesButton =
+      <div className="row">
+        <div className="col-sm-2" />
+        <div className="col-sm-7 comment-interaction-line">
+          <div className="comment-interaction-line-div">
+            {`Comment has ${totalInteractions} votes`}
+          </div>
+        </div>
+        <div className="col-sm-3">
+          <button onClick={this.showVotes} className="btn btn-sm float-right show-votes-button">
+            Show Results
+          </button>
+        </div>
+      </div>
+    }
+
     return(
       <div className="cf-comment cf-comment-reply margin-top-10px">
         <div className="cf-comment-wrapper">
@@ -288,13 +314,17 @@ class Reply extends React.Component {
             </div>
           </div>
         </div>
+        {showVotesButton}
         <VotingContainerBase
           commentId={this.props.replyId}
           currentUserId={this.props.currentUserId}
           commentVotes={this.props.commentVotes}
+          totalInteractions={this.props.totalInteractions}
           votePercents={this.props.votePercents}
+          showVotes={this.showVotes}
+          voteCounts={this.props.voteCounts}
           handleTopChange={this.props.handleTopChange}
-          userVoted={this.props.userVoted}
+          userVoted={this.state.userVoted}
           artSettings={this.props.artSettings}
           updateAppState={this.props.updateAppState}
         />
