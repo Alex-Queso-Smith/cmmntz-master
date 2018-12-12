@@ -19,7 +19,7 @@ class Api::V1::CommentsController < ApiController
     @comment = Comment.tabulation_for_individual_comment(current_user, params[:id], {})
     @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
     @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
-    @art =  Art.find(params[:art_id])
+    @art =  Art.find(@comment.art_id)
     @gallery_admins = @art.gallery_admin_user_account_ids
     @all_comments_size = @art.grand_total_comments(current_user).size
   end
@@ -43,7 +43,7 @@ class Api::V1::CommentsController < ApiController
       @comment = Comment.tabulation_for_individual_comment(current_user, params[:id], {})
       @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
       @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
-      @art =  Art.find(params[:art_id])
+      @art =  Art.find(@comment.art_id)
       @gallery_admins = @art.gallery_admin_user_account_ids
       @all_comments_size = @art.grand_total_comments(current_user).size
 
