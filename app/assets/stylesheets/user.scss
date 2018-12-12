@@ -1,10 +1,9 @@
 $breakpoint-phone: 575px;
 
-#user-edit-form {
-  margin: auto;
-  border: 1px solid grey;
+#user-edit-account-container {
+  margin: 10px auto;
   padding: 30px;
-  border-radius: 20px;
+  border-radius: 5px;
   width: 500px;
   background: rgba(255, 255, 255, 1 );
   color: #000000;
@@ -41,17 +40,24 @@ $breakpoint-phone: 575px;
 }
 
 #user-edit-settings-container {
-  margin: 60px auto;
-  border: 1px solid grey;
+  margin: 10px auto;
   padding: 30px;
-  border-radius: 20px;
   width: 500px;
   background: rgba(255, 255, 255, 1 );
   color: #000000;
 }
 
+#user-edit-container {
+  margin: auto;
+  width: 525px;
+  background: rgba(255, 255, 255, 1 );
+  border-radius: 5px;
+  color: #000000;
+  border: 1px solid grey;
+}
+
 @media (max-width: $breakpoint-phone) {
-  #user-edit-form, #password-form, #user-registration-form, #user-login-container, #user-edit-settings-container {
+  #user-edit-form, #password-form, #user-registration-form, #user-login-container, #user-edit-settings-container, #user-edit-container {
     width: 100%;
   }
 }

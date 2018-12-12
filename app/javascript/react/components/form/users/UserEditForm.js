@@ -7,7 +7,7 @@ import UserThemeSelector from '../UserThemeSelector';
 
 const UserEditForm = props => {
 
-  var userNameClass, emailClass, selectedAvatar, geomarker
+  var userNameClass, emailClass, selectedAvatar, geomarker;
 
   userNameClass = ErrorClassValidation(props.userNameError);
   emailClass = ErrorClassValidation(props.emailError);
