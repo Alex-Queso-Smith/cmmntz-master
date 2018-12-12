@@ -45,8 +45,6 @@ class CfCommentsApp extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-
-
   render(){
     var { commentRoot, userId, artType, artId, artSettings, gallerySettings, userSettings, galleryId } = this.state;
     var displayContainer;

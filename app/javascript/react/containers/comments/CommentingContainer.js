@@ -532,10 +532,7 @@ class CommentingContainer extends React.Component {
           </div>
           <div className="col-md-6 adverts-container">
             <div className="ad-container">
-              <img src="/assets/ad.jpg"/>
-            </div>
-            <div className="ad-container">
-              <img src="/assets/ad.jpg"/>
+              <img src="/assets/Ad1"/>
             </div>
           </div>
         </div>

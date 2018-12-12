@@ -44,14 +44,14 @@ $breakpoint-phone: 575px;
   top: 70px;
 
   .ad-container {
-    height: 150px;
-    width: 150px;
+    height: auto;
+    width: auto;
     margin-bottom: 20px;
     text-align: center;
 
     img {
-      max-height: 150px;
-      max-width: 150px;
+      max-height: 400px;
+      max-width: 400px;
       height: auto;
       width: auto;
       display: block;
