@@ -86,6 +86,9 @@ class Comment extends React.Component {
 
           var artSettings = this.props.artSettings
           artSettings[artErrors[1]] = true
+          if (artErrors[2]) {
+            artSettings['disabledMessage'] = artErrors[2]
+          }
           this.props.updateAppState("artSettings", artSettings)
         }
       } else {
@@ -349,7 +352,6 @@ class Comment extends React.Component {
           banUser={this.props.banUser}
           adminStatus={this.props.adminStatus}
           galleryId={galleryId}
-          updateAppState={this.props.updateAppState}
         />
       </div>
     )
