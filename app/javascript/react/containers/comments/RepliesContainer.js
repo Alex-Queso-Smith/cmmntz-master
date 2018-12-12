@@ -137,7 +137,6 @@ class RepliesContainer extends React.Component {
         var id = this.props.commentId
         var commentReplies = this.state.replies
         commentReplies.unshift(body.comment)
-        debugger
         this.setState({ replies: commentReplies })
         this.handleSuccessfulReply()
       }
