@@ -25,6 +25,7 @@ class UserEditSettingsContainer extends React.Component {
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
   handleRevertSettings = this.handleRevertSettings.bind(this);
+  handleClearFilters = this.handleClearFilters.bind(this);
 
   componentDidMount(){
     FetchDidMount(this, `/api/v1/users/${this.props.match.params.id}.json`)
@@ -97,6 +98,13 @@ class UserEditSettingsContainer extends React.Component {
       censor: "",
       showCensoredComments: true
     })
+  }
+
+  handleClearFilters(){
+    var opts = this.state.sortOpts;
+    opts.notFilterList = [];
+    opts.filterList = [];
+    this.setState({ sortOpts: opts })
   }
 
   handleFilterByClick(event){
@@ -192,6 +200,7 @@ class UserEditSettingsContainer extends React.Component {
           sortOpts={this.state.sortOpts}
           handleFilterSubmit={this.handleChange}
           handleSortDirClick={this.handleSortDirClick}
+          clearFilters={this.handleClearFilters}
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
           hideAdvancedLink={true}
