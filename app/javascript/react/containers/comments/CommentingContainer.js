@@ -36,12 +36,15 @@ class CommentingContainer extends React.Component {
         votesFrom: "",
         radius: '',
         latitude: '',
-        longitude: ''
+        longitude: '',
+        setFrom: null
       },
       gallerySettings: { },
       userSettings: { },
       commentEtiquette: null,
       censored: false,
+      showFilterModal: false,
+      filterModalShown: false
     }
     this.handleCommentForm = this.handleCommentForm.bind(this);
     this.commentFormSubmitter = this.commentFormSubmitter.bind(this);
@@ -63,6 +66,7 @@ class CommentingContainer extends React.Component {
     this.handleClearFilters = this.handleClearFilters.bind(this);
     this.showVoteCountTrigger = this.showVoteCountTrigger.bind(this);
     this.handleShowVoteModal = this.handleShowVoteModal.bind(this);
+    this.handleShowFilterModal = this.handleShowFilterModal.bind(this);
   }
 
   componentWillMount(){
@@ -164,6 +168,9 @@ class CommentingContainer extends React.Component {
     opts.notFilterList = [];
     opts.filterList = [];
     this.setState({ sortOpts: opts })
+    if (this.state.sortOpts.setFrom === "gallery") {
+      this.handleShowFilterModal()
+    }
     this.handleFilterSubmit()
   }
 
@@ -315,6 +322,9 @@ class CommentingContainer extends React.Component {
   }
 
   handleFilterSubmitMan(event){
+    if (this.state.sortOpts.setFrom === "gallery") {
+      this.handleShowFilterModal()
+    }
     this.handleChange(event)
     this.submitterMan(event)
   }
@@ -375,6 +385,9 @@ class CommentingContainer extends React.Component {
 
     this.setState({ sortOpts: opts })
 
+    if (this.state.sortOpts.setFrom === "gallery") {
+      this.handleShowFilterModal()
+    }
     this.submitterMan(event)
   }
 
@@ -429,6 +442,7 @@ class CommentingContainer extends React.Component {
       newSortOpts.notFilterList = not_filter_list
       newSortOpts.commentsFrom = comments_from
       newSortOpts.votesFrom = votes_from
+      newSortOpts.setFrom = "user"
     } else {
       censorComments = gallery_censor === "true" ? true : false
       newSortOpts.sortDir = gallery_sort_dir
@@ -437,6 +451,7 @@ class CommentingContainer extends React.Component {
       newSortOpts.notFilterList = gallery_not_filter_list
       newSortOpts.commentsFrom = gallery_comments_from
       newSortOpts.votesFrom = gallery_votes_from
+      newSortOpts.setFrom = "gallery"
     }
 
     this.setState({
@@ -495,6 +510,22 @@ class CommentingContainer extends React.Component {
     }
   }
 
+  handleShowFilterModal(){
+
+    if (this.state.showFilterModal) {
+      document.body.classList.remove("cf-modal-locked");
+      this.setState({
+        showFilterModal: false,
+        filterModalShown: true
+      })
+    } else if (!this.state.filterModalShown) {
+      document.body.classList.add("cf-modal-locked");
+      this.setState({
+        showFilterModal: true
+      })
+    }
+  }
+
   render(){
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
@@ -520,11 +551,23 @@ class CommentingContainer extends React.Component {
       </Modal>
     }
 
+    var filterModal;
+    if (this.state.showFilterModal && !this.state.filterModalShown) {
+      filterModal =
+      <Modal
+        handleClose={this.handleShowFilterModal}
+        modalTitle={"You are leaving curated filters"}
+      >
+        "You are now leaving site's curated view and will now see comments and votes previously filtered out by the site."
+      </Modal>
+    }
+
     var filteredCount = this.state.grandTotalComments - this.state.totalComments
 
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         {showVoteModal}
+        {filterModal}
         <CommentEtiquette galleryCommentEtiquette={commentEtiquette} />
         <div className="row">
           <div className="col-sm-12 col-md-6">
