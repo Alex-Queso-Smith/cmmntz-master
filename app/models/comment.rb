@@ -59,7 +59,6 @@ class Comment < ApplicationRecord
     min_interactions = 5
     user_interactions = user.comment_interactions.limit(min_interactions).size
     errors[:user] << "You must have 5 votes to comment.\n\nPlease vote on #{min_interactions - user_interactions} more comments or replies. " unless user_interactions >= min_interactions
-    errors[:base] << "forced error #{min_interactions} | #{user_interactions}"
   end
 
 
