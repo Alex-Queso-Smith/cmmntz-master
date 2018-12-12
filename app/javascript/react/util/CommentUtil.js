@@ -4,19 +4,19 @@ export const CommentLengthSorter = (text) => {
   var length = text.length
   var image;
   switch (true) {
-    case (length <= 250):
+    case (length <= 120):
       image = '/assets/length1'
       break;
-    case (length <= 500):
+    case (length <= 240):
       image = '/assets/length2'
       break;
-    case (length <= 750):
+    case (length <= 420):
       image = '/assets/length3'
       break;
-    case (length <= 1000):
+    case (length <= 600):
       image = '/assets/length4'
       break;
-    case (length > 1000):
+    case (length > 600):
       image = '/assets/length5'
       break;
   }
