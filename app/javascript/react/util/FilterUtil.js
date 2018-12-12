@@ -74,12 +74,19 @@ export const FilterButtonsRowOne = (object) => {
       blankClass = type[0]
     }
 
+    var handleFilterClickParent = (event) => {
+      object.props.handleFilterClick(event)
+      if (object.props.sortOpts.setFrom === "gallery") {
+        object.props.handleShowFilterModal()
+      }
+    }
+
     return(
       <SortButton
         key={`filter_${type[1]}`}
         className={`${blankClass}`}
         value={`${type[0]}_percent`}
-        onClick={object.props.handleFilterClick}
+        onClick={handleFilterClickParent}
         image={image}
         visibility={visibility}
         />
@@ -114,12 +121,19 @@ export const FilterButtonsRowTwo = (object) => {
       blankClass = type[0]
     }
 
+    var handleFilterClickParent = (event) => {
+      object.props.handleFilterClick(event)
+      if (object.props.sortOpts.setFrom === "gallery") {
+        object.props.handleShowFilterModal()
+      }
+    }
+
     return(
       <SortButton
         key={`filter_${type[1]}`}
         className={`${blankClass}`}
         value={`${type[0]}_percent`}
-        onClick={object.props.handleFilterClick}
+        onClick={handleFilterClickParent}
         image={image}
         visibility={visibility}
         />

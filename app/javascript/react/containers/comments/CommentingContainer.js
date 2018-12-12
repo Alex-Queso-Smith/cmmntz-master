@@ -322,9 +322,6 @@ class CommentingContainer extends React.Component {
   }
 
   handleFilterSubmitMan(event){
-    if (this.state.sortOpts.setFrom === "gallery") {
-      this.handleShowFilterModal()
-    }
     this.handleChange(event)
     this.submitterMan(event)
   }
@@ -365,7 +362,7 @@ class CommentingContainer extends React.Component {
   }
 
   handleFilterClick(event){
-    event.preventDefault();
+    event.preventDefault()
     const target = event.target;
     const name = target.getAttribute('data-value');
     var opts = this.state.sortOpts
@@ -385,9 +382,6 @@ class CommentingContainer extends React.Component {
 
     this.setState({ sortOpts: opts })
 
-    if (this.state.sortOpts.setFrom === "gallery") {
-      this.handleShowFilterModal()
-    }
     this.submitterMan(event)
   }
 
@@ -589,6 +583,7 @@ class CommentingContainer extends React.Component {
               handleFilterByClick={this.handleFilterByClick}
               parentSetLatLongClick={this.setLatLongClick}
               handleAdvancedFiltershow={this.handleAdvancedFiltershow}
+              handleShowFilterModal={this.handleShowFilterModal}
               clearFilters={this.handleClearFilters}
               />
           </div>
