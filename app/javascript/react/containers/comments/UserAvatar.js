@@ -12,7 +12,7 @@ class UserAvatar extends React.Component {
     var { user_name, gender, age_range, base_image } = this.props.userInfo
 
     var { followStar, blockSym } = this.props
-    var avatarImage = '/assets/bat_ffffff_000000';
+    var avatarImage = '/assets/avatar-default';
 
     if (base_image) {
       avatarImage = `/assets/${base_image}`
