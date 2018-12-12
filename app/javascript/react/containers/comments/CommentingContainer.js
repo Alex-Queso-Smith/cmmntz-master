@@ -17,6 +17,7 @@ class CommentingContainer extends React.Component {
         theme: 'light'
         },
       totalComments: 0,
+      grandTotalComments: 0,
       followedUsers: [],
       blockedUsers: [],
       comments: [],
@@ -292,7 +293,8 @@ class CommentingContainer extends React.Component {
 
       this.setState({
         comments: newComments,
-        totalComments: commentData.total_comments
+        totalComments: commentData.total_comments,
+        grandTotalComments: commentData.grand_total_comments
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -464,14 +466,17 @@ class CommentingContainer extends React.Component {
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
     var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored, commentEtiquette} = this.state;
-    var endComments;
 
+
+    var endComments;
     if (totalComments === comments.length) {
       endComments =
       <div className="text-center">
         ---  end of comments ---
       </div>
     }
+
+    var filteredCount = this.state.grandTotalComments - this.state.totalComments
 
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
@@ -508,7 +513,7 @@ class CommentingContainer extends React.Component {
         </div>
         <hr />
         <div>
-          <p>{totalComments} comments for this article</p>
+          <p>{totalComments} comments for this article | {filteredCount} comments are filtered out</p>
         </div>
         <div className="row">
           <div className="col-sm-12 col-md-6">
