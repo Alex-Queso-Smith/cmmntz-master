@@ -30,7 +30,7 @@ class Api::V1::CommentsController < ApiController
     @comment = Comment.new(comment_params)
 
     if @comment.save
-      old_top_id = @comment.old_top_id
+      @old_top_id = @comment.old_top_id
       @comment = Comment.tabulation_for_individual_comment(current_user, @comment.id, {})
       @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
       @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
