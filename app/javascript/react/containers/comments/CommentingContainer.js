@@ -105,7 +105,7 @@ class CommentingContainer extends React.Component {
 
           var newUserSettings = this.state.userSettings;
           var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, settings_updated, followed_users, blocked_users } = userData.user
-          var settingsUpdated = settings_updated === "true" ? true : false
+          var settingsUpdated = settings_updated === "true" || settings_updated == true ? true : false
 
           newUserSettings.sort_dir = sort_dir
           newUserSettings.sort_type = sort_type
@@ -402,7 +402,7 @@ class CommentingContainer extends React.Component {
     var censorComments;
 
     if (userSettings.settings_updated) {
-      censorComments = censor === "true" ? true : false
+      censorComments = censor === "true" || censor == true ? true : false
       newSortOpts.sortDir = sort_dir
       newSortOpts.sortType = sort_type
       newSortOpts.filterList = filter_list
@@ -410,7 +410,7 @@ class CommentingContainer extends React.Component {
       newSortOpts.commentsFrom = comments_from
       newSortOpts.votesFrom = votes_from
     } else {
-      censorComments = gallery_censor === "true" ? true : false
+      censorComments = gallery_censor === "true" || gallery_censor == true ? true : false
       newSortOpts.sortDir = gallery_sort_dir
       newSortOpts.sortType = gallery_sort_type
       newSortOpts.filterList = gallery_filter_list
