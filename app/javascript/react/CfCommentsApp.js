@@ -15,7 +15,8 @@ class CfCommentsApp extends React.Component {
       artSettings: {
         disabled: false,
         deactivated: false,
-        blacklisted: false
+        blacklisted: false,
+        disabledMessage: ""
       }
     }
     this.handleAppSetState = this.handleAppSetState.bind(this)
@@ -37,6 +38,7 @@ class CfCommentsApp extends React.Component {
       newArtSettings.disabled = artData.art.disabled
       newArtSettings.deactivated = artData.art.deactivated
       newArtSettings.userBlacklisted = artData.art.user_blacklisted
+      newArtSettings.disabledMessage = artData.art.disabled_message
 
       this.setState({
         artSettings: newArtSettings
@@ -69,9 +71,14 @@ class CfCommentsApp extends React.Component {
         banUser={this.banUser}
         />
     } else {
+      var msg = "This thread has been deactivated by the site Admins."
+
+      if (artSettings.disabledMessage != "") {
+        msg = artSettings.disabledMessage
+      }
       displayContainer =
       <div className="deactivated-message">
-        <h3>This thread has been deactivated by the site Admins.</h3>
+        <h3>{msg}</h3>
       </div>
     }
 

@@ -1,7 +1,7 @@
 json.art do
   json.disabled @art.is_disabled?
-  json.deactivated @art.deactivated
-
+  json.deactivated @art.deactivated?
+  json.disabled_message @art.disabled_message
   blacklisted = current_user ? current_user.user_blacklisted_for?(@art.gallery_id) : false
   json.user_blacklisted blacklisted
 

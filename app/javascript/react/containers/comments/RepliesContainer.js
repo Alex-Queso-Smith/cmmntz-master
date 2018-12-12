@@ -129,6 +129,9 @@ class RepliesContainer extends React.Component {
 
           var artSettings = this.props.artSettings
           artSettings[artErrors[1]] = true
+          if (artErrors[2]) {
+            artSettings['disabledMessage'] = artErrors[2]
+          }
           this.props.updateAppState("artSettings", artSettings)
         }
 
