@@ -17,7 +17,7 @@ class CfCommentsApp extends React.Component {
         deactivated: false,
         blacklisted: false,
         disabledMessage: "",
-        userCanPost: false
+        userCanPost: true
       }
     }
     this.handleAppSetState = this.handleAppSetState.bind(this)
