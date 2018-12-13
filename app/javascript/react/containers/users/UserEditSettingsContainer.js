@@ -130,15 +130,38 @@ class UserEditSettingsContainer extends React.Component {
     const name = target.getAttribute('data-value');
     var opts = this.state.sortOpts
 
-    if (opts.filterList.includes(name)){
-      var newFilters = opts.filterList.filter(v => v != name)
-      opts.filterList = newFilters
-      opts.notFilterList.push(name)
-    } else if (opts.notFilterList.includes(name)) {
-      var newFilters = opts.notFilterList.filter(v => v != name)
-      opts.notFilterList = newFilters
+    const right = [
+      "dislike_percent",
+      "dislike_a_lot_percent",
+      "trash_percent",
+      "warn_percent",
+      "sad_percent",
+      "boring_percent",
+      "angry_percent"
+    ]
+
+    if (right.includes(name)) {
+      if (opts.notFilterList.includes(name)) {
+        var newFilters = opts.notFilterList.filter(v => v != name)
+        opts.notFilterList = newFilters
+        opts.filterList.push(name)
+      } else if (opts.filterList.includes(name)) {
+        var newFilters = opts.filterList.filter(v => v != name)
+        opts.filterList = newFilters
+      } else {
+        opts.notFilterList.push(name)
+      }
     } else {
-      opts.filterList.push(name)
+      if (opts.filterList.includes(name)){
+        var newFilters = opts.filterList.filter(v => v != name)
+        opts.filterList = newFilters
+        opts.notFilterList.push(name)
+      } else if (opts.notFilterList.includes(name)) {
+        var newFilters = opts.notFilterList.filter(v => v != name)
+        opts.notFilterList = newFilters
+      } else {
+        opts.filterList.push(name)
+      }
     }
 
     opts.page = 1
