@@ -121,7 +121,7 @@ module CommentSearchs
 
     scope :for_non_blocked_users, -> {
       joins(:art)
-      .joins("left join gallery_blacklistings on gallery_blacklistings.user_id = comments.user_id AND gallery_blacklistings.gallery_id = arts.gallery_id")
+      .joins("left join gallery_blacklistings on gallery_blacklistings.user_id = comments.user_id AND gallery_blacklistings.gallery_id = arts.gallery_id and gallery_blacklistings.expires_at >= NOW()")
       .where("gallery_blacklistings.id IS NULL")
     }
 
