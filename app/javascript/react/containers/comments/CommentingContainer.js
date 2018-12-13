@@ -41,6 +41,7 @@ class CommentingContainer extends React.Component {
       },
       gallerySettings: { },
       userSettings: { },
+      userInfo: { },
       commentEtiquette: null,
       censored: false,
       showFilterModal: false,
@@ -82,10 +83,13 @@ class CommentingContainer extends React.Component {
          var oldUserSettings = this.state.userSettings;
          oldUserSettings.admin = userData.user.admin;
          oldUserSettings.guest = userData.user.guest;
+         var oldUserInfo = this.state.userInfo;
+         oldUserInfo.userName = userData.user.user_name;
 
          this.setState({
            userThemeSettings: oldUserThemeSettings,
-           userSettings: oldUserSettings
+           userSettings: oldUserSettings,
+           userInfo: oldUserInfo
          })
        })
        .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -563,6 +567,14 @@ class CommentingContainer extends React.Component {
         You are a Guest.
         <button className="btn btn-link" onClick={() => window.location = "/login"}>Login</button>
         <button className="btn btn-link" onClick={() => window.location = "/register"}>Register</button>
+      </div>
+    } else {
+      var edit_url = `/users/${this.props.userId}/edit_settings`
+      loginStatement =
+      <div>
+        Welcome {this.state.userInfo.userName}.
+        <button className="btn btn-link" onClick={() => window.location = edit_url}>Settings</button>
+        <button className="btn btn-link" onClick={() => window.location = "/logout"}>Logout</button>
       </div>
     }
 
