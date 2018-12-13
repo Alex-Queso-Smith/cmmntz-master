@@ -211,25 +211,21 @@ class UserEditSettingsContainer extends React.Component {
           clearFilters={this.handleClearFilters}
           hideAdvancedLink={true}
         />
-        <div className="row">
         <Checkbox
-          className={"col-6"}
           onChange={this.handleChange}
           name={"censor"}
           label={"Censor all text?"}
           checked={this.state.censor}
         />
         <Checkbox
-          className={"col-6"}
           onChange={this.handleChange}
           name={"showCensoredComments"}
           label={"Show Comment if Censored?"}
           checked={this.state.showCensoredComments}
         />
-      </div>
         <div className="margin-top-10px text-center">
-          <button className="btn btn-med btn-dark" onClick={this.handleSubmit}>
-            Submit
+          <button className="btn btn-large btn-block btn-dark" onClick={this.handleSubmit}>
+            Update
           </button>
         </div>
       </div>

@@ -1,20 +1,23 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { FetchWithPush, FetchDidMount, CreateErrorElements, ErrorClassValidation, FetchDeleteBasicWithPush } from '../../util/CoreUtil';
 import { Input, NukaCarousel as Carousel } from '../../components/form/FormComponents';
 
 class UserEditAccountContainer extends React.Component {
-  state = {
-    userName: '',
-    email: '',
-    avatar: '',
-    saveErrors: {}
+  constructor(props){
+    super(props);
+      this.state = {
+        userName: '',
+        email: '',
+        avatar: '',
+        saveErrors: {}
+      }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleAvatarClick = this.handleAvatarClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDeleteAccount = this.handleDeleteAccount.bind(this);
   }
-
-  handleChange = this.handleChange.bind(this);
-  handleAvatarClick = this.handleAvatarClick.bind(this);
-  handleSubmit = this.handleSubmit.bind(this);
-  handleDeleteAccount = this.handleDeleteAccount.bind(this);
 
   componentDidMount(){
     FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
@@ -127,6 +130,12 @@ class UserEditAccountContainer extends React.Component {
           />
           {emailError}
 
+          <Link to={`/users/${this.props.userId}/edit_password`} className="text-medium btn change-password-button">
+              Change Password
+          </Link>
+
+          <hr />
+
           <div className="form-group margin-top-10px">
             <label className="text-medium text-center" htmlFor="avatar">Choose Your Avatar</label>
             <br />
@@ -148,7 +157,9 @@ class UserEditAccountContainer extends React.Component {
             <h3>Delete my account</h3>
             <p className="warning-text">Warning: Deleting your account is irreversible. Once you delete your accounts, all of your comments and interactions will become anonymous.</p>
             <p className="warning-text">Do not click the button unless you are certain.</p>
-            <button onClick={this.handleDeleteAccountClick}  className="btn btn-danger btn-large btn-block">Delete Account</button>
+            <button onClick={this.handleDeleteAccountClick}  className="btn btn-danger btn-large btn-block">
+              Delete Account
+            </button>
           </div>
 
         </form>

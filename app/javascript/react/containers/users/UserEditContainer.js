@@ -3,6 +3,8 @@ import React from 'react';
 import Tabs from '../../components/settings/Tabs';
 import UserEditSettingsContainer from './UserEditSettingsContainer';
 import UserEditAccountContainer from './UserEditAccountContainer';
+import UserEditLooksContainer from './UserEditLooksContainer';
+import UserEditDemographicsContainer from './UserEditDemographicsContainer';
 
 class UserEditContainer extends React.Component {
   constructor(props){
@@ -27,14 +29,16 @@ class UserEditContainer extends React.Component {
     var page;
     switch (display) {
       case "":
-      page =
-      <UserEditAccountContainer userId={ userId } />
+        page =
+        <UserEditAccountContainer userId={ userId } />
       break;
       case "looks":
-
+        page =
+        <UserEditLooksContainer userId={ userId } />
       break;
       case "demographics":
-
+        page =
+        <UserEditDemographicsContainer userId={ userId } />
       break;
       case "settings":
         page =
@@ -55,6 +59,5 @@ class UserEditContainer extends React.Component {
     )
   }
 }
-
 
 export default UserEditContainer;
