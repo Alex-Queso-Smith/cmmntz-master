@@ -48,7 +48,7 @@ class Api::V1::CommentsController < ApiController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-    if @comment.update(comment_params)
+    if @comment.update(comment_params.merge(edited_at: Time.now))
       @comment = Comment.tabulation_for_individual_comment(current_user, params[:id], {})
       @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
       @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)

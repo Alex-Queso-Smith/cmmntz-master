@@ -2,7 +2,7 @@ json.id comment.id
 json.text comment.text
 json.censored_text comment.censored_text
 json.created_at display_time_ago(comment.created_at)
-json.edited has_been_edited(comment)
+json.edited comment.edited?
 json.user do
   json.user_id comment.user_id
   json.user_name comment_user_user_name(comment)
