@@ -4,6 +4,7 @@ import Textarea from 'react-expanding-textarea'
 import { FetchWithUpdate, FetchBasic } from '../../util/CoreUtil';
 import VotingContainerBase from '../voting/VotingContainerBase';
 import UserAvatar from '../../containers/comments/UserAvatar';
+import BanUser from '../modals/BanUser';
 
 class Reply extends React.Component {
   state = {
@@ -253,10 +254,9 @@ class Reply extends React.Component {
         <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteReply}>
           Delete Reply
         </button>
+
         banUserButton =
-        <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleBanUser}>
-          Ban User
-        </button>
+        <BanUser banAction={this.props.handleBanUser} />
     }
 
     var showVotesButton;

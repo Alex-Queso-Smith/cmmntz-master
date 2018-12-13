@@ -3,7 +3,7 @@ import BasicModal from './BasicModal';
 
 export const CommentEtiquette = props => {
   var etiquette;
-  
+
   if (props.galleryCommentEtiquette) {
     etiquette =
     <p>{props.galleryCommentEtiquette}</p>
@@ -28,6 +28,7 @@ export const CommentEtiquette = props => {
     <BasicModal
       modalButtonText="Commenting Etiquette"
       modalTitle="Commenting Etiquette"
+      modalButtonClass="btn-dark"
     >
     {etiquette}
     </BasicModal>

@@ -5,6 +5,7 @@ import { FetchBasic, FetchWithUpdate, CreateErrorElements, CheckInputValidation 
 import { ReplyFieldActivated, ReplyButtonActive, ReplyButtonInactive, ReplyCancelButton } from './CommentComponents';
 import { Checkbox } from '../form/FormComponents';
 import Modal from '../modals/Modal';
+import BanUser from '../modals/BanUser';
 import Reply from './Reply';
 import RepliesContainer from '../../containers/comments/RepliesContainer';
 import UserAvatar from '../../containers/comments/UserAvatar';
@@ -40,6 +41,7 @@ class Comment extends React.Component {
   onUserHover(){
     this.setState({ userTileHover: !this.state.userTileHover })
   }
+
 
   handleStateFlip(event){
     event.preventDefault();
@@ -254,10 +256,11 @@ class Comment extends React.Component {
       <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteComment}>
         Delete Comment
       </button>
+
       banUserButton =
-      <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleBanUser}>
-        Ban User
-      </button>
+      <BanUser banAction={this.props.handleBanUser} />
+
+
     }
 
     var adminFlag;

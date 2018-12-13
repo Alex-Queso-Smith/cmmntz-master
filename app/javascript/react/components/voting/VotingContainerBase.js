@@ -197,12 +197,11 @@ class VotingContainerBase extends React.Component {
 
   handleShowFlagModal(){
     if (this.state.flagModalShow) {
-      this.setState({ flagModalShow: !this.state.flagModalShow })
       document.body.classList.remove("cf-modal-locked");
     } else {
-      this.setState({ flagModalShow: !this.state.flagModalShow })
       document.body.classList.add("cf-modal-locked");
     }
+    this.setState({ flagModalShow: !this.state.flagModalShow })
   }
 
   handleFlagCommentModal(event){

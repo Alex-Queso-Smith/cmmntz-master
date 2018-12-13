@@ -20,7 +20,7 @@ class BasicModal extends React.Component {
 
     hideModal(event){
       event.preventDefault();
-      
+
       this.setState({ show: false });
       document.body.classList.remove("cf-modal-locked");
     }
@@ -37,11 +37,13 @@ class BasicModal extends React.Component {
           {this.props.children}
         </Modal>
       }
-
+      const style = {
+        display: "inline"
+      }
       return(
-        <div>
+        <div style={style}>
           {modalWindow}
-          <button onClick={this.showModal} className="btn btn-sm btn-dark">
+          <button onClick={this.showModal} className={`btn btn-sm ${this.props.modalButtonClass}`}>
             {this.props.modalButtonText}
           </button>
         </div>
