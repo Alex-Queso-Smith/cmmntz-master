@@ -3,12 +3,13 @@ class UserSessionsController < ApplicationController
   before_action :require_no_user, only: [:new, :create]
 
   def new
-    redirect_to(root_path) and return if current_user
+    redirect_to(root_path) and return if current_user && !current_user.guest?
     @user_session = UserSession.new
   end
 
   def create
     @user_session = UserSession.new(user_session_params)
+    raise "#{@user_session.valid?}"
     if @user_session.save
       flash[:notice] = "Login successful!"
       redirect_to root_url

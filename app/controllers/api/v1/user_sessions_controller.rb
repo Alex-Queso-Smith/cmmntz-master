@@ -9,6 +9,13 @@ class Api::V1::UserSessionsController < ApiController
 
   def create
     @user_session = UserSession.new(user_session_params.to_h)
+
+    if @user_session.valid?
+      cu_hold = current_user
+      current_user_session.destroy
+      cu_hold.destroy
+    end
+
     if @user_session.save
       puts "login good~~~~~~~~~~~~~"
       render json: { message: "Logged in successfully" }

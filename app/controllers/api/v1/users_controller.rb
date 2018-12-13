@@ -9,7 +9,9 @@ class Api::V1::UsersController < ApiController
 
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    attrs = current_user.attributes.merge(user_params)
+    current_user.attributes = attrs
+    @user = current_user
 
     if @user.save
       render json: { message: "Created successfully" }
