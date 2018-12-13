@@ -15,6 +15,7 @@ class UserEditDemographicsContainer extends React.Component {
       x: '',
       y: '',
       geoPin: { x: '', y: '' },
+      locationAnon: false
     }
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.setLatLongClick = this.setLatLongClick.bind(this);
@@ -61,18 +62,19 @@ class UserEditDemographicsContainer extends React.Component {
         longitude: "",
         x: "",
         y: "",
-        geoPin: { x: "", y: "" }
+        geoPin: { x: "", y: "" },
+        locationAnon: true
       })
     } else {
       this.setState({ [name]: value })
     }
-
   }
 
   handleGenderChange(event){
     event.preventDefault();
     const target = event.target;
     const value = target.name;
+
     this.setState({ gender: value })
   }
 
@@ -99,7 +101,8 @@ class UserEditDemographicsContainer extends React.Component {
     this.setState({
       latitude: latitude,
       longitude: longitude,
-      geoPin: { x: x - 6, y: y - 6 }
+      geoPin: { x: x - 6, y: y - 6 },
+      locationAnon: false
      })
   }
 
@@ -126,7 +129,7 @@ class UserEditDemographicsContainer extends React.Component {
   }
 
   render(){
-    var { ageRange, gender, x, y, latitude, longitude, geoPin } = this.state;
+    var { ageRange, gender, x, y, latitude, longitude, geoPin, locationAnon } = this.state;
 
     return(
       <div id="user-edit-demographics-container">
@@ -153,6 +156,7 @@ class UserEditDemographicsContainer extends React.Component {
             long={longitude}
             geoPin={geoPin}
             handleChange={this.handleChange}
+            locationAnon={locationAnon}
           />
           <div className="form-group actions margin-top-10px">
             <button id="user-edit-demographics-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit">

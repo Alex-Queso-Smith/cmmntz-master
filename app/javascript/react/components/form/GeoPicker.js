@@ -46,7 +46,8 @@ class GeoPicker extends React.Component {
           name="location"
           onChange={this.props.handleChange}
           label="None of Your Business"
-          className=""
+          className
+          checked={this.props.locationAnon}
         />
       </div>
     )
