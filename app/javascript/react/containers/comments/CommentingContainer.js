@@ -495,7 +495,7 @@ class CommentingContainer extends React.Component {
               clearFilters={this.handleClearFilters}
               />
           </div>
-          <div className="col-sm-0 col-md-6 video-container">
+          <div className="d-none d-md-block col-md-6 video-container">
             <h4>Tutorial</h4>
             <div className="video-wrapper">
               <img src="/assets/vid1.jpg"/>
@@ -526,7 +526,7 @@ class CommentingContainer extends React.Component {
               />
             {endComments}
           </div>
-          <div className="col-md-6 adverts-container">
+          <div className="d-none d-md-block col-md-6 adverts-container">
             <div className="ad-container">
               <img src="/assets/Ad"/>
             </div>
