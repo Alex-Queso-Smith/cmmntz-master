@@ -1,7 +1,7 @@
 $breakpoint-phone: 575px;
 
-#user-edit-form {
-  margin: auto;
+#user-registration-form {
+  margin: 60px auto;
   border: 1px solid grey;
   padding: 30px;
   border-radius: 20px;
@@ -30,28 +30,26 @@ $breakpoint-phone: 575px;
   color: #000000;
 }
 
-#user-registration-form {
-  margin: 60px auto;
-  border: 1px solid grey;
+#user-edit-account-container, #user-edit-settings-container, #user-edit-looks-container, #user-edit-demographics-container {
+  margin: 10px auto;
   padding: 30px;
-  border-radius: 20px;
+  border-radius: 5px;
   width: 500px;
   background: rgba(255, 255, 255, 1 );
   color: #000000;
 }
 
-#user-edit-settings-container {
-  margin: 60px auto;
-  border: 1px solid grey;
-  padding: 30px;
-  border-radius: 20px;
-  width: 500px;
+#user-edit-container {
+  margin: auto;
+  width: 525px;
   background: rgba(255, 255, 255, 1 );
+  border-radius: 5px;
   color: #000000;
+  border: 1px solid grey;
 }
 
 @media (max-width: $breakpoint-phone) {
-  #user-edit-form, #password-form, #user-registration-form, #user-login-container, #user-edit-settings-container {
+  #user-edit-form, #password-form, #user-registration-form, #user-login-container, #user-edit-settings-container, #user-edit-container {
     width: 100%;
   }
 }
@@ -222,4 +220,14 @@ $breakpoint-phone: 575px;
 
 .custom-control-label::before {
   background-color: #919191;
+}
+
+.change-password-button {
+  color: #777777;
+  background: #ffffff;
+  &:hover {
+    color: #777777;
+    background: #f8f9fa;
+    border: 1px solid #777777;
+  }
 }

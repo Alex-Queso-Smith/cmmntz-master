@@ -16,7 +16,8 @@ class UserEditSettingsContainer extends React.Component {
     },
     censor: "",
     showCensoredComments: true,
-    useGalleryDefault: false
+    useGalleryDefault: false,
+    display: ""
   }
 
   handleFilterByClick = this.handleFilterByClick.bind(this);
@@ -28,7 +29,7 @@ class UserEditSettingsContainer extends React.Component {
   handleClearFilters = this.handleClearFilters.bind(this);
 
   componentDidMount(){
-    FetchDidMount(this, `/api/v1/users/${this.props.match.params.id}.json`)
+    FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
     .then(userData => {
       var opts = this.state.sortOpts
       var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, show_censored_comments } = userData.user
@@ -178,13 +179,25 @@ class UserEditSettingsContainer extends React.Component {
     user.append("user[show_censored_comments]", showCensoredComments)
     user.append("user[settings_updated]", !useGalleryDefault)
 
-    FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'saveErrors', user)
-    .then(redirect => window.location = '/articles')
-    .then(redirect => { alert('Settings updated!') })
+    FetchWithPush(this, `/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
+    .then(body => {
+      if (!body.errors) {
+        this.setState({ saveErrors: {} })
+        alert(`${body.message}`)
+      }
+    })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  handleClearFilters(){
+    var opts = this.state.sortOpts;
+    opts.notFilterList = [];
+    opts.filterList = [];
+    this.setState({ sortOpts: opts })
+  }
+
   render(){
+
     return(
       <div id="user-edit-settings-container">
         <h5 className="text-center">Choose default sort and filter settings</h5>
@@ -203,27 +216,24 @@ class UserEditSettingsContainer extends React.Component {
           clearFilters={this.handleClearFilters}
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
+          clearFilters={this.handleClearFilters}
           hideAdvancedLink={true}
         />
-        <div className="row">
         <Checkbox
-          className={"col-6"}
           onChange={this.handleChange}
           name={"censor"}
           label={"Censor all text?"}
           checked={this.state.censor}
         />
         <Checkbox
-          className={"col-6"}
           onChange={this.handleChange}
           name={"showCensoredComments"}
           label={"Show Comment if Censored?"}
           checked={this.state.showCensoredComments}
         />
-      </div>
         <div className="margin-top-10px text-center">
-          <button className="btn btn-med btn-dark" onClick={this.handleSubmit}>
-            Submit
+          <button className="btn btn-large btn-block btn-dark" onClick={this.handleSubmit}>
+            Update
           </button>
         </div>
       </div>
