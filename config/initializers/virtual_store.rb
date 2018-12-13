@@ -24,7 +24,6 @@ module VirtualStore
       when "array"
         define_method "#{attr}=" do |val|
           self[loc.to_sym] ||= {}
-          val = serialize val, Array
           self[loc.to_sym][attr.to_sym] = val
         end
       else

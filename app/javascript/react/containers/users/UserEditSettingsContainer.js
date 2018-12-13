@@ -25,13 +25,14 @@ class UserEditSettingsContainer extends React.Component {
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
   handleRevertSettings = this.handleRevertSettings.bind(this);
+  handleClearFilters = this.handleClearFilters.bind(this);
 
   componentDidMount(){
     FetchDidMount(this, `/api/v1/users/${this.props.match.params.id}.json`)
     .then(userData => {
       var opts = this.state.sortOpts
       var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, show_censored_comments } = userData.user
-      var censored = censor === "true" ? true : false;
+      var censored = censor === "true" || censor == true ? true : false;
       var showCenComment = show_censored_comments === "false" ? false : true;
 
       opts.sortDir = sort_dir.length != 0 ? sort_dir : "desc"
@@ -97,6 +98,13 @@ class UserEditSettingsContainer extends React.Component {
       censor: "",
       showCensoredComments: true
     })
+  }
+
+  handleClearFilters(){
+    var opts = this.state.sortOpts;
+    opts.notFilterList = [];
+    opts.filterList = [];
+    this.setState({ sortOpts: opts })
   }
 
   handleFilterByClick(event){
@@ -192,6 +200,7 @@ class UserEditSettingsContainer extends React.Component {
           sortOpts={this.state.sortOpts}
           handleFilterSubmit={this.handleChange}
           handleSortDirClick={this.handleSortDirClick}
+          clearFilters={this.handleClearFilters}
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
           hideAdvancedLink={true}

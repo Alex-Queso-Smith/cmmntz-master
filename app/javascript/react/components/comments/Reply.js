@@ -11,6 +11,7 @@ class Reply extends React.Component {
     editStatus: false,
     edited: this.props.edited,
     userTileHover: false,
+    userVoted: this.props.userVoted,
     showFullText: false,
     userFollowed: this.props.userFollowed,
     userBlocked: this.props.userBlocked
@@ -23,6 +24,7 @@ class Reply extends React.Component {
   handleChange = this.handleChange.bind(this);
   handleCancelEditReply = this.handleCancelEditReply.bind(this);
   handleEditSubmit = this.handleEditSubmit.bind(this);
+  showVotes = this.showVotes.bind(this);
 
   handleChange(event){
     const target = event.target;
@@ -147,6 +149,10 @@ class Reply extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  showVotes(){
+    this.setState({ userVoted: true })
+  }
+
   render(){
     var { currentUserId, user, lengthImage, replyUserId } = this.props;
     var { text, editStatus, edited } = this.state;
@@ -199,14 +205,14 @@ class Reply extends React.Component {
         if (!this.state.showFullText) {
           textBox =
           <div className="cf-comment-text" >
-            {text.substring(0, text_length) + "..."}
+            <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text.substring(0, text_length) + "..."}} />
             <br />
             <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show more</a>
           </div>
         } else {
           textBox =
           <div className="cf-comment-text" >
-            {reply}
+            <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
             <br />
             <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show less</a>
           </div>
@@ -214,7 +220,7 @@ class Reply extends React.Component {
       } else {
         textBox =
         <div className="cf-comment-text" >
-          {text}
+          <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
         </div>
       }
     }
@@ -233,8 +239,6 @@ class Reply extends React.Component {
       cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditReply}>Cancel Edit</button>
     } else if (currentUserId === replyUserId) {
       editButton = <button className="btn btn-dark btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
-    } else {
-      editButton = <div className="deactivated-message">Replying on this thread has been disabled.</div>
     }
 
     var adminFlag;
@@ -253,6 +257,26 @@ class Reply extends React.Component {
         <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleBanUser}>
           Ban User
         </button>
+    }
+
+    var showVotesButton;
+    var { totalInteractions } = this.props;
+    if (!this.state.userVoted) {
+
+      showVotesButton =
+      <div className="row">
+        <div className="col-sm-2" />
+        <div className="col-sm-7 comment-interaction-line">
+          <div className="comment-interaction-line-div">
+            {`Comment has ${totalInteractions} votes`}
+          </div>
+        </div>
+        <div className="col-sm-3">
+          <button onClick={this.showVotes} className="btn btn-sm float-right show-votes-button">
+            Show Results
+          </button>
+        </div>
+      </div>
     }
 
     return(
@@ -291,13 +315,17 @@ class Reply extends React.Component {
             </div>
           </div>
         </div>
+        {showVotesButton}
         <VotingContainerBase
           commentId={this.props.replyId}
           currentUserId={this.props.currentUserId}
           commentVotes={this.props.commentVotes}
+          totalInteractions={this.props.totalInteractions}
           votePercents={this.props.votePercents}
+          showVotes={this.showVotes}
+          voteCounts={this.props.voteCounts}
           handleTopChange={this.props.handleTopChange}
-          userVoted={this.props.userVoted}
+          userVoted={this.state.userVoted}
           artSettings={this.props.artSettings}
           updateAppState={this.props.updateAppState}
         />

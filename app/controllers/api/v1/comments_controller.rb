@@ -19,7 +19,7 @@ class Api::V1::CommentsController < ApiController
     @comment = Comment.tabulation_for_individual_comment(current_user, params[:id], {})
     @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
     @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
-    @art =  Art.find(params[:art_id])
+    @art =  Art.find(@comment.art_id)
     @gallery_admins = @art.gallery_admin_user_account_ids
     @all_comments_size = @art.grand_total_comments(current_user).size
   end
@@ -30,7 +30,16 @@ class Api::V1::CommentsController < ApiController
     @comment = Comment.new(comment_params)
 
     if @comment.save
-      redirect_to api_v1_comments_path(art_type: @comment.art_type, art_id: @comment.art_id, old_top_id: @comment.old_top_id)
+      @old_top_id = @comment.old_top_id
+      @comment = Comment.tabulation_for_individual_comment(current_user, @comment.id, {})
+      @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
+      @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
+      @art =  Art.find(@comment.art_id)
+      @gallery_admins = @art.gallery_admin_user_account_ids
+      @all_comments_size = @art.grand_total_comments(current_user).size
+
+      render "api/v1/comments/show"
+      # redirect_to api_v1_comments_path(art_type: @comment.art_type, art_id: @comment.art_id, old_top_id: @comment.old_top_id)
     else
       render json: { errors: @comment.errors, status: :unprocessable_entity }
     end
@@ -43,7 +52,7 @@ class Api::V1::CommentsController < ApiController
       @comment = Comment.tabulation_for_individual_comment(current_user, params[:id], {})
       @current_users_votes = Vote.for_user_and_comment(current_user.id, @comment.id)
       @current_users_interactions = CommentInteraction.for_user_and_comment(current_user.id, @comment.id)
-      @art =  Art.find(params[:art_id])
+      @art =  Art.find(@comment.art_id)
       @gallery_admins = @art.gallery_admin_user_account_ids
       @all_comments_size = @art.grand_total_comments(current_user).size
 

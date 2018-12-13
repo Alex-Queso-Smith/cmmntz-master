@@ -145,7 +145,8 @@ class RepliesContainer extends React.Component {
         this.setState({ replyErrors: body.errors})
       } else {
         var id = this.props.commentId
-        var commentReplies = body.comments.find(c => c.id === id).replies
+        var commentReplies = this.state.replies
+        commentReplies.unshift(body.comment)
         this.setState({ replies: commentReplies })
         this.handleSuccessfulReply()
       }
@@ -200,7 +201,7 @@ class RepliesContainer extends React.Component {
 
         var followed = followedUsers.includes(reply.user.user_id)
         var blocked = blockedUsers.includes(reply.user.user_id)
-        var { id, edited, user, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text } = reply
+        var { id, edited, user, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text, vote_counts, total_interactions } = reply
         var lengthImage = CommentLengthSorter(text)
 
         var handleNewReplyBox = () => {
@@ -239,6 +240,8 @@ class RepliesContainer extends React.Component {
               currentUserId={currentUserId}
               commentVotes={current_users_votes}
               votePercents={vote_percents}
+              voteCounts={vote_counts}
+              totalInteractions={total_interactions}
               artSettings={this.props.artSettings}
               updateAppState={this.props.updateAppState}
               handleBanUser={handleBanUser}
