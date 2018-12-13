@@ -469,12 +469,13 @@ class CommentingContainer extends React.Component {
     }
   }
 
-  banUser(userId){
+  banUser(userId, event){
     var c = confirm("Do you wish to ban this user? You may unban from the admin console at any time.")
     var { galleryId, artId } = this.props;
 
     if (c) {
-      FetchIndividual(this, `/api/v1/gallery_blacklistings.json?gallery_id=${galleryId}&user_id=${userId}`, "POST")
+      var l = event.target.previousSibling.value
+      FetchIndividual(this, `/api/v1/gallery_blacklistings.json?gallery_id=${galleryId}&user_id=${userId}&dur=${l}`, "POST")
       .then(success => { alert("This user has been banned, login to admin console if you wish to unban at a future date.") })
       .then(finished => { this.handleFilterSubmit() })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
