@@ -76,6 +76,16 @@ class User < ApplicationRecord
     where( CheckLog.where("check_logs.checkable_id = users.id AND check_logs.checkable_type = 'user' AND check_logs.created_at >= ? AND check_logs.check_name = ?", datetime, check_name).exists.not )
   }
 
+  def self.create_guest_account
+    u = new
+    u.save(validate: false)
+    return u
+  end
+
+  def guest?
+    user_name.blank? && email.blank?
+  end
+
   ### Some Bool checks
   def post_eligible?
     min_interactions = 5

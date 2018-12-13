@@ -2,10 +2,18 @@ class ApplicationController < ActionController::Base
   # include ControllerIncludes::CurrentUser # methods regarding current_user
 
   helper_method :current_user_session, :current_user
-  ALL_FILTERS = [:require_app_access, :require_user, :current_user, :current_user_session]
+  ALL_FILTERS = [:require_app_access, :require_user, :current_user, :current_user_session, :create_guest_unless_logged_in]
   before_action *ALL_FILTERS
 
   private
+  def create_guest_unless_logged_in
+    if current_user.nil?
+      guest = User.create_guest_account
+      guest.reset_persistence_token!
+      @current_user_session = UserSession.create(guest)
+      @current_user = @current_user_session && @current_user_session.user
+    end
+  end
 
   def require_app_access
     unless cookies['cf-super-secure-app'] && cookies['cf-super-secure-app'] == "a"
@@ -40,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_no_user
-    if current_user
+    if current_user && !current_user.guest?
       store_location
       flash[:notice] = "You must be logged out to access this page"
       redirect_to root_path
