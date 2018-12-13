@@ -34,6 +34,10 @@ class Comment < ApplicationRecord
     gallery_admin_ids.include?(user_id)
   end
 
+  def edited?
+    !edited_at.blank?
+  end
+
   private
 
   ### Custom Validations be here
