@@ -12,30 +12,35 @@ import UserAvatar from '../../containers/comments/UserAvatar';
 import VotingContainerBase from '../voting/VotingContainerBase';
 
 class Comment extends React.Component {
-  constructor(props){
-    super(props);
-      this.state = {
-        editStatus: false,
-        updateId: null,
-        text: this.props.text,
-        edited: this.props.edited,
-        replies: this.props.replies,
-        userFollowed: this.props.userFollowed,
-        userBlocked: this.props.userBlocked,
-        userVoted: this.props.userVoted,
-        formInvalid: true,
-        userTileHover: false,
-        showFullText: false
-      }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleEditSubmit = this.handleEditSubmit.bind(this);
-    this.handleCancelEditComment = this.handleCancelEditComment.bind(this);
-    this.onUserHover = this.onUserHover.bind(this);
-    this.handleStateFlip = this.handleStateFlip.bind(this);
-    this.handleFollow = this.handleFollow.bind(this);
-    this.handleBlock = this.handleBlock.bind(this);
-    this.showVotes = this.showVotes.bind(this);
-    this.updateUserVoted = this.updateUserVoted.bind(this);
+  state = {
+    editStatus: false,
+    updateId: null,
+    text: this.props.text,
+    edited: this.props.edited,
+    replies: this.props.replies,
+    userFollowed: this.props.userFollowed,
+    userBlocked: this.props.userBlocked,
+    userVoted: this.props.userVoted,
+    formInvalid: true,
+    userTileHover: false,
+    showFullText: false
+  }
+
+  onUserHover = this.onUserHover.bind(this);
+  handleFollow = this.handleFollow.bind(this);
+  handleBlock = this.handleBlock.bind(this);
+  handleStateFlip = this.handleStateFlip.bind(this);
+  handleChange = this.handleChange.bind(this);
+  handleCancelEditComment = this.handleCancelEditComment.bind(this);
+  handleEditSubmit = this.handleEditSubmit.bind(this);
+  showVotes = this.showVotes.bind(this);
+  updateUserVoted = this.updateUserVoted.bind(this);
+
+  handleChange(event){
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+    this.setState({ [name]: value })
   }
 
   onUserHover(){
@@ -49,13 +54,6 @@ class Comment extends React.Component {
     const state = this.state[name];
 
     this.setState({ [name]: !state })
-  }
-
-  handleChange(event){
-    const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-    this.setState({ [name]: value })
   }
 
   handleCancelEditComment(){
@@ -173,30 +171,30 @@ class Comment extends React.Component {
   render(){
     var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState, galleryId } = this.props
     var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid, userVoted } = this.state
-    var userTile, starOpacity, blockOpacity;
 
-    var editButton, cancelButton;
-    if (!artSettings.disabled) {
-      if (editStatus && currentUserId === commentUserId) {
-        editButton = <button className="btn btn-sm comment-button" onClick={this.handleEditSubmit}>Edit Comment</button>
-        cancelButton = <button className="btn btn-sm comment-cancel-button" onClick={this.handleCancelEditComment}>Cancel</button>
-      } else if (currentUserId === commentUserId) {
-        editButton = <button className="btn btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
-      }
-    }
-
-    var lastEdited;
-    if (edited) {
-      lastEdited =
-      <div className="cf-comment-edit">
-        Comment has been Edited
+    var followStar, blockSym, starOpacity, blockOpacity;
+    if (commentUserId != currentUserId && userName != "Anonymous") {
+      if (!userFollowed) { starOpacity = "translucent" }
+      followStar =
+      <div className={`col-sm-1 block-follow-box cursor-pointer ${starOpacity}`}>
+        <img onClick={this.handleFollow} src="/assets/star" height="20px" width="20px" />
       </div>
+
+      if (!userBlocked) { blockOpacity = "translucent" }
+      blockSym =
+      <div className={`col-sm-1 block-follow-box cursor-pointer ${blockOpacity}`}>
+        <img onClick={this.handleBlock} src="/assets/block" height="20px" width="20px" />
+      </div>
+
+    } else {
+      followStar = <div className={`col-sm-1 block-follow-box`} />
+      blockSym = <div className={`col-sm-1 block-follow-box`} />
     }
 
     var textBox;
     if (editStatus) {
       textBox =
-        <Textarea
+      <Textarea
         maxLength="3000"
         className="form-control margin-top-10px textarea col-sm-10 cf-comment-text-area-edit"
         name="text"
@@ -229,23 +227,28 @@ class Comment extends React.Component {
       }
     }
 
-    var followStar, blockSym;
-    if (commentUserId != currentUserId && userName != "Anonymous") {
-      if (!userFollowed) { starOpacity = "translucent" }
-      followStar =
-      <div className={`col-sm-1 block-follow-box cursor-pointer ${starOpacity}`}>
-        <img onClick={this.handleFollow} src="/assets/star" height="20px" width="20px" />
+    var lastEdited;
+    if (edited) {
+      lastEdited =
+      <div className="cf-comment-edit">
+        Comment has been Edited
       </div>
+    }
 
-      if (!userBlocked) { blockOpacity = "translucent" }
-      blockSym =
-      <div className={`col-sm-1 block-follow-box cursor-pointer ${blockOpacity}`}>
-        <img onClick={this.handleBlock} src="/assets/block" height="20px" width="20px" />
-      </div>
+    var editButton, cancelButton;
+    if (!artSettings.disabled) {
+      if (editStatus && currentUserId === commentUserId) {
+        editButton = <button className="btn btn-sm comment-button" onClick={this.handleEditSubmit}>Edit Comment</button>
+        cancelButton = <button className="btn btn-sm comment-cancel-button" onClick={this.handleCancelEditComment}>Cancel</button>
+      } else if (currentUserId === commentUserId) {
+        editButton = <button className="btn btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+      }
+    }
 
-    } else {
-      followStar = <div className={`col-sm-1 block-follow-box`} />
-      blockSym = <div className={`col-sm-1 block-follow-box`} />
+    var adminFlag;
+    if (this.props.userInfo.gallery_admin) {
+      adminFlag =
+      " - Mod"
     }
 
     var deleteCommentButton, banUserButton;
@@ -258,13 +261,6 @@ class Comment extends React.Component {
       banUserButton =
       <BanUser banAction={this.props.handleBanUser} />
 
-
-    }
-
-    var adminFlag;
-    if (this.props.userInfo.gallery_admin) {
-      adminFlag =
-      " - Mod"
     }
 
     var showVotesButton;

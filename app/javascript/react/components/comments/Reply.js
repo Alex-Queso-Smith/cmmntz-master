@@ -163,14 +163,8 @@ class Reply extends React.Component {
     var { currentUserId, user, lengthImage, replyUserId } = this.props;
     var { text, editStatus, edited } = this.state;
     var { user_name, gender, age_range } = this.props.user;
-    var userInfo, starOpacity, followStar, blockSym, blockOpacity;
 
-    if (user_name == '') {
-      userInfo = "Anonymous"
-    } else {
-      userInfo = `${user_name} - ${gender} - ${age_range}`
-    }
-
+    var starOpacity, followStar, blockSym, blockOpacity;
     if (user.user_id != currentUserId && user_name != "Anonymous") {
       if (!this.state.userFollowed) {
         starOpacity = "translucent"

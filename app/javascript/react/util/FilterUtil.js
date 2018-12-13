@@ -87,7 +87,6 @@ export const FilterButtonsRowOne = (object) => {
         className={`${blankClass}`}
         value={`${type[0]}_percent`}
         onClick={handleFilterClickParent}
-        title={type[1]}
         image={image}
         visibility={visibility}
         />
@@ -135,7 +134,6 @@ export const FilterButtonsRowTwo = (object) => {
         className={`${blankClass}`}
         value={`${type[0]}_percent`}
         onClick={handleFilterClickParent}
-        title={type[1]}
         image={image}
         visibility={visibility}
         />
