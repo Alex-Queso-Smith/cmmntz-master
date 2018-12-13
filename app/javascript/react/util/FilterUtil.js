@@ -57,7 +57,7 @@ export const RowOneFilterTypes = [
   ["dislike", "Dislike"],
   ["dislike_a_lot", "Dislike A Lot"],
   ["trash", "Trash"],
-  ["warn", "Warn"],
+  ["warn", "Flag"],
   ["blank3", "blank3"]
 ]
 
@@ -87,6 +87,7 @@ export const FilterButtonsRowOne = (object) => {
         className={`${blankClass}`}
         value={`${type[0]}_percent`}
         onClick={handleFilterClickParent}
+        title={type[1]}
         image={image}
         visibility={visibility}
         />
@@ -134,6 +135,7 @@ export const FilterButtonsRowTwo = (object) => {
         className={`${blankClass}`}
         value={`${type[0]}_percent`}
         onClick={handleFilterClickParent}
+        title={type[1]}
         image={image}
         visibility={visibility}
         />
