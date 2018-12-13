@@ -5,20 +5,40 @@ import { CommentLengthSorter } from '../../util/CommentUtil';
 import Comment from '../../components/comments/Comment';
 
 class CommentsList extends React.Component {
-  state = {
-    replyParent: null
+  constructor(props){
+    super(props);
+    this.state = {
+      replyParent: null,
+      allComments: this.props.allComments
+    }
+
+    this.handleReplyOpen = this.handleReplyOpen.bind(this);
+    this.handleEditUpdate = this.handleEditUpdate.bind(this);
+
   }
 
-  handleReplyOpen = this.handleReplyOpen.bind(this);
+  componentDidUpdate(prevProps, prevState){
+    if (prevProps.allComments != this.props.allComments) {
+      this.setState({ allComments: this.props.allComments })
+    }
+  }
 
   handleReplyOpen(commentId){
     this.setState({ replyParent: commentId })
   }
 
+  handleEditUpdate(commentId, text){
+    var updateComments = this.state.allComments;
+
+    updateComments.find(comment => comment.id === commentId).text = text
+    this.setState({ allComments: updateComments })
+  }
+
   render(){
 
     var commentsArray;
-    var { allComments, percentShow, handleTopChange, followedUsers, blockedUsers, artType, artId, userId , artSettings, updateAppState, adminStatus, censored } = this.props
+    var { allComments } = this.state;
+    var { percentShow, handleTopChange, followedUsers, blockedUsers, artType, artId, userId , artSettings, updateAppState, adminStatus, censored } = this.props
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
@@ -93,6 +113,7 @@ class CommentsList extends React.Component {
                 totalInteractions={total_interactions}
                 voteCounts={vote_counts}
                 showVoteCountTrigger={this.props.showVoteCountTrigger}
+                handleEditUpdate={this.handleEditUpdate}
                 />
               <hr />
             </div>

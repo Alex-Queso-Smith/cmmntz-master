@@ -26,6 +26,7 @@ class Reply extends React.Component {
   handleCancelEditReply = this.handleCancelEditReply.bind(this);
   handleEditSubmit = this.handleEditSubmit.bind(this);
   showVotes = this.showVotes.bind(this);
+  updateUserVoted = this.updateUserVoted.bind(this);
 
   handleChange(event){
     const target = event.target;
@@ -48,20 +49,19 @@ class Reply extends React.Component {
   }
 
   handleCancelEditReply(){
-    if (this.state.edited) {
-      this.setState({ editStatus: false })
-    } else {
-      this.setState({
-        editStatus: false,
-        text: this.props.text
-      })
-    }
+    this.setState({
+      editStatus: false,
+      text: this.props.text
+    })
   }
 
   handleEditSubmit(event){
     event.preventDefault();
+
+    var { text } = this.state;
+
     var newText = new FormData();
-    newText.append("comment[text]", this.state.text)
+    newText.append("comment[text]", text)
 
     FetchBasic(this, `/api/v1/comments/${this.props.replyId}.json`, newText, 'PATCH')
     .then(body => {
@@ -85,9 +85,9 @@ class Reply extends React.Component {
       } else {
         this.setState({
           editStatus: false,
-          text: body.comment.text,
           edited: body.comment.edited
         })
+        this.props.handleEditUpdate(this.props.replyId, text)
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -151,6 +151,11 @@ class Reply extends React.Component {
   }
 
   showVotes(){
+    this.setState({ userVoted: true })
+    this.props.showVoteCountTrigger()
+  }
+
+  updateUserVoted(){
     this.setState({ userVoted: true })
   }
 
@@ -328,6 +333,7 @@ class Reply extends React.Component {
           userVoted={this.state.userVoted}
           artSettings={this.props.artSettings}
           updateAppState={this.props.updateAppState}
+          updateUserVoted={this.updateUserVoted}
         />
       </div>
     )
