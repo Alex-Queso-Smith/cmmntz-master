@@ -42,7 +42,6 @@ class Comment extends React.Component {
     this.setState({ userTileHover: !this.state.userTileHover })
   }
 
-
   handleStateFlip(event){
     event.preventDefault();
     const target = event.target;
@@ -60,20 +59,19 @@ class Comment extends React.Component {
   }
 
   handleCancelEditComment(){
-    if (this.state.edited) {
-      this.setState({ editStatus: false })
-    } else {
-      this.setState({
-        editStatus: false,
-        text: this.props.text
-      })
-    }
+    this.setState({
+      editStatus: false,
+      text: this.props.text
+    })
   }
 
   handleEditSubmit(event){
     event.preventDefault();
+
+    var { text } = this.state;
+
     var newText = new FormData();
-    newText.append("comment[text]", this.state.text)
+    newText.append("comment[text]", text)
 
     FetchBasic(this, `/api/v1/comments/${this.props.commentId}.json`, newText, 'PATCH')
     .then(body => {
@@ -97,9 +95,9 @@ class Comment extends React.Component {
       } else {
         this.setState({
           editStatus: false,
-          text: body.comment.text,
           edited: body.comment.edited
         })
+        this.props.handleEditUpdate(this.props.commentId, text)
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -361,6 +359,7 @@ class Comment extends React.Component {
           banUser={this.props.banUser}
           adminStatus={this.props.adminStatus}
           galleryId={galleryId}
+          showVoteCountTrigger={this.props.showVoteCountTrigger}
         />
       </div>
     )

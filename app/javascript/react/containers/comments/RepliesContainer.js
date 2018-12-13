@@ -26,6 +26,7 @@ class RepliesContainer extends React.Component {
   handleSuccessfulReply = this.handleSuccessfulReply.bind(this);
   handleReplySubmit = this.handleReplySubmit.bind(this);
   deleteReply = this.deleteReply.bind(this);
+  handleEditUpdate = this.handleEditUpdate.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (prevState.replyText != this.state.replyText) {
@@ -155,6 +156,13 @@ class RepliesContainer extends React.Component {
 
   }
 
+  handleEditUpdate(replyId, text){
+    var updateReplies = this.state.replies;
+
+    updateReplies.find(reply => reply.id === replyId).text = text
+    this.setState({ replies: updateReplies })
+  }
+
   deleteReply(replyId){
     var { galleryId } = this.props;
     var c = confirm("Are you sure you want to delete this reply?")
@@ -248,6 +256,8 @@ class RepliesContainer extends React.Component {
               handleDeleteReply={handleDeleteReply}
               adminStatus={this.props.adminStatus}
               updateAppState={this.props.updateAppState}
+              showVoteCountTrigger={this.props.showVoteCountTrigger}
+              handleEditUpdate={this.handleEditUpdate}
               />
           )
         } else {
