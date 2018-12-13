@@ -15,13 +15,13 @@ export const ImageSelectorTemp = (filterList, notFilterList, type) => {
 }
 
 export const SortTypes = [
-  ["top_percent", "top"],
-  ["love_percent", "love"],
-  ["like_score", "like"],
-  ["smart_percent", "smart"],
-  ["funny_percent", "funny"],
-  ["created_at", "created_at"],
-  ["comment_length", "length2"]
+  ["top_percent", "top", "Top"],
+  ["love_percent", "love", "Love"],
+  ["like_score", "like", "Like"],
+  ["smart_percent", "smart", "Smart"],
+  ["funny_percent", "funny", "Funny"],
+  ["created_at", "created_at", "Comment Date"],
+  ["comment_length", "length2", "Comment Length"]
 ]
 
 export const SortButtons = (object) => {
@@ -41,6 +41,8 @@ export const SortButtons = (object) => {
         onClick={object.props.handleFilterSubmit}
         image={image}
         visibility={''}
+        className="tooltip-container"
+        title={type[2]}
         />
     )
   })
@@ -63,10 +65,11 @@ export const RowOneFilterTypes = [
 
 export const FilterButtonsRowOne = (object) => {
   return RowOneFilterTypes.map((type) => {
-    var image, visibility, blankClass;
+    var image, visibility, blankClass, tooltipClass;
 
     if (!type[0].includes('blank')) {
       image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
+      tooltipClass = "tooltip-container"
     }
 
     if (type[0].includes('blank')) {
@@ -84,7 +87,7 @@ export const FilterButtonsRowOne = (object) => {
     return(
       <SortButton
         key={`filter_${type[1]}`}
-        className={`${blankClass}`}
+        className={`${blankClass} ${tooltipClass}`}
         value={`${type[0]}_percent`}
         onClick={handleFilterClickParent}
         title={type[1]}
@@ -111,10 +114,11 @@ export const RowTwoFilterTypes = [
 
 export const FilterButtonsRowTwo = (object) => {
   return RowTwoFilterTypes.map((type) => {
-    var image, visibility, blankClass;
+    var image, visibility, blankClass, tooltipClass;
 
     if (!type[0].includes('blank')) {
       image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
+      tooltipClass = "tooltip-container"
     }
 
     if (type[0].includes('blank')){
@@ -132,7 +136,7 @@ export const FilterButtonsRowTwo = (object) => {
     return(
       <SortButton
         key={`filter_${type[1]}`}
-        className={`${blankClass}`}
+        className={`${blankClass} ${tooltipClass}`}
         value={`${type[0]}_percent`}
         onClick={handleFilterClickParent}
         title={type[1]}
