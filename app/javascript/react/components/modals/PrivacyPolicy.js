@@ -6,6 +6,7 @@ export const PrivacyPolicy = props => {
     <BasicModal
       modalButtonText="Privacy Policy"
       modalTitle="Privacy Policy"
+      modalButtonClass="btn-dark"
     >
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus odio nec magna consequat, et cursus turpis placerat. Sed at tristique nisl, in pharetra urna. Vestibulum nec tortor eget velit eleifend ullamcorper eget at purus. Fusce consequat magna tellus, vitae laoreet tortor aliquam quis. Pellentesque finibus diam lacinia, euismod libero vitae, faucibus risus. Etiam a nunc sed quam semper eleifend vitae et ex. Cras volutpat, lectus et porta elementum, nibh nisl condimentum augue, nec tempus lectus lectus nec ligula. Pellentesque sed commodo eros, vel feugiat magna. Nam eleifend pellentesque pretium. Nam lacus sapien, bibendum sit amet diam volutpat, ornare feugiat arcu. Proin tempus aliquet enim, quis pellentesque tortor hendrerit a. Nunc vel metus pulvinar, ultrices sapien ut, sagittis sem. Pellentesque luctus consectetur suscipit. Curabitur luctus condimentum scelerisque. Integer vitae imperdiet nulla, sed placerat tellus.</p>
 

@@ -253,12 +253,12 @@ class CommentFormContainer extends React.Component {
               </button>
             </div>
           </div>
-          <div className="row">
-            {selfVoteButtonsRowOne}
-          </div>
-          <div className="row">
-            {selfVoteButtonsRowTwo}
-          </div>
+        </div>
+        <div className="row">
+          {selfVoteButtonsRowOne}
+        </div>
+        <div className="row">
+          {selfVoteButtonsRowTwo}
         </div>
         <div className="clear"></div>
       </form>

@@ -5,6 +5,7 @@ import { FetchBasic, FetchWithUpdate, CreateErrorElements, CheckInputValidation 
 import { ReplyFieldActivated, ReplyButtonActive, ReplyButtonInactive, ReplyCancelButton } from './CommentComponents';
 import { Checkbox } from '../form/FormComponents';
 import Modal from '../modals/Modal';
+import BanUser from '../modals/BanUser';
 import Reply from './Reply';
 import RepliesContainer from '../../containers/comments/RepliesContainer';
 import UserAvatar from '../../containers/comments/UserAvatar';
@@ -40,6 +41,7 @@ class Comment extends React.Component {
   onUserHover(){
     this.setState({ userTileHover: !this.state.userTileHover })
   }
+
 
   handleStateFlip(event){
     event.preventDefault();
@@ -209,14 +211,14 @@ class Comment extends React.Component {
         if (!this.state.showFullText) {
           textBox =
           <div className="cf-comment-text" >
-            {text.substring(0, text_length) + "..."}
+            <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text.substring(0, text_length) + "..."}} />
             <br />
             <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show more</a>
           </div>
         } else {
           textBox =
           <div className="cf-comment-text" >
-            {text}
+            <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
             <br />
             <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show less</a>
           </div>
@@ -224,7 +226,7 @@ class Comment extends React.Component {
       } else {
         textBox =
         <div className="cf-comment-text" >
-          {text}
+          <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
         </div>
       }
     }
@@ -254,10 +256,11 @@ class Comment extends React.Component {
       <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteComment}>
         Delete Comment
       </button>
+
       banUserButton =
-      <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleBanUser}>
-        Ban User
-      </button>
+      <BanUser banAction={this.props.handleBanUser} />
+
+
     }
 
     var adminFlag;
@@ -316,7 +319,6 @@ class Comment extends React.Component {
               <div className="col-sm-6">
               </div>
             </div>
-
             {textBox}
             {lastEdited}
             <div className="cf-comment-button-group">

@@ -27,8 +27,8 @@ class CommentsList extends React.Component {
           this.props.deleteComment(comment.id)
         }
 
-        var handleBanUser = () => {
-          this.props.banUser(comment.user.user_id)
+        var handleBanUser = (event) => {
+          this.props.banUser(comment.user.user_id, event)
         }
 
         var { user_name, gender, age_range, user_id, show_censored} = comment.user

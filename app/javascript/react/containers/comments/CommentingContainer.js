@@ -115,7 +115,7 @@ class CommentingContainer extends React.Component {
 
           var newUserSettings = this.state.userSettings;
           var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, settings_updated, followed_users, blocked_users } = userData.user
-          var settingsUpdated = settings_updated === "true" ? true : false
+          var settingsUpdated = settings_updated === "true" || settings_updated == true ? true : false
 
           newUserSettings.sort_dir = sort_dir
           newUserSettings.sort_type = sort_type
@@ -254,17 +254,13 @@ class CommentingContainer extends React.Component {
         }
         this.setState({ commentFormErrors: body.errors})
       } else {
-        var append = this.state.sortOpts.page > 1
-        var newComments;
-        if (append) {
-          newComments = this.state.comments.concat(body.comments)
-        } else {
-          newComments = body.comments
-        }
+        var newComments = this.state.comments
+        newComments.unshift(body.comment)
+        var totalComments = this.state.totalComments
 
         this.setState({
           comments: newComments,
-          totalComments: body.total_comments
+          totalComments: totalComments++
         })
 
         if (body.old_top_id){
@@ -429,7 +425,7 @@ class CommentingContainer extends React.Component {
     var censorComments;
 
     if (userSettings.settings_updated) {
-      censorComments = censor === "true" ? true : false
+      censorComments = censor === "true" || censor == true ? true : false
       newSortOpts.sortDir = sort_dir
       newSortOpts.sortType = sort_type
       newSortOpts.filterList = filter_list
@@ -438,7 +434,7 @@ class CommentingContainer extends React.Component {
       newSortOpts.votesFrom = votes_from
       newSortOpts.setFrom = "user"
     } else {
-      censorComments = gallery_censor === "true" ? true : false
+      censorComments = gallery_censor === "true" || gallery_censor == true ? true : false
       newSortOpts.sortDir = gallery_sort_dir
       newSortOpts.sortType = gallery_sort_type
       newSortOpts.filterList = gallery_filter_list
@@ -473,12 +469,13 @@ class CommentingContainer extends React.Component {
     }
   }
 
-  banUser(userId){
+  banUser(userId, event){
     var c = confirm("Do you wish to ban this user? You may unban from the admin console at any time.")
     var { galleryId, artId } = this.props;
 
     if (c) {
-      FetchIndividual(this, `/api/v1/gallery_blacklistings.json?gallery_id=${galleryId}&user_id=${userId}`, "POST")
+      var l = event.target.previousSibling.value
+      FetchIndividual(this, `/api/v1/gallery_blacklistings.json?gallery_id=${galleryId}&user_id=${userId}&dur=${l}`, "POST")
       .then(success => { alert("This user has been banned, login to admin console if you wish to unban at a future date.") })
       .then(finished => { this.handleFilterSubmit() })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
