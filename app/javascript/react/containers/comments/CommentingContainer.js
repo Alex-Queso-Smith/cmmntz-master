@@ -81,6 +81,7 @@ class CommentingContainer extends React.Component {
          oldUserThemeSettings.colorTheme = userData.user.color_theme;
          var oldUserSettings = this.state.userSettings;
          oldUserSettings.admin = userData.user.admin;
+         oldUserSettings.guest = userData.user.guest;
 
          this.setState({
            userThemeSettings: oldUserThemeSettings,
@@ -555,10 +556,22 @@ class CommentingContainer extends React.Component {
 
     var filteredCount = this.state.grandTotalComments - this.state.totalComments
 
+    var loginStatement;
+    if (this.state.userSettings.guest) {
+      loginStatement =
+      <div>
+        You are a Guest.
+        <button className="btn btn-link" onClick={() => window.location = "/login"}>Login</button>
+        <button className="btn btn-link" onClick={() => window.location = "/register"}>Register</button>
+      </div>
+    }
+
+
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         {showVoteModal}
         {filterModal}
+        {loginStatement}
         <CommentEtiquette galleryCommentEtiquette={commentEtiquette} />
         <div className="row">
           <div className="col-sm-12 col-md-6">
