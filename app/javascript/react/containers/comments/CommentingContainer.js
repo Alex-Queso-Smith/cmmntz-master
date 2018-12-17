@@ -587,18 +587,30 @@ class CommentingContainer extends React.Component {
     var loginStatement;
     if (this.state.userSettings.guest) {
       loginStatement =
-      <div>
-        You are a Guest.
-        <button className="btn btn-link" onClick={() => window.location = "/login"}>Login</button>
-        <button className="btn btn-link" onClick={() => window.location = "/register"}>Register</button>
+      <div className="login-statement-container row">
+        <div className="col-6 login-statement">
+          You are a Guest.
+        </div>
+        <div className="col-3">
+          <button className="btn btn-sm login-button" onClick={ () => window.location = "/login" }>Login</button>
+        </div>
+        <div className="col-3">
+          <button className="btn btn-sm login-button" onClick={ () => window.location = "/register" }>Register</button>
+        </div>
       </div>
     } else {
       var edit_url = `/users/${this.props.userId}/edit_settings`
       loginStatement =
-      <div>
-        Welcome {this.state.userInfo.userName}.
-        <button className="btn btn-link" onClick={() => window.location = edit_url}>Settings</button>
-        <button className="btn btn-link" onClick={() => window.location = "/logout"}>Logout</button>
+      <div className="login-statement-container row">
+        <div className="col-6 login-statement">
+          Welcome {this.state.userInfo.userName}!
+        </div>
+        <div className="col-3">
+          <button className="btn btn-sm login-button" onClick={ () => window.location = edit_url }>Settings</button>
+        </div>
+        <div className="col-3">
+          <button className="btn btn-sm login-button" onClick={ () => window.location = "/logout" }>Logout</button>
+        </div>
       </div>
     }
 

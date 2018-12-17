@@ -369,3 +369,19 @@ a:hover {
       border-color: #D3D3D3 transparent transparent transparent;
   }
 }
+
+.login-statement-container {
+  width: 50%;
+  margin: 5px 0px 5px 0px;
+}
+
+.login-statement {
+  line-height: 3.25em;
+}
+
+@media (max-width: $breakpoint-phone) {
+  .login-statement-container {
+    width: 100%;
+    margin: 5px 0px 5px 0px;
+  }
+}
