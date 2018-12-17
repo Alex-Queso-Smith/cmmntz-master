@@ -13,20 +13,17 @@ import VotingContainerBase from '../voting/VotingContainerBase';
 
 class Comment extends React.Component {
   state = {
-    editStatus: false,
-    updateId: null,
     text: this.props.text,
+    editStatus: false,
     edited: this.props.edited,
-    replies: this.props.replies,
+    userVoted: this.props.userVoted,
+    showFullText: false,
     userFollowed: this.props.userFollowed,
     userBlocked: this.props.userBlocked,
-    userVoted: this.props.userVoted,
-    formInvalid: true,
-    userTileHover: false,
-    showFullText: false
+    replies: this.props.replies,
+    isReply: this.props.isReply
   }
 
-  onUserHover = this.onUserHover.bind(this);
   handleFollow = this.handleFollow.bind(this);
   handleBlock = this.handleBlock.bind(this);
   handleStateFlip = this.handleStateFlip.bind(this);
@@ -41,10 +38,6 @@ class Comment extends React.Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     this.setState({ [name]: value })
-  }
-
-  onUserHover(){
-    this.setState({ userTileHover: !this.state.userTileHover })
   }
 
   handleStateFlip(event){
@@ -170,7 +163,7 @@ class Comment extends React.Component {
 
   render(){
     var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState, galleryId } = this.props
-    var { replies, editStatus, edited, text, userTileHover, userFollowed, userBlocked, formInvalid, userVoted } = this.state
+    var { replies, editStatus, edited, text, userFollowed, userBlocked } = this.state
 
     var followStar, blockSym, starOpacity, blockOpacity;
     if (commentUserId != currentUserId && userName != "Anonymous") {
@@ -265,7 +258,7 @@ class Comment extends React.Component {
 
     var showVotesButton;
     var { totalInteractions } = this.props;
-    if (!userVoted) {
+    if (!this.state.userVoted) {
 
       showVotesButton =
       <div className="row">
@@ -283,18 +276,40 @@ class Comment extends React.Component {
       </div>
     }
 
+    var replies;
+    if (!this.state.isReply) {
+      replies =
+      <RepliesContainer
+        replies={replies}
+        followedUsers={followedUsers}
+        blockedUsers={blockedUsers}
+        currentUserId={currentUserId}
+        artId={artId}
+        artType={artType}
+        commentId={commentId}
+        handleTopChange={this.props.handleTopChange}
+        handleReplyOpen={this.props.handleReplyOpen}
+        replyParent={this.props.replyParent}
+        censored={censored}
+        artSettings={artSettings}
+        updateAppState={updateAppState}
+        banUser={this.props.banUser}
+        adminStatus={this.props.adminStatus}
+        galleryId={galleryId}
+        showVoteCountTrigger={this.props.showVoteCountTrigger}
+      />
+    }
+
     return(
       <div className="cf-comment">
         <div className="cf-comment-wrapper">
           <UserAvatar
-            userTileHover={userTileHover}
             userInfo={userInfo}
-            onMouseEnter={this.onUserHover}
-            onMouseLeave={this.onUserHover}
             userName={userName}
             followStar={followStar}
             blockSym={blockSym}
           />
+
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
               <div className="cf-comment-user-name col-10">
@@ -306,13 +321,14 @@ class Comment extends React.Component {
                 </div>
               </div>
             </div>
+
             <div className="row">
               <div className="col-sm-6">
                 {createdAt}
               </div>
-              <div className="col-sm-6">
-              </div>
+              <div className="col-sm-6" />
             </div>
+
             {textBox}
             {lastEdited}
             <div className="cf-comment-button-group">
@@ -322,41 +338,24 @@ class Comment extends React.Component {
               {banUserButton}
             </div>
           </div>
+
         </div>
         {showVotesButton}
         <VotingContainerBase
           commentId={this.props.commentId}
           currentUserId={currentUserId}
           commentVotes={this.props.commentVotes}
+          totalInteractions={this.props.totalInteractions}
           votePercents={this.props.votePercents}
-          userVoted={this.state.userVoted}
-          handleTopChange={this.props.handleTopChange}
-          artSettings={artSettings}
-          updateAppState={updateAppState}
           showVotes={this.showVotes}
           voteCounts={this.props.voteCounts}
-          updateUserVoted={this.updateUserVoted}
-          totalInteractions={this.props.totalInteractions}
-        />
-        <RepliesContainer
-          replies={replies}
-          followedUsers={followedUsers}
-          blockedUsers={blockedUsers}
-          currentUserId={currentUserId}
-          artId={artId}
-          artType={artType}
-          commentId={commentId}
           handleTopChange={this.props.handleTopChange}
-          handleReplyOpen={this.props.handleReplyOpen}
-          replyParent={this.props.replyParent}
-          censored={censored}
+          userVoted={this.state.userVoted}
           artSettings={artSettings}
           updateAppState={updateAppState}
-          banUser={this.props.banUser}
-          adminStatus={this.props.adminStatus}
-          galleryId={galleryId}
-          showVoteCountTrigger={this.props.showVoteCountTrigger}
+          updateUserVoted={this.updateUserVoted}
         />
+      {replies}
       </div>
     )
   }

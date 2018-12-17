@@ -649,7 +649,7 @@ class CommentingContainer extends React.Component {
             <CommentsList
               artId={artId}
               artType={artType}
-              userId={userId}
+              currentUserId={userId}
               allComments={comments}
               handleTopChange={this.handleTopChange}
               followedUsers={followedUsers}

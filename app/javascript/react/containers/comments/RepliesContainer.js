@@ -4,7 +4,7 @@ import { FetchWithUpdate, FetchIndividual, CreateErrorElements, CheckInputValida
 import { CommentLengthSorter } from '../../util/CommentUtil';
 import { ReplyFieldActivated, ReplyButtonActive, ReplyButtonInactive, ReplyCancelButton } from '../../components/comments/CommentComponents';
 import Modal from '../../components/modals/Modal';
-import Reply from '../../components/comments/Reply';
+import Comment from '../../components/comments/Comment';
 
 class RepliesContainer extends React.Component {
   state = {
@@ -198,70 +198,85 @@ class RepliesContainer extends React.Component {
   }
 
   render(){
-    var { followedUsers, blockedUsers, currentUserId, censored, artSettings } = this.props;
+    var { followedUsers, blockedUsers, currentUserId, censored, artSettings, updateAppState, adminStatus, artSettings } = this.props;
     var { replies } = this.state;
     var repliesList, anonModal, replyField, replyButton, cancelReplyButton, replyErrorText, repliesWrapper;
-    var blockedCount = 0;
-
 
     if (replies && this.state.showReplies) {
        var commentReplies = replies.map((reply) => {
 
-        var followed = followedUsers.includes(reply.user.user_id)
-        var blocked = blockedUsers.includes(reply.user.user_id)
-        var { id, edited, user, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text, vote_counts, total_interactions } = reply
-        var lengthImage = CommentLengthSorter(text)
+         var handleNewReplyBox = () => {
+           this.props.handleReplyOpen(this.props.commentId)
+         }
 
-        var handleNewReplyBox = () => {
-          this.props.handleReplyOpen(this.props.commentId)
-        }
+         var handleBanUser = () => {
+           this.banUser(reply.user.user_id)
+         }
 
-        var handleBanUser = () => {
-          this.banUser(reply.user.user_id)
-        }
+         var handleDeleteReply = () => {
 
-        var handleDeleteReply = () => {
+           this.deleteReply(reply.id)
+         }
 
-          this.deleteReply(reply.id)
-        }
+        var { id, edited, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text, vote_counts, total_interactions } = reply
+        var { user_name, gender, age_range, user_id, show_censored } = reply.user;
 
         var shownText = text;
         if (censored && censored_text) {
           shownText = censored_text
         }
 
-        if (!blocked) {
+        var lengthImage = CommentLengthSorter(text)
+        var userFollowed = followedUsers.includes(user_id)
+        var userBlocked = blockedUsers.includes(user_id)
+
+        var userName;
+        if (user_name) {
+          userName = `${user_name}`
+        }
+
+        var showCensored = true;
+
+        if (censored && user_id != userId) {
+          if (show_censored === "false") {
+            showCensored = false
+          }
+        }
+
+        if (!userBlocked && showCensored) {
           return(
-            <Reply
-              key={id}
-              handleNewReplyBox={handleNewReplyBox}
-              replyId={id}
-              user={user}
-              lengthImage={lengthImage}
-              edited={edited}
-              text={shownText}
-              posted={created_at}
-              userFollowed={followed}
-              userBlocked={blocked}
-              userVoted={user_has_voted}
-              replyUserId={user.user_id}
-              currentUserId={currentUserId}
-              commentVotes={current_users_votes}
-              votePercents={vote_percents}
-              voteCounts={vote_counts}
-              totalInteractions={total_interactions}
-              artSettings={this.props.artSettings}
-              updateAppState={this.props.updateAppState}
-              handleBanUser={handleBanUser}
-              handleDeleteReply={handleDeleteReply}
-              adminStatus={this.props.adminStatus}
-              updateAppState={this.props.updateAppState}
-              showVoteCountTrigger={this.props.showVoteCountTrigger}
-              handleEditUpdate={this.handleEditUpdate}
-              />
+            <div className="cf-comment-div" key={id}>
+              <Comment
+                adminStatus={adminStatus}
+                edited={edited}
+                userFollowed={userFollowed}
+                userBlocked={userBlocked}
+                commentUserId={user_id}
+                commentId={id}
+                userName={userName}
+                userInfo={reply.user}
+                lengthImage={lengthImage}
+                createdAt={created_at}
+                text={shownText}
+                userVoted={user_has_voted}
+                currentUserId={currentUserId}
+                commentVotes={current_users_votes}
+                votePercents={vote_percents}
+                voteCounts={vote_counts}
+                totalInteractions={total_interactions}
+                artSettings={artSettings}
+                updateAppState={updateAppState}
+                handleBanUser={handleBanUser}
+                handleDeleteComment={handleDeleteReply}
+                showVoteCountTrigger={this.props.showVoteCountTrigger}
+                handleEditUpdate={this.handleEditUpdate}
+                isReply={reply.reply}
+
+                handleNewReplyBox={handleNewReplyBox}
+                />
+              <hr />
+            </div>
           )
-        } else {
-          blockedCount ++
         }
       })
       repliesList =
@@ -272,14 +287,8 @@ class RepliesContainer extends React.Component {
 
     if (replies.length > 0){ // will alway show without the explicit len check
       var buttonText = this.state.showReplies ? "Hide" : "Show"
-      var showBlockedCount, repliesCount;
+      var repliesCount;
       var showRepliesButton = <button className="btn show-replies-button btn-sm margin-left-10px" name="showReplies" onClick={this.handleStateFlip}>{buttonText}</button>
-
-      if (blockedCount > 1) {
-        showBlockedCount = `${blockedCount} replies have been blocked`
-      } else if (blockedCount > 0) {
-        showBlockedCount = `${blockedCount} reply has been blocked`
-      }
 
       if (replies.length === 1) {
         repliesCount =
@@ -322,9 +331,6 @@ class RepliesContainer extends React.Component {
         {repliesCount}
         {showRepliesButton}
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span >
-          {showBlockedCount}
-        </span>
         {repliesList}
       </div>
     }
