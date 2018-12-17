@@ -81,8 +81,6 @@ export const AlwaysVisible = [
 ]
 
 export const RowOneVoteTypes = [
-  ["blank1", "blank1"],
-  ["blank2", "blank2"],
   ["top", "Top"],
   ["love", "Love"],
   ["like_a_lot", "Like A Lot"],
@@ -91,22 +89,17 @@ export const RowOneVoteTypes = [
   ["dislike", "Dislike"],
   ["dislike_a_lot", "Dislike A Lot"],
   ["trash", "Trash"],
-  ["warn", "Warn"],
-  ["blank3", "blank3"]
+  ["warn", "Warn"]
 ]
 
 export const RowTwoVoteTypes = [
-  ["blank1", "blank1"],
-  ["blank2", "blank2"],
-  ["blank3", "blank3"],
   ["smart", "Smart"],
   ["funny", "Funny"],
   ["happy", "Happy"],
   ["shocked", "Shocked"],
   ["sad", "Sad"],
   ["boring", "Boring"],
-  ["angry", "Angry"],
-  ["blank4", "blank4"]
+  ["angry", "Angry"]
 ]
 
 const OpacityHandler = (selectedVotes, type) => {
@@ -119,31 +112,22 @@ const OpacityHandler = (selectedVotes, type) => {
 
 export const RowOneVoteButtons = (object) => {
   return RowOneVoteTypes.map((type) => {
-    var visibility, image, percentage, blankClass, voteFraction;
+    var visibility, percentage, blankClass, voteFraction;
     var { userVoted, percentShow, votePercents, selectedVotes, voteCounts, totalInteractions } = object.state
     var opacity = OpacityHandler(selectedVotes, type[0]);
 
-    if (
-      userVoted &&
-      !type[0].includes('blank') &&
-      percentShow
-    ) {
+    if ( userVoted && percentShow ) {
       voteFraction = `${voteCounts[type[0]]}/${totalInteractions}`
       percentage = `${votePercents[type[0]]}%`
     }
 
-    if ( !userVoted || type[0].includes('blank') ) {
+    if ( !userVoted ) {
       if (!AlwaysVisible.includes(type[0])) {
         visibility = 'visibility-hidden'
       }
     }
 
-    if (!type[0].includes('blank')) {
-      image = ImageSelector(type[0])
-    } else {
-      blankClass = type[0]
-    }
-
+    var image = ImageSelector(type[0])
     var clickFunction = object.handleClickVote;
 
     if (type[0] === "warn") {
@@ -153,7 +137,7 @@ export const RowOneVoteButtons = (object) => {
     return(
       <VoteButtonRowOne
         key={`${object.props.commentId}_${type[0]}`}
-        className={`margin-top-bottom-10px ${blankClass}`}
+        className={`margin-top-bottom-10px`}
         name={type[0]}
         label={type[1]}
         onClick={clickFunction}
@@ -169,34 +153,25 @@ export const RowOneVoteButtons = (object) => {
 
 export const RowTwoVoteButtons = (object) => {
   return RowTwoVoteTypes.map((type) => {
-    var visibility, image, percentage, blankClass, voteFraction;
+    var visibility, percentage, blankClass, voteFraction;
     var { userVoted, percentShow, votePercents, selectedVotes, voteCounts, totalInteractions } = object.state
     var opacity = OpacityHandler(selectedVotes, type[0])
 
-    if ( // show percentage if user has voted and div is not blank
-      userVoted &&
-      !type[0].includes('blank') &&
-      percentShow
-    ) {
+    if ( userVoted && percentShow ) {
       voteFraction = `${voteCounts[type[0]]}/${totalInteractions}`
       percentage = `${votePercents[type[0]]}%`
     }
 
-    if ( !userVoted || type[0].includes('blank') ) {
+    if ( !userVoted ) {
       visibility = 'visibility-hidden'
     }
 
-    // select image for button based on type
-    if (!type[0].includes('blank')) {
-      image = ImageSelector(type[0])
-    } else {
-      blankClass = type[0]
-    }
+    var image = ImageSelector(type[0])
 
     return(
       <VoteButtonRowTwo
         key={`${object.props.commentId}_${type[0]}`}
-        className={`margin-top-bottom-10px ${blankClass}`}
+        className={`margin-top-bottom-10px`}
         name={type[0]}
         label={type[1]}
         onClick={object.handleClickVote}
