@@ -145,10 +145,12 @@ class RepliesContainer extends React.Component {
 
         this.setState({ replyErrors: body.errors})
       } else {
-        var id = this.props.commentId
-        var commentReplies = this.state.replies
-        commentReplies.unshift(body.comment)
-        this.setState({ replies: commentReplies })
+        if (body.comment.approved) {
+          var commentReplies = this.state.replies
+          commentReplies.unshift(body.comment)
+          this.setState({ replies: commentReplies })
+        }
+        
         this.handleSuccessfulReply()
       }
     })
