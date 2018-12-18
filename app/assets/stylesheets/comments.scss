@@ -60,14 +60,13 @@ $bootstrap-blue: #0069D9;
 
     .cf-comment-user-meta {
       position: relative;
-      width: 75px;
       float: left;
       overflow: visible;
 
       .cf-avatar-infoTile {
         position: absolute;
         top: 0px;
-        left: 75px;
+        left: 50px;
         z-index: 300;
 
         background-color: #fff;
@@ -88,11 +87,7 @@ $bootstrap-blue: #0069D9;
       }
 
       .cf-comment-user-avatar {
-        border: 1px solid $grayline;
-        border-radius: 50%;
-        height: 100%;
-        width: 100%;
-        min-width: 60px; min-height: 60px;
+        width: 45px; height: 45px;
         white-space: nowrap;
         text-align: center;
 
@@ -103,10 +98,8 @@ $bootstrap-blue: #0069D9;
         }
 
         .avatar-image, .cf-comment-user-data {
-          height: 100%;
-          width: 100%;
           border-radius: 50%;
-          min-width: 60px; min-height: 60px;
+          width: 45px; height: 45px;
           vertical-align: middle;
         }
       }
@@ -203,7 +196,7 @@ $bootstrap-blue: #0069D9;
   color: red;
 }
 
-.comment-button, .reply-button, .show-replies-button, .show-filters-button {
+.comment-button, .reply-button, .show-filters-button {
   margin: 5px 5px 5px 0px;
   color: #777777;
   background: #ffffff;
@@ -218,8 +211,22 @@ $bootstrap-blue: #0069D9;
   }
 }
 
+.show-replies-button {
+  color: #777777;
+  background: #ffffff;
+
+  &:hover {
+    color: #777777;
+    background: #f8f9fa;
+    border: 1px solid #777777;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
 .show-votes-button {
-  margin: 5px 0px 5px 0px;
+  // margin: 5px 0px 5px 0px;
   color: #777777;
   background: #ffffff;
 
@@ -261,7 +268,11 @@ $bootstrap-blue: #0069D9;
 }
 
 .comment-interaction-line {
-  line-height: 3.25em;
+  line-height: 2.5em;
+}
+
+.comment-interaction-row {
+  margin-top: 2px;
 }
 
 .comment-interaction-line-div {
