@@ -551,7 +551,6 @@ class CommentingContainer extends React.Component {
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
     var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored, commentEtiquette} = this.state;
 
-
     var endComments;
     if (totalComments === comments.length) {
       endComments =
@@ -654,7 +653,7 @@ class CommentingContainer extends React.Component {
         </div>
         <hr />
         <div>
-          <p>{totalComments} comments for this article | {filteredCount} comments are filtered out</p>
+          <p>{totalComments} comments | {filteredCount} filtered out</p>
         </div>
         <div className="row">
           <div className="col-sm-12 col-md-6">

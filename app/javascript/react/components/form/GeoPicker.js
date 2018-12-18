@@ -29,9 +29,7 @@ class GeoPicker extends React.Component {
         left: geoPin.x
       }
 
-      var geoMarker =
-        <div className="cf-geomarker" style={style}>
-        </div>
+      var geoMarker = <div className="cf-geomarker" style={style} />
     }
 
     return(
@@ -45,8 +43,7 @@ class GeoPicker extends React.Component {
         <Checkbox
           name="location"
           onChange={this.props.handleChange}
-          label="None of Your Business"
-          className
+          label="Prefer Not To Say"
           checked={this.props.locationAnon}
         />
       </div>

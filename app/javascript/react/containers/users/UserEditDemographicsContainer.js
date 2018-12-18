@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AgeRangeSelector, AgeSlider, GenderSelector } from '../../components/form/FormComponents';
+import { AgeRangeSelector, AgeSlider, GenderSelector, Checkbox } from '../../components/form/FormComponents';
 import { FetchDidMount, FetchWithPush } from '../../util/CoreUtil';
 import GeoPicker from '../../components/form/GeoPicker';
 
@@ -15,11 +15,11 @@ class UserEditDemographicsContainer extends React.Component {
       x: '',
       y: '',
       geoPin: { x: '', y: '' },
-      locationAnon: false
+      locationAnon: false,
+      genderAnon: false
     }
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.setLatLongClick = this.setLatLongClick.bind(this);
-    this.handleGenderChange = this.handleGenderChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -32,12 +32,25 @@ class UserEditDemographicsContainer extends React.Component {
     .then(body => {
       var user = body.user
 
-      var x = ((user.longitude + 180) / (180 / 150))
-      var y = (((user.latitude / -1) + 180) / (180 / 100))
+      var x = ( (user.longitude + 180) / (180 / 150) )
+      var y = ( ((user.latitude / -1) + 180) / (180 / 100) )
+
+      var gender;
+      switch (user.gender) {
+        case 0:
+            gender = "female"
+          break;
+        case 1:
+            gender = "other"
+          break;
+        case 2:
+            gender = "male"
+          break;
+      }
 
       this.setState({
         ageRange: user.age_range,
-        gender: user.gender,
+        gender: gender,
         latitude: user.latitude,
         longitude: user.longitude,
         x: x,
@@ -53,29 +66,36 @@ class UserEditDemographicsContainer extends React.Component {
 
   handleChange(event){
     const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
+    var value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    if (name === "location" && value === true) {
-      this.setState({
-        latitude: "",
-        longitude: "",
-        x: "",
-        y: "",
-        geoPin: { x: "", y: "" },
-        locationAnon: true
-      })
-    } else {
-      this.setState({ [name]: value })
+    switch (name) {
+      case "location":
+        this.setState({
+          latitude: "",
+          longitude: "",
+          x: "",
+          y: "",
+          geoPin: { x: "", y: "" },
+          locationAnon: value
+        })
+        break;
+      case "gender":
+        value = target.getAttribute('value')
+        this.setState({
+          [name]: value,
+          genderAnon: false
+        })
+        break;
+      case "genderAnon":
+        this.setState({
+          gender: "",
+          genderAnon: value
+        })
+        break;
+      default:
+        this.setState({ [name]: value })
     }
-  }
-
-  handleGenderChange(event){
-    event.preventDefault();
-    const target = event.target;
-    const value = target.name;
-
-    this.setState({ gender: value })
   }
 
   handleSliderChange(event){
@@ -110,12 +130,25 @@ class UserEditDemographicsContainer extends React.Component {
     event.preventDefault();
 
     var { userId } = this.props;
+    var { gender } = this.state;
+
+    switch (gender) {
+      case "female":
+          gender = 0
+        break;
+      case "other":
+          gender = 1
+        break;
+      case "male":
+          gender = 2
+        break;
+    }
 
     var user = new FormData();
     user.append("user[age_range]", this.state.ageRange);
     user.append("user[latitude]", this.state.latitude);
     user.append("user[longitude]", this.state.longitude);
-    user.append("user[gender]", this.state.gender);
+    user.append("user[gender]", gender);
 
     FetchWithPush(this, `/api/v1/users/${userId}.json`, '', 'PATCH', 'saveErrors', user)
     .then(body => {
@@ -144,8 +177,14 @@ class UserEditDemographicsContainer extends React.Component {
           <GenderSelector
             name="gender"
             label="Gender"
-            onChange={this.handleGenderChange}
+            onChange={this.handleChange}
             value={gender}
+          />
+          <Checkbox
+            name="genderAnon"
+            onChange={this.handleChange}
+            label="Prefer Not To Say"
+            checked={this.state.genderAnon}
           />
           <hr />
           <GeoPicker

@@ -142,16 +142,22 @@ export const CreateErrorElements = (errors, name) => {
   }
 }
 
-export const CheckInputValidation = (object, state) => {
-  var valid = false;
+export const CheckInputValidation = (object, state, privacyPolicy = true) => {
+  var invalid = false;
 
   state.forEach((item) => {
     if (item.length === 0) {
-      valid = true
-    } 
+      invalid = true
+    }
   })
 
-  object.setState({ formInvalid: valid })
+  if (!invalid) {
+    if (!privacyPolicy) {
+      invalid = true
+    }
+  }
+
+  object.setState({ formInvalid: invalid })
 }
 
 export const ErrorClassValidation = (error) => {

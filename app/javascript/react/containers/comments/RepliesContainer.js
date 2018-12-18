@@ -293,12 +293,12 @@ class RepliesContainer extends React.Component {
       if (replies.length === 1) {
         repliesCount =
         <span className="cf-replies-count">
-          There is {replies.length} reply to this comment
+          {replies.length} reply
         </span>
       } else {
         repliesCount =
         <span className="cf-replies-count">
-          There are {replies.length} replies to this comment
+          {replies.length} replies
         </span>
       }
     }

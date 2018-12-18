@@ -231,10 +231,10 @@ class Comment extends React.Component {
     var editButton, cancelButton;
     if (!artSettings.disabled) {
       if (editStatus && currentUserId === commentUserId) {
-        editButton = <button className="btn btn-sm comment-button" onClick={this.handleEditSubmit}>Edit Comment</button>
+        editButton = <button className="btn btn-sm comment-button" onClick={this.handleEditSubmit}>Edit</button>
         cancelButton = <button className="btn btn-sm comment-cancel-button" onClick={this.handleCancelEditComment}>Cancel</button>
       } else if (currentUserId === commentUserId) {
-        editButton = <button className="btn btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+        editButton = <button className="btn btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit</button>
       }
     }
 
@@ -265,12 +265,12 @@ class Comment extends React.Component {
         <div className="col-sm-2" />
         <div className="col-sm-7 comment-interaction-line">
           <div className="comment-interaction-line-div">
-            {`Comment has ${totalInteractions} votes`}
+            {`${totalInteractions} votes`}
           </div>
         </div>
         <div className="col-sm-3">
           <button onClick={this.showVotes} className="btn btn-sm float-right show-votes-button">
-            Show Results
+            Results
           </button>
         </div>
       </div>

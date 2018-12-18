@@ -12,7 +12,7 @@ export const AgeSlider = props => {
   />
 
   if (selectedRange == "") {
-    ageRange = "None of your business"
+    ageRange = "Prefer Not To Say"
     selectedRange = "10"
   } else {
     var age = parseInt(selectedRange)
@@ -59,28 +59,23 @@ export const Checkbox = props => {
 export const GenderSelector = props => {
   var translucency = "translucent";
   var genders = [
-    ["", "none", "None of your Biz!"],
     ["0", "female", "Female"],
-    ["1", "other", "Other"],
-    ["2", "male", "Male"]
+    ["2", "male", "Male"],
+    ["1", "other", "Other"]
   ];
 
   var genderButtons = genders.map((gender) => {
-    var translucency;
+    var translucency = gender[1] === props.value ? "" : "translucent"
 
-    if (gender[0] == "") {
-      translucency = props.value.length == 0 ? "" : "translucent"
-    } else {
-      translucency = parseInt(props.value) === parseInt(gender[0]) ? "" : "translucent"
-    }
     return(
       <GenderButton
         key={`gender-${gender[1]}`}
         translucency={translucency}
         onChange={props.onChange}
         imageName={gender[1]}
+        value={gender[1]}
         label={gender[2]}
-        name={gender[0]}
+        name={"gender"}
       />
     )
   })
@@ -88,7 +83,7 @@ export const GenderSelector = props => {
   return(
     <div>
       <label className="text-medium">Gender</label>
-      <div id="gender-selector" className="row margin-top-bottom-10px">
+      <div id="gender-selector" className="row margin-top-bottom-10px justify-content-center">
         {genderButtons}
       </div>
     </div>
@@ -98,7 +93,7 @@ export const GenderSelector = props => {
 const GenderButton = props => {
   return(
     <div className={`col-3`}>
-      <img className={`gender-btn gender-none ${props.translucency}`} onClick={props.onChange} name={props.name} src={`/assets/genders/gender-${props.imageName}.png`} />
+      <img className={`gender-btn ${props.translucency}`} onClick={props.onChange} name={props.name} value={props.value} src={`/assets/genders/gender-${props.imageName}.png`} />
       <div className="text-center">
         {props.label}
       </div>

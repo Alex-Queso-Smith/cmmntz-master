@@ -7,11 +7,11 @@ export const AgeRangeImageSelector = (props) => {
 
   switch (age.toString()) {
     case "":
-      ageRange = "None of your business"
+      ageRange = "Prefer Not To Say"
       age = "10"
       break;
     case "10":
-      ageRange = "None of your business"
+      ageRange = "Prefer Not To Say"
       break;
     case "13":
       ageRange = "13-19"
@@ -64,7 +64,7 @@ export const AgeRangeImageSelector = (props) => {
     if (ageRange === "75+") {
       ageImage =
       <div>
-        <img className="cf-age-image" src={`/assets/age-ranges/75-plus.png`} />
+        <img className="cf-age-image" src={`/assets/age-ranges/75-plus`} />
       </div>
     } else {
       ageImage =
@@ -75,7 +75,7 @@ export const AgeRangeImageSelector = (props) => {
   } else {
     ageImage =
     <div>
-      <img className="cf-age-image" src={`/assets/block.png`} />
+      <img className="cf-age-image" src={`/assets/question-mark`} />
     </div>
   }
 
