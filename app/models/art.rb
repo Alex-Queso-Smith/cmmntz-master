@@ -43,7 +43,11 @@ class Art < ApplicationRecord
   end
 
   def comment_requires_approval?
-    !gallery.comment_approval_needed.blank? && gallery.comment_approval_needed == "true"
+    !gallery.comment_approval_needed.blank? && gallery.comment_approval_needed == true
+  end
+
+  def comment_requires_guest_approval?(comment)
+    !gallery.guest_approval_needed.blank? && gallery.guest_approval_needed == true && comment.user.guest?
   end
 
   def moderators_request_notification?(comment)

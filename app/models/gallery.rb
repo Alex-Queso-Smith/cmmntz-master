@@ -19,6 +19,7 @@ class Gallery < ApplicationRecord
     censor: :bool,
     default_art_thread_expiration_days: :integer,
     comment_approval_needed: :bool,
+    guest_approval_needed: :bool,
     notify_on_comment_approval_needed: :bool,
     notify_on_new_comment: :bool
   }

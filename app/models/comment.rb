@@ -83,7 +83,7 @@ class Comment < ApplicationRecord
   end
 
   def set_approval!
-    self.approved = !art.comment_requires_approval?
+    self.approved = !(art.comment_requires_approval? || art.comment_requires_guest_approval?(self))
   end
 
   def parse_and_build_votes
