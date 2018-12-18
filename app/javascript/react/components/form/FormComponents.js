@@ -175,6 +175,28 @@ const newAvatars = [
   "turtle"
 ]
 
+const randomAvatars = [
+  "bat_924885_92a6dd",
+  "bunny_4dce74_9279a5",
+  "cat_9e6bc6_c4c4c4",
+  "chicken_c485d3_e2c89f",
+  "cow_79e8c3_e88e8e",
+  "crab_b24949_14a9dd",
+  "deer_9e844f_94c472",
+  "dog_e8c972_649e93",
+  "duck_dbdb6b_7d64ba",
+  "flower_efe778_9ad5e5",
+  "goat_956fce_83ddb4",
+  "owl_d36363_4f5872",
+  "pig_247ee0_c1e293",
+  "potted_plant_93835f_255e1b",
+  "rat_688e4f_bababa",
+  "rooster_d37272_9fd88f",
+  "sheep_dddddd_629698",
+  "snake_4cc151_cfe053",
+  "tree_6d643c_81cc71"
+]
+
 export const NukaCarousel = props => {
 
   var avatarImages = newAvatars.map((a) => {
@@ -204,9 +226,21 @@ export const NukaCarousel = props => {
     allImages.push(redImages[i])
   }
 
+  var randomImages = randomAvatars.map((a) => {
+    var style = {
+      height: '55px',
+      width: '55px'
+    }
+    return(
+      <img style={style} onClick={props.onChange} name={`${a}`} key ={a} src={`/assets/${a}`} />
+    )
+  })
+
+  var everything = randomImages.concat(allImages)
+
   return(
     <Carousel slidesToShow={7} renderBottomCenterControls={function(){}} slidesToScroll={4} wrapAround={true}>
-      {allImages}
+      {everything}
     </Carousel>
   )
 }
