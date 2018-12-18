@@ -259,7 +259,7 @@ class CommentingContainer extends React.Component {
         }
         this.setState({ commentFormErrors: body.errors})
       } else {
-        if (body.comment.approved) {    
+        if (body.comment.approved) {
           var newComments = this.state.comments
           newComments.unshift(body.comment)
           var totalComments = this.state.totalComments
@@ -533,7 +533,6 @@ class CommentingContainer extends React.Component {
   }
 
   handleShowFilterModal(){
-
     if (this.state.showFilterModal) {
       document.body.classList.remove("cf-modal-locked");
       this.setState({
