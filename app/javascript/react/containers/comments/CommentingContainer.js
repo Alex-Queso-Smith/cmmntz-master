@@ -8,6 +8,8 @@ import CommentFilters from './CommentFilters';
 import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual, FetchDeleteBasic } from '../../util/CoreUtil';
 import CommentEtiquette from '../../components/modals/CommentEtiquette';
 import Modal from '../../components/modals/Modal';
+import PreSetFilters from '../../components/filters/PreSetFilters';
+import { presetOptions } from '../../components/filters/SortSelect';
 
 class CommentingContainer extends React.Component {
   constructor(props){
@@ -41,6 +43,7 @@ class CommentingContainer extends React.Component {
       },
       gallerySettings: { },
       userSettings: { },
+      presetFilter: "",
       userInfo: { },
       commentEtiquette: null,
       censored: false,
@@ -172,7 +175,10 @@ class CommentingContainer extends React.Component {
     var opts = this.state.sortOpts;
     opts.notFilterList = [];
     opts.filterList = [];
-    this.setState({ sortOpts: opts })
+    this.setState({
+      sortOpts: opts,
+      presetFilter: ""
+    })
     if (this.state.sortOpts.setFrom === "gallery") {
       this.handleShowFilterModal()
     }
@@ -194,10 +200,26 @@ class CommentingContainer extends React.Component {
     };
 
     var opts = this.state.sortOpts
-    opts[name] = value
-    opts.page = 1
 
-    this.setState({ sortOpts: opts })
+    if (name === "presetFilter") {
+      var filter = presetOptions[value]
+
+      opts.filterList = filter.filterList;
+      opts.notFilterList = filter.notFilterList;
+      opts.radius = filter.radius;
+      opts.sortType = filter.sortType;
+      opts.commentsFrom = filter.commentsFrom
+      opts.page = 1;
+      this.setState({
+        sortOpts: opts,
+        [name]: value
+      })
+      this.handleFilterSubmit()
+    } else {
+      opts[name] = value
+      opts.page = 1
+      this.setState({ sortOpts: opts })
+    }
   };
 
   // repetetive with handleFilterSubmit
@@ -359,7 +381,10 @@ class CommentingContainer extends React.Component {
     opts[name] = value;
     opts.page = 1
 
-    this.setState({ sortOpts: opts })
+    this.setState({
+      sortOpts: opts,
+      presetFilter: ""
+    })
 
     this.submitterMan(event);
   }
@@ -407,7 +432,10 @@ class CommentingContainer extends React.Component {
 
     opts.page = 1
 
-    this.setState({ sortOpts: opts })
+    this.setState({
+      sortOpts: opts,
+      presetFilter: ""
+    })
 
     this.submitterMan(event)
   }
@@ -631,6 +659,12 @@ class CommentingContainer extends React.Component {
           </div>
         </div>
         <hr />
+        <div>
+          <PreSetFilters
+            onChange={this.handleChange}
+            option={this.state.presetFilter}
+          />
+        </div>
         <div className="row">
           <div className="col-sm-12 col-md-6">
             <CommentFilters

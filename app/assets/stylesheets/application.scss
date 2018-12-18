@@ -389,3 +389,16 @@ a:hover {
 .privacy-policy {
   font-weight: 600;
 }
+
+#preset-filters-selector {
+  margin-bottom: 5px;
+
+  h4 {
+    margin-bottom: 0px;
+    margin-right: 10px;
+  }
+
+  .preset-filter-row {
+    margin-left: 0px !important;
+  }
+}

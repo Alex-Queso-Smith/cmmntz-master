@@ -3,7 +3,7 @@ import React from 'react'
 import { SortDir, SortButton } from '../../components/filters/SortSelect'
 import { ImageSelector } from '../../util/VoteUtil';
 import { SortButtons, FilterButtonsRowOne, FilterButtonsRowTwo, FilterCommentsBy, FilterVotesBy } from '../../util/FilterUtil'
-import GeoSelect from '../filters/GeoSelect'
+import GeoSelect from '../filters/GeoSelect';
 
 class CommentFilters extends React.Component {
   render(){
@@ -47,6 +47,7 @@ class CommentFilters extends React.Component {
 
     return(
       <div className={`cf-filter-block ${this.props.className}`}>
+
         <div className="row vote-row" >
           <h4 className="col-2 col-sm-2 col-md-2">Sort</h4>
 
