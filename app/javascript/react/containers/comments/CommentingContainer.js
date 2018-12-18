@@ -259,14 +259,16 @@ class CommentingContainer extends React.Component {
         }
         this.setState({ commentFormErrors: body.errors})
       } else {
-        var newComments = this.state.comments
-        newComments.unshift(body.comment)
-        var totalComments = this.state.totalComments
+        if (body.comment.approved) {    
+          var newComments = this.state.comments
+          newComments.unshift(body.comment)
+          var totalComments = this.state.totalComments
 
-        this.setState({
-          comments: newComments,
-          totalComments: totalComments++
-        })
+          this.setState({
+            comments: newComments,
+            totalComments: totalComments++
+          })
+        }
 
         if (body.old_top_id){
           this.handleTopChange(body.old_top_id)

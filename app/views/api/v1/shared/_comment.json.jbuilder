@@ -1,9 +1,10 @@
 json.id comment.id
+json.approved comment.approved?
 json.text comment.text
 json.censored_text comment.censored_text
 json.created_at display_time_ago(comment.created_at)
 json.edited comment.edited?
-json.reply comment.parent_id? 
+json.reply comment.parent_id?
 json.user do
   json.user_id comment.user_id
   json.user_name comment_user_user_name(comment)
