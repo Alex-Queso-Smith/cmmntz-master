@@ -137,7 +137,7 @@ export const RowOneVoteButtons = (object) => {
     return(
       <VoteButtonRowOne
         key={`${object.props.commentId}_${type[0]}`}
-        className={`margin-top-bottom-10px`}
+        className={`margin-top-10px`}
         name={type[0]}
         label={type[1]}
         onClick={clickFunction}
@@ -171,7 +171,7 @@ export const RowTwoVoteButtons = (object) => {
     return(
       <VoteButtonRowTwo
         key={`${object.props.commentId}_${type[0]}`}
-        className={`margin-top-bottom-10px`}
+        className={`margin-top-10px`}
         name={type[0]}
         label={type[1]}
         onClick={object.handleClickVote}
