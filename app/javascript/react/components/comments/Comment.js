@@ -306,6 +306,7 @@ class Comment extends React.Component {
             userName={userName}
             followStar={followStar}
             blockSym={blockSym}
+            userVoted={this.state.userVoted}
           />
 
           <div className="cf-comment-w-meta">
