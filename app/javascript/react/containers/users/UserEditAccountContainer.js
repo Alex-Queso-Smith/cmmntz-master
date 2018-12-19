@@ -146,7 +146,7 @@ class UserEditAccountContainer extends React.Component {
           </div>
 
           <div className="form-group actions margin-top-10px">
-            <button id="user-registration-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit">
+            <button id="user-registration-button" type="submit" className="btn float-right btn-sm btn-dark margin-top-bottom-10px" value="Submit">
               <span className="text-medium">Update</span>
             </button>
           </div>

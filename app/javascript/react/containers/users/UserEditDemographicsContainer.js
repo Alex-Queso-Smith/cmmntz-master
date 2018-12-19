@@ -198,7 +198,7 @@ class UserEditDemographicsContainer extends React.Component {
             locationAnon={locationAnon}
           />
           <div className="form-group actions margin-top-10px">
-            <button id="user-edit-demographics-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit">
+            <button id="user-edit-demographics-button" type="submit" className="btn btn-sm float-right btn-dark" value="Submit">
               <span className="text-medium">Update</span>
             </button>
           </div>
