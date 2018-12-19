@@ -87,6 +87,7 @@ class Art < ApplicationRecord
   ### Postprocessors
 
   def find_or_create_artist_record!
-    GalleryArtist.find_or_create_for_artist_name(artist_name, gallery_id)
+    ga = GalleryArtist.find_or_create_for_artist_name(artist_name, gallery_id)
+    self.update_columns(gallery_artist_id: ga.id)
   end
 end
