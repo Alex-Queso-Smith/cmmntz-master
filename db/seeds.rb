@@ -176,7 +176,7 @@ num_articles.times do
     created_at: time,
     updated_at: time
   )
-  art = Art.create(url: article_one.url, gallery: gallery, published_at: article_one.publish_date )
+  art = Art.create(url: article_one.url, gallery: gallery, published_at: article_one.publish_date, artist_name: article_one.author.name )
 
   time += rand(100..1000)
 
