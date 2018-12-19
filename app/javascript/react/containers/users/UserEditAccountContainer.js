@@ -5,32 +5,39 @@ import { FetchWithPush, FetchDidMount, CreateErrorElements, ErrorClassValidation
 import { Input, NukaCarousel as Carousel } from '../../components/form/FormComponents';
 
 class UserEditAccountContainer extends React.Component {
-  constructor(props){
-    super(props);
-      this.state = {
-        userName: '',
-        email: '',
-        avatar: '',
-        saveErrors: {}
-      }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleAvatarClick = this.handleAvatarClick.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDeleteAccount = this.handleDeleteAccount.bind(this);
+  state = {
+    userName: '',
+    email: '',
+    avatar: '',
+    saveErrors: {}
   }
 
+  _isMounted = false;
+  handleChange = this.handleChange.bind(this);
+  handleAvatarClick = this.handleAvatarClick.bind(this);
+  handleSubmit = this.handleSubmit.bind(this);
+  handleDeleteAccount = this.handleDeleteAccount.bind(this);
+
   componentDidMount(){
+    this._isMounted = true;
+
     FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
     .then(body => {
       var user = body.user
 
-      this.setState({
-        userName: user.user_name,
-        email: user.email,
-        avatar: user.avatar_image
-      })
+      if (this._isMounted) {
+        this.setState({
+          userName: user.user_name,
+          email: user.email,
+          avatar: user.avatar_image
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
   }
 
   handleChange(event){
