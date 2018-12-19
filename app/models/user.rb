@@ -48,6 +48,9 @@ class User < ApplicationRecord
   has_many :blockers, class_name: 'Blocking', foreign_key: "blocking_id"
   has_many :blocker_users, through: :blockers, source: :blocker
 
+  # define galleries where the user has moderator status
+  has_many :user_gallery_moderators
+
   # galleries where the user can not post
   has_many :gallery_blacklistings
 
@@ -134,8 +137,16 @@ class User < ApplicationRecord
     scope
   end
 
+  def moderator_for?(gallery_id)
+    customer_for?(gallery_id) || user_gallery_moderator_for?(gallery_id)
+  end
+
   def customer_for?(gallery_id)
     Customer.account_for_gallery_and_user(gallery_id, id).size > 0
+  end
+
+  def user_gallery_moderator_for?(gallery_id)
+    user_gallery_moderators.for_gallery(gallery_id).size > 0
   end
 
   def user_blacklisted_for?(gallery_id)

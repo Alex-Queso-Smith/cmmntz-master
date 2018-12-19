@@ -100,6 +100,7 @@ class Vote < ApplicationRecord
   end
 
   def auto_flag_moderator_activate!
+    return # temp deactivate until we can return to finish
     return unless vote_type = "warn" # only run when someone has cast a warn vote
     comment.auto_flag_moderator_activate!
   end

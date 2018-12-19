@@ -20,6 +20,6 @@ json.user do
   json.censor @user.censor || nil
   json.show_censored_comments @user.show_censored_comments || true
   json.settings_updated @user.settings_updated || false
-  json.admin @user.customer_for?(params[:gallery_id])
+  json.admin @user.moderator_for?(params[:gallery_id])
   json.guest @user.guest?
 end
