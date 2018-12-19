@@ -20,7 +20,7 @@ class Vote < ApplicationRecord
   validates :vote_type, uniqueness: { scope: [:user_id, :comment_id, :vote_type]}
   validate :vote_is_unique_from_exclusve_group, :art_is_not_deactivated, :deal_with_duplicate_top_votes
 
-  after_create_commit :add_comment_interaction_for_comment_and_user!, :update_last_interaction_at_for_art!
+  after_create_commit :add_comment_interaction_for_comment_and_user!, :update_last_interaction_at_for_art!, :auto_flag_moderator_activate!
 
   before_destroy :art_is_not_deactivated_for_destroy
 
@@ -97,6 +97,11 @@ class Vote < ApplicationRecord
 
   def update_last_interaction_at_for_art!
     Art.find(comment.art_id).update_attribute("last_interaction_at", Time.now())
+  end
+
+  def auto_flag_moderator_activate!
+    return unless vote_type = "warn" # only run when someone has cast a warn vote
+    comment.auto_flag_moderator_activate!
   end
 
   ### searches

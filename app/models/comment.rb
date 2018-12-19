@@ -10,6 +10,7 @@ class Comment < ApplicationRecord
   belongs_to :parent, class_name: 'Comment', optional: true
   has_many :replies, class_name: 'Comment', foreign_key: :parent_id
   has_many :votes
+  has_many :flag_votes, -> { where(vote_type: "warn") }, class_name: "Vote", foreign_key: "comment_id"
   has_many :comment_interactions
 
   delegate :gallery, to: :art
