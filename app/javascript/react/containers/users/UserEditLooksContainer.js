@@ -4,28 +4,35 @@ import UserThemeSelector from '../../components/form/UserThemeSelector';
 import { FetchDidMount, FetchWithPush } from '../../util/CoreUtil';
 
 class UserEditLooksContainer extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      font: '',
-      colorTheme: '',
-      saveErrors: {}
-    }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  state = {
+    font: '',
+    colorTheme: '',
+    saveErrors: {}
   }
 
+  _isMounted = false;
+  handleChange = this.handleChange.bind(this);
+  handleSubmit = this.handleSubmit.bind(this);
+
   componentDidMount(){
+    this._isMounted = true;
+
     FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
     .then(body => {
       var user = body.user
 
-      this.setState({
-        font: user.font,
-        colorTheme: user.color_theme
-      })
+      if (this._isMounted) {
+        this.setState({
+          font: user.font,
+          colorTheme: user.color_theme
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
   }
 
   handleChange(event){

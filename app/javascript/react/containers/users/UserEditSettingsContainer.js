@@ -20,6 +20,7 @@ class UserEditSettingsContainer extends React.Component {
     display: ""
   }
 
+  _isMounted = false;
   handleFilterByClick = this.handleFilterByClick.bind(this);
   handleFilterClick = this.handleFilterClick.bind(this);
   handleSortDirClick = this.handleSortDirClick.bind(this);
@@ -29,6 +30,8 @@ class UserEditSettingsContainer extends React.Component {
   handleClearFilters = this.handleClearFilters.bind(this);
 
   componentDidMount(){
+    this._isMounted = true;
+
     FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
     .then(userData => {
       var opts = this.state.sortOpts
@@ -43,13 +46,19 @@ class UserEditSettingsContainer extends React.Component {
       opts.filterList = filter_list.length != 0 ? filter_list.split(',') : []
       opts.notFilterList = not_filter_list.length != 0 ? not_filter_list.split(',') : []
 
-      this.setState({
-        sortOpts: opts,
-        censor: censored,
-        showCensoredComments: showCenComment
-      })
+      if (this._isMounted) {
+        this.setState({
+          sortOpts: opts,
+          censor: censored,
+          showCensoredComments: showCenComment
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
   }
 
   handleChange(event){

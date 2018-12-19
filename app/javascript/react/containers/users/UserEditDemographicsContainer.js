@@ -5,9 +5,7 @@ import { FetchDidMount, FetchWithPush } from '../../util/CoreUtil';
 import GeoPicker from '../../components/form/GeoPicker';
 
 class UserEditDemographicsContainer extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
+  state = {
       gender: '',
       ageRange: '',
       latitude: '',
@@ -17,14 +15,16 @@ class UserEditDemographicsContainer extends React.Component {
       geoPin: { x: '', y: '' },
       locationAnon: false,
       genderAnon: false
-    }
-    this.handleSliderChange = this.handleSliderChange.bind(this);
-    this.setLatLongClick = this.setLatLongClick.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
+  _isMounted = false
+  handleSliderChange = this.handleSliderChange.bind(this);
+  setLatLongClick = this.setLatLongClick.bind(this);
+  handleSubmit = this.handleSubmit.bind(this);
+  handleChange = this.handleChange.bind(this);
+
   componentDidMount(){
+    this._isMounted = true;
 
     var { userId } = this.props;
 
@@ -48,20 +48,26 @@ class UserEditDemographicsContainer extends React.Component {
           break;
       }
 
-      this.setState({
-        ageRange: user.age_range,
-        gender: gender,
-        latitude: user.latitude,
-        longitude: user.longitude,
-        x: x,
-        y: y,
-        geoPin: {
-          x: x - 6,
-          y: y - 6
-        }
-      })
+      if (this._isMounted) {
+        this.setState({
+          ageRange: user.age_range,
+          gender: gender,
+          latitude: user.latitude,
+          longitude: user.longitude,
+          x: x,
+          y: y,
+          geoPin: {
+            x: x - 6,
+            y: y - 6
+          }
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
   }
 
   handleChange(event){
