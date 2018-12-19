@@ -13,12 +13,7 @@ class ArticlesController < ApplicationController
   # GET /articles/1.json
   def show
     url = @article.url(request)
-    @art = Art.where(url: url).first_or_create do |art|
-      art.gallery = Gallery.find_by(name: "Classibridge Times")
-      art.topics_list = @article.topics
-      art.published_at = @article.publish_date
-      art.art_type = "article"
-    end
+    @art = Art.find_or_create_for_url(url, "Classibridge Times", @article.topics, @article.publish_date, @article.author.name)
   end
 
   private

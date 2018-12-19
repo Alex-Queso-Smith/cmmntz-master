@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_145638) do
+ActiveRecord::Schema.define(version: 2018_12_19_160034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -334,6 +334,17 @@ ActiveRecord::Schema.define(version: 2018_12_19_145638) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "comment_etiquette"
+  end
+
+  create_table "gallery_artists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "artist_name"
+    t.uuid "gallery_id"
+    t.uuid "customer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["artist_name"], name: "index_gallery_artists_on_artist_name"
+    t.index ["customer_id"], name: "index_gallery_artists_on_customer_id"
+    t.index ["gallery_id"], name: "index_gallery_artists_on_gallery_id"
   end
 
   create_table "gallery_blacklistings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
