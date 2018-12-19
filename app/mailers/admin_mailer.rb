@@ -19,4 +19,11 @@ class AdminMailer < ApplicationMailer
     @comment = comment
     mail(to: @thread.moderator.email, subject: "Classifilter: New comment pending approval: #{@thread.url}")
   end
+
+  def notify_of_thread_locking(thread, comments, warning_comments)
+    @thread = thread
+    @comments = comments
+    @warning_comments = warning_comments
+    mail(to: @thread.moderator.email, subject: "Classifilter: Thread has been locked and requires moderation: #{@thread.url}")
+  end
 end

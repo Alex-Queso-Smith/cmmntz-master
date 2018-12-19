@@ -1,6 +1,11 @@
 class Art < ApplicationRecord
   attr_accessor :artist_name
 
+  vstr 'settings', {
+    ignore_warning_checker: :bool
+  }
+
+
   belongs_to :gallery
   delegate :checker_settings, :default_art_thread_expiration_days, to: :gallery
 

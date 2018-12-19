@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_165349) do
+ActiveRecord::Schema.define(version: 2018_12_19_184551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_165349) do
     t.string "art_type"
     t.text "disabled_message"
     t.uuid "gallery_artist_id"
+    t.text "settings"
     t.index ["created_at"], name: "index_arts_on_created_at"
     t.index ["gallery_artist_id"], name: "index_arts_on_gallery_artist_id"
     t.index ["gallery_id"], name: "index_arts_on_gallery_id"
