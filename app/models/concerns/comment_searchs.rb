@@ -52,7 +52,8 @@ module CommentSearchs
     }
 
     scope :not_anon, -> { where(comments: {anonymous: false}) }
-
+    scope :not_guest, -> { where(comments: {guest: false}) }
+    scope :not_anon_or_guest, -> { not_anon.not_guest }
     scope :created_since, -> (datetime) {
       where(arel_table[:created_at].gteq(datetime))
     }
@@ -173,7 +174,7 @@ module CommentSearchs
         elsif comments_from == "network"
           user_ids = user.network_user_ids
         end
-        scope = scope.comments_from_followed(user_ids).not_anon
+        scope = scope.comments_from_followed(user_ids).not_anon_or_guest
       end
 
       scope
@@ -185,6 +186,10 @@ module CommentSearchs
       end
 
       scope
+    end
+
+    def self.not_for_anon_or_guest(scope)
+      scope = scope.not_anon_or_guest
     end
 
     def self.sort_list(scope, sort_dir, sort_type)
@@ -202,6 +207,7 @@ module CommentSearchs
       scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
       scope = self.get_comments_from(scope, user, filter_opts[:comments_from])
       scope = self.eliminate_blocked(scope, user)
+      scope = self.not_for_anon_or_guest(scope) if filter_opts[:hide_anon_and_guest]
       scope = self.sort_list(scope, filter_opts[:sort_dir], filter_opts[:sort_type])
     end
 
