@@ -37,7 +37,11 @@ class SessionLoginContainer extends React.Component {
       login.append("user_session[remember_me]", this.state.rememberMe);
 
       FetchWithPush(this, '/api/v1/user_sessions.json', '/', 'POST', 'loginErrors', login)
-      .then(redirect => window.location = '/articles')
+      .then(body =>{
+        if (!body.errors) {
+          window.location = '/articles'
+        }
+      })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
     }
   }
