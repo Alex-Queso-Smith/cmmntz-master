@@ -12,7 +12,8 @@ class UserEditSettingsContainer extends React.Component {
       notFilterList: [],
       filterList: [],
       commentsFrom: "",
-      votesFrom: ""
+      votesFrom: "",
+      hideAnonAndGuest: false
     },
     censor: "",
     showCensoredComments: true,
@@ -35,7 +36,7 @@ class UserEditSettingsContainer extends React.Component {
     FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
     .then(userData => {
       var opts = this.state.sortOpts
-      var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, show_censored_comments } = userData.user
+      var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, show_censored_comments, hide_anon_and_guest } = userData.user.sort_opts
       var censored = censor === "true" || censor == true ? true : false;
       var showCenComment = show_censored_comments === "false" ? false : true;
 
@@ -45,6 +46,7 @@ class UserEditSettingsContainer extends React.Component {
       opts.votesFrom = votes_from
       opts.filterList = filter_list.length != 0 ? filter_list.split(',') : []
       opts.notFilterList = not_filter_list.length != 0 ? not_filter_list.split(',') : []
+      opts.hideAnonAndGuest = hide_anon_and_guest
 
       if (this._isMounted) {
         this.setState({

@@ -4,7 +4,8 @@ class Api::V1::UsersController < ApiController
   before_action :require_no_user, only: [:create]
   # GET /users.json
   def show
-    #code
+    # load gallery for search settings determination
+    @gallery = Gallery.find params[:gallery_id] if params[:gallery_id]
   end
 
   # POST /users.json
