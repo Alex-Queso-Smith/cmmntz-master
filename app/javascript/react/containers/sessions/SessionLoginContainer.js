@@ -84,11 +84,11 @@ class SessionLoginContainer extends React.Component {
             onChange={this.handleChange}
           />
         <div className="form-group actions margin-top-10px text-center">
-            <button id="login-button" type="submit" className="btn btn-small btn-dark margin-right-10px" value="Submit" disabled={this.state.formInvalid}>
+            <button id="login-button" type="submit" className="btn btn-sm btn-dark margin-right-10px" value="Submit" disabled={this.state.formInvalid}>
               Login
             </button>
               <Link to='/register'>
-                <button className="btn btn-small btn-dark margin-left-10px">
+                <button className="btn btn-sm btn-dark margin-left-10px">
                   Register
                 </button>
               </Link>

@@ -35,7 +35,6 @@ class GeoPicker extends React.Component {
     return(
       <div id="geo-picker">
         <div className="cf-geomap-wrapper">
-        <h4 className="text-center">Choose your location</h4>
           <div className="cf-geomap-container" onMouseMove={this._onMouseMove} onClick={setLatLong}>
             {geoMarker}
           </div>
