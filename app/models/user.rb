@@ -20,6 +20,7 @@ class User < ApplicationRecord
     votes_from: :string,
     censor: :string,
     show_censored_comments: :bool,
+    hide_anon_and_guest: :bool,
     settings_updated: :bool
   }
 
