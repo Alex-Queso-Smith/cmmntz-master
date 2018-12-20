@@ -5,7 +5,7 @@ module CommentBase
   MIN_FLAG_PERCENT = '.20'
 
   def render_anonymously?
-    anonymous? || user.nil? || user.guest?
+    anonymous?
   end
 
 

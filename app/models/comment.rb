@@ -26,6 +26,7 @@ class Comment < ApplicationRecord
 
   scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
 
+  before_create :set_guest!
   before_save :censor_text!, :set_approval!
   after_create_commit :update_last_interaction_at_for_art!
   after_commit :alert_admin_of_comment!
@@ -75,6 +76,11 @@ class Comment < ApplicationRecord
   end
 
   ### Preprocessors
+
+  def set_guest!
+    self.guest = user.guest?
+  end
+
   def censor_text!
     text_hold = text
     BAD_WORDS.each do |word|

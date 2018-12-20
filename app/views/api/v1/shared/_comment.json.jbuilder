@@ -13,6 +13,7 @@ json.user do
   json.base_image comment_user_base_image(comment)
   json.show_censored comment_user_show_censored(comment)
   json.gallery_admin comment.by_admin_of?(gallery_admins)
+  json.posted_as_guest comment.guest?
 end
 
   user_has_interacted = current_users_interactions.detect { |i| i.comment_id == comment.id }.present?
