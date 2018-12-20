@@ -82,6 +82,7 @@ export const FilterButtonsRowOne = (object) => {
         onClick={handleFilterClickParent}
         image={image}
         visibility={visibility}
+        title={`${type[1]}`}
         />
     )
   })
@@ -119,6 +120,7 @@ export const FilterButtonsRowTwo = (object) => {
         onClick={handleFilterClickParent}
         image={image}
         visibility={visibility}
+        title={`${type[1]}`}
         />
     )
   })
