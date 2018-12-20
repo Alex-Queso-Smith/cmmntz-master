@@ -22,7 +22,7 @@ class UserNewOptionalContainer extends React.Component {
     }
 
     var selectedAvatar;
-    if (this.props.avatar) {
+    if (this.props.selectedAvatar) {
       var style = {
         height: '110px',
         width: '110px',
@@ -31,7 +31,7 @@ class UserNewOptionalContainer extends React.Component {
 
       selectedAvatar =
       <div className="text-center">
-        <img style={style} src={`/assets/${this.props.avatar}`} />
+        <img style={style} src={`/assets/${this.props.selectedAvatar}`} />
       </div>
     }
     return(

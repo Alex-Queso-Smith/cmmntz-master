@@ -288,6 +288,7 @@ class UserNewContainer extends React.Component {
           handleBackClick={this.handleBackClick}
           selectedAvatar={this.state.avatar}
           handleSubmit={this.handleSubmit}
+          handleAvatarClick={this.handleAvatarClick}
           locationAnon={this.state.locationAnon}
           ageRangeAnon={this.state.ageRangeAnon}
         />
@@ -313,7 +314,7 @@ class UserNewContainer extends React.Component {
         handleClose={this.handleSubmissionWarning}
       >
         Please select an option or select Prefer Not To say for all demographics. Your comments are more likely to be filtered out if you select Prefer Not To Say by other users.
-        
+
       </Modal>
     }
 
