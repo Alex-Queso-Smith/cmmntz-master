@@ -49,7 +49,7 @@ $breakpoint-phone: 575px;
 }
 
 @media (max-width: $breakpoint-phone) {
-  #user-edit-form, #password-form, #user-registration-form, #user-login-container, #user-edit-settings-container, #user-edit-container {
+  #user-edit-form, #password-form, #user-registration-form, #user-login-container, #user-edit-settings-container, #user-edit-container, #user-edit-looks-container {
     width: 100%;
   }
 }
