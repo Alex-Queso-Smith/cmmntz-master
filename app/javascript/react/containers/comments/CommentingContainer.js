@@ -39,7 +39,8 @@ class CommentingContainer extends React.Component {
         radius: '',
         latitude: '',
         longitude: '',
-        setFrom: null
+        setFrom: null,
+        hideAnonAndGuest: false
       },
       gallerySettings: { },
       userSettings: { },
@@ -122,7 +123,7 @@ class CommentingContainer extends React.Component {
         .then(userData => {
 
           var newUserSettings = this.state.userSettings;
-          var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, settings_updated, followed_users, blocked_users } = userData.user
+          var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, settings_updated, followed_users, blocked_users, hide_anon_and_guest } = userData.user
           var settingsUpdated = settings_updated === "true" || settings_updated == true ? true : false
 
           newUserSettings.sort_dir = sort_dir
@@ -135,6 +136,7 @@ class CommentingContainer extends React.Component {
           newUserSettings.blockedUsers = blocked_users
           newUserSettings.settings_updated = settingsUpdated
           newUserSettings.censor = censor
+          newUserSettings.hideAnonAndGuest = hide_anon_and_guest
 
           this.setState({ userSettings: newUserSettings })
         })
@@ -186,7 +188,7 @@ class CommentingContainer extends React.Component {
   }
 
   handleChange(event){
-    event.preventDefault();
+
     const target = event.target;
     const name = target.name;
 
@@ -220,6 +222,7 @@ class CommentingContainer extends React.Component {
       opts.page = 1
       this.setState({ sortOpts: opts })
     }
+
   };
 
   // repetetive with handleFilterSubmit
@@ -305,7 +308,7 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit(){
     var search = new FormData();
 
-    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius } = this.state.sortOpts;
+    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius, hideAnonAndGuest } = this.state.sortOpts;
     var { artType, artId } = this.props;
     search.append("art_type", artType)
     search.append("art_id", artId)
@@ -324,6 +327,9 @@ class CommentingContainer extends React.Component {
       search.append("search[radius]", radius)
       search.append("search[lat]", latitude)
       search.append("search[lon]", longitude)
+    }
+    if (hideAnonAndGuest) {
+      search.append("search[hide_anon_and_guest]", hideAnonAndGuest)
     }
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
@@ -478,8 +484,8 @@ class CommentingContainer extends React.Component {
   handleSettingsUpdate(){
     var { sortOpts } = this.state;
     var { userSettings, gallerySettings } = this.state;
-    var { sort_dir, sort_type, filter_list, not_filter_list, comments_from, votes_from, followedUsers, blockedUsers, settings_updated, censor } = userSettings
-    var { gallery_sort_dir, gallery_sort_type, gallery_filter_list, gallery_not_filter_list, gallery_comments_from, gallery_votes_from, gallery_censor } = gallerySettings
+    var { sort_dir, sort_type, filter_list, not_filter_list, comments_from, votes_from, followedUsers, blockedUsers, settings_updated, censor, hide_anon_and_guest } = userSettings
+    var { gallery_sort_dir, gallery_sort_type, gallery_filter_list, gallery_not_filter_list, gallery_comments_from, gallery_votes_from, gallery_censor, gallery_hide_anon_and_guest } = gallerySettings
     var newSortOpts = sortOpts
     var censorComments;
 
@@ -491,6 +497,7 @@ class CommentingContainer extends React.Component {
       newSortOpts.notFilterList = not_filter_list
       newSortOpts.commentsFrom = comments_from
       newSortOpts.votesFrom = votes_from
+      newSortOpts.hideAnonAndGuest = hide_anon_and_guest
       newSortOpts.setFrom = "user"
     } else {
       censorComments = gallery_censor === "true" || gallery_censor == true ? true : false
@@ -500,6 +507,7 @@ class CommentingContainer extends React.Component {
       newSortOpts.notFilterList = gallery_not_filter_list
       newSortOpts.commentsFrom = gallery_comments_from
       newSortOpts.votesFrom = gallery_votes_from
+      newSortOpts.hideAnonAndGuest = gallery_hide_anon_and_guest
       newSortOpts.setFrom = "gallery"
     }
 
@@ -642,7 +650,6 @@ class CommentingContainer extends React.Component {
       </div>
     }
 
-
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         {showVoteModal}
@@ -669,6 +676,7 @@ class CommentingContainer extends React.Component {
           <div className="col-sm-12 col-md-6">
             <CommentFilters
               sortOpts={sortOpts}
+              onChange={this.handleChange}
               handleFilterSubmit={this.handleFilterSubmitMan}
               handleSortDirClick={this.handleSortDirClick}
               handleFilterClick={this.handleFilterClick}

@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { Checkbox } from '../../components/form/FormComponents';
 import { SortDir, SortButton } from '../../components/filters/SortSelect'
 import { ImageSelector } from '../../util/VoteUtil';
 import { SortButtons, FilterButtonsRowOne, FilterButtonsRowTwo, FilterCommentsBy, FilterVotesBy } from '../../util/FilterUtil'
@@ -12,7 +13,7 @@ class CommentFilters extends React.Component {
     var filterButtonsRowOne = FilterButtonsRowOne(this)
     var filterButtonsRowTwo = FilterButtonsRowTwo(this)
 
-    const { showAdvancedFilters, radius, x, y, latitude, longitude, geoPin } = this.props.sortOpts
+    const { showAdvancedFilters, radius, x, y, latitude, longitude, geoPin, hideAnonAndGuest } = this.props.sortOpts
 
     var advancedFilters, advancedFiltersToggle;
     if (!this.props.hideAdvancedLink == true) {
@@ -74,6 +75,15 @@ class CommentFilters extends React.Component {
           {filterButtonsRowTwo}
         </div>
         <br/>
+        <div className="row checkbox-row">
+          <Checkbox
+            className="col-12"
+            name={"hideAnonAndGuest"}
+            checked={hideAnonAndGuest}
+            label="Hide Anonymous and Guest Comments"
+            onChange={this.props.onChange}
+          />
+        </div>
         <div className="row">
           <div className="col-12">
             <h4>Show only comments from:</h4>

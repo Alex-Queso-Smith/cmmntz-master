@@ -409,3 +409,7 @@ a:hover {
 .custom-checkbox > [type="checkbox"]:not(:checked) + label:before {
   box-shadow: none;
 }
+
+ .checkbox-row {
+   margin-left: 0px !important;
+ }
