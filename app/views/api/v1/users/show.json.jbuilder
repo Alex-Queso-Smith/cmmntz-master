@@ -26,5 +26,6 @@ json.user do
     json.hide_anon_and_guest object.hide_anon_and_guest
 
     json.show_censored_comments @user.show_censored_comments || true
+    json.set_from object.class.to_s.downcase
   end
 end
