@@ -199,7 +199,7 @@ $bootstrap-blue: #0069D9;
 .comment-button, .reply-button, .show-filters-button {
   margin: 5px 5px 5px 0px;
   color: #777777;
-  background: #ffffff;
+  background: none;
 
   &:hover {
     color: #777777;
@@ -208,6 +208,18 @@ $bootstrap-blue: #0069D9;
   }
   &:focus {
     box-shadow: 0 0 0 0;
+  }
+}
+
+.dark {
+  .comment-button, .reply-button, .show-filters-button {
+    color: #fff;
+
+    &:hover {
+      color: #fff;
+      background: #000;
+      border: 1px solid #777777;
+    }
   }
 }
 
