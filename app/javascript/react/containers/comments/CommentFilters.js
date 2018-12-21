@@ -7,6 +7,10 @@ import { SortButtons, FilterButtonsRowOne, FilterButtonsRowTwo, FilterCommentsBy
 import GeoSelect from '../filters/GeoSelect';
 
 class CommentFilters extends React.Component {
+  state = {
+      hideAnonAndGuest: this.props.sortOpts.hideAnonAndGuest
+    }
+
   render(){
 
     var sortButtons = SortButtons(this)
@@ -79,7 +83,7 @@ class CommentFilters extends React.Component {
           <Checkbox
             className="col-12"
             name={"hideAnonAndGuest"}
-            checked={hideAnonAndGuest}
+            checked={this.state.hideAnonAndGuest}
             label="Hide Anonymous and Guest Comments"
             onChange={this.props.onChange}
           />
