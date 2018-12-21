@@ -13,7 +13,7 @@ class ArticlesController < ApplicationController
   # GET /articles/1.json
   def show
     url = @article.url(request)
-    @art = Art.find_or_create_for_url(url, "Classibridge Times", @article.topics, @article.publish_date, @article.author.name)
+    @art = Art.find_or_create_for_url(url, "Classibridge Times", @article.topics, @article.publish_date, @article.author.name, "article")
   end
 
   private

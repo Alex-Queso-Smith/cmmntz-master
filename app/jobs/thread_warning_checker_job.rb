@@ -17,7 +17,7 @@ class ThreadWarningCheckerJob < ApplicationJob
       comments.update_all(approved: false, approved_by: nil)
 
       # lock the thread??
-      thread.disabled = true
+      thread.deactivated = true
       thread.save
 
       # notify the thread's moderator about this activity

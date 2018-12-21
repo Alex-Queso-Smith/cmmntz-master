@@ -593,10 +593,10 @@ class CommentingContainer extends React.Component {
           You are a Guest.
         </div>
         <div className="col-3">
-          <button className="btn btn-sm login-button" onClick={ () => window.location = "/login" }>Login</button>
+          <button className="btn btn-sm fade-button" onClick={ () => window.location = "/login" }>Login</button>
         </div>
         <div className="col-3">
-          <button className="btn btn-sm login-button" onClick={ () => window.location = "/register" }>Register</button>
+          <button className="btn btn-sm fade-button" onClick={ () => window.location = "/register" }>Register</button>
         </div>
       </div>
     } else {
@@ -607,10 +607,10 @@ class CommentingContainer extends React.Component {
           Welcome {this.state.userInfo.userName}!
         </div>
         <div className="col-3">
-          <button className="btn btn-sm login-button" onClick={ () => window.location = edit_url }>Settings</button>
+          <button className="btn btn-sm fade-button" onClick={ () => window.location = edit_url }>Settings</button>
         </div>
         <div className="col-3">
-          <button className="btn btn-sm login-button" onClick={ () => window.location = "/logout" }>Logout</button>
+          <button className="btn btn-sm fade-button" onClick={ () => window.location = "/logout" }>Logout</button>
         </div>
       </div>
     }
