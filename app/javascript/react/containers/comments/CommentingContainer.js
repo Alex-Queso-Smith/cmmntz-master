@@ -60,6 +60,7 @@ class CommentingContainer extends React.Component {
     this.setLatLongClick = this.setLatLongClick.bind(this);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handlePresetFilterChange = this.handlePresetFilterChange.bind(this);
     this.handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
     this.handleSortDirClick = this.handleSortDirClick.bind(this);
     this.handleFilterClick = this.handleFilterClick.bind(this);
@@ -196,8 +197,21 @@ class CommentingContainer extends React.Component {
 
     var opts = this.state.sortOpts
 
-    if (name === "presetFilter") {
+    opts[name] = value
+    opts.page = 1
+    this.setState({ sortOpts: opts })
+  };
+
+  handlePresetFilterChange(event){
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+
+    if (value === "0") {
+      this.handleClearFilters()
+    } else {
       var filter = presetOptions[value]
+      var opts = this.state.sortOpts
 
       opts.filterList = filter.filterList;
       opts.notFilterList = filter.notFilterList;
@@ -210,13 +224,8 @@ class CommentingContainer extends React.Component {
         [name]: value
       })
       this.handleFilterSubmit()
-    } else {
-      opts[name] = value
-      opts.page = 1
-      this.setState({ sortOpts: opts })
     }
-
-  };
+  }
 
   // repetetive with handleFilterSubmit
   handleCommentForm(event, text, anonymous, formInvalid, selfVotes = [], handleClear){
@@ -623,7 +632,7 @@ class CommentingContainer extends React.Component {
         <hr />
         <div>
           <PreSetFilters
-            onChange={this.handleChange}
+            onChange={this.handlePresetFilterChange}
             option={this.state.presetFilter}
           />
         </div>
