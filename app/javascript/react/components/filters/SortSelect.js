@@ -26,9 +26,10 @@ export const FilterFromButton = props => {
 }
 
 export const presetOptions = [
+  {},
   {filterList: ["funny_percent"], notFilterList: [], radius: "small", sortType: "funny_percent", commentsFrom: ""},
   {filterList: [], notFilterList: ["warn_percent", "trash_percent", "dislike_a_lot_percent"], radius: "", sortType: "created_at", commentsFrom: ""},
   {filterList: ["love_percent"], notFilterList: ["boring_percent"], radius: "", sortType: "love_percent", commentsFrom: ""},
-  {filterList: ["angry_percent", "shocking_percent"], notFilterList: [], radius: "", sortType: "created_at", commentsFrom: ""},
+  {filterList: ["angry_percent", "warn_percent"], notFilterList: [], radius: "", sortType: "created_at", commentsFrom: ""},
   {filterList: ["like_a_lot_percent", "smart_percent"], notFilterList: ["trash_percent", "warn_percent"], radius: "", sortType: "smart_percent", commentsFrom: "friends"}
 ]
