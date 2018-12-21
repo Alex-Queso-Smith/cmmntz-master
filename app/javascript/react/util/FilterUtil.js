@@ -20,8 +20,8 @@ export const SortTypes = [
   ["like_score", "like", "Like"],
   ["smart_percent", "smart", "Smart"],
   ["funny_percent", "funny", "Funny"],
-  ["created_at", "created_at", "Comment Date"],
-  ["comment_length", "length2", "Comment Length"]
+  ["created_at", "created_at", "Date"],
+  ["comment_length", "length2", "Length"]
 ]
 
 export const SortButtons = (object) => {
