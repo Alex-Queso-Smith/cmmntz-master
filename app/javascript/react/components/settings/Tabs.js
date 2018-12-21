@@ -16,7 +16,7 @@ const Tabs = (props) => {
     ["Account", ""],
     ["Looks", "looks"],
     ["Demographics", "demographics"],
-    ["Settings", "settings"]
+    ["Search Settings", "settings"]
   ]
 
   var links = types.map(type => {

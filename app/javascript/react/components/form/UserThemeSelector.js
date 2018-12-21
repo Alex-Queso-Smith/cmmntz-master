@@ -3,20 +3,18 @@ import React from 'react';
 const UserThemeSelector = props => {
   return(
     <div className="user-theme-selector">
-      <label className="text-medium text-center">Theme</label>
-      <br />
 
       <div id="theme-selector-options-wrapper">
         <div id="theme-selector-options-left">
           <label className="text-medium">
-          Select Color:
-          <br />
-          <br />
-          <select name="colorTheme" value={props.colorTheme} onChange={props.onChange}>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
-        </label>
+            Select Theme:
+            <br />
+            <br />
+            <select name="colorTheme" value={props.colorTheme} onChange={props.onChange}>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </label>
         </div>
 
         <div id="theme-selector-options-right">

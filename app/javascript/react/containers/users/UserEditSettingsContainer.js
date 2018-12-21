@@ -30,7 +30,7 @@ class UserEditSettingsContainer extends React.Component {
   handleRevertSettings = this.handleRevertSettings.bind(this);
   clearFilters = this.clearFilters.bind(this);
   handleSortOptCheckChange = this.handleSortOptCheckChange.bind(this);
-  
+
   componentDidMount(){
     this._isMounted = true;
 
@@ -248,7 +248,6 @@ class UserEditSettingsContainer extends React.Component {
 
     return(
       <div id="user-edit-settings-container">
-        <h5 className="text-center">Choose default sort and filter settings</h5>
         <br />
         <Checkbox
           onChange={this.handleRevertSettings}
