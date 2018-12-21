@@ -12,66 +12,64 @@ import PreSetFilters from '../../components/filters/PreSetFilters';
 import { presetOptions } from '../../components/filters/SortSelect';
 
 class CommentingContainer extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      userThemeSettings: {
-        font: 'serif',
-        theme: 'light'
-        },
-      totalComments: 0,
-      grandTotalComments: 0,
-      showVoteCount: 0,
-      showVoteModal: false,
-      followedUsers: [],
-      blockedUsers: [],
-      comments: [],
-      commentFormErrors: {},
-      sortOpts: {
-        showAdvancedFilters: false,
-        sortDir: 'desc',
-        sortType: 'created_at',
-        notFilterList: [],
-        filterList: [],
-        page: 1,
-        commentsFrom: "",
-        votesFrom: "",
-        radius: '',
-        latitude: '',
-        longitude: '',
-        hideAnonAndGuest: false
+  state = {
+    userThemeSettings: {
+      font: 'serif',
+      theme: 'light'
       },
-      gallerySettings: { },
-      userSettings: { },
-      presetFilter: "",
-      userInfo: { },
-      commentEtiquette: null,
-      censored: false,
-      showFilterModal: false,
-      filterModalShown: false
-    }
-    this.handleCommentForm = this.handleCommentForm.bind(this);
-    this.commentFormSubmitter = this.commentFormSubmitter.bind(this);
-    this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
-    this.handleTopChange = this.handleTopChange.bind(this);
-    this.handleLoadMoreClick = this.handleLoadMoreClick.bind(this);
-    this.handleFilterByClick = this.handleFilterByClick.bind(this);
-    this.handleAdvancedFiltershow = this.handleAdvancedFiltershow.bind(this);
-    this.setLatLongClick = this.setLatLongClick.bind(this);
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handlePresetFilterChange = this.handlePresetFilterChange.bind(this);
-    this.handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
-    this.handleSortDirClick = this.handleSortDirClick.bind(this);
-    this.handleFilterClick = this.handleFilterClick.bind(this);
-    this.submitterMan = this.submitterMan.bind(this);
-    this.deleteComment = this.deleteComment.bind(this);
-    this.banUser = this.banUser.bind(this);
-    this.handleClearFilters = this.handleClearFilters.bind(this);
-    this.showVoteCountTrigger = this.showVoteCountTrigger.bind(this);
-    this.handleShowVoteModal = this.handleShowVoteModal.bind(this);
-    this.handleShowFilterModal = this.handleShowFilterModal.bind(this);
+    totalComments: 0,
+    grandTotalComments: 0,
+    showVoteCount: 0,
+    showVoteModal: false,
+    followedUsers: [],
+    blockedUsers: [],
+    comments: [],
+    commentFormErrors: {},
+    sortOpts: {
+      showAdvancedFilters: false,
+      sortDir: 'desc',
+      sortType: 'created_at',
+      notFilterList: [],
+      filterList: [],
+      page: 1,
+      commentsFrom: "",
+      votesFrom: "",
+      radius: '',
+      latitude: '',
+      longitude: '',
+      hideAnonAndGuest: false
+    },
+    gallerySettings: { },
+    userSettings: { },
+    presetFilter: "",
+    userInfo: { },
+    commentEtiquette: null,
+    censored: false,
+    showFilterModal: false,
+    filterModalShown: false
   }
+
+  handleCommentForm = this.handleCommentForm.bind(this);
+  commentFormSubmitter = this.commentFormSubmitter.bind(this);
+  handleFilterSubmit = this.handleFilterSubmit.bind(this);
+  handleTopChange = this.handleTopChange.bind(this);
+  handleLoadMoreComments = this.handleLoadMoreComments.bind(this);
+  handleFilterByClick = this.handleFilterByClick.bind(this);
+  handleAdvancedFiltershow = this.handleAdvancedFiltershow.bind(this);
+  setLatLongClick = this.setLatLongClick.bind(this);
+
+  handleChange = this.handleChange.bind(this);
+  handlePresetFilterChange = this.handlePresetFilterChange.bind(this);
+  handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
+  handleSortDirClick = this.handleSortDirClick.bind(this);
+  handleFilterClick = this.handleFilterClick.bind(this);
+  submitterMan = this.submitterMan.bind(this);
+  deleteComment = this.deleteComment.bind(this);
+  banUser = this.banUser.bind(this);
+  clearFilters = this.clearFilters.bind(this);
+  showVoteCountTrigger = this.showVoteCountTrigger.bind(this);
+  handleShowVoteModal = this.handleShowVoteModal.bind(this);
+  handleShowFilterModal = this.handleShowFilterModal.bind(this);
 
   componentWillMount(){
     var { userId, galleryId } = this.props;
@@ -142,47 +140,7 @@ class CommentingContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  setLatLongClick(x, y, radius){
-    var longitude = Math.round((x * (180 / 150)) - 180)
-    var latitude = Math.round(((y * (180 / 100)) - 180) * -1)
-    var newSortOpts = this.state.sortOpts
-
-    newSortOpts.latitude = latitude
-    newSortOpts.longitude =  longitude
-    newSortOpts.radius = radius
-
-    this.setState({
-      sortOpts:  newSortOpts
-     })
-
-     setTimeout(function() { //Start the timer
-       this.handleFilterSubmit();
-     }.bind(this), 1)
-  }
-
-  handleAdvancedFiltershow(event){
-    event.preventDefault()
-    var newOpts = this.state.sortOpts
-    newOpts.showAdvancedFilters = !newOpts.showAdvancedFilters
-    this.setState({ sortOpts: newOpts })
-  }
-
-  handleClearFilters(){
-    var opts = this.state.sortOpts;
-    opts.notFilterList = [];
-    opts.filterList = [];
-    this.setState({
-      sortOpts: opts,
-      presetFilter: ""
-    })
-    if (this.state.sortOpts.setFrom === "gallery") {
-      this.handleShowFilterModal()
-    }
-    this.handleFilterSubmit()
-  }
-
   handleChange(event){
-
     const target = event.target;
     const name = target.name;
 
@@ -202,32 +160,24 @@ class CommentingContainer extends React.Component {
     this.setState({ sortOpts: opts })
   };
 
-  handlePresetFilterChange(event){
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
+  setLatLongClick(x, y, radius){
+    var longitude = Math.round((x * (180 / 150)) - 180)
+    var latitude = Math.round(((y * (180 / 100)) - 180) * -1)
+    var newSortOpts = this.state.sortOpts
 
-    if (value === "0") {
-      this.handleClearFilters()
-    } else {
-      var filter = presetOptions[value]
-      var opts = this.state.sortOpts
+    newSortOpts.latitude = latitude
+    newSortOpts.longitude =  longitude
+    newSortOpts.radius = radius
 
-      opts.filterList = filter.filterList;
-      opts.notFilterList = filter.notFilterList;
-      opts.radius = filter.radius;
-      opts.sortType = filter.sortType;
-      opts.commentsFrom = filter.commentsFrom
-      opts.page = 1;
-      this.setState({
-        sortOpts: opts,
-        [name]: value
-      })
-      this.handleFilterSubmit()
-    }
+    this.setState({
+      sortOpts:  newSortOpts
+     })
+
+     setTimeout(function() { //Start the timer
+       this.handleFilterSubmit();
+     }.bind(this), 1)
   }
 
-  // repetetive with handleFilterSubmit
   handleCommentForm(event, text, anonymous, formInvalid, selfVotes = [], handleClear){
     event.preventDefault();
 
@@ -306,7 +256,23 @@ class CommentingContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  // repetetive with handleCommentForm
+  deleteComment(commentId){
+    var { galleryId } = this.props;
+    var c = confirm("Are you sure you want to delete this comment?")
+    if (c) {
+      var updateComment = new FormData()
+      updateComment.append("comment[deleted]", true)
+
+      FetchWithUpdate(this, `/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
+      .then(success => {
+        var allComments = this.state.comments;
+        var filteredComments = allComments.filter(comment => comment.id != commentId)
+        this.setState({ comments: filteredComments })
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
+  }
+
   handleFilterSubmit(){
     var search = new FormData();
 
@@ -363,6 +329,51 @@ class CommentingContainer extends React.Component {
     setTimeout(function() { //Start the timer
       this.handleFilterSubmit();
     }.bind(this), 1)
+  }
+
+  handleAdvancedFiltershow(){
+    var newOpts = this.state.sortOpts
+    newOpts.showAdvancedFilters = !newOpts.showAdvancedFilters
+    this.setState({ sortOpts: newOpts })
+  }
+
+  clearFilters(){
+    var opts = this.state.sortOpts;
+    opts.notFilterList = [];
+    opts.filterList = [];
+    this.setState({
+      sortOpts: opts,
+      presetFilter: ""
+    })
+    if (this.state.sortOpts.setFrom === "gallery") {
+      this.handleShowFilterModal()
+    }
+    this.handleFilterSubmit()
+  }
+
+  handlePresetFilterChange(event){
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+
+    if (value === "0") {
+      this.clearFilters()
+    } else {
+      var filter = presetOptions[value]
+      var opts = this.state.sortOpts
+
+      opts.filterList = filter.filterList;
+      opts.notFilterList = filter.notFilterList;
+      opts.radius = filter.radius;
+      opts.sortType = filter.sortType;
+      opts.commentsFrom = filter.commentsFrom
+      opts.page = 1;
+      this.setState({
+        sortOpts: opts,
+        [name]: value
+      })
+      this.handleFilterSubmit()
+    }
   }
 
   handleSortDirClick(event){
@@ -448,7 +459,7 @@ class CommentingContainer extends React.Component {
     this.submitterMan(event)
   }
 
-  handleLoadMoreClick(event){
+  handleLoadMoreComments(event){
     var opts = this.state.sortOpts
     if (this.state.totalComments != this.state.comments.length) {
       opts.page += 1
@@ -481,23 +492,6 @@ class CommentingContainer extends React.Component {
 
       }
     }.bind(this), 50)
-  }
-
-  deleteComment(commentId){
-    var { galleryId } = this.props;
-    var c = confirm("Are you sure you want to delete this comment?")
-    if (c) {
-      var updateComment = new FormData()
-      updateComment.append("comment[deleted]", true)
-
-      FetchWithUpdate(this, `/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
-      .then(success => {
-        var allComments = this.state.comments;
-        var filteredComments = allComments.filter(comment => comment.id != commentId)
-        this.setState({ comments: filteredComments })
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
-    }
   }
 
   banUser(userId, event){
@@ -648,7 +642,7 @@ class CommentingContainer extends React.Component {
               parentSetLatLongClick={this.setLatLongClick}
               handleAdvancedFiltershow={this.handleAdvancedFiltershow}
               handleShowFilterModal={this.handleShowFilterModal}
-              clearFilters={this.handleClearFilters}
+              clearFilters={this.clearFilters}
               />
           </div>
           <div className="col-sm-0 col-md-6 video-container">
@@ -693,7 +687,7 @@ class CommentingContainer extends React.Component {
           ToggledStyle={{left: '75px'}}
         />
         <BottomScollListener
-          onBottom={this.handleLoadMoreClick}
+          onBottom={this.handleLoadMoreComments}
           offset={500}
         />
       </div>

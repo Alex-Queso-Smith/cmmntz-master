@@ -28,7 +28,7 @@ class UserEditSettingsContainer extends React.Component {
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
   handleRevertSettings = this.handleRevertSettings.bind(this);
-  handleClearFilters = this.handleClearFilters.bind(this);
+  clearFilters = this.clearFilters.bind(this);
 
   componentDidMount(){
     this._isMounted = true;
@@ -112,7 +112,7 @@ class UserEditSettingsContainer extends React.Component {
     })
   }
 
-  handleClearFilters(){
+  clearFilters(){
     var opts = this.state.sortOpts;
     opts.notFilterList = [];
     opts.filterList = [];
@@ -223,7 +223,7 @@ class UserEditSettingsContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleClearFilters(){
+  clearFilters(){
     var opts = this.state.sortOpts;
     opts.notFilterList = [];
     opts.filterList = [];
@@ -247,10 +247,10 @@ class UserEditSettingsContainer extends React.Component {
           sortOpts={this.state.sortOpts}
           handleFilterSubmit={this.handleChange}
           handleSortDirClick={this.handleSortDirClick}
-          clearFilters={this.handleClearFilters}
+          clearFilters={this.clearFilters}
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
-          clearFilters={this.handleClearFilters}
+          clearFilters={this.clearFilters}
           hideAdvancedLink={true}
         />
         <Checkbox
