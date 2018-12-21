@@ -12,6 +12,10 @@ class CfCommentsApp extends React.Component {
       artType: document.getElementById('cf-comments-app').getAttribute('data-art-type'),
       artId: document.getElementById('cf-comments-app').getAttribute('data-art-id'),
       galleryId: document.getElementById('cf-comments-app').getAttribute('data-gallery-id'),
+      themeSettings: {
+        font: document.getElementById('cf-comments-app').getAttribute('data-user-font'),
+        color: document.getElementById('cf-comments-app').getAttribute('data-user-theme'),
+      },
       artSettings: {
         disabled: false,
         deactivated: false,
@@ -84,8 +88,12 @@ class CfCommentsApp extends React.Component {
       </div>
     }
 
+    var {font, color} = this.state.themeSettings;
+    font = !font ? "serif" : font
+    color = !color ? "light" : color
+
     return (
-      <div id="cf-commenting-container" className="container-fluid">
+      <div id="cf-commenting-container" className={`container-fluid ${font} ${color}`}>
         {displayContainer}
       </div>
     )
