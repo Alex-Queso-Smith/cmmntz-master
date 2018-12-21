@@ -333,8 +333,8 @@ a:hover {
     .tooltip-content {
       visibility: visible;
       opacity: 1;
-      transition: opacity .4s ease-out;
-      transition-delay: 1s;
+      transition: opacity .2s ease-out;
+      transition-delay: .75s;
       top: -40px;
     }
   }
