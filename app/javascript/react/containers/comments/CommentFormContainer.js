@@ -254,10 +254,10 @@ class CommentFormContainer extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row">
+        <div className="row justify-content-center margin-top-10px">
           {selfVoteButtonsRowOne}
         </div>
-        <div className="row">
+        <div className="row justify-content-center">
           {selfVoteButtonsRowTwo}
         </div>
         <div className="clear"></div>
