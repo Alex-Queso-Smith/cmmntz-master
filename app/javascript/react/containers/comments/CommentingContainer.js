@@ -72,29 +72,29 @@ class CommentingContainer extends React.Component {
   handleShowFilterModal = this.handleShowFilterModal.bind(this);
 
   componentWillMount(){
-    var { userId, galleryId } = this.props;
-
-    if (userId.length > 0){
-       FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
-       .then(userData => {
-
-         var oldUserThemeSettings = this.state.userThemeSettings;
-         oldUserThemeSettings.font = userData.user.font;
-         oldUserThemeSettings.colorTheme = userData.user.color_theme;
-         var oldUserSettings = this.state.userSettings;
-         oldUserSettings.admin = userData.user.admin;
-         oldUserSettings.guest = userData.user.guest;
-         var oldUserInfo = this.state.userInfo;
-         oldUserInfo.userName = userData.user.user_name;
-
-         this.setState({
-           userThemeSettings: oldUserThemeSettings,
-           userSettings: oldUserSettings,
-           userInfo: oldUserInfo
-         })
-       })
-       .catch(error => console.error(`Error in fetch: ${error.message}`));
-     }
+    // var { userId, galleryId } = this.props;
+    //
+    // if (userId.length > 0){
+    //    FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
+    //    .then(userData => {
+    //
+    //      // var oldUserThemeSettings = this.state.userThemeSettings;
+    //      // oldUserThemeSettings.font = userData.user.font;
+    //      // oldUserThemeSettings.colorTheme = userData.user.color_theme;
+    //      var oldUserSettings = this.state.userSettings;
+    //      oldUserSettings.admin = userData.user.admin;
+    //      oldUserSettings.guest = userData.user.guest;
+    //      var oldUserInfo = this.state.userInfo;
+    //      oldUserInfo.userName = userData.user.user_name;
+    //
+    //      this.setState({
+    //        // userThemeSettings: oldUserThemeSettings,
+    //        userSettings: oldUserSettings,
+    //        userInfo: oldUserInfo
+    //      })
+    //    })
+    //    .catch(error => console.error(`Error in fetch: ${error.message}`));
+    //  }
   }
 
   componentDidMount(){
@@ -110,9 +110,8 @@ class CommentingContainer extends React.Component {
         FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
         .then(userData => {
 
-          var newUserSettings = this.state.userSettings;
           var newSortOpts = this.state.sortOpts;
-          var { followed_users, blocked_users } = userData.user
+          var { followed_users, blocked_users, admin, guest, user_name } = userData.user
           var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, hide_anon_and_guest } = userData.user.sort_opts
           var censorComments = censor === "true" || censor == true ? true : false
 
@@ -125,8 +124,16 @@ class CommentingContainer extends React.Component {
           newSortOpts.censor = censor
           newSortOpts.hideAnonAndGuest = hide_anon_and_guest
 
+          var newUserSettings = this.state.userSettings;
+          newUserSettings.admin = admin;
+          newUserSettings.guest = guest;
+
+          var newUserInfo = this.state.userInfo;
+          newUserInfo.userName = user_name;
+
           this.setState({
             userSettings: newUserSettings,
+            userInfo: newUserInfo,
             sortOpts: newSortOpts,
             censor: censorComments,
             blockedUsers: blocked_users,
