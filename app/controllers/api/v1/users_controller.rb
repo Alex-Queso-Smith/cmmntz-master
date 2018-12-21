@@ -60,7 +60,8 @@ class Api::V1::UsersController < ApiController
         :votes_from,
         :censor,
         :show_censored_comments,
-        :settings_updated
+        :settings_updated,
+        :hide_anon_and_guest
       )
     end
 end

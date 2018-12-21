@@ -29,7 +29,8 @@ class UserEditSettingsContainer extends React.Component {
   handleSubmit = this.handleSubmit.bind(this);
   handleRevertSettings = this.handleRevertSettings.bind(this);
   clearFilters = this.clearFilters.bind(this);
-
+  handleSortOptCheckChange = this.handleSortOptCheckChange.bind(this);
+  
   componentDidMount(){
     this._isMounted = true;
 
@@ -63,11 +64,22 @@ class UserEditSettingsContainer extends React.Component {
     this._isMounted = false;
   }
 
+  handleSortOptCheckChange(event) {
+    var target = event.target
+    var newOpts = this.state.sortOpts
+    newOpts[target.name] = target.checked
+
+    this.setState({
+      sortOpts: newOpts,
+      useGalleryDefault: false
+    })
+  }
+
   handleChange(event){
     const target = event.target;
     const name = target.name;
-
     var value;
+
     if (target.type === "checkbox") {
       value = target.checked
 
@@ -199,7 +211,7 @@ class UserEditSettingsContainer extends React.Component {
   handleSubmit(event){
     event.preventDefault();
 
-    var { sortDir, sortType, notFilterList, filterList, commentsFrom, votesFrom } = this.state.sortOpts;
+    var { sortDir, sortType, notFilterList, filterList, commentsFrom, votesFrom, hideAnonAndGuest } = this.state.sortOpts;
     var { censor, showCensoredComments, useGalleryDefault } = this.state;
 
     var user = new FormData();
@@ -212,7 +224,9 @@ class UserEditSettingsContainer extends React.Component {
     user.append("user[censor]", censor);
     user.append("user[show_censored_comments]", showCensoredComments)
     user.append("user[settings_updated]", !useGalleryDefault)
+    user.append("user[hide_anon_and_guest]", hideAnonAndGuest)
 
+    hideAnonAndGuest
     FetchWithPush(this, `/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
     .then(body => {
       if (!body.errors) {
@@ -252,6 +266,7 @@ class UserEditSettingsContainer extends React.Component {
           handleFilterByClick={this.handleFilterByClick}
           clearFilters={this.clearFilters}
           hideAdvancedLink={true}
+          onChange={this.handleSortOptCheckChange}
         />
         <Checkbox
           onChange={this.handleChange}
