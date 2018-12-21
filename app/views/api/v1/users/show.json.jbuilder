@@ -23,7 +23,8 @@ json.user do
     json.filter_list object.filter_list || []
     json.votes_from object.votes_from || ""
     json.comments_from object.comments_from || ""
-    json.show_censored_comments object.show_censored_comments || true
     json.hide_anon_and_guest object.hide_anon_and_guest
+
+    json.show_censored_comments @user.show_censored_comments || true
   end
 end

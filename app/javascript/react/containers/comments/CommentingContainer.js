@@ -101,17 +101,8 @@ class CommentingContainer extends React.Component {
   componentDidMount(){
     FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
     .then(artData => {
-
-      var newGallerySettings = artData.art.gallery_settings
-
-      var { gallery_filter_list, gallery_not_filter_list, gallery_comment_etiquette } = artData.art.gallery_settings
-
-      newGallerySettings.gallery_filter_list = gallery_filter_list.length != 0 ? gallery_filter_list.split(',') : []
-      newGallerySettings.gallery_not_filter_list = gallery_not_filter_list.length != 0 ? gallery_not_filter_list.split(',') : []
-
       this.setState({
-        gallerySettings: newGallerySettings,
-        commentEtiquette: gallery_comment_etiquette
+        commentEtiquette: artData.art.gallery_comment_etiquette
       })
     })
     .then(stuff => {
