@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  skip_before_action *ALL_FILTERS - [:require_app_access]
+  skip_before_action *ALL_FILTERS - [:require_app_access, :create_guest_unless_logged_in]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   # GET /articles
@@ -13,12 +13,7 @@ class ArticlesController < ApplicationController
   # GET /articles/1.json
   def show
     url = @article.url(request)
-    @art = Art.where(url: url).first_or_create do |art|
-      art.gallery = Gallery.find_by(name: "Classibridge Times")
-      art.topics_list = @article.topics
-      art.published_at = @article.publish_date
-      art.art_type = "article"
-    end
+    @art = Art.find_or_create_for_url(url, "Classibridge Times", @article.topics, @article.publish_date, @article.author.name, "article")
   end
 
   private

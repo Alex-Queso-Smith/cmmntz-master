@@ -14,7 +14,7 @@ User.create(
   email: "jesse@classibridge.com",
   password: "password",
   password_confirmation: "password",
-  base_image: "butterfly",
+  base_image: "flower_ffffff_000000",
   longitude: -75,
   latitude: 40
 )
@@ -34,7 +34,7 @@ User.create(
   email: "alex@classibridge.com",
   password: "password",
   password_confirmation: "password",
-  base_image: "gi",
+  base_image: "rooster_ffffff_000000",
   longitude: -75,
   latitude: 40
 )
@@ -54,7 +54,7 @@ User.create(
   email: "aj@classibridge.com",
   password: "password",
   password_confirmation: "password",
-  base_image: "boxing-glove",
+  base_image: "turtle_ffffff_ff0000",
   longitude: -75,
   latitude: 40
 )
@@ -176,7 +176,7 @@ num_articles.times do
     created_at: time,
     updated_at: time
   )
-  art = Art.create(url: article_one.url, gallery: gallery, published_at: article_one.publish_date )
+  art = Art.create(url: article_one.url, gallery: gallery, published_at: article_one.publish_date, artist_name: article_one.author.name )
 
   time += rand(100..1000)
 

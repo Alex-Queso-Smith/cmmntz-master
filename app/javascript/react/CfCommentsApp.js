@@ -12,10 +12,16 @@ class CfCommentsApp extends React.Component {
       artType: document.getElementById('cf-comments-app').getAttribute('data-art-type'),
       artId: document.getElementById('cf-comments-app').getAttribute('data-art-id'),
       galleryId: document.getElementById('cf-comments-app').getAttribute('data-gallery-id'),
+      themeSettings: {
+        font: document.getElementById('cf-comments-app').getAttribute('data-user-font'),
+        color: document.getElementById('cf-comments-app').getAttribute('data-user-theme'),
+      },
       artSettings: {
         disabled: false,
         deactivated: false,
-        blacklisted: false
+        blacklisted: false,
+        disabledMessage: "",
+        userCanPost: true
       }
     }
     this.handleAppSetState = this.handleAppSetState.bind(this)
@@ -23,10 +29,6 @@ class CfCommentsApp extends React.Component {
 
   handleAppSetState(key, val) {
     this.setState({ [key]: val })
-  }
-
-  componentWillMount() {
-    document.getElementById("body").classList.add("purple-bg")
   }
 
   componentDidMount() {
@@ -37,6 +39,8 @@ class CfCommentsApp extends React.Component {
       newArtSettings.disabled = artData.art.disabled
       newArtSettings.deactivated = artData.art.deactivated
       newArtSettings.userBlacklisted = artData.art.user_blacklisted
+      newArtSettings.disabledMessage = artData.art.disabled_message
+      newArtSettings.userCanPost = artData.art.user_can_post
 
       this.setState({
         artSettings: newArtSettings
@@ -69,14 +73,23 @@ class CfCommentsApp extends React.Component {
         banUser={this.banUser}
         />
     } else {
+      var msg = "This thread has been deactivated by the site Admins."
+
+      if (artSettings.disabledMessage != "") {
+        msg = artSettings.disabledMessage
+      }
       displayContainer =
       <div className="deactivated-message">
-        <h3>This thread has been deactivated by the site Admins.</h3>
+        <h3>{msg}</h3>
       </div>
     }
 
+    var {font, color} = this.state.themeSettings;
+    font = !font ? "serif" : font
+    color = !color ? "light" : color
+
     return (
-      <div id="cf-commenting-container" className="container-fluid">
+      <div id="cf-commenting-container" className={`container-fluid ${font} ${color}`}>
         {displayContainer}
       </div>
     )

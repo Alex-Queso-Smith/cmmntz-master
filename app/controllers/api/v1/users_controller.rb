@@ -4,12 +4,15 @@ class Api::V1::UsersController < ApiController
   before_action :require_no_user, only: [:create]
   # GET /users.json
   def show
-    #code
+    # load gallery for search settings determination
+    @gallery = Gallery.find params[:gallery_id] if params[:gallery_id]
   end
 
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    attrs = current_user.attributes.merge(user_params)
+    current_user.attributes = attrs
+    @user = current_user
 
     if @user.save
       render json: { message: "Created successfully" }
@@ -57,7 +60,8 @@ class Api::V1::UsersController < ApiController
         :votes_from,
         :censor,
         :show_censored_comments,
-        :settings_updated
+        :settings_updated,
+        :hide_anon_and_guest
       )
     end
 end

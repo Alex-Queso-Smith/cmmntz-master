@@ -52,7 +52,8 @@ module CommentSearchs
     }
 
     scope :not_anon, -> { where(comments: {anonymous: false}) }
-
+    scope :not_guest, -> { where(comments: {guest: false}) }
+    scope :not_anon_or_guest, -> { not_anon.not_guest }
     scope :created_since, -> (datetime) {
       where(arel_table[:created_at].gteq(datetime))
     }
@@ -121,7 +122,7 @@ module CommentSearchs
 
     scope :for_non_blocked_users, -> {
       joins(:art)
-      .joins("left join gallery_blacklistings on gallery_blacklistings.user_id = comments.user_id AND gallery_blacklistings.gallery_id = arts.gallery_id")
+      .joins("left join gallery_blacklistings on gallery_blacklistings.user_id = comments.user_id AND gallery_blacklistings.gallery_id = arts.gallery_id and gallery_blacklistings.expires_at >= NOW()")
       .where("gallery_blacklistings.id IS NULL")
     }
 
@@ -151,7 +152,7 @@ module CommentSearchs
     end
 
     def self.vote_scoping(scope, user, votes_from = "")
-      if user && !user.followed_users.blank? && votes_from
+      if user && votes_from
         if votes_from == "friends"
           user_ids = user.followed_user_ids
         elsif votes_from == "network"
@@ -167,13 +168,13 @@ module CommentSearchs
     end
 
     def self.get_comments_from(scope, user, comments_from = "")
-      if user && !user.followed_users.blank? && comments_from
+      if user && comments_from
         if comments_from == "friends"
           user_ids = user.followed_user_ids
         elsif comments_from == "network"
           user_ids = user.network_user_ids
         end
-        scope = scope.comments_from_followed(user_ids).not_anon
+        scope = scope.comments_from_followed(user_ids).not_anon_or_guest
       end
 
       scope
@@ -185,6 +186,10 @@ module CommentSearchs
       end
 
       scope
+    end
+
+    def self.not_for_anon_or_guest(scope)
+      scope = scope.not_anon_or_guest
     end
 
     def self.sort_list(scope, sort_dir, sort_type)
@@ -202,7 +207,14 @@ module CommentSearchs
       scope = self.vote_scoping(scope, user, filter_opts[:votes_from])
       scope = self.get_comments_from(scope, user, filter_opts[:comments_from])
       scope = self.eliminate_blocked(scope, user)
+      scope = self.not_for_anon_or_guest(scope) if filter_opts[:hide_anon_and_guest]
       scope = self.sort_list(scope, filter_opts[:sort_dir], filter_opts[:sort_type])
+    end
+
+    def self.complete_listing_for_thread(article_id)
+      scope = for_art_type_and_id("art", article_id).joins_votes
+      scope = scope.select_tabulation.includes(:user).approved.not_deleted.for_non_blocked_users
+      scope
     end
 
     # sort and filter for art listings

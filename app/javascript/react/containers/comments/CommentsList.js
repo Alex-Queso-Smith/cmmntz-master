@@ -5,20 +5,38 @@ import { CommentLengthSorter } from '../../util/CommentUtil';
 import Comment from '../../components/comments/Comment';
 
 class CommentsList extends React.Component {
-  state = {
-    replyParent: null
+  constructor(props){
+    super(props);
+    this.state = {
+      replyParent: null,
+      allComments: this.props.allComments
+    }
+    this.handleReplyOpen = this.handleReplyOpen.bind(this);
+    this.handleEditUpdate = this.handleEditUpdate.bind(this);
   }
 
-  handleReplyOpen = this.handleReplyOpen.bind(this);
+  componentDidUpdate(prevProps, prevState){
+    if (prevProps.allComments != this.props.allComments) {
+      this.setState({ allComments: this.props.allComments })
+    }
+  }
 
   handleReplyOpen(commentId){
     this.setState({ replyParent: commentId })
   }
 
+  handleEditUpdate(commentId, text){
+    var updateComments = this.state.allComments;
+
+    updateComments.find(comment => comment.id === commentId).text = text
+    this.setState({ allComments: updateComments })
+  }
+
   render(){
 
     var commentsArray;
-    var { allComments, percentShow, handleTopChange, followedUsers, blockedUsers, artType, artId, userId , artSettings, updateAppState, adminStatus, censored } = this.props
+    var { allComments } = this.state;
+    var { percentShow, followedUsers, blockedUsers, artType, artId, currentUserId , artSettings, updateAppState, adminStatus, censored } = this.props
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
@@ -27,22 +45,23 @@ class CommentsList extends React.Component {
           this.props.deleteComment(comment.id)
         }
 
-        var handleBanUser = () => {
-          this.props.banUser(comment.user.user_id)
+        var handleBanUser = (event) => {
+          this.props.banUser(comment.user.user_id, event)
         }
-        
+
+        var { id, edited, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text, vote_counts, total_interactions, replies } = comment
         var { user_name, gender, age_range, user_id, show_censored} = comment.user
-        var { id, text, created_at, edited, replies, vote_percents, current_users_votes, user_has_voted, censored_text, total_interactions, vote_counts } = comment
-        var userName, commentLength;
 
         var shownText = text;
+        if (censored && censored_text) {
+          shownText = censored_text
+        }
+
         var lengthImage = CommentLengthSorter(text)
         var userFollowed = followedUsers.includes(user_id)
         var userBlocked = blockedUsers.includes(user_id)
 
-        if (censored) {
-          shownText = censored_text
-        }
+        var userName;
         if (user_name) {
           userName = `${user_name}`
         }
@@ -63,35 +82,40 @@ class CommentsList extends React.Component {
                 edited={edited}
                 userFollowed={userFollowed}
                 userBlocked={userBlocked}
-                followedUsers={followedUsers}
-                blockedUsers={blockedUsers}
                 commentUserId={user_id}
                 commentId={id}
                 userName={userName}
                 userInfo={comment.user}
-                createdAt={created_at}
                 lengthImage={lengthImage}
+                createdAt={created_at}
                 text={shownText}
-                replies={replies}
+                userVoted={user_has_voted}
+                currentUserId={currentUserId}
                 commentVotes={current_users_votes}
                 votePercents={vote_percents}
-                userVoted={user_has_voted}
-                handleTopChange={handleTopChange}
-                handleReplyOpen={this.handleReplyOpen}
-                replyParent={this.state.replyParent}
-                artId={artId}
-                currentUserId={userId}
-                artType={artType}
-                censored={censored}
+                voteCounts={vote_counts}
+                totalInteractions={total_interactions}
                 artSettings={artSettings}
                 updateAppState={updateAppState}
-                handleDeleteComment={handleDeleteComment}
-                banCommentUser={handleBanUser}
-                banUser={this.props.banUser}
                 handleBanUser={handleBanUser}
+                handleDeleteComment={handleDeleteComment}
+                showVoteCountTrigger={this.props.showVoteCountTrigger}
+                handleEditUpdate={this.handleEditUpdate}
+                isReply={comment.reply}
+
+                artId={artId}
+                artType={artType}
+                censored={censored}
                 galleryId={this.props.galleryId}
-                totalInteractions={total_interactions}
-                voteCounts={vote_counts}
+
+                handleTopChange={this.props.handleTopChange}
+
+                replyParent={this.state.replyParent}
+                handleReplyOpen={this.handleReplyOpen}
+                banUser={this.props.banUser}
+                replies={replies}
+                followedUsers={followedUsers}
+                blockedUsers={blockedUsers}
                 />
               <hr />
             </div>

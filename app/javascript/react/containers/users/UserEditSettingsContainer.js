@@ -12,26 +12,32 @@ class UserEditSettingsContainer extends React.Component {
       notFilterList: [],
       filterList: [],
       commentsFrom: "",
-      votesFrom: ""
+      votesFrom: "",
+      hideAnonAndGuest: false
     },
     censor: "",
     showCensoredComments: true,
-    useGalleryDefault: false
+    useGalleryDefault: false,
+    display: ""
   }
 
+  _isMounted = false;
   handleFilterByClick = this.handleFilterByClick.bind(this);
   handleFilterClick = this.handleFilterClick.bind(this);
   handleSortDirClick = this.handleSortDirClick.bind(this);
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
   handleRevertSettings = this.handleRevertSettings.bind(this);
-  handleClearFilters = this.handleClearFilters.bind(this);
+  clearFilters = this.clearFilters.bind(this);
+  handleSortOptCheckChange = this.handleSortOptCheckChange.bind(this);
 
   componentDidMount(){
-    FetchDidMount(this, `/api/v1/users/${this.props.match.params.id}.json`)
+    this._isMounted = true;
+
+    FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
     .then(userData => {
       var opts = this.state.sortOpts
-      var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, show_censored_comments } = userData.user
+      var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, show_censored_comments, hide_anon_and_guest } = userData.user.sort_opts
       var censored = censor === "true" || censor == true ? true : false;
       var showCenComment = show_censored_comments === "false" ? false : true;
 
@@ -41,21 +47,39 @@ class UserEditSettingsContainer extends React.Component {
       opts.votesFrom = votes_from
       opts.filterList = filter_list.length != 0 ? filter_list.split(',') : []
       opts.notFilterList = not_filter_list.length != 0 ? not_filter_list.split(',') : []
+      opts.hideAnonAndGuest = hide_anon_and_guest
 
-      this.setState({
-        sortOpts: opts,
-        censor: censored,
-        showCensoredComments: showCenComment
-      })
+      if (this._isMounted) {
+        this.setState({
+          sortOpts: opts,
+          censor: censored,
+          showCensoredComments: showCenComment
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
+  }
+
+  handleSortOptCheckChange(event) {
+    var target = event.target
+    var newOpts = this.state.sortOpts
+    newOpts[target.name] = target.checked
+
+    this.setState({
+      sortOpts: newOpts,
+      useGalleryDefault: false
+    })
   }
 
   handleChange(event){
     const target = event.target;
     const name = target.name;
-
     var value;
+
     if (target.type === "checkbox") {
       value = target.checked
 
@@ -100,7 +124,7 @@ class UserEditSettingsContainer extends React.Component {
     })
   }
 
-  handleClearFilters(){
+  clearFilters(){
     var opts = this.state.sortOpts;
     opts.notFilterList = [];
     opts.filterList = [];
@@ -129,15 +153,38 @@ class UserEditSettingsContainer extends React.Component {
     const name = target.getAttribute('data-value');
     var opts = this.state.sortOpts
 
-    if (opts.filterList.includes(name)){
-      var newFilters = opts.filterList.filter(v => v != name)
-      opts.filterList = newFilters
-      opts.notFilterList.push(name)
-    } else if (opts.notFilterList.includes(name)) {
-      var newFilters = opts.notFilterList.filter(v => v != name)
-      opts.notFilterList = newFilters
+    const right = [
+      "dislike_percent",
+      "dislike_a_lot_percent",
+      "trash_percent",
+      "warn_percent",
+      "sad_percent",
+      "boring_percent",
+      "angry_percent"
+    ]
+
+    if (right.includes(name)) {
+      if (opts.notFilterList.includes(name)) {
+        var newFilters = opts.notFilterList.filter(v => v != name)
+        opts.notFilterList = newFilters
+        opts.filterList.push(name)
+      } else if (opts.filterList.includes(name)) {
+        var newFilters = opts.filterList.filter(v => v != name)
+        opts.filterList = newFilters
+      } else {
+        opts.notFilterList.push(name)
+      }
     } else {
-      opts.filterList.push(name)
+      if (opts.filterList.includes(name)){
+        var newFilters = opts.filterList.filter(v => v != name)
+        opts.filterList = newFilters
+        opts.notFilterList.push(name)
+      } else if (opts.notFilterList.includes(name)) {
+        var newFilters = opts.notFilterList.filter(v => v != name)
+        opts.notFilterList = newFilters
+      } else {
+        opts.filterList.push(name)
+      }
     }
 
     opts.page = 1
@@ -164,7 +211,7 @@ class UserEditSettingsContainer extends React.Component {
   handleSubmit(event){
     event.preventDefault();
 
-    var { sortDir, sortType, notFilterList, filterList, commentsFrom, votesFrom } = this.state.sortOpts;
+    var { sortDir, sortType, notFilterList, filterList, commentsFrom, votesFrom, hideAnonAndGuest } = this.state.sortOpts;
     var { censor, showCensoredComments, useGalleryDefault } = this.state;
 
     var user = new FormData();
@@ -177,17 +224,30 @@ class UserEditSettingsContainer extends React.Component {
     user.append("user[censor]", censor);
     user.append("user[show_censored_comments]", showCensoredComments)
     user.append("user[settings_updated]", !useGalleryDefault)
+    user.append("user[hide_anon_and_guest]", hideAnonAndGuest)
 
-    FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'saveErrors', user)
-    .then(redirect => window.location = '/articles')
-    .then(redirect => { alert('Settings updated!') })
+    hideAnonAndGuest
+    FetchWithPush(this, `/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
+    .then(body => {
+      if (!body.errors) {
+        this.setState({ saveErrors: {} })
+        alert(`${body.message}`)
+      }
+    })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  clearFilters(){
+    var opts = this.state.sortOpts;
+    opts.notFilterList = [];
+    opts.filterList = [];
+    this.setState({ sortOpts: opts })
+  }
+
   render(){
+
     return(
       <div id="user-edit-settings-container">
-        <h5 className="text-center">Choose default sort and filter settings</h5>
         <br />
         <Checkbox
           onChange={this.handleRevertSettings}
@@ -200,30 +260,28 @@ class UserEditSettingsContainer extends React.Component {
           sortOpts={this.state.sortOpts}
           handleFilterSubmit={this.handleChange}
           handleSortDirClick={this.handleSortDirClick}
-          clearFilters={this.handleClearFilters}
+          clearFilters={this.clearFilters}
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
+          clearFilters={this.clearFilters}
           hideAdvancedLink={true}
+          onChange={this.handleSortOptCheckChange}
         />
-        <div className="row">
         <Checkbox
-          className={"col-6"}
           onChange={this.handleChange}
           name={"censor"}
           label={"Censor all text?"}
           checked={this.state.censor}
         />
         <Checkbox
-          className={"col-6"}
           onChange={this.handleChange}
           name={"showCensoredComments"}
           label={"Show Comment if Censored?"}
           checked={this.state.showCensoredComments}
         />
-      </div>
         <div className="margin-top-10px text-center">
-          <button className="btn btn-med btn-dark" onClick={this.handleSubmit}>
-            Submit
+          <button className="btn btn-sm float-right btn-dark" onClick={this.handleSubmit}>
+            Update
           </button>
         </div>
       </div>

@@ -10,6 +10,7 @@ class Comment < ApplicationRecord
   belongs_to :parent, class_name: 'Comment', optional: true
   has_many :replies, class_name: 'Comment', foreign_key: :parent_id
   has_many :votes
+  has_many :flag_votes, -> { where(vote_type: "warn") }, class_name: "Vote", foreign_key: "comment_id"
   has_many :comment_interactions
 
   delegate :gallery, to: :art
@@ -21,10 +22,11 @@ class Comment < ApplicationRecord
   validates :user_id, :text, presence: true
 
   validates :text, length: { in: 1..3000 }
-  validate :text_does_not_have_html, :art_is_not_disabled
+  validate :text_does_not_have_html, :art_is_not_disabled, :user_has_min_interactions
 
   scope :for_art_type_and_id, lambda { |type, id| where(art_type: type, art_id: id ) }
 
+  before_create :set_guest!
   before_save :censor_text!, :set_approval!
   after_create_commit :update_last_interaction_at_for_art!
   after_commit :alert_admin_of_comment!
@@ -51,10 +53,18 @@ class Comment < ApplicationRecord
     if art.deactivated?
       errors[:art] << "This Thread has been deactivated."
       errors[:art] << "deactivated"
+      errors[:art] << art.disabled_message if art.disabled_message
     elsif art.disabled?
       errors[:art] << "This Thread has been disabled.\n\nPosting and replying to it has been deactivated.\n\nYou action has been cancelled."
       errors[:art] << "disabled"
+      errors[:art] << art.disabled_message if art.disabled_message
     end
+  end
+
+  def user_has_min_interactions
+    min_interactions = 5
+    user_interactions = user.comment_interactions.limit(min_interactions).size
+    errors[:user] << "You must have 5 votes to comment.\n\nPlease vote on #{min_interactions - user_interactions} more comments or replies. " unless user_interactions >= min_interactions
   end
 
 
@@ -66,6 +76,11 @@ class Comment < ApplicationRecord
   end
 
   ### Preprocessors
+
+  def set_guest!
+    self.guest = user.guest?
+  end
+
   def censor_text!
     text_hold = text
     BAD_WORDS.each do |word|
@@ -75,7 +90,8 @@ class Comment < ApplicationRecord
   end
 
   def set_approval!
-    self.approved = !art.comment_requires_approval?
+    self.approved = !(art.comment_requires_approval? || art.comment_requires_guest_approval?(self))
+    self.approved_by = "auto" if approved?
   end
 
   def parse_and_build_votes

@@ -1,18 +1,29 @@
 import React from 'react'
 
+import { Checkbox } from '../../components/form/FormComponents';
 import { SortDir, SortButton } from '../../components/filters/SortSelect'
 import { ImageSelector } from '../../util/VoteUtil';
 import { SortButtons, FilterButtonsRowOne, FilterButtonsRowTwo, FilterCommentsBy, FilterVotesBy } from '../../util/FilterUtil'
-import GeoSelect from '../filters/GeoSelect'
+import GeoSelect from '../filters/GeoSelect';
 
 class CommentFilters extends React.Component {
+  state = {
+    hideAnonAndGuest: this.props.sortOpts.hideAnonAndGuest
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if (this.props.sortOpts.hideAnonAndGuest != this.state.hideAnonAndGuest) {
+      this.setState({ hideAnonAndGuest: this.props.sortOpts.hideAnonAndGuest })
+    }
+  }
+
   render(){
 
     var sortButtons = SortButtons(this)
     var filterButtonsRowOne = FilterButtonsRowOne(this)
     var filterButtonsRowTwo = FilterButtonsRowTwo(this)
 
-    const { showAdvancedFilters, radius, x, y, latitude, longitude, geoPin } = this.props.sortOpts
+    const { showAdvancedFilters, radius, x, y, latitude, longitude, geoPin, hideAnonAndGuest } = this.props.sortOpts
 
     var advancedFilters, advancedFiltersToggle;
     if (!this.props.hideAdvancedLink == true) {
@@ -47,6 +58,7 @@ class CommentFilters extends React.Component {
 
     return(
       <div className={`cf-filter-block ${this.props.className}`}>
+
         <div className="row vote-row" >
           <h4 className="col-2 col-sm-2 col-md-2">Sort</h4>
 
@@ -66,13 +78,22 @@ class CommentFilters extends React.Component {
             <button className="cf-clear-button btn btn-sm float-right" onClick={this.props.clearFilters}>Clear</button>
           </div>
         </div>
-        <div className="row vote-row">
+        <div className="row justify-content-center vote-row">
           {filterButtonsRowOne}
         </div>
-        <div className="row vote-row">
+        <div className="row justify-content-center vote-row">
           {filterButtonsRowTwo}
         </div>
         <br/>
+        <div className="row checkbox-row">
+          <Checkbox
+            className="col-12 margin-top-bottom-10px"
+            name={"hideAnonAndGuest"}
+            checked={this.state.hideAnonAndGuest}
+            label="Hide Anonymous and Guest Comments"
+            onChange={this.props.onChange}
+          />
+        </div>
         <div className="row">
           <div className="col-12">
             <h4>Show only comments from:</h4>

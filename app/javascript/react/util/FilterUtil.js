@@ -15,13 +15,13 @@ export const ImageSelectorTemp = (filterList, notFilterList, type) => {
 }
 
 export const SortTypes = [
-  ["top_percent", "top"],
-  ["love_percent", "love"],
-  ["like_score", "like"],
-  ["smart_percent", "smart"],
-  ["funny_percent", "funny"],
-  ["created_at", "created_at"],
-  ["comment_length", "length2"]
+  ["top_percent", "top", "Top"],
+  ["love_percent", "love", "Love"],
+  ["like_score", "like", "Like"],
+  ["smart_percent", "smart", "Smart"],
+  ["funny_percent", "funny", "Funny"],
+  ["created_at", "created_at", "Date"],
+  ["comment_length", "length2", "Length"]
 ]
 
 export const SortButtons = (object) => {
@@ -41,14 +41,14 @@ export const SortButtons = (object) => {
         onClick={object.props.handleFilterSubmit}
         image={image}
         visibility={''}
+        className="tooltip-container"
+        title={type[2]}
         />
     )
   })
 }
 
 export const RowOneFilterTypes = [
-  ["blank1", "blank1"],
-  ["blank2", "blank2"],
   ["top", "Top"],
   ["love", "Love"],
   ["like_a_lot", "Like A Lot"],
@@ -57,71 +57,70 @@ export const RowOneFilterTypes = [
   ["dislike", "Dislike"],
   ["dislike_a_lot", "Dislike A Lot"],
   ["trash", "Trash"],
-  ["warn", "Warn"],
-  ["blank3", "blank3"]
+  ["warn", "Flag"]
 ]
 
 export const FilterButtonsRowOne = (object) => {
   return RowOneFilterTypes.map((type) => {
-    var image, visibility, blankClass;
+    var visibility, blankClass;
 
-    if (!type[0].includes('blank')) {
-      image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
-    }
+    var image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
+    var tooltipClass = "tooltip-container"
 
-    if (type[0].includes('blank')) {
-      visibility = "visibility-hidden"
-      blankClass = type[0]
+    var handleFilterClickParent = (event) => {
+      object.props.handleFilterClick(event)
+      if (object.props.sortOpts.setFrom === "gallery") {
+        object.props.handleShowFilterModal()
+      }
     }
 
     return(
       <SortButton
         key={`filter_${type[1]}`}
-        className={`${blankClass}`}
+        className={`${tooltipClass}`}
         value={`${type[0]}_percent`}
-        onClick={object.props.handleFilterClick}
+        onClick={handleFilterClickParent}
         image={image}
         visibility={visibility}
+        title={`${type[1]}`}
         />
     )
   })
 }
 
 export const RowTwoFilterTypes = [
-  ["blank1", "blank1"],
-  ["blank2", "blank2"],
-  ["blank3", "blank3"],
   ["smart", "Smart"],
   ["funny", "Funny"],
   ["happy", "Happy"],
   ["shocked", "Shocked"],
   ["sad", "Sad"],
   ["boring", "Boring"],
-  ["angry", "Angry"],
-  ["blank4", "blank4"]
+  ["angry", "Angry"]
 ]
 
 export const FilterButtonsRowTwo = (object) => {
   return RowTwoFilterTypes.map((type) => {
-    var image, visibility, blankClass;
+    var visibility, tooltipClass;
 
-    if (!type[0].includes('blank')) {
-      image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
-    }
+    var image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
+    var tooltipClass = "tooltip-container"
 
-    if (type[0].includes('blank')){
-      visibility = "visibility-hidden"
-      blankClass = type[0]
+    var handleFilterClickParent = (event) => {
+      object.props.handleFilterClick(event)
+      if (object.props.sortOpts.setFrom === "gallery") {
+        object.props.handleShowFilterModal()
+      }
     }
 
     return(
       <SortButton
         key={`filter_${type[1]}`}
-        className={`${blankClass}`}
+        className={`${tooltipClass}`}
         value={`${type[0]}_percent`}
-        onClick={object.props.handleFilterClick}
+        onClick={handleFilterClickParent}
         image={image}
         visibility={visibility}
+        title={`${type[1]}`}
         />
     )
   })

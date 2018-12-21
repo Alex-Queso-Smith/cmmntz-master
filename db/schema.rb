@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_13_174200) do
+ActiveRecord::Schema.define(version: 2018_12_20_202129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -77,7 +77,10 @@ ActiveRecord::Schema.define(version: 2018_12_13_174200) do
     t.datetime "published_at"
     t.string "art_type"
     t.text "disabled_message"
+    t.uuid "gallery_artist_id"
+    t.text "settings"
     t.index ["created_at"], name: "index_arts_on_created_at"
+    t.index ["gallery_artist_id"], name: "index_arts_on_gallery_artist_id"
     t.index ["gallery_id"], name: "index_arts_on_gallery_id"
     t.index ["last_interaction_at"], name: "index_arts_on_last_interaction_at"
     t.index ["url"], name: "index_arts_on_url"
@@ -129,8 +132,13 @@ ActiveRecord::Schema.define(version: 2018_12_13_174200) do
     t.boolean "approved", default: false, null: false
     t.boolean "deleted", default: false
     t.datetime "edited_at"
+    t.boolean "ignore_flagged", default: false, null: false
+    t.string "approved_by"
+    t.boolean "guest", default: false, null: false
     t.index ["approved"], name: "index_comments_on_approved"
     t.index ["art_id", "art_type"], name: "index_comments_on_art_id_and_art_type"
+    t.index ["guest"], name: "index_comments_on_guest"
+    t.index ["ignore_flagged"], name: "index_comments_on_ignore_flagged"
     t.index ["interactions_count"], name: "index_comments_on_interactions_count"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -333,6 +341,17 @@ ActiveRecord::Schema.define(version: 2018_12_13_174200) do
     t.text "comment_etiquette"
   end
 
+  create_table "gallery_artists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "artist_name"
+    t.uuid "gallery_id"
+    t.uuid "customer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["artist_name"], name: "index_gallery_artists_on_artist_name"
+    t.index ["customer_id"], name: "index_gallery_artists_on_customer_id"
+    t.index ["gallery_id"], name: "index_gallery_artists_on_gallery_id"
+  end
+
   create_table "gallery_blacklistings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "gallery_id"
     t.uuid "user_id"
@@ -350,8 +369,17 @@ ActiveRecord::Schema.define(version: 2018_12_13_174200) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_gallery_moderators", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "gallery_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gallery_id"], name: "index_user_gallery_moderators_on_gallery_id"
+    t.index ["user_id"], name: "index_user_gallery_moderators_on_user_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "user_name", null: false
+    t.string "user_name"
     t.string "crypted_password"
     t.string "password_salt"
     t.string "persistence_token"

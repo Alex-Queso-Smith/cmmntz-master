@@ -1,16 +1,6 @@
 import React from 'react'
 
 const Modal = props => {
-  var actionButton;
-
-  if (props.actionButton) {
-    actionButton =
-    <div className="">
-      <button className="btn btn-med btn-dark" name="warn" onClick={props.actionButton}>
-        Flag Comment
-      </button>
-    </div>
-  }
 
   return (
     <div className="cf-modal">
@@ -20,7 +10,6 @@ const Modal = props => {
         <hr />
         <div className="cf-modal-contents">
           {props.children}
-          {actionButton}
         </div>
       </section>
     </div>

@@ -4,6 +4,7 @@ import Textarea from 'react-expanding-textarea'
 import { FetchWithUpdate, FetchBasic } from '../../util/CoreUtil';
 import VotingContainerBase from '../voting/VotingContainerBase';
 import UserAvatar from '../../containers/comments/UserAvatar';
+import BanUser from '../modals/BanUser';
 
 class Reply extends React.Component {
   state = {
@@ -17,7 +18,6 @@ class Reply extends React.Component {
     userBlocked: this.props.userBlocked
   }
 
-  onUserHover = this.onUserHover.bind(this);
   handleFollow = this.handleFollow.bind(this);
   handleBlock = this.handleBlock.bind(this);
   handleStateFlip = this.handleStateFlip.bind(this);
@@ -25,16 +25,13 @@ class Reply extends React.Component {
   handleCancelEditReply = this.handleCancelEditReply.bind(this);
   handleEditSubmit = this.handleEditSubmit.bind(this);
   showVotes = this.showVotes.bind(this);
+  updateUserVoted = this.updateUserVoted.bind(this);
 
   handleChange(event){
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     this.setState({ [name]: value })
-  }
-
-  onUserHover(){
-    this.setState({ userTileHover: !this.state.userTileHover })
   }
 
   handleStateFlip(event){
@@ -47,20 +44,19 @@ class Reply extends React.Component {
   }
 
   handleCancelEditReply(){
-    if (this.state.edited) {
-      this.setState({ editStatus: false })
-    } else {
-      this.setState({
-        editStatus: false,
-        text: this.props.text
-      })
-    }
+    this.setState({
+      editStatus: false,
+      text: this.props.text
+    })
   }
 
   handleEditSubmit(event){
     event.preventDefault();
+
+    var { text } = this.state;
+
     var newText = new FormData();
-    newText.append("comment[text]", this.state.text)
+    newText.append("comment[text]", text)
 
     FetchBasic(this, `/api/v1/comments/${this.props.replyId}.json`, newText, 'PATCH')
     .then(body => {
@@ -76,14 +72,17 @@ class Reply extends React.Component {
 
           var artSettings = this.props.artSettings
           artSettings[artErrors[1]] = true
+          if (artErrors[2]) {
+            artSettings['disabledMessage'] = artErrors[2]
+          }
           this.props.updateAppState("artSettings", artSettings)
         }
       } else {
         this.setState({
           editStatus: false,
-          text: body.comment.text,
           edited: body.comment.edited
         })
+        this.props.handleEditUpdate(this.props.replyId, text)
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -148,42 +147,33 @@ class Reply extends React.Component {
 
   showVotes(){
     this.setState({ userVoted: true })
+    this.props.showVoteCountTrigger()
+  }
+
+  updateUserVoted(){
+    this.setState({ userVoted: true })
   }
 
   render(){
-    var { currentUserId, user, lengthImage, replyUserId } = this.props;
-    var { text, editStatus, edited } = this.state;
-    var { user_name, gender, age_range } = this.props.user;
-    var userInfo, starOpacity, followStar, blockSym, blockOpacity;
+    var { userName, userInfo, currentUserId, lengthImage, replyUserId, artSettings, createdAt } = this.props;
+    var { text, editStatus, edited, userFollowed, userBlocked } = this.state;
 
-    if (user_name == '') {
-      userInfo = "Anonymous"
-    } else {
-      userInfo = `${user_name} - ${gender} - ${age_range}`
-    }
-
-    if (user.user_id != currentUserId && user_name != "Anonymous") {
-      if (!this.state.userFollowed) {
-        starOpacity = "translucent"
-      }
-      if (!this.state.userBlocked) {
-        blockOpacity = "translucent"
-      }
+    var starOpacity, followStar, blockSym, blockOpacity;
+    if (userInfo.user_id != currentUserId && userName != "Anonymous") {
+      if (!userFollowed) { starOpacity = "translucent" }
       followStar =
       <div className={`col-1 col-sm-1 col-md-1 cursor-pointer ${starOpacity}`}>
         <img onClick={this.handleFollow} src="/assets/star" height="20px" width="20px" />
       </div>
+
+      if (!userBlocked) { blockOpacity = "translucent" }
       blockSym =
       <div className={`col-1 col-sm-1 col-md-1 cursor-pointer ${blockOpacity}`}>
         <img onClick={this.handleBlock} src="/assets/block" height="20px" width="20px" />
       </div>
     } else {
-      blockSym =
-      <div className={`col-1 col-sm-1 col-md-1`}>
-      </div>
-      followStar =
-      <div className={`cf-comment-user-name col-1 col-sm-1 col-md-1`}>
-      </div>
+      blockSym = <div className={`col-1 col-sm-1 col-md-1`} />
+      followStar = <div className={`cf-comment-user-name col-1 col-sm-1 col-md-1`} />
     }
 
     var textBox;
@@ -231,15 +221,17 @@ class Reply extends React.Component {
     }
 
     var cancelButton, editButton;
-    if (editStatus && currentUserId === replyUserId) {
-      editButton = <button className="btn btn-dark btn-sm comment-button" onClick={this.handleEditSubmit}>Edit Comment</button>
-      cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditReply}>Cancel Edit</button>
-    } else if (currentUserId === replyUserId) {
-      editButton = <button className="btn btn-dark btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+    if (!artSettings.disabled) {
+      if (editStatus && currentUserId === replyUserId) {
+        editButton = <button className="btn btn-dark btn-sm comment-button" onClick={this.handleEditSubmit}>Edit Comment</button>
+        cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditReply}>Cancel Edit</button>
+      } else if (currentUserId === replyUserId) {
+        editButton = <button className="btn btn-dark btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+      }
     }
 
     var adminFlag;
-    if (this.props.user.gallery_admin) {
+    if (userInfo.gallery_admin) {
       adminFlag =
       " - Mod"
     }
@@ -247,13 +239,12 @@ class Reply extends React.Component {
     var deleteReplyButton, banUserButton;
     if (this.props.adminStatus && currentUserId != replyUserId) {
       deleteReplyButton =
-        <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteReply}>
-          Delete Reply
-        </button>
-        banUserButton =
-        <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleBanUser}>
-          Ban User
-        </button>
+      <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteReply}>
+        Delete Reply
+      </button>
+
+      banUserButton =
+      <BanUser banAction={this.props.handleBanUser} />
     }
 
     var showVotesButton;
@@ -280,21 +271,16 @@ class Reply extends React.Component {
       <div className="cf-comment cf-comment-reply margin-top-10px">
         <div className="cf-comment-wrapper">
           <UserAvatar
-            userTileHover={this.state.userTileHover}
-            userInfo={this.props.user}
-            onMouseEnter={this.onUserHover}
-            onMouseLeave={this.onUserHover}
-            userName={user_name}
+            userInfo={userInfo}
+            userName={userName}
             followStar={followStar}
             blockSym={blockSym}
             />
+
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
-              <div className="cf-comment-user-name col-4">
-                {user_name}{adminFlag}
-              </div>
-              <div className="cf-comment-at col-6" >
-                {this.props.posted}
+              <div className="cf-comment-user-name col-10">
+                {this.props.userName}{adminFlag}
               </div>
               <div className="cf-comment-length col-2">
                 <div className="float-right">
@@ -302,6 +288,14 @@ class Reply extends React.Component {
                 </div>
               </div>
             </div>
+
+            <div className="row">
+              <div className="col-sm-6">
+                {createdAt}
+              </div>
+              <div className="col-sm-6" />
+            </div>
+
             {textBox}
             {lastEdited}
             <div className="cf-reply-button-group">
@@ -311,6 +305,7 @@ class Reply extends React.Component {
               {banUserButton}
             </div>
           </div>
+
         </div>
         {showVotesButton}
         <VotingContainerBase
@@ -323,8 +318,9 @@ class Reply extends React.Component {
           voteCounts={this.props.voteCounts}
           handleTopChange={this.props.handleTopChange}
           userVoted={this.state.userVoted}
-          artSettings={this.props.artSettings}
+          artSettings={artSettings}
           updateAppState={this.props.updateAppState}
+          updateUserVoted={this.updateUserVoted}
         />
       </div>
     )

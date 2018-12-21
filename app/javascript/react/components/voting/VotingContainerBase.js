@@ -96,6 +96,13 @@ class VotingContainerBase extends React.Component {
           })
         }
 
+        // update app
+        var artSettings = this.props.artSettings
+        if (artSettings.userCanPost != body.user_can_post) {
+          artSettings["userCanPost"] = body.user_can_post
+          this.props.updateAppState("artSettings", artSettings)
+        }
+
         if (body.old_top_id){
           this.props.handleTopChange(body.old_top_id)
         }
@@ -174,7 +181,7 @@ class VotingContainerBase extends React.Component {
 
     var percentShowSet = () => {
       this.setState({ percentShow: true })
-      this.props.showVotes()
+      this.props.updateUserVoted()
     }
 
     if (this.state.userVoted) {
@@ -190,12 +197,11 @@ class VotingContainerBase extends React.Component {
 
   handleShowFlagModal(){
     if (this.state.flagModalShow) {
-      this.setState({ flagModalShow: !this.state.flagModalShow })
       document.body.classList.remove("cf-modal-locked");
     } else {
-      this.setState({ flagModalShow: !this.state.flagModalShow })
       document.body.classList.add("cf-modal-locked");
     }
+    this.setState({ flagModalShow: !this.state.flagModalShow })
   }
 
   handleFlagCommentModal(event){
@@ -217,20 +223,23 @@ class VotingContainerBase extends React.Component {
       <Modal
         handleClose={this.handleShowFlagModal}
         modalTitle={"Flag this comment?"}
-        actionButton={this.handleFlagCommentModal}
-        buttonName={"warn"}
       >
       If you wish to flag this comment please click flag comment button !
+      <div className="">
+        <button className="btn btn-med btn-dark" name="warn" onClick={this.handleFlagCommentModal}>
+          Flag Comment
+        </button>
+      </div>
       </Modal>
     }
 
     return(
       <div className="cf-votes-container" >
         {flagModal}
-        <div className="cf-votes-top-row row ">
+        <div className="cf-votes-top-row row justify-content-center">
           {voteButtonsRowOne}
         </div>
-        <div className="cf-votes-bot-row row ">
+        <div className="cf-votes-bot-row row justify-content-center">
           {voteButtonsRowTwo}
         </div>
       </div>
