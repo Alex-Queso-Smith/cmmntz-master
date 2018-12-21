@@ -96,6 +96,6 @@ class Api::V1::CommentsController < ApiController
     end
 
     def admin?
-      current_user.customer_for?(params[:gallery_id])
+      current_user.moderator_for?(params[:gallery_id])
     end
 end
