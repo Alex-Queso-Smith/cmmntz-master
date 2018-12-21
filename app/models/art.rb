@@ -28,12 +28,12 @@ class Art < ApplicationRecord
   }
 
   ### accessor methods
-  def self.find_or_create_for_url(url, gallery_name, article_topics, article_publish_date, article_artist_name)
+  def self.find_or_create_for_url(url, gallery_name, article_topics, article_publish_date, article_artist_name, type)
     a = where(url: url).first_or_create do |art|
       art.gallery = Gallery.find_by(name: gallery_name)
       art.topics_list = article_topics
       art.published_at = article_publish_date
-      art.art_type = "article"
+      art.art_type = type
       art.artist_name = article_artist_name
     end
     return a
