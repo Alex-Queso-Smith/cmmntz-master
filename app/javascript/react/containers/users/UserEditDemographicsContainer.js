@@ -14,6 +14,7 @@ class UserEditDemographicsContainer extends React.Component {
       y: '',
       geoPin: { x: '', y: '' },
       locationAnon: false,
+      ageRangeAnon: false,
       genderAnon: false
   }
 
@@ -93,6 +94,12 @@ class UserEditDemographicsContainer extends React.Component {
           genderAnon: false
         })
         break;
+      case "ageRangeAnon":
+        this.setState({
+          ageRange: "",
+          ageRangeAnon: value
+        })
+        break;
       case "genderAnon":
         this.setState({
           gender: "",
@@ -168,7 +175,7 @@ class UserEditDemographicsContainer extends React.Component {
   }
 
   render(){
-    var { ageRange, gender, x, y, latitude, longitude, geoPin, locationAnon } = this.state;
+    var { ageRange, gender, x, y, latitude, longitude, geoPin, locationAnon, genderAnon, ageRangeAnon } = this.state;
 
     return(
       <div id="user-edit-demographics-container">
@@ -178,6 +185,12 @@ class UserEditDemographicsContainer extends React.Component {
             label="Age Range"
             onChange={this.handleSliderChange}
             value={ageRange}
+          />
+          <Checkbox
+            name="ageRangeAnon"
+            onChange={this.handleChange}
+            label="Prefer Not To Say"
+            checked={ageRangeAnon}
           />
           <hr />
           <GenderSelector
@@ -190,9 +203,10 @@ class UserEditDemographicsContainer extends React.Component {
             name="genderAnon"
             onChange={this.handleChange}
             label="Prefer Not To Say"
-            checked={this.state.genderAnon}
+            checked={genderAnon}
           />
           <hr />
+          <h4 className="text-medium">Click Near Where You Live</h4>
           <GeoPicker
             setLatLongClick={this.setLatLongClick}
             x={x}
@@ -203,8 +217,8 @@ class UserEditDemographicsContainer extends React.Component {
             handleChange={this.handleChange}
             locationAnon={locationAnon}
           />
-          <div className="form-group actions margin-top-10px">
-            <button id="user-edit-demographics-button" type="submit" className="btn btn-sm float-right btn-dark" value="Submit">
+          <div className="form-group actions">
+            <button id="user-edit-demographics-button" type="submit" className="btn btn-sm float-right btn-dark margin-top-10px" value="Submit">
               <span className="text-medium">Update</span>
             </button>
           </div>

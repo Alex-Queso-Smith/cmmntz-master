@@ -77,8 +77,8 @@ class UserEditLooksContainer extends React.Component {
             colorTheme={colorTheme}
             />
 
-          <div className="form-group actions margin-top-10px">
-            <button id="user-edit-looks-button" type="submit" className="btn btn-block btn-large btn-dark" value="Submit">
+          <div className="form-group actions">
+            <button id="user-edit-looks-button" type="submit" className="btn btn-sm btn-dark float-right margin-top-10px" value="Submit">
               <span className="text-medium">Update</span>
             </button>
           </div>

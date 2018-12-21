@@ -87,7 +87,7 @@ class CommentFilters extends React.Component {
         <br/>
         <div className="row checkbox-row">
           <Checkbox
-            className="col-12"
+            className="col-12 margin-top-bottom-10px"
             name={"hideAnonAndGuest"}
             checked={this.state.hideAnonAndGuest}
             label="Hide Anonymous and Guest Comments"
