@@ -2,6 +2,7 @@ $breakpoint-tablet: 900px;
 $breakpoint-phone: 450px;
 
 $grayline: #D3D3D3;
+$dark-grayline: #7A7A7A;
 $bootstrap-blue: #0069D9;
 
 @media (max-width: $breakpoint-tablet) {
@@ -266,6 +267,14 @@ $bootstrap-blue: #0069D9;
   background: #f0f0f0;
   border: 1px solid $grayline;
   cursor: pointer;
+}
+
+.dark {
+  .cf-clear-button {
+    color: #fff;
+    border: 1px solid $dark-grayline;
+    background: #000;
+  }
 }
 
 .cf-geo-filter-button {
