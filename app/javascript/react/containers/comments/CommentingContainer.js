@@ -640,7 +640,7 @@ class CommentingContainer extends React.Component {
           <div className="col-sm-12 col-md-6">
             <CommentFilters
               sortOpts={sortOpts}
-              onChange={this.handleChange}
+              onChange={this.handleFilterSubmitMan}
               handleFilterSubmit={this.handleFilterSubmitMan}
               handleSortDirClick={this.handleSortDirClick}
               handleFilterClick={this.handleFilterClick}
