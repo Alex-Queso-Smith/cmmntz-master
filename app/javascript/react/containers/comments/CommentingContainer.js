@@ -430,7 +430,6 @@ class CommentingContainer extends React.Component {
       }
     }
 
-
     opts.page = 1
 
     this.setState({
