@@ -40,7 +40,8 @@ class CfCommentsApp extends React.Component {
       newArtSettings.deactivated = artData.art.deactivated
       newArtSettings.userBlacklisted = artData.art.user_blacklisted
       newArtSettings.disabledMessage = artData.art.disabled_message
-      newArtSettings.userCanPost = artData.art.user_can_post
+      // newArtSettings.userCanPost = artData.art.user_can_post
+      newArtSettings.userCanPost = true // override to deactivate check
 
       this.setState({
         artSettings: newArtSettings
