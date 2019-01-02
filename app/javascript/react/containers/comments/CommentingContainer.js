@@ -637,7 +637,7 @@ class CommentingContainer extends React.Component {
         </div>
         <hr />
         <div>
-          <p>{totalComments} comments | {filteredCount} filtered out</p>
+          <p>{this.state.grandTotalComments} comments | {filteredCount} filtered | {totalComments} shown</p>
         </div>
         <div className="row">
           <div className="col-sm-12 col-md-6">
