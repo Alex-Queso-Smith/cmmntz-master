@@ -544,7 +544,7 @@ class CommentingContainer extends React.Component {
         handleClose={this.handleShowVoteModal}
         modalTitle={"Please consider voting!"}
       >
-      "Hey now maybe you should vote so everything will be more awesome!"
+      We’ve noticed that you’ve clicked the Show Results button a few times. Although you’re more than welcome to, please know that the full power of the Classifilter commenting widget is unlocked when users vote on comments and inform the community what they think. Also, please be aware that guests do not have to log in to leave comments or vote on comments.
       </Modal>
     }
 
@@ -555,7 +555,7 @@ class CommentingContainer extends React.Component {
         handleClose={this.handleShowFilterModal}
         modalTitle={"You are leaving curated filters"}
       >
-        "You are now leaving site's curated view and will now see comments and votes previously filtered out by the site."
+      Please be aware that by changing the filter settings, you are now leaving the curated view that the website has created. You are free to do so, but please do so with the knowledge that some of the content you might see might not be up to the standards of this site. Please click OK if you would like to proceed.
       </Modal>
     }
 

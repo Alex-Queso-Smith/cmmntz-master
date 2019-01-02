@@ -302,7 +302,7 @@ class UserNewContainer extends React.Component {
         modalTitle="For your consideration"
         handleClose={this.handleShowAnonWarning}
       >
-        If you do not select demographic information, your comments are more likely to be filtered out!
+      Please be aware that by listing some of your information as anonymous, the likelihood that any comments you post will be filtered out via default settings goes up substantially. You always have the option to post specific comments as an anonymous user, but the system works best when your main account has the demographic details entered.
       </Modal>
     }
 
@@ -313,8 +313,7 @@ class UserNewContainer extends React.Component {
         modalTitle="Please select options for demographics"
         handleClose={this.handleSubmissionWarning}
       >
-        Please select an option or select Prefer Not To say for all demographics. Your comments are more likely to be filtered out if you select Prefer Not To Say by other users.
-
+      Please select an option or select Prefer Not To say for all demographics. Please be aware that by listing some of your information as anonymous, the likelihood that any comments you post will be filtered out via default settings goes up substantially. You always have the option to post specific comments as an anonymous user, but the system works best when your main account has the demographic details entered.
       </Modal>
     }
 
