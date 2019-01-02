@@ -323,6 +323,7 @@ class CommentingContainer extends React.Component {
     var opts = this.state.sortOpts;
     opts.notFilterList = [];
     opts.filterList = [];
+    opts.hideAnonAndGuest = false;
     this.setState({
       sortOpts: opts,
       presetFilter: ""
