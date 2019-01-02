@@ -55,7 +55,9 @@ class CommentFilters extends React.Component {
         </div>
       }
     }
-
+    const marginTop0 = {
+      marginTop: "0px"
+    }
     return(
       <div className={`cf-filter-block ${this.props.className}`}>
 
@@ -75,7 +77,7 @@ class CommentFilters extends React.Component {
             <h4>Filters</h4>
           </div>
           <div className="col-sm-6">
-            <button className="cf-clear-button btn btn-sm float-right" onClick={this.props.clearFilters}>Clear</button>
+            <button style={marginTop0} className="fade-button btn btn-sm float-right" onClick={this.props.clearFilters}>Clear</button>
           </div>
         </div>
         <div className="row justify-content-center vote-row">
@@ -94,7 +96,6 @@ class CommentFilters extends React.Component {
             onChange={this.props.onChange}
           />
         </div>
-
         <div className="row">
           <div className="col-sm-6 cf-filter-from-section">
             <h4>Show only comments from:</h4>
