@@ -653,6 +653,7 @@ class CommentingContainer extends React.Component {
               artSettings={artSettings}
               updateAppState={updateAppState}
               adminStatus={this.state.userSettings.admin}
+              guestStatus={this.state.userSettings.guest}
               deleteComment={this.deleteComment}
               banUser={this.banUser}
               galleryId={this.props.galleryId}

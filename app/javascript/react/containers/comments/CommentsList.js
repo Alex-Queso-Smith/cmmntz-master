@@ -36,7 +36,7 @@ class CommentsList extends React.Component {
 
     var commentsArray;
     var { allComments } = this.state;
-    var { percentShow, followedUsers, blockedUsers, artType, artId, currentUserId , artSettings, updateAppState, adminStatus, censored } = this.props
+    var { percentShow, followedUsers, blockedUsers, artType, artId, currentUserId , artSettings, updateAppState, adminStatus, guestStatus, censored } = this.props
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
@@ -79,6 +79,7 @@ class CommentsList extends React.Component {
             <div className="cf-comment-div" key={id}>
               <Comment
                 adminStatus={adminStatus}
+                guestStatus={guestStatus}
                 edited={edited}
                 userFollowed={userFollowed}
                 userBlocked={userBlocked}
