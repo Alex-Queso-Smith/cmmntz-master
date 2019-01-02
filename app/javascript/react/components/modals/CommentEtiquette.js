@@ -22,7 +22,7 @@ export const CommentEtiquette = props => {
     <BasicModal
       modalButtonText="Commenting Etiquette"
       modalTitle="Commenting Etiquette"
-      modalButtonClass="btn-dark"
+      modalButtonClass="fade-button"
     >
     {etiquette}
     </BasicModal>

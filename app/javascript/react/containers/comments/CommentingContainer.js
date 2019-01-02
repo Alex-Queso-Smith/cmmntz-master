@@ -6,7 +6,6 @@ import CommentFormContainer from './CommentFormContainer';
 import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
 import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual, FetchDeleteBasic } from '../../util/CoreUtil';
-import CommentEtiquette from '../../components/modals/CommentEtiquette';
 import Modal from '../../components/modals/Modal';
 import PreSetFilters from '../../components/filters/PreSetFilters';
 import { presetOptions } from '../../components/filters/SortSelect';
@@ -527,7 +526,7 @@ class CommentingContainer extends React.Component {
   render(){
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
-    var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored, commentEtiquette} = this.state;
+    var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored } = this.state;
 
     var endComments;
     if (totalComments === comments.length) {
@@ -596,13 +595,13 @@ class CommentingContainer extends React.Component {
         {showVoteModal}
         {filterModal}
         {loginStatement}
-        <CommentEtiquette galleryCommentEtiquette={commentEtiquette} />
         <div className="row">
           <div className="col-sm-12 col-md-6">
             <CommentFormContainer
               handleSubmit={this.handleCommentForm}
               commentFormErrors={commentFormErrors}
               artSettings={artSettings}
+              commentEtiquette={this.state.commentEtiquette}
               />
           </div>
         </div>

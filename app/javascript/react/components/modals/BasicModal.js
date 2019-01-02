@@ -33,15 +33,15 @@ class BasicModal extends React.Component {
         {this.props.children}
       </Modal>
     }
-    const style = {
-      display: "inline"
-    }
+
     return(
-      <div style={style}>
-        {modalWindow}
-        <button onClick={this.showModal} className={`btn btn-sm ${this.props.modalButtonClass}`}>
-          {this.props.modalButtonText}
-        </button>
+      <div className="row">
+        <div className="col-12">
+          {modalWindow}
+          <button onClick={this.showModal} className={`btn btn-sm ${this.props.modalButtonClass}`}>
+            {this.props.modalButtonText}
+          </button>
+        </div>
       </div>
     );
   }

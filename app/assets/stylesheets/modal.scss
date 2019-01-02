@@ -1,3 +1,5 @@
+$breakpoint-phone: 575px;
+
 .cf-modal {
   position: fixed;
   top: 0;
@@ -23,6 +25,9 @@
   h3 {
     height: 10%;
   }
+  ol {
+    padding-inline-start: 20px !important;
+  }
   .cf-modal-contents {
     height: 82%;
     width: 100%;
@@ -47,4 +52,14 @@
 
 .cf-modal-locked {
   overflow: hidden;
+}
+
+@media (max-width: $breakpoint-phone) {
+  .cf-modal-main {
+    width: 90%;
+    height: 90%;
+  }
+  .cf-modal-contents {
+    padding-right: 10px;
+  }
 }

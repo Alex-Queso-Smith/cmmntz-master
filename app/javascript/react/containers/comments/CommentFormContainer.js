@@ -7,6 +7,7 @@ import VoteButtonRowOne from '../../components/voting/VoteButtonRowOne';
 import { CreateErrorElements, CheckInputValidation, FetchWithUpdate } from '../../util/CoreUtil';
 import { Timeout } from '../../util/CommentUtil';
 import { ImageSelector, RowOneVoteTypes, RowTwoVoteTypes } from '../../util/VoteUtil';
+import CommentEtiquette from '../../components/modals/CommentEtiquette';
 
 class CommentFormContainer extends React.Component {
   state = {
@@ -221,24 +222,33 @@ class CommentFormContainer extends React.Component {
     } else {
       commentForm =
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
-        <div className="">
-          <Checkbox
-            name="anonymous"
-            onChange={this.handleChange}
-            label="Submit Anonymously"
-            className="row"
-            />
+        <div className="row">
+          <div className="col-6">
+            <Checkbox
+              name="anonymous"
+              onChange={this.handleChange}
+              label="Submit Anonymously"
+              className=""
+              />
+          </div>
+          <div className="col-6">
+            <div className="float-right">
+              <CommentEtiquette galleryCommentEtiquette={this.props.commentEtiquette} />
+            </div>
+          </div>
         </div>
         <div className="row">
-          <Textarea
-            maxLength="3000"
-            className="form-control margin-top-10px textarea"
-            name="text"
-            placeholder="Type your comment here"
-            value={text}
-            onChange={this.handleChange}
-            rows={7}
-            />
+          <div className="col-12">
+            <Textarea
+              maxLength="3000"
+              className="form-control margin-top-10px textarea"
+              name="text"
+              placeholder="Type your comment here"
+              value={text}
+              onChange={this.handleChange}
+              rows={7}
+              />
+          </div>
         </div>
         {textError}
         {approvalMsg}
