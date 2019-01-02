@@ -166,7 +166,11 @@ class Comment extends React.Component {
     var { replies, editStatus, edited, text, userFollowed, userBlocked } = this.state
 
     var followStar, blockSym, starOpacity, blockOpacity;
-    if (commentUserId != currentUserId && userName != "Anonymous") {
+    if (
+      commentUserId != currentUserId &&
+      userName != "Anonymous" &&
+      !this.props.guestStatus
+    ) {
       if (!userFollowed) { starOpacity = "translucent" }
       followStar =
       <div className={`col-sm-1 block-follow-box cursor-pointer ${starOpacity}`}>

@@ -72,32 +72,6 @@ class CommentingContainer extends React.Component {
   handleShowVoteModal = this.handleShowVoteModal.bind(this);
   handleShowFilterModal = this.handleShowFilterModal.bind(this);
 
-  componentWillMount(){
-    // var { userId, galleryId } = this.props;
-    //
-    // if (userId.length > 0){
-    //    FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
-    //    .then(userData => {
-    //
-    //      // var oldUserThemeSettings = this.state.userThemeSettings;
-    //      // oldUserThemeSettings.font = userData.user.font;
-    //      // oldUserThemeSettings.colorTheme = userData.user.color_theme;
-    //      var oldUserSettings = this.state.userSettings;
-    //      oldUserSettings.admin = userData.user.admin;
-    //      oldUserSettings.guest = userData.user.guest;
-    //      var oldUserInfo = this.state.userInfo;
-    //      oldUserInfo.userName = userData.user.user_name;
-    //
-    //      this.setState({
-    //        // userThemeSettings: oldUserThemeSettings,
-    //        userSettings: oldUserSettings,
-    //        userInfo: oldUserInfo
-    //      })
-    //    })
-    //    .catch(error => console.error(`Error in fetch: ${error.message}`));
-    //  }
-  }
-
   componentDidMount(){
     FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
     .then(artData => {
@@ -663,7 +637,7 @@ class CommentingContainer extends React.Component {
         </div>
         <hr />
         <div>
-          <p>{totalComments} comments | {filteredCount} filtered out</p>
+          <p>{this.state.grandTotalComments} comments | {filteredCount} filtered | {totalComments} shown</p>
         </div>
         <div className="row">
           <div className="col-sm-12 col-md-6">
@@ -679,6 +653,7 @@ class CommentingContainer extends React.Component {
               artSettings={artSettings}
               updateAppState={updateAppState}
               adminStatus={this.state.userSettings.admin}
+              guestStatus={this.state.userSettings.guest}
               deleteComment={this.deleteComment}
               banUser={this.banUser}
               galleryId={this.props.galleryId}

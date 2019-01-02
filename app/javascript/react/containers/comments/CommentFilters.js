@@ -94,33 +94,24 @@ class CommentFilters extends React.Component {
             onChange={this.props.onChange}
           />
         </div>
+
         <div className="row">
-          <div className="col-12">
+          <div className="col-sm-6 cf-filter-from-section">
             <h4>Show only comments from:</h4>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
             <FilterCommentsBy
               commentsFrom={this.props.sortOpts.commentsFrom}
               onClick={this.props.handleFilterByClick}
               />
           </div>
-        </div>
-        <br />
-        <div className="row">
-          <div className="col-12">
+          <div className="col-sm-6 cf-filter-from-section">
             <h4>Show only Votes By:</h4>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
             <FilterVotesBy
               votesFrom={this.props.sortOpts.votesFrom}
               onClick={this.props.handleFilterByClick}
               />
           </div>
         </div>
+        <br />
         {advancedFiltersToggle}
         {advancedFilters}
       </div>

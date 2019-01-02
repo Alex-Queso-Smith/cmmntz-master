@@ -302,7 +302,8 @@ h4 {
 }
 
 a:hover {
-  background-color: rgba(255,255,255,0.0)
+  background-color: rgba(255,255,255,0.0);
+  color: #5B3592;
 }
 
 .deactivated-message {
@@ -416,4 +417,15 @@ a:hover {
 
  .checkbox-row {
    margin-left: 0px !important;
+ }
+
+ .cf-filter-from-section {
+   padding-right: 0px !important;
+ }
+
+ @media (max-width: $breakpoint-phone) {
+   .cf-filter-from-section {
+     padding-right: 15px !important;
+     margin-top: 10px;
+   }
  }
