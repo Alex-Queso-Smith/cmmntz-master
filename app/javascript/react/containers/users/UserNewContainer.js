@@ -3,6 +3,7 @@ import React from 'react';
 import UserNewRequiredContainer from './UserNewRequiredContainer';
 import UserNewOptionalContainer from './UserNewOptionalContainer';
 import { FetchWithPush, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
+import Modal from '../../components/modals/Modal';
 
 class UserNewContainer extends React.Component {
   state = {
@@ -224,7 +225,7 @@ class UserNewContainer extends React.Component {
   }
 
   handleSubmissionWarning(){
-    var { submissionWarningShow, submissionWarningShown } = this.state;
+    var { submissionWarningShow } = this.state;
 
     if (!submissionWarningShow) {
       document.body.classList.add("cf-modal-locked");
@@ -300,7 +301,7 @@ class UserNewContainer extends React.Component {
         modalTitle="For your consideration"
         handleClose={this.handleShowAnonWarning}
       >
-      Please be aware that by listing some of your information as anonymous, the likelihood that any comments you post will be filtered out via default settings goes up substantially. You always have the option to post specific comments as an anonymous user, but the system works best when your main account has the demographic details entered.
+      "Please be aware that by listing some of your information as anonymous, the likelihood that any comments you post will be filtered out via default settings goes up substantially. You always have the option to post specific comments as an anonymous user, but the system works best when your main account has the demographic details entered."
       </Modal>
     }
 
