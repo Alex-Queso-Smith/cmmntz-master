@@ -23,7 +23,7 @@ module ApplicationHelper
   end
 
   def page_title(title = "")
-    t = "Classibridge Times"
+    t = "Customer Newspaper Site-Test"
     if !title.blank?
       t = "#{title} - #{t}"
     end
