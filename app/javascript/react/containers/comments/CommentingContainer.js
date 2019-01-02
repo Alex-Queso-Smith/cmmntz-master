@@ -126,6 +126,10 @@ class CommentingContainer extends React.Component {
     const target = event.target;
     const name = target.name;
 
+    if (this.state.sortOpts.setFrom == 'gallery' && name == "hideAnonAndGuest") {
+      this.handleShowFilterModal()
+    }
+
     var value;
     if (target.type === "checkbox") {
       value = target.checked

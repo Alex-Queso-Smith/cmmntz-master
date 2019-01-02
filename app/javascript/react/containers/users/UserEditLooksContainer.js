@@ -79,7 +79,7 @@ class UserEditLooksContainer extends React.Component {
 
           <div className="form-group actions">
             <button id="user-edit-looks-button" type="submit" className="btn btn-sm btn-dark float-right margin-top-10px" value="Submit">
-              <span className="text-medium">Update</span>
+              Update
             </button>
           </div>
         </form>
