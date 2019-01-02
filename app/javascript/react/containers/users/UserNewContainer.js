@@ -3,8 +3,6 @@ import React from 'react';
 import UserNewRequiredContainer from './UserNewRequiredContainer';
 import UserNewOptionalContainer from './UserNewOptionalContainer';
 import { FetchWithPush, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
-import PrivacyPolicy from '../../components/modals/PrivacyPolicy';
-import Modal from '../../components/modals/Modal';
 
 class UserNewContainer extends React.Component {
   state = {

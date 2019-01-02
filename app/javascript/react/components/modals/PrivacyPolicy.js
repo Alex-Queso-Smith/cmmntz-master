@@ -6,17 +6,31 @@ export const PrivacyPolicy = props => {
     <BasicModal
       modalButtonText="Privacy Policy"
       modalTitle="Privacy Policy"
-      modalButtonClass="btn-dark"
+      modalButtonClass="fade-button"
     >
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus odio nec magna consequat, et cursus turpis placerat. Sed at tristique nisl, in pharetra urna. Vestibulum nec tortor eget velit eleifend ullamcorper eget at purus. Fusce consequat magna tellus, vitae laoreet tortor aliquam quis. Pellentesque finibus diam lacinia, euismod libero vitae, faucibus risus. Etiam a nunc sed quam semper eleifend vitae et ex. Cras volutpat, lectus et porta elementum, nibh nisl condimentum augue, nec tempus lectus lectus nec ligula. Pellentesque sed commodo eros, vel feugiat magna. Nam eleifend pellentesque pretium. Nam lacus sapien, bibendum sit amet diam volutpat, ornare feugiat arcu. Proin tempus aliquet enim, quis pellentesque tortor hendrerit a. Nunc vel metus pulvinar, ultrices sapien ut, sagittis sem. Pellentesque luctus consectetur suscipit. Curabitur luctus condimentum scelerisque. Integer vitae imperdiet nulla, sed placerat tellus.</p>
-
-      <p>Fusce non ante nec mi sagittis pellentesque. Quisque nulla elit, auctor quis augue sed, porttitor scelerisque nulla. Nullam sit amet placerat lacus. Donec massa lacus, maximus ut pretium cursus, efficitur in eros. Aenean urna ex, ornare sit amet quam quis, efficitur congue risus. Nunc faucibus eget nibh nec scelerisque. Phasellus commodo congue augue, eget ultricies enim. Suspendisse vehicula nunc consequat risus tempus, nec consequat nulla interdum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent mattis ante finibus, cursus leo tempor, maximus turpis. Phasellus lectus leo, auctor quis mauris a, rutrum dictum urna. Vestibulum eu molestie elit. Phasellus convallis porta diam, in fermentum orci. Ut quis eleifend nulla, eu lacinia ex. Quisque tempus tellus vel ipsum feugiat, ut euismod nunc consectetur. Fusce dictum dignissim ultrices.</p>
-
-      <p>Donec consectetur, nisi eu placerat vestibulum, nunc nulla vestibulum neque, eget rutrum velit eros blandit eros. Duis aliquet massa et maximus rhoncus. Nunc in justo ligula. Fusce sed arcu blandit, consequat tellus vel, aliquet ex. Fusce ac varius libero. In ac scelerisque odio, nec euismod tellus. Maecenas laoreet odio lectus, ut tempor nulla tristique non. Sed commodo, odio at congue tempus, sem nulla volutpat nibh, a fringilla dolor arcu ac turpis. Nam egestas egestas metus dapibus fermentum. Aenean vestibulum lacus eu faucibus eleifend. Nunc eu arcu auctor, luctus lacus a, lobortis erat. Morbi vel venenatis leo. Suspendisse fermentum condimentum dolor in accumsan. Praesent tincidunt varius lacinia. Vivamus egestas tellus et eleifend viverra.</p>
-
-      <p>Cras hendrerit elementum ipsum in faucibus. Cras porta pharetra urna sit amet pretium. Etiam convallis suscipit velit nec mattis. Donec commodo placerat libero, eu vulputate nibh semper vel. Etiam porta, nunc cursus tempor interdum, sapien magna dapibus augue, sed ultrices magna enim quis libero. Donec et egestas magna. In semper sem est, id congue enim lacinia at. Nullam posuere est sed accumsan viverra. Donec in elit sed mi vestibulum vulputate. In at libero sed elit finibus ultrices ut nec leo. In vestibulum hendrerit lectus, ac vestibulum nisl posuere non. Proin quis ligula dui.</p>
-
-      <p>Pellentesque lacinia neque ut tincidunt scelerisque. Praesent commodo lectus risus, sed blandit nibh lacinia ut. In fermentum hendrerit velit quis condimentum. Sed rutrum volutpat urna, vel ornare elit finibus nec. Nam mattis imperdiet velit, et pulvinar ante convallis ut. Sed at dolor pulvinar lorem ullamcorper venenatis. Donec maximus auctor nulla et blandit. Etiam tincidunt lacus eget porta interdum. Curabitur ut rhoncus magna. Vivamus placerat ornare lacinia. Nulla viverra mauris vel nisl molestie faucibus. Quisque imperdiet ipsum in neque aliquet faucibus fermentum in enim.</p>
+    <ol>
+      <li>
+        As is evident in our account creation process, Classibridge does not collect any Personally Identifiable Information (PII), nor do we track your usage of our systems besides the bare amount necessary to ensure our posting and voting processes operate as intended, and any data you upload is owned by you but perpetually licensed without royalties to Classibridge as stated in our Terms of Service (TOS).
+      </li>
+      <li>
+        We will not sell any information that we might have on any of our users to any third party and any advertising that is shown on our platform is targeted only to the content of the articles, but never to characteristics or demographics of your user account.
+      </li>
+      <li>
+        Our systems might automatically gather extra information, such as your IP address and browser type,  in order for the system to work properly but any such information that is unique to you will be deleted from our systems after it is no longer required to provide you with services.
+      </li>
+      <li>
+        We do use cookies to ensure you can stay logged in and able to connect, but the information is not used to track you individually and does not capture what you do when you are not on the website that hosts our widget.
+      </li>
+      <li>
+        Information you posted will be shared only with your express permission, such as when you choose to share something you posted to social media, when there is a danger of imminent and serious harm to a person, or to comply with the law (in which case, we will provide only the information we have available and, if the law provides it, we will attempt to notify you that your information was provided to legal authorities).
+      </li>
+      <li>
+        You can modify or delete your account at any time but please be aware that deleting your account will set the author of content you posted to anonymous unless you go into the comment thread directly and delete any comment you do not want posted.
+      </li>
+      <li>
+        Our servers and data reside in the United States but all users worldwide have the right to contact us via our Contact Us page to request that their personal data is modified or deleted, although, as stated earlier, our systems are configured to not store any PII.
+      </li>
+    </ol>
     </BasicModal>
   )
 
