@@ -1,6 +1,10 @@
 require 'redcarpet'
 
 module ApplicationHelper
+def widget_url
+  asset_url(Webpacker.instance.manifest.lookup!('application.js')) 
+end
+
   # Convert markdown to HTML
   def markdown(text)
     options = {
