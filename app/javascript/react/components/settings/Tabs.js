@@ -14,8 +14,8 @@ const LineItem = (props) => {
 const Tabs = (props) => {
   const types = [
     ["Account", ""],
-    ["Looks", "looks"],
     ["Demographics", "demographics"],
+    ["Looks", "looks"],
     ["Search Settings", "settings"]
   ]
 

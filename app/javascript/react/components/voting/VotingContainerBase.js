@@ -42,6 +42,12 @@ class VotingContainerBase extends React.Component {
       })
     }
 
+    if (prevProps.voteCounts != this.props.voteCounts) {
+      this.setState({
+        voteCounts: this.props.voteCounts
+      })
+    }
+
     if (prevProps.userVoted != this.props.userVoted) {
         this.setState({
           userVoted: this.props.userVoted,
