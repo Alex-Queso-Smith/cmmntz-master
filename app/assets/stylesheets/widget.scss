@@ -405,6 +405,17 @@ a:hover {
   box-shadow: none;
 }
 
- .checkbox-row {
-   margin-left: 0px !important;
+.checkbox-row {
+ margin-left: 0px !important;
+}
+
+ .cf-filter-from-section {
+   padding-right: 0px !important;
+ }
+
+ @media (max-width: $breakpoint-phone) {
+   .cf-filter-from-section {
+     padding-right: 15px !important;
+     margin-top: 10px;
+   }
  }
