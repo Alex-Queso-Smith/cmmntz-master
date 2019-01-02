@@ -10,7 +10,7 @@ class UserEditContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      display: "demographics",
+      display: "",
       userId: this.props.match.params.id
     }
     this.handleTabClick = this.handleTabClick.bind(this);
