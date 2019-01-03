@@ -24,9 +24,11 @@ $breakpoint-phone: 575px;
 }
 
 #footer {
+  background-color: #fff;
   min-height: 100px;
   border-top: 1px solid $grey;
   margin-top: 20px;
+  z-index: 10;
 
 
   .msg {
@@ -62,7 +64,7 @@ $breakpoint-phone: 575px;
   padding: 15px;
   background-color: rgba(255, 255, 255, .95);
   color: black;
-  
+
   .articles-wrapper {
     margin: 10px;
 
