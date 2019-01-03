@@ -106,8 +106,13 @@ $breakpoint-phone: 575px;
   }
 
 }
-
 .article-wrapper {
+  background-color: #ffffff;
+  margin: auto;
+  color: #000000;
+  padding: 20px 20px;
+  border-bottom: 1px solid $grayline;
+
   .article-header {
     text-align: center;
     .article-header-image {
