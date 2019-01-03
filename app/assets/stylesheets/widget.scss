@@ -410,13 +410,17 @@ a:hover {
  margin-left: 0px !important;
 }
 
- .cf-filter-from-section {
-   padding-right: 0px !important;
- }
+.cf-filter-from-section {
+  padding-right: 0px !important;
+}
 
  @media (max-width: $breakpoint-phone) {
    .cf-filter-from-section {
      padding-right: 15px !important;
      margin-top: 10px;
    }
+ }
+
+ .line-height-2-25 {
+   line-height: 2.25;
  }
