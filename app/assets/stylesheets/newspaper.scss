@@ -1,6 +1,9 @@
 $grey: #D3D3D3;
 $grayline: #D3D3D3;
 
+$breakpoint-tablet: 900px;
+$breakpoint-phone: 575px;
+
 .cf-link:hover {
   color: #5B3592;
 }
@@ -33,6 +36,17 @@ $grayline: #D3D3D3;
 
     h3 {
       text-align: center;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-phone) {
+  #cf-navbar-2 {
+    display: none;
+  }
+  #footer {
+    .msg {
+      width: 90%;
     }
   }
 }
