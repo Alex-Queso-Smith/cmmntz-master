@@ -759,16 +759,17 @@ class CommentingContainer extends React.Component {
             {endComments}
           </div>
           <div className="d-none d-md-block col-md-6 adverts-container">
-            
-              <FeedbackFormContainer
-                userId={this.props.userId}
-              />
-              <hr />
+            <FeedbackFormContainer
+              userId={this.props.userId}
+            />
+            <hr />
             <div className="ad-container">
               <img src="/assets/Ad"/>
             </div>
           </div>
         </div>
+
+        <button id="feedback_button" className="btn btn-primary">Feedback</button>
         <ScrollUpButton
           ToggledStyle={{left: '75px'}}
         />

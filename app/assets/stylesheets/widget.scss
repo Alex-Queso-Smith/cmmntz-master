@@ -417,3 +417,16 @@ a:hover {
  .line-height-2-25 {
    line-height: 2.25;
  }
+
+#feedback_button {
+  display: none;
+  z-index: 50;
+}
+@media (max-width: $breakpoint-phone) {
+  #feedback_button {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+  }
+}
