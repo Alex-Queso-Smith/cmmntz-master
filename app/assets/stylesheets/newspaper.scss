@@ -1,3 +1,6 @@
+$grey: #D3D3D3;
+$grayline: #D3D3D3;
+
 .cf-link:hover {
   color: #5B3592;
 }
@@ -5,12 +8,18 @@
   max-width: 900px;
 }
 
-#cf-nav-bar {
-  background-color: rgba(255,255,255, 0.0)
+#cf-navbar, #cf-navbar-2 {
+  background-color: #fff;
+  border-bottom: 1px solid $grey;
 }
 
-$grey: #D3D3D3;
-$grayline: #D3D3D3;
+#cf-navbar-2 {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 50px;
+  z-index: 10;
+}
+
 
 .pagination {
   justify-content: center;
