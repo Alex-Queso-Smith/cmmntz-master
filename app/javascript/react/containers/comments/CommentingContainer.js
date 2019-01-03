@@ -9,6 +9,7 @@ import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual, FetchDelet
 import Modal from '../../components/modals/Modal';
 import PreSetFilters from '../../components/filters/PreSetFilters';
 import { presetOptions } from '../../components/filters/SortSelect';
+import { BugForm } from '../../components/form/BetaTesting';
 
 class CommentingContainer extends React.Component {
   state = {
@@ -46,7 +47,12 @@ class CommentingContainer extends React.Component {
     commentEtiquette: null,
     censored: false,
     showFilterModal: false,
-    filterModalShown: false
+    filterModalShown: false,
+    userFeedbackForm: false,
+    userBugForm: false,
+    userText: "",
+    feedbackCategory: "",
+    feedbackType: ""
   }
 
   handleCommentForm = this.handleCommentForm.bind(this);
@@ -70,6 +76,9 @@ class CommentingContainer extends React.Component {
   showVoteCountTrigger = this.showVoteCountTrigger.bind(this);
   handleShowVoteModal = this.handleShowVoteModal.bind(this);
   handleShowFilterModal = this.handleShowFilterModal.bind(this);
+  feedbackFormUpdate = this.feedbackFormUpdate.bind(this);
+  handleFormChange = this.handleFormChange.bind(this);
+  feedbackFormSubmit = this.feedbackFormSubmit.bind(this);
 
   componentDidMount(){
     FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
@@ -145,6 +154,10 @@ class CommentingContainer extends React.Component {
     opts.page = 1
     this.setState({ sortOpts: opts })
   };
+
+  handleFormChange(event){
+    this.setState({ [event.target.name]: event.target.value })
+  }
 
   setLatLongClick(x, y, radius){
     var longitude = Math.round((x * (180 / 150)) - 180)
@@ -527,6 +540,51 @@ class CommentingContainer extends React.Component {
     }
   }
 
+  feedbackFormUpdate(type){
+    if (type === "feedback") {
+      this.setState({
+        userFeedbackForm: !this.state.userFeedbackForm,
+        userBugForm: false,
+        feedbackType: "Feedback",
+        userText: ""
+      })
+    } else {
+      this.setState({
+        userFeedbackForm: false,
+        userBugForm: !this.state.userBugForm,
+        feedbackType: "Bug",
+        userText: ""
+      })
+    }
+  }
+
+  feedbackFormSubmit(event){
+    event.preventDefault();
+
+    var { userText, feedbackCategory, feedbackType } = this.state;
+
+    var newFeedback = new FormData();
+
+    newFeedback.append("user_feedback[text]", userText)
+    newFeedback.append("user_feedback[category]", feedbackCategory)
+    newFeedback.append("user_feedback[user_id]", this.props.userId)
+    newFeedback.append("user_feedback[type]", feedbackType)
+
+    FetchBasic(this, '/api/v1/user_feedbacks.json', newFeedback, 'POST')
+    .then(feedbackData => {
+      debugger
+      alert(feedbackData.message)
+      this.setState({
+        userFeedbackForm: false,
+        userBugForm: false,
+        userText: "",
+        feedbackCategory: "",
+        feedbackType: ""
+      })
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
   render(){
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
@@ -592,6 +650,22 @@ class CommentingContainer extends React.Component {
           <button className="btn btn-sm fade-button" onClick={ () => window.location = "/logout" }>Logout</button>
         </div>
       </div>
+    }
+
+    var userFeedbackForm;
+
+    var handleBugForm = () => {
+      this.feedbackFormUpdate("bug")
+    }
+
+    var handleFeedbackForm = () => {
+      this.feedbackFormUpdate("feedback")
+    }
+
+    if (this.state.userFeedbackForm) {
+      userFeedbackForm = BugForm(this, "feedback", "Provide your feedback here. Thank you!")
+    } else if (this.state.userBugForm) {
+      userFeedbackForm = BugForm(this, "bug", "Please describe bug with context of how it occurred. Thank you!")
     }
 
     return(
@@ -665,6 +739,15 @@ class CommentingContainer extends React.Component {
             {endComments}
           </div>
           <div className="d-none d-md-block col-md-6 adverts-container">
+            <div className="row justify-content-center">
+              <div>
+                <button onClick={ handleFeedbackForm } className="btn btn-lg btn-primary">Feedback?</button>
+              </div>
+              &nbsp;
+              <button onClick={ handleBugForm } className="btn btn-lg btn-primary">Bugs?</button>
+            </div>
+              {userFeedbackForm}
+              <hr />
             <div className="ad-container">
               <img src="/assets/Ad"/>
             </div>

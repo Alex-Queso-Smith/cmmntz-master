@@ -7,7 +7,7 @@ class Api::V1::UserFeedbacksController < ApiController
     @user_feedback = UserFeedback.new(user_feedback_params)
 
     if @user_feedback.save
-      render json: {message: "Thank You for your feedback!"}
+      render json: { message: "Thank You for your feedback!" } 
     else
       render json: { errors: @user_feedback.errors, status: :unprocessable_entity }
     end
