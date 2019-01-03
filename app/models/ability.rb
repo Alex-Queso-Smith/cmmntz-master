@@ -31,7 +31,8 @@ class Ability
     can :crud, Following, { follower_id: user.id } # can follower other users
     can :crud, Blocking, { blocker_id: user.id } # can block other users
     can :create, GalleryBlacklisting
-    
+    can :create, UserFeedback, { user_id: user.id } # can crud own user_feedback
+
     # TODO: move this to admin app
     # this is only here until this feature gets moved to the admin app
     can :create, AdminMail
