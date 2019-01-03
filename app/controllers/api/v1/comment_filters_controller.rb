@@ -4,6 +4,7 @@ class Api::V1::CommentFiltersController < ApiController
     page = params[:page] || 1
     search = params[:search] || {}
     @comments = Comment.filter_and_sort(current_user, params[:art_id], params[:art_type], search, page)
+    # raise "#{@comments.to_sql}"
     comment_ids = @comments.map(&:id)
     @replies = Comment.tabulation_for_comments_list(current_user, comment_ids, search)
     comment_ids += @replies.map(&:id)

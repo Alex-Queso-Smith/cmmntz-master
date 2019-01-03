@@ -34,11 +34,24 @@ module CommentSearchs
       )
     }
 
+    scope :select_tabulation_interactions, -> {
+      # select("COUNT(DISTINCT(comment_interactions.id)) as tabulation_interactions")
+    }
+
     scope :joins_votes, -> {
       joins("left join votes on votes.comment_id = comments.id")
     }
+
+    scope :joins_interactions, -> {
+      # select_tabulation_interactions.joins("left join comment_interactions on comment_interactions.comment_id = comments.id")
+    }
+
     scope :joins_votes_with_user_list, lambda { |user_ids|
       joins("left join votes on votes.comment_id = comments.id and votes.user_id in (#{user_ids})")
+    }
+
+    scope :joins_interactions_with_user_list, lambda { |user_ids|
+      # select_tabulation_interactions.joins("left join comment_interactions on comment_interactions.comment_id = comments.id and comment_interactions.user_id in (#{user_ids})")
     }
 
     scope :not_replies, -> {
@@ -160,8 +173,9 @@ module CommentSearchs
         end
         user_ids << user.id
         scope = scope.joins_votes_with_user_list(user_ids.map{|id| "'#{id}'"}.join(", "))
+        scope = scope.joins_interactions_with_user_list(user_ids.map{|id| "'#{id}'"}.join(", "))
       else
-        scope = scope.joins_votes
+        scope = scope.joins_votes.joins_interactions
       end
 
       scope
