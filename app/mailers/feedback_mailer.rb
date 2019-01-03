@@ -1,8 +1,8 @@
 class FeedbackMailer < ApplicationMailer
   default :from => "do_not_reply@classifilter.com"
 
-  def send_quality_comments_found_mail(feedback)
-    @feedback = feeback
+  def email_team(feedback)
+    @feedback = feedback
     mail( to: "jesse@classibridge.com", subject: "Classifilter: #{@feedback.type} report")
   end
 end
