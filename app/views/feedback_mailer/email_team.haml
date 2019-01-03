@@ -1,3 +1,17 @@
-= debug @feedback.user
-%hr/
-= debug @feedback
+%table
+  %tbody
+    %tr
+      %th User Name
+      %td #{@feedback.user.user_name}
+    %tr
+      %th Email
+      %td #{@feedback.user.email}
+    %tr
+      %th Type
+      %td #{@feedback.type}
+    %tr
+      %th Category
+      %td #{@feedback.category}
+    %tr
+      %th Feedback
+      %td #{@feedback.text}
