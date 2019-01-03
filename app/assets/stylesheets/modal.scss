@@ -57,7 +57,7 @@ $breakpoint-phone: 575px;
 @media (max-width: $breakpoint-phone) {
   .cf-modal-main {
     width: 90%;
-    height: 90%;
+    height: auto;
   }
   .cf-modal-contents {
     padding-right: 10px;

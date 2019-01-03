@@ -8,13 +8,20 @@ import GeoSelect from '../filters/GeoSelect';
 
 class CommentFilters extends React.Component {
   state = {
-    hideAnonAndGuest: this.props.sortOpts.hideAnonAndGuest
+    hideAnonAndGuest: this.props.sortOpts.hideAnonAndGuest,
+    filtersExpanded: true
   }
+
+  expandFilters = this.expandFilters.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (this.props.sortOpts.hideAnonAndGuest != this.state.hideAnonAndGuest) {
       this.setState({ hideAnonAndGuest: this.props.sortOpts.hideAnonAndGuest })
     }
+  }
+
+  expandFilters(){
+    this.setState({ filtersExpanded: !this.state.filtersExpanded })
   }
 
   render(){
@@ -55,31 +62,16 @@ class CommentFilters extends React.Component {
         </div>
       }
     }
-    const marginTop0 = {
-      marginTop: "0px"
+
+    var spanExpand = <span className="cursor-pointer" onClick={this.expandFilters}>  +  </span>
+    if (this.state.filtersExpanded) {
+      spanExpand = <span className="cursor-pointer" onClick={this.expandFilters}>  -  </span>
     }
-    return(
-      <div className={`cf-filter-block ${this.props.className}`}>
 
-        <div className="row vote-row" >
-          <h4 className="col-2 col-sm-2 col-md-2">Sort</h4>
-
-          {sortButtons}
-          <SortDir
-            value={this.props.sortOpts.sortDir}
-            onClick={this.props.handleSortDirClick}
-            image={ImageSelector(this.props.sortOpts.sortDir)}
-          />
-        </div>
-        <br/>
-        <div className="row">
-          <div className="col-sm-6">
-            <h4>Filters</h4>
-          </div>
-          <div className="col-sm-6">
-            <button style={marginTop0} className="fade-button btn btn-sm float-right" onClick={this.props.clearFilters}>Clear</button>
-          </div>
-        </div>
+    var filters;
+    if (this.state.filtersExpanded) {
+      filters =
+      <div className="cf-filters-container">
         <div className="row justify-content-center vote-row">
           {filterButtonsRowOne}
         </div>
@@ -96,6 +88,36 @@ class CommentFilters extends React.Component {
             onChange={this.props.onChange}
           />
         </div>
+      </div>
+    }
+
+    const marginTop0 = {
+      marginTop: "0px"
+    }
+
+    return(
+      <div className={`cf-filter-block ${this.props.className}`}>
+
+        <div className="row vote-row" >
+          <h4 className="col-2 col-sm-2 col-md-2">Sort</h4>
+
+          {sortButtons}
+          <SortDir
+            value={this.props.sortOpts.sortDir}
+            onClick={this.props.handleSortDirClick}
+            image={ImageSelector(this.props.sortOpts.sortDir)}
+          />
+        </div>
+        <br/>
+        <div className="row">
+          <div className="col-sm-6">
+            <h4 className="line-height-2-25">Filters{spanExpand}</h4>
+          </div>
+          <div className="col-sm-6">
+            <button style={marginTop0} className="fade-button btn btn-sm float-right" onClick={this.props.clearFilters}>Clear</button>
+          </div>
+        </div>
+        {filters}
         <div className="row">
           <div className="col-sm-6 cf-filter-from-section">
             <h4>Show only comments from:</h4>
