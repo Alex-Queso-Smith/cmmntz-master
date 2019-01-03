@@ -24,8 +24,15 @@
         <% end %>
 
         <ul class="navbar-nav ml-auto">
-          <span class="nav-link ml-auto"><%= display_date Time.now, false %></span>
-          <%= link_to "CF-DeAuth", deauthorize_access_url, class: "nav-link ml-auto" %>
+          <span class="nav-link ml-auto" style="border-right: 1px solid grey;"><%= display_date Time.now, false %></span>
+          <%= link_to image_tag("P_Facebook.png", height: "16px", width: "16px"), "https://www.facebook.com/Classibridge", class: "nav-link ml-auto", target: "_blank" %>
+          <%= link_to image_tag("P_Instagram.png", height: "16px", width: "16px"), "https://www.instagram.com/classibridge/", class: "nav-link ml-auto", target: "_blank" %>
+          <%= link_to image_tag("P_LinkedIn.png", height: "16px", width: "16px"), "https://www.linkedin.com/company/classibridge/", class: "nav-link ml-auto", target: "_blank" %>
+          <%= link_to image_tag("P_Pinterest.png", height: "16px", width: "16px"), "https://www.pinterest.com/classibridge/", class: "nav-link ml-auto", target: "_blank" %>
+          <%= link_to image_tag("P_Twitter.png", height: "16px", width: "16px"), "https://twitter.com/Classibridge", class: "nav-link ml-auto", target: "_blank" %>
+          <%= link_to image_tag("P_Youtube.png", height: "16px", width: "16px"), "https://www.youtube.com/channel/UCUVrYMtDyHfyGku8BG_ZCuQ", class: "nav-link ml-auto", target: "_blank" %>
+
+          <%#= link_to "CF-DeAuth", deauthorize_access_url, class: "nav-link ml-auto" %>
         </ul>
 
       </nav>
