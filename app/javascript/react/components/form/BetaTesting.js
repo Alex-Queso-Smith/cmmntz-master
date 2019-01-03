@@ -4,12 +4,16 @@ import Textarea from 'react-expanding-textarea';
 import { Input } from './FormComponents';
 
 
-export const BugForm = (object, type, placeholder)  => {
+export const BugForm = (object, type, textError, categoryError, placeholder)  => {
+  const selectStyle = {
+    width: "65%"
+  }
+
   return(
     <form  className="cf-user-feedback-form" onSubmit={ object.feedbackFormSubmit }>
       <div className="form-inline">
         <label htmlFor="feedbackCategory" className="text-medium margin-right-10px">Category</label>
-        <select className="form-control" name="feedbackCategory" value={object.state.feedbackCategory} onChange={object.handleFormChange}>
+        <select style={selectStyle} className="form-control" name="feedbackCategory" value={object.state.feedbackCategory} onChange={object.handleChange}>
           <option />
           <option value="commenting" className="cf-category-item">
             Commenting
@@ -27,6 +31,7 @@ export const BugForm = (object, type, placeholder)  => {
             Other
           </option>
         </select>
+        {categoryError}
       </div>
         <Textarea
           maxLength="3000"
@@ -34,9 +39,10 @@ export const BugForm = (object, type, placeholder)  => {
           name="userText"
           placeholder={placeholder}
           value={object.state.userText}
-          onChange={object.handleFormChange}
+          onChange={object.handleChange}
           rows={7}
         />
+      {textError}
       <input type="hidden" name="feedbackType" value={type} />
       <div className="row">
         <div className="col-6">

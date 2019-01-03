@@ -5,11 +5,12 @@ import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 import CommentFormContainer from './CommentFormContainer';
 import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
-import { FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual, FetchDeleteBasic } from '../../util/CoreUtil';
+import { CreateErrorElements, FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual, FetchDeleteBasic } from '../../util/CoreUtil';
 import Modal from '../../components/modals/Modal';
 import PreSetFilters from '../../components/filters/PreSetFilters';
 import { presetOptions } from '../../components/filters/SortSelect';
 import { BugForm } from '../../components/form/BetaTesting';
+import FeedbackFormContainer from '../FeedbackFormContainer';
 
 class CommentingContainer extends React.Component {
   state = {
@@ -52,7 +53,8 @@ class CommentingContainer extends React.Component {
     userBugForm: false,
     userText: "",
     feedbackCategory: "",
-    feedbackType: ""
+    feedbackType: "",
+    feedbackErrors: {}
   }
 
   handleCommentForm = this.handleCommentForm.bind(this);
@@ -572,15 +574,21 @@ class CommentingContainer extends React.Component {
 
     FetchBasic(this, '/api/v1/user_feedbacks.json', newFeedback, 'POST')
     .then(feedbackData => {
-      debugger
-      alert(feedbackData.message)
-      this.setState({
-        userFeedbackForm: false,
-        userBugForm: false,
-        userText: "",
-        feedbackCategory: "",
-        feedbackType: ""
-      })
+
+      if (feedbackData.errors) {
+        this.setState({
+          feedbackErrors: feedbackData.errors
+        })
+      } else {
+        alert(feedbackData.message)
+        this.setState({
+          userFeedbackForm: false,
+          userBugForm: false,
+          userText: "",
+          feedbackCategory: "",
+          feedbackType: ""
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -652,8 +660,6 @@ class CommentingContainer extends React.Component {
       </div>
     }
 
-    var userFeedbackForm;
-
     var handleBugForm = () => {
       this.feedbackFormUpdate("bug")
     }
@@ -662,10 +668,24 @@ class CommentingContainer extends React.Component {
       this.feedbackFormUpdate("feedback")
     }
 
+    var { feedbackErrors } = this.state;
+
+    var categoryError;
+    if (feedbackErrors.category) {
+      categoryError = CreateErrorElements(feedbackErrors.category, "Category")
+    }
+
+    var textError;
+    if (feedbackErrors.text) {
+      textError = CreateErrorElements(feedbackErrors.text, "Text area")
+    }
+
+    var userFeedbackForm;
+
     if (this.state.userFeedbackForm) {
-      userFeedbackForm = BugForm(this, "feedback", "Provide your feedback here. Thank you!")
+      userFeedbackForm = BugForm(this, "feedback", textError, categoryError, "Provide your feedback here. Thank you!")
     } else if (this.state.userBugForm) {
-      userFeedbackForm = BugForm(this, "bug", "Please describe bug with context of how it occurred. Thank you!")
+      userFeedbackForm = BugForm(this, "bug", textError, categoryError, "Please describe bug with context of how it occurred. Thank you!")
     }
 
     return(
@@ -739,14 +759,10 @@ class CommentingContainer extends React.Component {
             {endComments}
           </div>
           <div className="d-none d-md-block col-md-6 adverts-container">
-            <div className="row justify-content-center">
-              <div>
-                <button onClick={ handleFeedbackForm } className="btn btn-lg btn-primary">Feedback?</button>
-              </div>
-              &nbsp;
-              <button onClick={ handleBugForm } className="btn btn-lg btn-primary">Bugs?</button>
-            </div>
-              {userFeedbackForm}
+            
+              <FeedbackFormContainer
+                userId={this.props.userId}
+              />
               <hr />
             <div className="ad-container">
               <img src="/assets/Ad"/>

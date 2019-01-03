@@ -2,7 +2,7 @@ require 'redcarpet'
 
 module ApplicationHelper
 def widget_url
-  asset_url(Webpacker.instance.manifest.lookup!('application.js')) 
+  asset_url(Webpacker.instance.manifest.lookup!('application.js'))
 end
 
   # Convert markdown to HTML
@@ -27,7 +27,7 @@ end
   end
 
   def page_title(title = "")
-    t = "Customer Newspaper Site-Test"
+    t = SITE_NAME
     if !title.blank?
       t = "#{title} - #{t}"
     end
