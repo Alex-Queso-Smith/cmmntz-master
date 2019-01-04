@@ -180,6 +180,14 @@ $breakpoint-phone: 575px;
       display: block;
     }
   }
+
+  .article-footer {
+    margin-top: 10px;
+    p {
+      line-height: 3em;
+      font-size: 2em;
+    }
+  }
 }
 
 .cf-navbar-date {
