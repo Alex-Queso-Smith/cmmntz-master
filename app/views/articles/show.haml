@@ -4,9 +4,10 @@
 .article-wrapper
   .article-header
     %h3= @article.title
+    %h4= @article.author.name
+    %h4= display_date @article.publish_date
     .article-header-image
       = article_banner @article
-    %h4 Source: #{@article.author.name}
 
   %br/
   .article-body.row.justify-content-center
