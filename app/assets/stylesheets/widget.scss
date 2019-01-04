@@ -364,8 +364,10 @@ a:hover {
 }
 
 .login-statement {
-  line-height: 3.25em;
+  line-height: 2em;
+  text-align: top;
   padding-left: 25px !important;
+  font-size: 1.5em;
 }
 
 @media (max-width: $breakpoint-phone) {
@@ -429,4 +431,9 @@ a:hover {
     bottom: 20px;
     right: 10px;
   }
+}
+
+.cf-login-hr {
+  margin-top: 0;
+  margin-bottom: 0;
 }

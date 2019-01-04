@@ -137,6 +137,7 @@ class CommentFilters extends React.Component {
         <br />
         {advancedFiltersToggle}
         {advancedFilters}
+        <hr />
       </div>
     )
   }

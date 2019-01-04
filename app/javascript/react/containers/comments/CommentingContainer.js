@@ -635,7 +635,7 @@ class CommentingContainer extends React.Component {
       loginStatement =
       <div className="login-statement-container row">
         <div className="col-6 login-statement">
-          You are a Guest.
+          Guest
         </div>
         <div className="col-3">
           <button className="btn btn-sm fade-button" onClick={ () => window.location = "/login" }>Login</button>
@@ -649,7 +649,7 @@ class CommentingContainer extends React.Component {
       loginStatement =
       <div className="login-statement-container row">
         <div className="col-6 login-statement">
-          Welcome {this.state.userInfo.userName}!
+          {this.state.userInfo.userName}
         </div>
         <div className="col-3">
           <button className="btn btn-sm fade-button" onClick={ () => window.location = edit_url }>Settings</button>
@@ -692,6 +692,8 @@ class CommentingContainer extends React.Component {
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         {showVoteModal}
         {filterModal}
+        <div />
+
         <div className="row">
           <div className="col-sm-12 col-md-6">
             <CommentFormContainer
@@ -703,13 +705,14 @@ class CommentingContainer extends React.Component {
               />
           </div>
         </div>
-        <hr />
+
         <div>
           <PreSetFilters
             onChange={this.handlePresetFilterChange}
             option={this.state.presetFilter}
           />
         </div>
+
         <div className="row">
           <div className="col-sm-12 col-md-6">
             <CommentFilters
@@ -729,7 +732,7 @@ class CommentingContainer extends React.Component {
 
           </div>
         </div>
-        <hr />
+
         <div>
           <p>{this.state.grandTotalComments} comments | {filteredCount} filtered | {totalComments} shown</p>
         </div>
@@ -758,7 +761,7 @@ class CommentingContainer extends React.Component {
           <div className="d-none d-md-block col-md-6 adverts-container">
             <FeedbackFormContainer
               userId={this.props.userId}
-            />
+              />
             <hr />
           </div>
         </div>

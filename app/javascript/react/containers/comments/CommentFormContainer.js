@@ -235,13 +235,13 @@ class CommentFormContainer extends React.Component {
             </div>
           </div>
         </div>
-        <hr />
+        <hr className="cf-login-hr" />
         {this.props.loginStatement}
         <div className="row">
           <div className="col-12">
             <Textarea
               maxLength="3000"
-              className="form-control margin-top-10px textarea"
+              className="form-control textarea"
               name="text"
               placeholder="Type your comment here"
               value={text}
@@ -286,6 +286,7 @@ class CommentFormContainer extends React.Component {
       <div className="container">
         {anonModal}
         {commentForm}
+        <hr />
       </div>
     )
   }
