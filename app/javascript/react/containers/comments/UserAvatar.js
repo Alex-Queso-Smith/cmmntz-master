@@ -12,9 +12,14 @@ class UserAvatar extends React.Component {
     var { user_name, gender, age_range, base_image } = this.props.userInfo
 
     var { followStar, blockSym } = this.props
-    var avatarImage = '/assets/anonymous_7f7f7f_b5b5b5';
+    var avatarImage = '/assets/guest';
 
-    if (base_image) { avatarImage = `/assets/${base_image}` }
+    if (user_name === 'Anonymous') {
+      avatarImage = `/assets/anonymous`
+    }
+    else if (base_image) {
+      avatarImage = `/assets/${base_image}`
+    }
 
     var ageRangeImage;
     if (age_range != "") {
