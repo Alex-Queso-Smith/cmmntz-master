@@ -137,8 +137,12 @@ $breakpoint-phone: 575px;
   }
 
   .article-header {
-    text-align: center;
+    text-align: left;
     h3 {
+      font-size: 36px;
+      font-weight: 900;
+    }
+    h4 {
       font-size: 36px;
       font-weight: 900;
     }
@@ -146,8 +150,8 @@ $breakpoint-phone: 575px;
       margin: 0 auto;
 
       .article-banner {
-        max-width: 900px;
-        max-height: 900px;
+        max-width: 100%;
+        max-height: 100%;
         width: auto;
         height: auto;
       }
@@ -162,8 +166,8 @@ $breakpoint-phone: 575px;
     .article-middle-image {
       margin-left:15px;
 
-      max-width: 900px;
-      max-height: 900px;
+      max-width: 100%;
+      max-height: 100%;
       width: auto;
       height: auto;
     }
