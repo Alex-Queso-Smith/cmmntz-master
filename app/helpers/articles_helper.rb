@@ -13,7 +13,7 @@ module ArticlesHelper
 
   def article_image article_image
     if article_image.present? && article_image.asset.present?
-      image_tag article_image.asset.url, class: "article-middle-image"
+      image_tag article_image.asset.url, class: "img-fluid"
     end
   end
 
