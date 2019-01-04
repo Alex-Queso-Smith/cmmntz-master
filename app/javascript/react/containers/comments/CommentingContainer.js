@@ -726,10 +726,7 @@ class CommentingContainer extends React.Component {
               />
           </div>
           <div className="d-none d-md-block col-md-6 video-container">
-            <h4>Tutorial</h4>
-            <div className="video-wrapper">
-              <img src="/assets/vid1.jpg"/>
-            </div>
+
           </div>
         </div>
         <hr />
@@ -763,9 +760,6 @@ class CommentingContainer extends React.Component {
               userId={this.props.userId}
             />
             <hr />
-            <div className="ad-container">
-              <img src="/assets/Ad"/>
-            </div>
           </div>
         </div>
 
