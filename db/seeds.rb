@@ -157,7 +157,7 @@ end
 
 article_categories = ArticleCategory.all
 
-gallery = Gallery.create(name: "Classibridge Times")
+gallery = Gallery.create(name: "Customer Newspaper Site-Test")
 
 # generate desired number of articles
 puts "generating #{num_articles} articles"
