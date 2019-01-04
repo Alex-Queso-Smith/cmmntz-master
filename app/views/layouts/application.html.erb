@@ -18,37 +18,37 @@
   <body id="body" class="newspaper-bs">
     <div id="body-container" class="container">
       <nav id="cf-navbar" class="navbar sticky-top">
-        <%= link_to SITE_NAME, root_path, class: "navbar-brand" %>
+        <%= link_to SITE_NAME, root_path, class: "navbar-brand cf-navbar-title" %>
         <%# if Rails.env.production? %>
           <%#= link_to "Competition", "https://cf-competition.herokuapp.com/login", class: "nav-link" %>
         <%# end %>
         <div class="ml-auto">
-          <span class="navbar-text" style="padding-right: 10px; border-right: 1px solid grey;"><%= Time.now.strftime("%B %d, %Y") %></span>
-          <%= link_to image_tag("P_Facebook.png", height: "16px", width: "16px"), "https://www.facebook.com/Classibridge", class: "ml-auto", target: "_blank" %>
-          <%= link_to image_tag("P_Instagram.png", height: "16px", width: "16px"), "https://www.instagram.com/classibridge/", class: "ml-auto", target: "_blank" %>
-          <%= link_to image_tag("P_LinkedIn.png", height: "16px", width: "16px"), "https://www.linkedin.com/company/classibridge/", class: "ml-auto", target: "_blank" %>
-          <%= link_to image_tag("P_Pinterest.png", height: "16px", width: "16px"), "https://www.pinterest.com/classibridge/", class: "ml-auto", target: "_blank" %>
-          <%= link_to image_tag("P_Twitter.png", height: "16px", width: "16px"), "https://twitter.com/Classibridge", class: "ml-auto", target: "_blank" %>
-          <%= link_to image_tag("P_Youtube.png", height: "16px", width: "16px"), "https://www.youtube.com/channel/UCUVrYMtDyHfyGku8BG_ZCuQ", class: "ml-auto", target: "_blank" %>
+          <span class="navbar-text cf-navbar-date" style="padding-right: 10px; border-right: 1px solid grey;"><%= Time.now.strftime("%B %d, %Y") %></span>
+          <%= link_to image_tag("P_Facebook.png", height: "16px", width: "16px"), "https://www.facebook.com/Classibridge", class: "navbar-social-icons", target: "_blank" %>
+          <%= link_to image_tag("P_Instagram.png", height: "16px", width: "16px"), "https://www.instagram.com/classibridge/", class: "navbar-social-icons", target: "_blank" %>
+          <%= link_to image_tag("P_LinkedIn.png", height: "16px", width: "16px"), "https://www.linkedin.com/company/classibridge/", class: "navbar-social-icons", target: "_blank" %>
+          <%= link_to image_tag("P_Pinterest.png", height: "16px", width: "16px"), "https://www.pinterest.com/classibridge/", class: "navbar-social-icons", target: "_blank" %>
+          <%= link_to image_tag("P_Twitter.png", height: "16px", width: "16px"), "https://twitter.com/Classibridge", class: "navbar-social-icons", target: "_blank" %>
+          <%= link_to image_tag("P_Youtube.png", height: "16px", width: "16px"), "https://www.youtube.com/channel/UCUVrYMtDyHfyGku8BG_ZCuQ", class: "navbar-social-icons", target: "_blank" %>
         </div>
 
       </nav>
 
-      <nav id="cf-navbar-2" class="navbar">
-        <div class="mr-auto">
-          <span class="dummy_link"><%= link_to "News", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-          <span class="dummy_link"><%= link_to "Sports", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-          <span class="dummy_link"><%= link_to "Business", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-          <span class="dummy_link"><%= link_to "Opinion", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-          <span class="dummy_link"><%= link_to "Politics", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-          <span class="dummy_link"><%= link_to "Entertainment", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-          <span class="dummy_link"><%= link_to "Life", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-          <span class="dummy_link"><%= link_to "Food", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-          <span class="dummy_link"><%= link_to "Health", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-          <span class="dummy_link"><%= link_to "Real Estate", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-          <span class="dummy_link"><%= link_to "Obituaries", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-          <span class="dummy_link"><%= link_to "Jobs", "#",  class: "", onclick: "alert('This is an inactive feature of this news site.')" %></span>
-        </div>
+      <nav id="cf-navbar-2" class="navbar navbar-expand-lg justify-content-center">
+        <ul class="navbar-nav">
+          <li class="nav-item"><%= link_to "News", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+          <li class="nav-item"><%= link_to "Sports", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+          <li class="nav-item"><%= link_to "Business", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+          <li class="nav-item"><%= link_to "Opinion", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+          <li class="nav-item"><%= link_to "Politics", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+          <li class="nav-item"><%= link_to "Entertainment", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+          <li class="nav-item"><%= link_to "Life", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+          <li class="nav-item"><%= link_to "Food", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+          <li class="nav-item"><%= link_to "Health", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+          <li class="nav-item"><%= link_to "Real Estate", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+          <li class="nav-item"><%= link_to "Obituaries", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+          <li class="nav-item"><%= link_to "Jobs", "#",  class: "nav-link dummy_link", onclick: "alert('This is an inactive feature of this news site.')" %></li>
+        </ul>
       </nav>
       <p></p>
       <%= yield %>

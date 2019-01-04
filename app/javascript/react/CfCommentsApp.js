@@ -33,6 +33,7 @@ class CfCommentsApp extends React.Component {
   }
 
   componentDidMount() {
+  
     FetchDidMount(this, `/api/v1/arts/${this.state.artId}.json`)
     .then(artData => {
 
