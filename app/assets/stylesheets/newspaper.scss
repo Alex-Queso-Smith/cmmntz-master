@@ -134,6 +134,7 @@ $breakpoint-phone: 575px;
     line-height: 1.5em;
     letter-spacing: -.2px;
     font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
+    text-align: justify;
   }
 
   .article-header {
@@ -177,6 +178,14 @@ $breakpoint-phone: 575px;
       max-width: 100%;
       height: auto;
       display: block;
+    }
+  }
+
+  .article-footer {
+    margin-top: 10px;
+    p {
+      line-height: 3em;
+      font-size: 2em;
     }
   }
 }
