@@ -3,6 +3,7 @@ import Textarea from 'react-expanding-textarea'
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
 import Modal from '../../components/modals/Modal';
+import PrivacyPolicy from '../../components/modals/PrivacyPolicy';
 import VoteButtonRowOne from '../../components/voting/VoteButtonRowOne';
 import { CreateErrorElements, CheckInputValidation, FetchWithUpdate } from '../../util/CoreUtil';
 import { Timeout } from '../../util/CommentUtil';
@@ -224,12 +225,9 @@ class CommentFormContainer extends React.Component {
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
         <div className="row">
           <div className="col-6">
-            <Checkbox
-              name="anonymous"
-              onChange={this.handleChange}
-              label="Submit Anonymously"
-              className=""
-              />
+            <div className="float-left">
+              <PrivacyPolicy />
+            </div>
           </div>
           <div className="col-6">
             <div className="float-right">
@@ -237,6 +235,8 @@ class CommentFormContainer extends React.Component {
             </div>
           </div>
         </div>
+        <hr />
+        {this.props.loginStatement}
         <div className="row">
           <div className="col-12">
             <Textarea
@@ -256,7 +256,15 @@ class CommentFormContainer extends React.Component {
           <div className=" margin-top-10px float-left col-3">
             <button className="btn btn-sm btn-dark" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
           </div>
-          <div className="margin-top-10px col-9 col-sm-9">
+          <div className="col-6">
+            <Checkbox
+              name="anonymous"
+              onChange={this.handleChange}
+              label="Submit Anonymously"
+              className=""
+            />
+          </div>
+          <div className="margin-top-10px col-3">
             <div className="float-right">
               <button id="comments-button" type="submit" className="btn btn-sm btn-dark" value="Submit" disabled={formInvalid}>
                 Submit Comment

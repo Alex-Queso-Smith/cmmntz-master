@@ -692,7 +692,6 @@ class CommentingContainer extends React.Component {
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         {showVoteModal}
         {filterModal}
-        {loginStatement}
         <div className="row">
           <div className="col-sm-12 col-md-6">
             <CommentFormContainer
@@ -700,6 +699,7 @@ class CommentingContainer extends React.Component {
               commentFormErrors={commentFormErrors}
               artSettings={artSettings}
               commentEtiquette={this.state.commentEtiquette}
+              loginStatement={loginStatement}
               />
           </div>
         </div>

@@ -360,12 +360,12 @@ a:hover {
 }
 
 .login-statement-container {
-  width: 50%;
-  margin: 5px 0px 5px 0px;
+  width: auto;
 }
 
 .login-statement {
   line-height: 3.25em;
+  padding-left: 25px !important;
 }
 
 @media (max-width: $breakpoint-phone) {
