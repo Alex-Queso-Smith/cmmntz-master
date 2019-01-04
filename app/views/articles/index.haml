@@ -13,8 +13,6 @@
                 .row
                   .col-sm-6
                     Source: #{article.author.name}
-                  .col-sm-6
-                    Comments/Replies: #{article.art.grand_total_comments(current_user).size if article.art.present?}
                   
               .article-preview-text
                 = markdown(article.introduction)

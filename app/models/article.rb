@@ -25,7 +25,7 @@ class Article < ApplicationRecord
   end
 
   def art
-    @art ||= Art.includes(:approved_comments, :comments).find_by(url: url)
+    @art ||= Art.find_by(url: url)
   end
 
   def comments
