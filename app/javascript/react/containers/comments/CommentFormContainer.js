@@ -224,6 +224,11 @@ class CommentFormContainer extends React.Component {
       commentForm =
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
         <div className="row">
+          <div className="col-12">
+            <a target="_blank" href="https://www.classibridge.com"><img className="cf-logo-image-form" src="/assets/Classifilter_Logo" /></a>
+          </div>
+        </div>
+        <div className="row">
           <div className="col-6">
             <div className="float-left">
               <PrivacyPolicy />
@@ -235,13 +240,13 @@ class CommentFormContainer extends React.Component {
             </div>
           </div>
         </div>
-        <hr />
+        <hr className="cf-login-hr" />
         {this.props.loginStatement}
         <div className="row">
           <div className="col-12">
             <Textarea
               maxLength="3000"
-              className="form-control margin-top-10px textarea"
+              className="form-control textarea"
               name="text"
               placeholder="Type your comment here"
               value={text}
@@ -286,6 +291,7 @@ class CommentFormContainer extends React.Component {
       <div className="container">
         {anonModal}
         {commentForm}
+        <hr />
       </div>
     )
   }
