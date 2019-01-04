@@ -1,24 +1,39 @@
-.articles-container
-  %h3 Articles
-  .articles-wrapper
-    - @articles.each do |article|
-      .row.margin-top-bottom-15px
-        .article-container.col-sm-12
-          .article-row.row
-            .left-pane.col-sm-4.col-md-3.col-lg-2
-              = article_thumbnail_or_placeholder article
-            .right-pane.col-sm-8.col-md-9.col-lg-10
-              .article-title
-                %h3= link_to "#{display_date article.publish_date, false} - #{article.title}", article_path(article.slug), class: "cf-link"
-                .row
-                  .col-sm-6
-                    Source: #{article.author.name}
-                  .col-sm-6
-                    Comments/Replies: #{article.art.grand_total_comments(current_user).size if article.art.present?}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Votes: #{article.votes.size}
-              .article-preview-text
-                = markdown(article.introduction)
-                %br/
-                = link_to "read more", article_path(article.slug), class: "cf-link"
-  = will_paginate @articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
+.row
+  .col-sm-12.col-md-8
+    .articles-container
+      %h3 Articles
+
+
+      first article:
+      = @first_article.title
+      %br/
+      %br/
+      second article:
+      = @second_article.title
+      %br/
+      %br/
+      .articles-wrapper
+        - @articles.each do |article|
+          .row.margin-top-bottom-15px
+            .article-container.col-sm-12
+              .article-row.row
+                .left-pane.col-sm-4.col-md-3.col-lg-2
+                  = article_thumbnail_or_placeholder article
+                .right-pane.col-sm-8.col-md-9.col-lg-10
+                  .article-title
+                    %h3= link_to "#{display_date article.publish_date, false} - #{article.title}", article_path(article.slug), class: "cf-link"
+                    .row
+                      .col-sm-6
+                        Source: #{article.author.name}
+                      .col-sm-6
+                        Comments/Replies: #{article.art.grand_total_comments(current_user).size if article.art.present?}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Votes: #{article.votes.size}
+                  .article-preview-text
+                    = markdown(article.introduction)
+                    %br/
+                    = link_to "read more", article_path(article.slug), class: "cf-link"
+      = will_paginate @articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
+
+  .d-sm-none.d-md-block.d-md-4.articles-side
+    = render "side"
