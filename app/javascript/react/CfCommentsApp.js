@@ -1,7 +1,6 @@
 import React from 'react';
 
 import CommentingContainer from './containers/comments/CommentingContainer';
-import PrivacyPolicy from './components/modals/PrivacyPolicy';
 import { FetchDidMount, FetchIndividual } from './util/CoreUtil';
 
 class CfCommentsApp extends React.Component {
@@ -33,7 +32,7 @@ class CfCommentsApp extends React.Component {
   }
 
   componentDidMount() {
-  
+
     FetchDidMount(this, `/api/v1/arts/${this.state.artId}.json`)
     .then(artData => {
 
@@ -93,7 +92,6 @@ class CfCommentsApp extends React.Component {
 
     return (
       <div id="cf-commenting-container" className={`container-fluid ${font} ${color}`}>
-        <PrivacyPolicy />
         {displayContainer}
       </div>
     )
