@@ -83,29 +83,26 @@ $breakpoint-phone: 575px;
   color: black;
 
   .article-box {
-    border: 1px solid $grey;
-    height: 300px;
-    width: 300px;
+    max-width: 315px;
+    min-width: 230px;
+    width: 100%;
+    height: auto;
     margin: 0 auto;
 
     @media (max-width: 1200px) {
-      height: 250px;
-      width: 250px;
+      max-width: 250px;
     }
 
     @media (max-width: 1000px) {
-      height: 210px;
-      width: 210px;
+      max-width: 210px;
     }
 
     @media (max-width: $breakpoint-tablet) {
-      height: 200px;
-      width: 200px;
+      max-width: 200px;
     }
 
     @media (max-width: $breakpoint-phone) {
-      height: 300px;
-      width: 300px;
+      max-width: 300px;
       margin-bottom: 10px;
     }
   }
