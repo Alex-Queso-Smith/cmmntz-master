@@ -9,8 +9,6 @@
     %h4.grey= @article.publish_date.strftime("%B %d, %Y")
     .article-header-image
       = article_banner @article
-
-  %br/
   .article-body.row.justify-content-center
     .body_text
       = markdown(@article.body)
