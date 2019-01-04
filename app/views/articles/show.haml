@@ -4,8 +4,9 @@
 .article-wrapper
   .article-header
     %h3= @article.title
+    %hr.sep
     %h4= @article.author.name
-    %h4= display_date @article.publish_date
+    %h4.grey= @article.publish_date.strftime("%B %d, %Y")
     .article-header-image
       = article_banner @article
 

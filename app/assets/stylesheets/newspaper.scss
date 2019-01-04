@@ -142,9 +142,19 @@ $breakpoint-phone: 575px;
       font-size: 36px;
       font-weight: 900;
     }
+    hr.sep {
+      margin-left: 0px;
+      align: left;
+      width: 50px;
+      border-color: #000;
+    }
     h4 {
       font-size: 16px;
-      font-weight: 900;
+      font-weight: 700;
+    }
+    h4.grey {
+      color: $grey;
+      font-weight: 500;
     }
     .article-header-image {
       margin: 0 auto;
