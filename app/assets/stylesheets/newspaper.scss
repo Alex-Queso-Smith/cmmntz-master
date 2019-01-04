@@ -129,6 +129,13 @@ $breakpoint-phone: 575px;
   padding: 20px 20px;
   border-bottom: 1px solid $grayline;
 
+  p {
+    font-size: 16px;
+    line-height: 1.5em;
+    letter-spacing: -.2px;
+    font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
+  }
+
   .article-header {
     text-align: center;
     h3 {
