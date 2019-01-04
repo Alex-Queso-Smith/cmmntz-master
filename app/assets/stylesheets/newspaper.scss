@@ -11,6 +11,11 @@ $breakpoint-phone: 575px;
   max-width: 900px;
 }
 
+.dummy_link {
+  display: inline-block;
+  margin-right: 20px;
+}
+
 #cf-navbar, #cf-navbar-2 {
   background-color: #fff;
   border-bottom: 1px solid $grey;

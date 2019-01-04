@@ -11,9 +11,9 @@ module ArticlesHelper
     end
   end
 
-  def article_middle_image article
-    if article.middle_image.present? && article.middle_image.asset.present?
-      image_tag article.middle_image.asset.url, class: "article-middle-image"
+  def article_image article_image
+    if article_image.present? && article_image.asset.present?
+      image_tag article_image.asset.url, class: "article-middle-image"
     end
   end
 
