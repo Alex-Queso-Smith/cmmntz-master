@@ -13,5 +13,22 @@
   .article-body.row
     .col-sm-12
       = markdown(@article.body)
+  .article-body.row
+    .col-sm-12
+      = article_image @article.top_image
+  .article-body.row
+    .col-sm-12
+      = markdown(@article.body_1)
+  .article-body.row
+    .col-sm-12
+      = article_image @article.middle_image
+  .article-body.row
+    .col-sm-12
+      = markdown(@article.body_2)
+  .article-body.row
+    .col-sm-12
+      = article_image @article.footer_image
+
+
 
 <div id="cf-comments-app" class="cf-bs" data-gallery-id="#{@art.gallery_id}" data-art-id="#{@art.id}" data-art-type="art" data-user-id="#{current_user.id if current_user}" data-user-font="#{current_user.font if current_user}" data-user-theme="#{current_user.color_theme if current_user}"/>
