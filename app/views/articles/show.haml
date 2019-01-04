@@ -9,26 +9,23 @@
     %h4 Source: #{@article.author.name}
 
   %br/
-  .article-body.row
-    .col-sm-12
+  .article-body.row.justify-content-center
+    .body_text
       = markdown(@article.body)
-  .article-body.row
-    .col-sm-12
-      = article_image @article.top_image
+  .article-body.row.justify-content-center
+    = article_image @article.top_image
   - if !@article.body_2.blank?
-    .article-body.row
-      .col-sm-12
+    .article-body.row.justify-content-center
+      .body_text
         = markdown(@article.body_2)
-  .article-body.row
-    .col-sm-12
-      = article_image @article.middle_image
+  .article-body.row.justify-content-center
+    = article_image @article.middle_image
   - if !@article.body_3.blank?
-    .article-body.row
-      .col-sm-12
+    .article-body.row.justify-content-center
+      .body_text
         = markdown(@article.body_3)
-  .article-body.row
-    .col-sm-12
-      = article_image @article.footer_image
+  .article-body.row.justify-content-center
+    = article_image @article.footer_image
 
 
 
