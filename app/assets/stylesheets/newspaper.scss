@@ -42,7 +42,11 @@ $breakpoint-phone: 575px;
   }
 }
 
-@media (max-width: $breakpoint-phone) {
+.navbar-social-icons {
+  margin-left: 15px;
+}
+
+@media (max-width: 1000px) {
   #cf-navbar-2 {
     display: none;
   }
@@ -50,6 +54,15 @@ $breakpoint-phone: 575px;
     .msg {
       width: 90%;
     }
+  }
+  .navbar-social-icons {
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: $breakpoint-phone) {
+  .navbar-social-icons {
+    margin-left: 0px;
   }
 }
 
@@ -135,4 +148,15 @@ $breakpoint-phone: 575px;
       height: auto;
     }
   }
+}
+
+.cf-navbar-date {
+  font-size: 11px;
+  padding-bottom: 0px !important;
+}
+
+.cf-navbar-title {
+  font-weight: bold;
+  font-size: 1.75em;
+  font-family: sans-serif;
 }
