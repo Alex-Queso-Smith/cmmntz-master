@@ -127,9 +127,7 @@ class UserNewContainer extends React.Component {
     var value = target.value;
     const name = target.name;
 
-    if (value === "15") {
-      value = "13"
-    } else if (value === "10") {
+    if (value === "10") {
       value = ""
     }
 
