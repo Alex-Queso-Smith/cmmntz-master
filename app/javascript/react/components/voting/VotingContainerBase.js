@@ -201,13 +201,17 @@ class VotingContainerBase extends React.Component {
     }
   }
 
-  handleShowFlagModal(){
-    if (this.state.flagModalShow) {
-      document.body.classList.remove("cf-modal-locked");
+  handleShowFlagModal(event){
+    if (this.state.selectedVotes.warn === null) {
+      if (this.state.flagModalShow) {
+        document.body.classList.remove("cf-modal-locked");
+      } else {
+        document.body.classList.add("cf-modal-locked");
+      }
+      this.setState({ flagModalShow: !this.state.flagModalShow })
     } else {
-      document.body.classList.add("cf-modal-locked");
+      this.handleClickVote(event)
     }
-    this.setState({ flagModalShow: !this.state.flagModalShow })
   }
 
   handleFlagCommentModal(event){
