@@ -27,18 +27,14 @@
       %hr
 
       .articles-wrapper
-        - @articles.in_groups_of(2, false) do |group|
-          %br/
-          .row.articles-row
-            - group.each do |article|
-              .col-sm-6.article-tile
-                .row
-                  .col-6.left
-                    = article_thumbnail_or_placeholder article
-                  .col-6.right
-                    = truncate(article.introduction, length: 50)
-                    %br/
-                    = link_to "read more", article_path(article.slug), class: "cf-link"
+        - @articles.each do |article|
+          .row.article-row
+            .col-5.col-sm-4.col-md-3
+              = article_image_link article
+            .col-7.col-sm-8.col-md-9
+              %h3= link_to article.title, article_path(article.slug)
+              .pub-date.sentinel= article.publish_date.strftime("%B %d, %Y")
+              .preview.sentinel= truncate(article.introduction, length: 50)
         %br/
         %br/
         .row.justify-content-center.margin-top-10px
