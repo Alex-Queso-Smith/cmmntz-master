@@ -9,5 +9,5 @@
         .icons
           .views
             %i.ion-chatboxes
-            2,907
+            = article.art.grand_total_comments(current_user).size if article.art.present?
     = link_to "", article_path(article.slug)
