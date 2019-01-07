@@ -43,6 +43,7 @@ export const SortButtons = (object) => {
         visibility={''}
         className="tooltip-container"
         title={type[2]}
+        row="top"
         />
     )
   })
@@ -83,6 +84,7 @@ export const FilterButtonsRowOne = (object) => {
         image={image}
         visibility={visibility}
         title={`${type[1]}`}
+        row="top"
         />
     )
   })
@@ -121,6 +123,7 @@ export const FilterButtonsRowTwo = (object) => {
         image={image}
         visibility={visibility}
         title={`${type[1]}`}
+        row="bottom"
         />
     )
   })
