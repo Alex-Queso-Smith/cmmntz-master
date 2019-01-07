@@ -710,6 +710,7 @@ class CommentingContainer extends React.Component {
           modalButtonId={"feedback-button"}
           modalButtonText={"Feedback / Bugs"}
           modalButtonClass="btn-primary"
+          modalTitle="Please select the appropriate button for reporting."
         >
           <FeedbackFormContainer
             userId={this.props.userId}
