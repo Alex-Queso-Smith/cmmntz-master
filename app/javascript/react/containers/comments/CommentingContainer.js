@@ -768,7 +768,7 @@ class CommentingContainer extends React.Component {
 
         <button id="feedback_button" className="btn btn-primary">Feedback</button>
         <ScrollUpButton
-          ToggledStyle={{left: '75px'}}
+          ToggledStyle={ {left: '75px'} }
         />
         <BottomScollListener
           onBottom={this.handleLoadMoreComments}
