@@ -4,6 +4,7 @@ $grayline: #D3D3D3;
 $breakpoint-tablet: 900px;
 $breakpoint-phone: 575px;
 
+
 .sentinel {
   font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
 }
@@ -86,6 +87,11 @@ $breakpoint-phone: 575px;
   padding: 15px;
   color: black;
 
+  h3.main-title {
+    font-weight: 900;
+    font-size: 40px;
+  }
+
   .article-box {
     max-width: 315px;
     min-width: 230px;
@@ -125,7 +131,7 @@ $breakpoint-phone: 575px;
         margin-bottom: 3px;
         font-weight: 900;
         font-size: 30px;
-        
+
         @media (max-width: $breakpoint-phone) {
           font-size: 22px;
         }

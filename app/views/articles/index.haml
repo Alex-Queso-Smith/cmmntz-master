@@ -2,27 +2,13 @@
   .col-sm-12.col-md-8
     .articles-container
       .row.justify-content-center
-        %h3 Articles
+        %h3.main-title Articles
 
       .row.justify-content-center.margin-top-10px
         .col-sm-6
-          .article-box
-            <figure class="snip1585">
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample70.jpg" alt="sample70" />
-            <figcaption>
-            <h3>#{@first_article.title}</h3>
-            </figcaption>
-            = link_to "", article_path(@first_article.slug)
-            </figure>
+          = render "article_tile", article: @first_article
         .col-sm-6
-          .article-box
-            <figure class="snip1585">
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample70.jpg" alt="sample70" />
-            <figcaption>
-            <h3>#{@second_article.title}</h3>
-            </figcaption>
-            = link_to "", article_path(@second_article.slug)
-            </figure>
+          = render "article_tile", article: @second_article
 
       %hr
 

@@ -2,11 +2,11 @@ module ArticlesHelper
   def article_image_link article
     link_to article_thumbnail_or_placeholder(article), article_path(article.slug)
   end
-  def article_thumbnail_or_placeholder article
+  def article_thumbnail_or_placeholder article, x_class = "img-fluid"
     if article.thumbnail.present? && article.thumbnail.asset.present?
-      image_tag article.thumbnail.asset.thumb.url, class: "img-fluid"
+      image_tag article.thumbnail.asset.url, class: "#{x_class}"
     else
-      image_tag '/images/image-placeholder.jpg', class: 'img-fluid'
+      image_tag '/images/image-placeholder.jpg', class:  "#{x_class}"
     end
   end
 

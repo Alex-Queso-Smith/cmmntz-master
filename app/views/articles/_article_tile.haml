@@ -1,0 +1,16 @@
+.article-box
+  %figure.snip1518
+    .image
+      = article_thumbnail_or_placeholder article, "size-300"
+    %figcaption
+      %h3= article.title
+      %footer
+        .date= article.publish_date.strftime("%B %d, %Y")
+        .icons
+          .views
+            %i.ion-eye
+            2,907
+          .love
+            %i.ion-heart
+            623
+    = link_to "", article_path(article.slug)
