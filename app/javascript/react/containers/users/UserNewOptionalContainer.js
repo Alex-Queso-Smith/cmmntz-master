@@ -4,9 +4,7 @@ import { Input, Checkbox, AgeSlider, GenderSelector, NukaCarousel as Carousel } 
 import GeoPicker from '../../components/form/GeoPicker';
 
 class UserNewOptionalContainer extends React.Component {
-  state = {
-
-  }
+  state = {}
 
   render(){
     const { x, y, latitude, longitude, geoPin, locationAnon } = this.props
