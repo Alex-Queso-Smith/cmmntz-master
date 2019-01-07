@@ -1,7 +1,9 @@
 class Api::V1::CommentFiltersController < ApiController
   # POST /comments.json
   def create
-    page = params[:page] || 1
+    # page = params[:page] || 1
+    # due to new exclusion param, always pull the first page
+    page = 1
     search = params[:search] || {}
     @comments = Comment.filter_and_sort(current_user, params[:art_id], params[:art_type], search, page)
     # raise "#{@comments.to_sql}"
