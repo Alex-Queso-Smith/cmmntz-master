@@ -46,6 +46,16 @@ class UserAvatar extends React.Component {
       </div>
     }
 
+    var blockFollowBox;
+    if (followStar) {
+      blockFollowBox =
+      <div className="row justify-content-start block-follow-box">
+        {followStar}
+        {blockSym}
+        <div className="col-8"/>
+      </div>
+    }
+
     var infoTile;
     if (this.state.showInfoTile) {
       infoTile=
@@ -57,11 +67,7 @@ class UserAvatar extends React.Component {
                 <h4 className="user-name-avatar">{user_name}</h4>
               </div>
             </div>
-            <div className="row">
-                {followStar}
-                {blockSym}
-              <div className="col-sm-10" />
-            </div>
+            {blockFollowBox}
           </div>
           <div className="row margin-top-10px gender-image-box">
             {genderImage}

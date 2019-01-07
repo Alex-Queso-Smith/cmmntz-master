@@ -68,11 +68,11 @@ $bootstrap-blue: #0069D9;
         position: absolute;
         top: 0px;
         left: 50px;
-        z-index: 300;
+        z-index: 8;
 
         background-color: #fff;
         border: 1px solid $grayline;
-        height: 150px;
+        height: auto;
         width: auto;
         border-radius: 10px;
 
@@ -315,4 +315,17 @@ $bootstrap-blue: #0069D9;
 .cf-logo-image-form {
   width: 100%;
   margin-bottom: 10px;
+}
+
+.padding-cancel {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.block-follow-box-start {
+  margin: 0px 0px 5px 15px;
+}
+
+.block-follow-box {
+  max-width: 150px;
 }

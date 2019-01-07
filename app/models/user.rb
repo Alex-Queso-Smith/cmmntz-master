@@ -92,7 +92,7 @@ class User < ApplicationRecord
 
   ### Some Bool checks
   def post_eligible?
-    min_interactions = 5
+    min_interactions = 0
     comment_interactions.limit(min_interactions).size >= min_interactions
   end
 

@@ -321,26 +321,26 @@ a:hover {
 .tooltip-container {
   position: relative;
   &:hover {
-    .tooltip-content {
+    .tooltip-content-top, .tooltip-content-bottom {
       visibility: visible;
       opacity: 1;
       transition: opacity .2s ease-out;
       transition-delay: .75s;
-      top: -40px;
     }
   }
 }
-.tooltip-content {
+
+.tooltip-content-top {
   visibility: hidden;
   opacity: 0;
   position: absolute;
   border: 1px solid #D3D3D3;
   border-radius: 15px;
   background: #fff;
-  left: -30px;
-  top: -130px;
+  white-space: nowrap;
+  left: -15px;
+  top: -25px;
   padding: 3px 15px 3px ;
-  margin: 16px;
   font-size: 15px;
   width: auto;
   transition: opacity 1s all ease;
@@ -356,6 +356,35 @@ a:hover {
       top: 100%;
       left: 25px;
       border-color: #D3D3D3 transparent transparent transparent;
+  }
+}
+
+.tooltip-content-bottom {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  border: 1px solid #D3D3D3;
+  border-radius: 15px;
+  background: #fff;
+  white-space: nowrap;
+  left: -20%;
+  top: 45px;
+  padding: 3px 15px 3px ;
+  font-size: 15px;
+  width: auto;
+  transition: opacity 1s all ease;
+  transition-delay: .25s;
+  z-index: 2;
+  color: #000;
+
+  &:after {
+      content: "";
+      position: absolute;
+      border-width: 7px;
+      border-style: solid;
+      top: -57%;
+      left: 19px;
+      border-color: transparent transparent #D3D3D3 transparent;
   }
 }
 
