@@ -40,7 +40,8 @@ class CommentingContainer extends React.Component {
       latitude: '',
       longitude: '',
       hideAnonAndGuest: false,
-      setFrom: 'gallery'
+      setFrom: 'gallery',
+      previousCommentIds: []
     },
     gallerySettings: { },
     userSettings: { },
@@ -152,6 +153,7 @@ class CommentingContainer extends React.Component {
 
     opts[name] = value
     opts.page = 1
+    opts.previousCommentIds = []
     this.setState({ sortOpts: opts })
   };
 
@@ -271,7 +273,7 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit(){
     var search = new FormData();
 
-    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius, hideAnonAndGuest } = this.state.sortOpts;
+    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius, hideAnonAndGuest, previousCommentIds } = this.state.sortOpts;
     var { artType, artId } = this.props;
     search.append("art_type", artType)
     search.append("art_id", artId)
@@ -293,6 +295,10 @@ class CommentingContainer extends React.Component {
     }
     if (hideAnonAndGuest) {
       search.append("search[hide_anon_and_guest]", hideAnonAndGuest)
+    }
+
+    if (previousCommentIds.length) {
+      search.append("search[previous_comment_ids]", previousCommentIds)
     }
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
@@ -364,6 +370,7 @@ class CommentingContainer extends React.Component {
       opts.sortType = filter.sortType;
       opts.commentsFrom = filter.commentsFrom
       opts.page = 1;
+      opts.previousCommentIds = []
       this.setState({
         sortOpts: opts,
         [name]: value
@@ -379,6 +386,7 @@ class CommentingContainer extends React.Component {
     var opts = this.state.sortOpts
     opts.sortDir = value
     opts.page = 1
+    opts.previousCommentIds = []
 
     this.setState({
       sortOpts: opts
@@ -395,6 +403,7 @@ class CommentingContainer extends React.Component {
     var opts = this.state.sortOpts
     opts[name] = value;
     opts.page = 1
+    opts.previousCommentIds = []
 
     this.setState({
       sortOpts: opts,
@@ -445,6 +454,7 @@ class CommentingContainer extends React.Component {
     }
 
     opts.page = 1
+    opts.previousCommentIds = []
 
     this.setState({
       sortOpts: opts,
@@ -457,6 +467,14 @@ class CommentingContainer extends React.Component {
   handleLoadMoreComments(event){
     var opts = this.state.sortOpts
     if (this.state.totalComments != this.state.comments.length) {
+      var comments = this.state.comments
+      var commentIds = [];
+
+      for (var i = 0; i < comments.length; i++) {
+        commentIds.push(comments[i].id)
+      }
+
+      opts.previousCommentIds = commentIds
       opts.page += 1
 
       this.setState({

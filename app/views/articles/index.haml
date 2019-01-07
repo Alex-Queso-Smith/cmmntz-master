@@ -20,7 +20,7 @@
             .col-7.col-sm-8.col-md-9
               %h3= link_to article.title, article_path(article.slug)
               .pub-date.sentinel= article.publish_date.strftime("%B %d, %Y")
-              .preview.sentinel= truncate(article.introduction, length: 50)
+              .preview.sentinel= truncate(article.introduction, length: 150)
         %br/
         %br/
         .row.justify-content-center.margin-top-10px

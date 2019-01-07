@@ -81,6 +81,10 @@ module CommentSearchs
 
     scope :not_deleted, -> { where(deleted: false) }
 
+    scope :excluded_ids, -> (previous_ids) {
+      where.not(id: previous_ids)
+    }
+
     # Meta Scoping
 
     Vote::TYPES.each do |type|
@@ -234,6 +238,7 @@ module CommentSearchs
     # sort and filter for art listings
     def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, page)
       scope = for_art_type_and_id(article_type, article_id)
+      scope = scope.excluded_ids(filter_opts[:previous_comment_ids].split(",")) if filter_opts[:previous_comment_ids]
       scope = self.base_search(scope, user, filter_opts)
       scope = scope.not_replies.page(page)
     end

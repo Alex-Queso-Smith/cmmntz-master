@@ -8,7 +8,7 @@
   margin: 10px;
   min-width: 250px;
   max-width: 310px;
-  min-height: 375px;
+  min-height: 400px;
   width: 100%;
   background-color: #ffffff;
   color: #2B2B2B;
@@ -37,9 +37,9 @@
 .snip1518 h3 {
   font-family: 'Oswald';
   text-transform: uppercase;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 900;
-  line-height: 29px;
+  line-height: 27px;
   margin: 3px 0;
 }
 
@@ -47,13 +47,16 @@
 .snip1518 footer {
   border-top: 1px solid rgba(0, 0, 0, 0.065);
   padding: 0 20px;
-  font-size: 13px;
-  line-height: 50px;
   text-align: left;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
+
+  font-size: 1.25em;
+  line-height: 1.5em;
+  letter-spacing: -.2px;
+  font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
 }
 
 .snip1518 footer .icons {
