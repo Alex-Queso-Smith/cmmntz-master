@@ -205,7 +205,7 @@ export const NukaCarousel = props => {
       width: '55px'
     }
     return(
-      <img style={style} onClick={props.onChange} name={`${a}_ffffff_000000`} key ={a} src={`/assets/${a}_ffffff_000000`} />
+      <img style={style} onClick={props.onChange} name={`${a}_ffffff_000000`} key ={a} src={`/images/avatars/${a}_ffffff_000000.png`} />
     )
   })
 
@@ -215,7 +215,7 @@ export const NukaCarousel = props => {
       width: '55px'
     }
     return(
-      <img style={style} onClick={props.onChange} name={`${a}_ffffff_ff0000`} key ={a} src={`/assets/${a}_ffffff_ff0000`} />
+      <img style={style} onClick={props.onChange} name={`${a}_ffffff_ff0000`} key ={a} src={`/images/avatars/${a}_ffffff_ff0000.png`} />
     )
   })
 
@@ -232,7 +232,7 @@ export const NukaCarousel = props => {
       width: '55px'
     }
     return(
-      <img style={style} onClick={props.onChange} name={`${a}`} key ={a} src={`/assets/${a}`} />
+      <img style={style} onClick={props.onChange} name={`${a}`} key ={a} src={`/images/avatars/${a}.png`} />
     )
   })
 

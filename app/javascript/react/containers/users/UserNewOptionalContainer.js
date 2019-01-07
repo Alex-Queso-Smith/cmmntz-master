@@ -31,7 +31,7 @@ class UserNewOptionalContainer extends React.Component {
 
       selectedAvatar =
       <div className="text-center">
-        <img style={style} src={`/assets/${this.props.selectedAvatar}`} />
+        <img style={style} src={`/images/avatars/${this.props.selectedAvatar}.png`} />
       </div>
     }
     return(
