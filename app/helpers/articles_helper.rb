@@ -1,7 +1,7 @@
 module ArticlesHelper
   def article_thumbnail_or_placeholder article
     if article.thumbnail.present? && article.thumbnail.asset.present?
-      image_tag article.thumbnail.asset.thumb.url, class: "article-thumb"
+      image_tag article.thumbnail.asset.thumb.url, class: "img-fluid"
     end
   end
 

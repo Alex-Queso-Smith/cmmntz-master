@@ -1,24 +1,48 @@
-.articles-container
-  %h3 Articles
-  .articles-wrapper
-    - @articles.each do |article|
-      .row.margin-top-bottom-15px
-        .article-container.col-sm-12
-          .article-row.row
-            .left-pane.col-sm-4.col-md-3.col-lg-2
-              = article_thumbnail_or_placeholder article
-            .right-pane.col-sm-8.col-md-9.col-lg-10
-              .article-title
-                %h3= link_to "#{display_date article.publish_date, false} - #{article.title}", article_path(article.slug), class: "cf-link"
+.row.articles-main
+  .col-sm-12.col-md-8
+    .articles-container
+      .row.justify-content-center
+        %h3 Articles
+
+      .row.justify-content-center.margin-top-10px
+        .col-sm-6
+          .article-box
+            <figure class="snip1585">
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample70.jpg" alt="sample70" />
+            <figcaption>
+            <h3>#{@first_article.title}</h3>
+            </figcaption>
+            = link_to "", article_path(@first_article.slug)
+            </figure>
+        .col-sm-6
+          .article-box
+            <figure class="snip1585">
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample70.jpg" alt="sample70" />
+            <figcaption>
+            <h3>#{@second_article.title}</h3>
+            </figcaption>
+            = link_to "", article_path(@second_article.slug)
+            </figure>
+
+      %hr
+
+      .articles-wrapper
+        - @articles.in_groups_of(2, false) do |group|
+          %br/
+          .row.articles-row
+            - group.each do |article|
+              .col-sm-6.article-tile
                 .row
-                  .col-sm-6
-                    Source: #{article.author.name}
-                  .col-sm-6
-                    Comments/Replies: #{article.art.grand_total_comments(current_user).size if article.art.present?}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Votes: #{article.votes.size}
-              .article-preview-text
-                = markdown(article.introduction)
-                %br/
-                = link_to "read more", article_path(article.slug), class: "cf-link"
-  = will_paginate @articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
+                  .col-6.left
+                    = article_thumbnail_or_placeholder article
+                  .col-6.right
+                    = truncate(article.introduction, length: 50)
+                    %br/
+                    = link_to "read more", article_path(article.slug), class: "cf-link"
+        %br/
+        %br/
+        .row.justify-content-center.margin-top-10px
+          = will_paginate @articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
+
+  .d-none.d-sm-none.d-md-block.d.col-md-4.articles-side
+    = render "side"

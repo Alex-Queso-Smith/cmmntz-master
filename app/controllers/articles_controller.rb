@@ -6,7 +6,9 @@ class ArticlesController < ApplicationController
   # GET /articles.json
   def index
     page = params[:page] || 1
-    @articles = Article.order(publish_date: :desc).where("publish_date <= '#{Date.today}'").page(page)
+    @articles = Article.order(publish_date: :desc).where("publish_date <= '#{Date.today}'").page(page).to_a
+    @first_article = @articles.shift
+    @second_article = @articles.shift
   end
 
   # GET /articles/1
