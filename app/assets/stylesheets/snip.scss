@@ -47,13 +47,16 @@
 .snip1518 footer {
   border-top: 1px solid rgba(0, 0, 0, 0.065);
   padding: 0 20px;
-  font-size: 13px;
-  line-height: 50px;
   text-align: left;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
+
+  font-size: 1.25em;
+  line-height: 1.5em;
+  letter-spacing: -.2px;
+  font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
 }
 
 .snip1518 footer .icons {
