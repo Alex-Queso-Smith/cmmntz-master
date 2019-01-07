@@ -75,7 +75,17 @@ class Vote < ApplicationRecord
 
     if top_votes_for_user.any?
       c = top_votes_for_user.first.comment
-      errors.add(:base) << "You have already voted the following as top (A):\n\n#{truncate(c.text, length: 100)}\n\nWould you like to change your top vote for this thread to (B):\n\n#{truncate(comment.text, length: 100)}"
+      choice_a = truncate(c.text, length: 100)
+      choice_a = choice_a.gsub("&quot;", '"')
+      choice_a = choice_a.gsub("&#39;", "'")
+      choice_a = choice_a.gsub("&amp;", '&')
+      choice_a = choice_a.gsub("&amp;", '&') #strange but needed
+      choice_b = truncate(comment.text, length: 100)
+      choice_b = choice_b.gsub("&quot;", '"')
+      choice_b = choice_b.gsub("&#39;", "'")
+      choice_b = choice_b.gsub("&amp;", '&')
+      choice_b = choice_b.gsub("&amp;", '&') #strange but needed
+      errors.add(:base) << "You have already voted the following as top (A):\n\n#{choice_a}\n\nWould you like to change your top vote for this thread to (B):\n\n#{choice_b}"
       errors.add(:base) << c.id
     end
   end
