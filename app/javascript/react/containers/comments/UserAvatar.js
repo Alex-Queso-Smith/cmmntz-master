@@ -4,7 +4,7 @@ import { AgeRangeImageSelector } from '../../components/general/General';
 
 class UserAvatar extends React.Component {
   state = {
-    showInfoTile: true
+    showInfoTile: false
   }
 
 
