@@ -70,7 +70,7 @@ export const ImageSelector = (type) => {
   if (type.includes('blank')) {
     return ''
   } else {
-    return `/assets/${type}.png`
+    return `/images/icons-v2/${type}.png`
   }
 }
 

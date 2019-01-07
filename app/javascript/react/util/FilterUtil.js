@@ -6,11 +6,11 @@ import { ImageSelector } from './VoteUtil';
 export const ImageSelectorTemp = (filterList, notFilterList, type) => {
 
   if (filterList.includes(`${type}_percent`)) {
-    return `/assets/${type}-selected`
+    return `/images/icons-v2/${type}-selected.png`
   } else if (notFilterList.includes(`${type}_percent`)) {
-    return  `/assets/${type}-unselected`
+    return  `/images/icons-v2/${type}-unselected.png`
   } else {
-    return `/assets/${type}`
+    return `/images/icons-v2/${type}.png`
   }
 }
 

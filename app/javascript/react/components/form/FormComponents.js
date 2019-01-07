@@ -93,7 +93,7 @@ export const GenderSelector = props => {
 const GenderButton = props => {
   return(
     <div className={`col-3`}>
-      <img className={`gender-btn ${props.translucency}`} onClick={props.onChange} name={props.name} value={props.value} src={`/assets/genders/gender-${props.imageName}.png`} />
+      <img className={`gender-btn ${props.translucency}`} onClick={props.onChange} name={props.name} value={props.value} src={`/images/icons-v2/genders/gender-${props.imageName}.png`} />
       <div className="text-center">
         {props.label}
       </div>
@@ -205,7 +205,7 @@ export const NukaCarousel = props => {
       width: '55px'
     }
     return(
-      <img style={style} onClick={props.onChange} name={`${a}_ffffff_000000`} key ={a} src={`/assets/${a}_ffffff_000000`} />
+      <img style={style} onClick={props.onChange} name={`${a}_ffffff_000000`} key ={a} src={`/images/avatars/${a}_ffffff_000000.png`} />
     )
   })
 
@@ -215,7 +215,7 @@ export const NukaCarousel = props => {
       width: '55px'
     }
     return(
-      <img style={style} onClick={props.onChange} name={`${a}_ffffff_ff0000`} key ={a} src={`/assets/${a}_ffffff_ff0000`} />
+      <img style={style} onClick={props.onChange} name={`${a}_ffffff_ff0000`} key ={a} src={`/images/avatars/${a}_ffffff_ff0000.png`} />
     )
   })
 
@@ -232,7 +232,7 @@ export const NukaCarousel = props => {
       width: '55px'
     }
     return(
-      <img style={style} onClick={props.onChange} name={`${a}`} key ={a} src={`/assets/${a}`} />
+      <img style={style} onClick={props.onChange} name={`${a}`} key ={a} src={`/images/avatars/${a}.png`} />
     )
   })
 

@@ -174,13 +174,13 @@ class Comment extends React.Component {
       if (!userFollowed) { starOpacity = "translucent" }
       followStar =
       <div className={`col-sm-1 block-follow-box cursor-pointer ${starOpacity}`}>
-        <img onClick={this.handleFollow} src="/assets/star" height="20px" width="20px" />
+        <img onClick={this.handleFollow} src="/images/icons-v2/star.png" height="20px" width="20px" />
       </div>
 
       if (!userBlocked) { blockOpacity = "translucent" }
       blockSym =
       <div className={`col-sm-1 block-follow-box cursor-pointer ${blockOpacity}`}>
-        <img onClick={this.handleBlock} src="/assets/block" height="20px" width="20px" />
+        <img onClick={this.handleBlock} src="/images/icons-v2/block.png" height="20px" width="20px" />
       </div>
 
     } else {

@@ -109,7 +109,7 @@ class UserEditAccountContainer extends React.Component {
       selectedAvatar =
       <div className="text-center">
         <h5>Selected Avatar</h5>
-        <img style={style} src={`/assets/${avatar}`} />
+        <img style={style} src={`/images/avatars/${avatar}.png`} />
       </div>
     }
 
