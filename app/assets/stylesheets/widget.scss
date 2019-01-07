@@ -449,16 +449,16 @@ a:hover {
    line-height: 2.25;
  }
 
-#feedback_button {
+#feedback-button {
   display: none;
   z-index: 50;
 }
 @media (max-width: $breakpoint-phone) {
-  #feedback_button {
+  #feedback-button {
     display: block;
     position: fixed;
     bottom: 20px;
-    right: 10px;
+    right: 15px;
   }
 }
 

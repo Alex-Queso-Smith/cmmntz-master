@@ -7,6 +7,7 @@ import CommentsList from './CommentsList';
 import CommentFilters from './CommentFilters';
 import { CreateErrorElements, FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual, FetchDeleteBasic } from '../../util/CoreUtil';
 import Modal from '../../components/modals/Modal';
+import BasicModal from '../../components/modals/BasicModal';
 import PreSetFilters from '../../components/filters/PreSetFilters';
 import { presetOptions } from '../../components/filters/SortSelect';
 import { BugForm } from '../../components/form/BetaTesting';
@@ -78,9 +79,6 @@ class CommentingContainer extends React.Component {
   showVoteCountTrigger = this.showVoteCountTrigger.bind(this);
   handleShowVoteModal = this.handleShowVoteModal.bind(this);
   handleShowFilterModal = this.handleShowFilterModal.bind(this);
-  feedbackFormUpdate = this.feedbackFormUpdate.bind(this);
-  handleFormChange = this.handleFormChange.bind(this);
-  feedbackFormSubmit = this.feedbackFormSubmit.bind(this);
 
   componentDidMount(){
     FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
@@ -156,10 +154,6 @@ class CommentingContainer extends React.Component {
     opts.page = 1
     this.setState({ sortOpts: opts })
   };
-
-  handleFormChange(event){
-    this.setState({ [event.target.name]: event.target.value })
-  }
 
   setLatLongClick(x, y, radius){
     var longitude = Math.round((x * (180 / 150)) - 180)
@@ -542,57 +536,6 @@ class CommentingContainer extends React.Component {
     }
   }
 
-  feedbackFormUpdate(type){
-    if (type === "feedback") {
-      this.setState({
-        userFeedbackForm: !this.state.userFeedbackForm,
-        userBugForm: false,
-        feedbackType: "Feedback",
-        userText: ""
-      })
-    } else {
-      this.setState({
-        userFeedbackForm: false,
-        userBugForm: !this.state.userBugForm,
-        feedbackType: "Bug",
-        userText: ""
-      })
-    }
-  }
-
-  feedbackFormSubmit(event){
-    event.preventDefault();
-
-    var { userText, feedbackCategory, feedbackType } = this.state;
-
-    var newFeedback = new FormData();
-
-    newFeedback.append("user_feedback[text]", userText)
-    newFeedback.append("user_feedback[category]", feedbackCategory)
-    newFeedback.append("user_feedback[user_id]", this.props.userId)
-    newFeedback.append("user_feedback[type]", feedbackType)
-
-    FetchBasic(this, '/api/v1/user_feedbacks.json', newFeedback, 'POST')
-    .then(feedbackData => {
-
-      if (feedbackData.errors) {
-        this.setState({
-          feedbackErrors: feedbackData.errors
-        })
-      } else {
-        alert(feedbackData.message)
-        this.setState({
-          userFeedbackForm: false,
-          userBugForm: false,
-          userText: "",
-          feedbackCategory: "",
-          feedbackType: ""
-        })
-      }
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
   render(){
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
@@ -660,34 +603,6 @@ class CommentingContainer extends React.Component {
       </div>
     }
 
-    var handleBugForm = () => {
-      this.feedbackFormUpdate("bug")
-    }
-
-    var handleFeedbackForm = () => {
-      this.feedbackFormUpdate("feedback")
-    }
-
-    var { feedbackErrors } = this.state;
-
-    var categoryError;
-    if (feedbackErrors.category) {
-      categoryError = CreateErrorElements(feedbackErrors.category, "Category")
-    }
-
-    var textError;
-    if (feedbackErrors.text) {
-      textError = CreateErrorElements(feedbackErrors.text, "Text area")
-    }
-
-    var userFeedbackForm;
-
-    if (this.state.userFeedbackForm) {
-      userFeedbackForm = BugForm(this, "feedback", textError, categoryError, "Provide your feedback here. Thank you!")
-    } else if (this.state.userBugForm) {
-      userFeedbackForm = BugForm(this, "bug", textError, categoryError, "Please describe bug with context of how it occurred. Thank you!")
-    }
-
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         {showVoteModal}
@@ -703,6 +618,11 @@ class CommentingContainer extends React.Component {
               commentEtiquette={this.state.commentEtiquette}
               loginStatement={loginStatement}
               />
+          </div>
+          <div className="d-none d-md-block col-md-6">
+            <FeedbackFormContainer
+              userId={this.props.userId}
+            />
           </div>
         </div>
 
@@ -736,7 +656,9 @@ class CommentingContainer extends React.Component {
         <div>
           <p>{this.state.grandTotalComments} comments | {filteredCount} filtered | {totalComments} shown</p>
         </div>
+
         <div className="row">
+
           <div className="col-sm-12 col-md-6">
             <CommentsList
               artId={artId}
@@ -758,15 +680,23 @@ class CommentingContainer extends React.Component {
               />
             {endComments}
           </div>
+
           <div className="d-none d-md-block col-md-6 adverts-container">
             <FeedbackFormContainer
               userId={this.props.userId}
               />
-            <hr />
           </div>
-        </div>
 
-        <button id="feedback_button" className="btn btn-primary">Feedback</button>
+        </div>
+        <BasicModal
+          modalButtonId={"feedback-button"}
+          modalButtonText={"Feedback / Bugs"}
+          modalButtonClass="btn-primary"
+        >
+          <FeedbackFormContainer
+            userId={this.props.userId}
+          />
+        </BasicModal>
         <ScrollUpButton
           ToggledStyle={ {left: '75px'} }
         />

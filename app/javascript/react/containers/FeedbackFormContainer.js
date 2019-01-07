@@ -97,9 +97,31 @@ class FeedbackFormContainer extends React.Component {
     var userFeedbackForm;
 
     if (this.state.userFeedbackForm) {
-      userFeedbackForm = BugForm(this, "feedback", textError, categoryError, "Provide your feedback here. Thank you!")
+      userFeedbackForm =
+      <BugForm
+        modal={false}
+        type="feedback"
+        textError={textError}
+        categoryError={categoryError}
+        placeholder={"Provide your feedback here. Thank you!"}
+        feedbackFormSubmit={this.feedbackFormSubmit}
+        feedbackCategory={this.state.feedbackCategory}
+        onChange={this.handleChange}
+        text={this.state.userText}
+      />
     } else if (this.state.userBugForm) {
-      userFeedbackForm = BugForm(this, "bug", textError, categoryError, "Please describe bug with context of how it occurred. Thank you!")
+      userFeedbackForm =
+      <BugForm
+        modal={false}
+        type="bug"
+        textError={textError}
+        categoryError={categoryError}
+        placeholder={"Please describe bug with context of how it occurred. Thank you!"}
+        feedbackFormSubmit={this.feedbackFormSubmit}
+        feedbackCategory={this.state.feedbackCategory}
+        onChange={this.handleChange}
+        text={this.state.userText}
+      />
     }
 
     return(
