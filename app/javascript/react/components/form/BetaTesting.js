@@ -14,7 +14,7 @@ export const BugForm = (props)  => {
     buttons =
     <div className="row">
       <div className="col-6">
-        <button className="btn btn-sm btn-dark float-left margin-top-10px" onClick={ (e) => { e.preventDefault(); object.setState({ userBugForm: false }) } }>Cancel</button>
+        <button className="btn btn-sm btn-dark float-left margin-top-10px" onClick={ props.cancelFeedbackForm }>Cancel</button>
       </div>
       <div className="col-6">
         <button className="btn btn-sm btn-dark float-right margin-top-10px" type="submit" value="Submit" >Submit</button>
@@ -43,7 +43,7 @@ export const BugForm = (props)  => {
     <form  className="cf-user-feedback-form" onSubmit={ props.feedbackFormSubmit }>
       <div className="form-inline">
         <label htmlFor="feedbackCategory" className="text-medium margin-right-10px">Category</label>
-        <select style={selectStyle} className="form-control" name="feedbackCategory" value={props.feedbackCategory} onChange={props.handleChange}>
+        <select style={selectStyle} className="form-control" name="feedbackCategory" value={props.feedbackCategory} onChange={props.onChange}>
           <option />
           <option value="commenting" className="cf-category-item">
             Commenting
@@ -69,7 +69,7 @@ export const BugForm = (props)  => {
           name="userText"
           placeholder={props.placeholder}
           value={props.userText}
-          onChange={props.handleChange}
+          onChange={props.onChange}
           rows={7}
         />
       {tError}

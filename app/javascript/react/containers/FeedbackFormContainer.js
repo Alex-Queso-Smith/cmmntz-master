@@ -16,6 +16,7 @@ class FeedbackFormContainer extends React.Component {
   handleChange = this.handleChange.bind(this);
   feedbackFormUpdate = this.feedbackFormUpdate.bind(this);
   feedbackFormSubmit = this.feedbackFormSubmit.bind(this);
+  cancelFeedbackForm = this.cancelFeedbackForm.bind(this);
 
   handleChange(event){
     this.setState({ [event.target.name]: event.target.value })
@@ -27,14 +28,16 @@ class FeedbackFormContainer extends React.Component {
         userFeedbackForm: !this.state.userFeedbackForm,
         userBugForm: false,
         feedbackType: "Feedback",
-        userText: ""
+        userText: "",
+        feedbackErrors: {}
       })
     } else {
       this.setState({
         userFeedbackForm: false,
         userBugForm: !this.state.userBugForm,
         feedbackType: "Bug",
-        userText: ""
+        userText: "",
+        feedbackErrors: {}
       })
     }
   }
@@ -70,6 +73,15 @@ class FeedbackFormContainer extends React.Component {
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  cancelFeedbackForm(event){
+    event.preventDefault();
+
+    this.setState({
+      userFeedbackForm: false,
+      userBugForm: false
+    })
   }
 
   render(){
@@ -108,6 +120,7 @@ class FeedbackFormContainer extends React.Component {
         feedbackCategory={this.state.feedbackCategory}
         onChange={this.handleChange}
         text={this.state.userText}
+        cancelFeedbackForm={this.cancelFeedbackForm}
       />
     } else if (this.state.userBugForm) {
       userFeedbackForm =
@@ -121,6 +134,7 @@ class FeedbackFormContainer extends React.Component {
         feedbackCategory={this.state.feedbackCategory}
         onChange={this.handleChange}
         text={this.state.userText}
+        cancelFeedbackForm={this.cancelFeedbackForm}
       />
     }
 
