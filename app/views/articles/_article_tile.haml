@@ -1,0 +1,13 @@
+.article-box
+  %figure.snip1518
+    .image
+      = article_thumbnail_or_placeholder article, "size-300"
+    %figcaption
+      %h3= article.title
+      %footer
+        .date= article.publish_date.strftime("%B %d, %Y")
+        .icons
+          .views
+            %i.ion-chatboxes
+            = article.art.grand_total_comments(current_user).size if article.art.present?
+    = link_to "", article_path(article.slug)
