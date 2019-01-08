@@ -85,8 +85,8 @@ class Vote < ApplicationRecord
       choice_b = choice_b.gsub("&#39;", "'")
       choice_b = choice_b.gsub("&amp;", '&')
       choice_b = choice_b.gsub("&amp;", '&') #strange but needed
-      errors.add(:base) << "You have already voted the following as top (A):\n\n#{choice_a}\n\nWould you like to change your top vote for this thread to (B):\n\n#{choice_b}"
-      errors.add(:base) << c.id
+      errors.add(:comment) << "You have already voted the following as top (A):\n\n#{choice_a}\n\nWould you like to change your top vote for this thread to (B):\n\n#{choice_b}"
+      errors.add(:comment) << c.id
     end
   end
 
