@@ -164,7 +164,9 @@ class UserNewContainer extends React.Component {
       }
 
       if (
-        !genderAnon && gender === ""
+        !genderAnon && gender === "" ||
+        !locationAnon && latitude === "" & longitude == "" ||
+        !ageRangeAnon && ageRange === ""
       ) {
         this.handleSubmissionWarning()
       } else {
