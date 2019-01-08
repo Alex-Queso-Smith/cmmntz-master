@@ -1,3 +1,9 @@
+/* disable display of Whisper logout button */
+#wwwhisper-iframe {
+  display: none;
+}
+/* end */
+
 $grey: #D3D3D3;
 $grayline: #D3D3D3;
 
