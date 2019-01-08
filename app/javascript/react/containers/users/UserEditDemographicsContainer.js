@@ -47,6 +47,8 @@ class UserEditDemographicsContainer extends React.Component {
         case 2:
             gender = "male"
           break;
+        default:
+          gender = ""
       }
       var noLocation = false
       if (user.latitude === "" ) {
@@ -227,6 +229,11 @@ class UserEditDemographicsContainer extends React.Component {
           <div className="form-group actions">
             <button id="user-edit-demographics-button" type="submit" className="btn btn-sm float-right btn-dark margin-top-10px" value="Submit">
               Update
+            </button>
+          </div>
+          <div className="form-group actions">
+            <button id="user-edit-demographics-button" className="btn btn-sm float-left btn-dark margin-top-10px" onClick={ () => { this.props.history.goBack() } }>
+              Back to Articles
             </button>
           </div>
         </form>

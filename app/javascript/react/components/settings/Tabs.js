@@ -33,7 +33,7 @@ const Tabs = (props) => {
   })
 
   return(
-    <div className="cf-manage-comments-tabs">
+    <div className="cf-manage-comments-tabs margin-top-10px">
       <ul className="nav nav-tabs">
         {links}
       </ul>

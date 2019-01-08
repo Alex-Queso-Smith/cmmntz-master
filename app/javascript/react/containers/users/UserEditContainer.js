@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Tabs from '../../components/settings/Tabs';
 import UserEditSettingsContainer from './UserEditSettingsContainer';
@@ -31,19 +32,19 @@ class UserEditContainer extends React.Component {
     switch (display) {
       case "":
         page =
-        <UserEditAccountContainer userId={ userId } />
+        <UserEditAccountContainer userId={ userId } history={this.props.history} />
       break;
       case "looks":
         page =
-        <UserEditLooksContainer userId={ userId } />
+        <UserEditLooksContainer userId={ userId } history={this.props.history} />
       break;
       case "demographics":
         page =
-        <UserEditDemographicsContainer userId={ userId } />
+        <UserEditDemographicsContainer userId={ userId } history={this.props.history} />
       break;
       case "settings":
         page =
-        <UserEditSettingsContainer userId={ userId } />
+        <UserEditSettingsContainer userId={ userId } history={this.props.history} />
         break;
       case "password":
         page =
@@ -55,6 +56,7 @@ class UserEditContainer extends React.Component {
 
     return(
       <div id="user-edit-container">
+        <Link className="margin-left-10px" to={''} onClick={ () => { this.props.history.goBack() } }>Back to Articles</Link>
         <Tabs
           display={this.state.display}
           onClick={this.handleTabClick}

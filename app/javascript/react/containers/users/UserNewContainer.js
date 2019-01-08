@@ -187,7 +187,7 @@ class UserNewContainer extends React.Component {
           if (body.errors) {
             this.setState({currentPage: 1})
           } else {
-            window.location = '/articles'
+            this.props.history.goBack()
           }
         })
         .catch(error => console.error(`Error in fetch: ${error.message}`));
