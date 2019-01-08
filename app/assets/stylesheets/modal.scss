@@ -34,6 +34,11 @@ $breakpoint-phone: 575px;
     text-align: justify;
     overflow-x: hidden;
     overflow-y: scroll;
+
+    font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
+    font-size: 1.25em;
+    line-height: 1.5em;
+    letter-spacing: -.2px;
   }
   .cf-modal-close {
     position: absolute;

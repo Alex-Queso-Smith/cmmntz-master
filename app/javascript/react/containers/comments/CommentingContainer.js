@@ -621,6 +621,10 @@ class CommentingContainer extends React.Component {
       </div>
     }
 
+    var bodyRect = document.body.getBoundingClientRect()
+    var appRect = document.getElementById('cf-comments-app').getBoundingClientRect()
+    var widgetPageY = appRect.top - bodyRect.top
+    // debugger
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         {showVoteModal}
@@ -719,6 +723,8 @@ class CommentingContainer extends React.Component {
         </BasicModal>
         <ScrollUpButton
           ToggledStyle={ {left: '75px'} }
+          ShowAtPosition={widgetPageY + 150}
+          StopPosition={widgetPageY - 100}
         />
         <BottomScollListener
           onBottom={this.handleLoadMoreComments}

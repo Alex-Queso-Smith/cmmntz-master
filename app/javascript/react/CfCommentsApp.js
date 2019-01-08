@@ -92,6 +92,7 @@ class CfCommentsApp extends React.Component {
 
     return (
       <div id="cf-commenting-container" className={`container-fluid ${font} ${color}`}>
+        
         {displayContainer}
       </div>
     )

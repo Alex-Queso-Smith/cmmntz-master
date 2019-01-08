@@ -196,7 +196,7 @@ class CommentFormContainer extends React.Component {
         handleClose={this.handleCloseAnonModal}
         modalTitle={'Do you wish to post anonymously?'}
       >
-      If you wish to take advantage of ...... please do not post anonymously, thanks pal!
+      Please be aware that default settings are for Anonymous & Guest comments to be filtered out so the likelihood of this comment being read are greatly reduced.
       </Modal>
     }
     if (artSettings.disabled) {
