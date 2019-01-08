@@ -62,7 +62,6 @@ class FeedbackFormContainer extends React.Component {
           feedbackErrors: feedbackData.errors
         })
       } else {
-        alert(feedbackData.message)
         this.setState({
           userFeedbackForm: false,
           userBugForm: false,
@@ -70,6 +69,7 @@ class FeedbackFormContainer extends React.Component {
           feedbackCategory: "",
           feedbackType: ""
         })
+        setTimeout(function() {alert(feedbackData.message), 10})
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
