@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
-import { FetchWithPush, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
+import { FetchWithPush, CreateErrorElements, CheckInputValidation, FetchDeleteBasicWithPush } from '../../util/CoreUtil';
 
-class UserPasswordFormContainer extends React.Component {
+class UserEditPasswordContainer extends React.Component {
   state = {
     password: '',
     passwordConfirmation: '',
@@ -13,6 +13,7 @@ class UserPasswordFormContainer extends React.Component {
 
   handleSubmit = this.handleSubmit.bind(this);
   handleChange = this.handleChange.bind(this);
+  handleDeleteAccount = this.handleDeleteAccount.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (
@@ -25,18 +26,6 @@ class UserPasswordFormContainer extends React.Component {
     }
   }
 
-  handleSubmit(event){
-    event.preventDefault();
-    if (!this.state.formInvalid) {
-      var user = new FormData();
-      user.append("user[password]", this.state.password);
-      user.append("user[password_confirmation]", this.state.passwordConfirmation);
-
-      FetchWithPush(this, `/api/v1/users/${this.props.match.params.id}.json`, '/', 'PATCH', 'passwordErrors', user)
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
-    }
-  }
-
   handleChange(event){
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -45,7 +34,31 @@ class UserPasswordFormContainer extends React.Component {
     this.setState({ [name]: value })
   }
 
+  handleSubmit(event){
+    event.preventDefault();
+
+    if (!this.state.formInvalid) {
+      var user = new FormData();
+      user.append("user[password]", this.state.password);
+      user.append("user[password_confirmation]", this.state.passwordConfirmation);
+
+      FetchWithPush(this, `/api/v1/users/${this.props.userId}.json`, '/', 'PATCH', 'passwordErrors', user)
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
+  }
+
+  handleDeleteAccount(event){
+    event.preventDefault();
+
+    var confirm1 = confirm("Are you sure you wish to delete your account? Deleting your account is irreversible. Once you delete your accounts, all of your comments and interactions will become anonymous.");
+
+    if (confirm1 == true) {
+      FetchDeleteBasicWithPush(this, `/api/v1/users/${this.props.userId}.json`, '/login')
+    }
+  }
+
   render(){
+    
     var passwordClass, passwordError, passwordConfirmationClass, passwordConfirmationError;
     var { passwordErrors } = this.state
 
@@ -53,7 +66,7 @@ class UserPasswordFormContainer extends React.Component {
     passwordConfirmationError = CreateErrorElements(passwordErrors.password_confirmation, "Password Confirmation")
 
     return(
-      <div className="login-container">
+      <div className="user-edit-password-container">
         <form className="form" id="password-form" onSubmit={this.handleSubmit}>
           <h1 className="user-title text-center">Edit Password</h1>
           <Input
@@ -75,8 +88,13 @@ class UserPasswordFormContainer extends React.Component {
           />
           {passwordConfirmationError}
           <div className="form-group actions margin-top-10px">
-            <button id="login-button" type="submit" className="btn btn-block btn-medium btn-dark" value="Submit" disabled={this.state.formInvalid}>
-              Save
+            <button onClick={this.handleDeleteAccount}  className="btn btn-danger btn-sm float-left">
+              Delete Account
+            </button>
+          </div>
+          <div className="form-group actions margin-top-10px">
+            <button type="submit" className="btn float-right btn-sm btn-dark" value="Submit" disabled={this.state.formInvalid}>
+              Update
             </button>
           </div>
         </form>
@@ -85,4 +103,4 @@ class UserPasswordFormContainer extends React.Component {
   }
 }
 
-export default UserPasswordFormContainer;
+export default UserEditPasswordContainer;
