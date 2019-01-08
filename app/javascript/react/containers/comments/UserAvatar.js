@@ -33,7 +33,7 @@ class UserAvatar extends React.Component {
         age_range = "75-plus"
       }
       ageRangeImage =
-      <div className="col-sm-6">
+      <div className="col-6">
         <img style={style} src={`/images/icons-v2/age-ranges/${age_range}.png`} />
       </div>
     }
@@ -45,7 +45,7 @@ class UserAvatar extends React.Component {
         width: "50px"
       }
       genderImage =
-      <div className="col-sm-6">
+      <div className="col-6">
         <img style={style} src={`/images/icons-v2/genders/gender-${gender}.png`} />
       </div>
     }
