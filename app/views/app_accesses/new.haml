@@ -1,13 +1,11 @@
-#user-login-container.container.login-container
+#app-access-container
   = form_for @app_access do |f|
     = render "/shared/error_messages", target: @app_access
-    %h3 Halt!
-
-    %p In order to proceed, thou must answer this question:
-
-    %p What is the Password?
-
+    %h3 Almost there...
+    %p Please enter the password that you received from Classibridge in the 'Classibridge's Instructions for Beta Testing' email.
     .form-group
+      = f.label :password_field, "Password", class: "text-medium"
       = f.password_field :password, class: "form-control"
     .form-group.actions
-      = f.submit "Authorize Me!", class: "btn btn-secondary"
+      .row.float-right
+        = f.submit "Verify my identity", class: "btn btn-dark btn-sm"

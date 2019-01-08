@@ -14,7 +14,7 @@ class AppAccess < Tableless
     if ENV['APPLICATION_PASSCODE']
       ENV['APPLICATION_PASSCODE']
     else
-      "password"
+      "betatester"
     end
   end
 end

@@ -1,0 +1,17 @@
+$breakpoint-phone: 575px;
+
+#app-access-container {
+  margin: auto;
+  border: 1px solid #808080;
+  padding: 30px;
+  padding-bottom: 60px;
+  border-radius: 5px;
+  width: 500px;
+  color: #000000;
+
+  @media (max-width: $breakpoint-phone) {
+    width: 100%;
+    border: none;
+  }
+
+}
