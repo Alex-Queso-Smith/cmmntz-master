@@ -231,11 +231,6 @@ class UserEditDemographicsContainer extends React.Component {
               Update
             </button>
           </div>
-          <div className="form-group actions">
-            <button id="user-edit-demographics-button" className="btn btn-sm float-left btn-dark margin-top-10px" onClick={ () => { this.props.history.goBack() } }>
-              Back to Articles
-            </button>
-          </div>
         </form>
       </div>
     )
