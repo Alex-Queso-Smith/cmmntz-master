@@ -110,10 +110,10 @@ class CommentFilters extends React.Component {
         </div>
         <br/>
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-6">
             <h4 className="line-height-2-25">Filters{spanExpand}</h4>
           </div>
-          <div className="col-sm-6">
+          <div className="col-6">
             <button style={marginTop0} className="fade-button btn btn-sm float-right" onClick={this.props.clearFilters}>Clear</button>
           </div>
         </div>
