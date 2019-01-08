@@ -7,6 +7,7 @@ import UserEditAccountContainer from './UserEditAccountContainer';
 import UserEditLooksContainer from './UserEditLooksContainer';
 import UserEditDemographicsContainer from './UserEditDemographicsContainer';
 import UserEditPasswordContainer from './UserEditPasswordContainer';
+import FeedbackFormContainer from '../FeedbackFormContainer';
 
 class UserEditContainer extends React.Component {
   constructor(props){
@@ -62,6 +63,10 @@ class UserEditContainer extends React.Component {
           onClick={this.handleTabClick}
         />
         {page}
+        <hr />
+        <FeedbackFormContainer
+          userId={this.state.userId}
+        />
       </div>
     )
   }
