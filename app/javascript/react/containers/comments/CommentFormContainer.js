@@ -135,7 +135,7 @@ class CommentFormContainer extends React.Component {
 
   render(){
 
-    var { commentFormErrors, artSettings } = this.props
+    var { commentFormErrors, artSettings, userSettings } = this.props
     var { text, formInvalid, selfVotes, selfVoteStatus, anonModalShow } = this.state
     var textError, timer, anonModal, selfVoteButtonsRowOne, selfVoteButtonsRowTwo, approvalMsg;
 
@@ -204,6 +204,17 @@ class CommentFormContainer extends React.Component {
       <span className="helper-text">Note: This thread requires approval of all comments before they will be displayed.</span>
     }
 
+    var anonCheckBox;
+    if (!userSettings.guest) {
+      anonCheckBox =
+      <Checkbox
+        name="anonymous"
+        onChange={this.handleChange}
+        label="Submit Anonymously"
+        className=""
+      />
+    }
+
     var commentForm;
     if (artSettings.disabled) {
       var msg = "Commenting on this thread has been disabled by the site Admins."
@@ -262,12 +273,7 @@ class CommentFormContainer extends React.Component {
             <button className="btn btn-sm btn-dark" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
           </div>
           <div className="col-6">
-            <Checkbox
-              name="anonymous"
-              onChange={this.handleChange}
-              label="Submit Anonymously"
-              className=""
-            />
+            {anonCheckBox}
           </div>
           <div className="margin-top-10px col-3">
             <div className="float-right">

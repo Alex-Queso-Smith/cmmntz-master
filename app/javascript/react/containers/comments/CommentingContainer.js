@@ -557,7 +557,7 @@ class CommentingContainer extends React.Component {
   render(){
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
-    var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored } = this.state;
+    var { totalComments, comments, commentFormErrors, userSettings, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored } = this.state;
 
     var endComments;
     if (totalComments === comments.length) {
@@ -633,6 +633,7 @@ class CommentingContainer extends React.Component {
               handleSubmit={this.handleCommentForm}
               commentFormErrors={commentFormErrors}
               artSettings={artSettings}
+              userSettings={userSettings}
               commentEtiquette={this.state.commentEtiquette}
               loginStatement={loginStatement}
               />
