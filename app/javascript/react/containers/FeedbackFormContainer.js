@@ -69,7 +69,7 @@ class FeedbackFormContainer extends React.Component {
           feedbackCategory: "",
           feedbackType: ""
         })
-        setTimeout(function() {alert(feedbackData.message), 10})
+        setTimeout(function() {alert(feedbackData.message), 1})
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
