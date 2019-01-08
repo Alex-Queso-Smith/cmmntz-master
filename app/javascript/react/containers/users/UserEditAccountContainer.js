@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { FetchWithPush, FetchDidMount, CreateErrorElements, ErrorClassValidation, FetchDeleteBasicWithPush } from '../../util/CoreUtil';
+import { FetchWithPush, FetchDidMount, CreateErrorElements, ErrorClassValidation } from '../../util/CoreUtil';
 import { Input, NukaCarousel as Carousel } from '../../components/form/FormComponents';
 
 class UserEditAccountContainer extends React.Component {
@@ -16,7 +16,6 @@ class UserEditAccountContainer extends React.Component {
   handleChange = this.handleChange.bind(this);
   handleAvatarClick = this.handleAvatarClick.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
-  handleDeleteAccount = this.handleDeleteAccount.bind(this);
 
   componentDidMount(){
     this._isMounted = true;
@@ -74,16 +73,6 @@ class UserEditAccountContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleDeleteAccount(event){
-    event.preventDefault();
-    var confirm1 = confirm("Are you sure you wish to delete your account?");
-    if (confirm1 == true) {
-      var confirm2 = confirm("Are you REALLY certain that you wish to delete your account?\n\nOnce you do this, there is no going back.");
-      if (confirm2 == true){
-        FetchDeleteBasicWithPush(this, `/api/v1/users/${this.props.userId}.json`, '/login')
-      }
-    }
-  }
 
   render(){
     var { saveErrors, userName, email, avatar } = this.state;
@@ -135,10 +124,6 @@ class UserEditAccountContainer extends React.Component {
           />
           {emailError}
 
-          <Link to={`/users/${this.props.userId}/edit_password`} className="text-medium btn change-password-button">
-              Change Password
-          </Link>
-
           <hr />
 
           <div className="form-group margin-top-10px">
@@ -151,19 +136,8 @@ class UserEditAccountContainer extends React.Component {
           </div>
 
           <div className="form-group actions">
-            <button id="user-registration-button" type="submit" className="btn float-right btn-sm btn-dark  margin-top-10px" value="Submit">
+            <button id="user-registration-button" type="submit" className="btn float-right btn-sm btn-dark" value="Submit">
               Update
-            </button>
-          </div>
-
-          <hr />
-
-          <div id="delete-account">
-            <h3>Delete my account</h3>
-            <p className="warning-text">Warning: Deleting your account is irreversible. Once you delete your accounts, all of your comments and interactions will become anonymous.</p>
-            <p className="warning-text">Do not click the button unless you are certain.</p>
-            <button onClick={this.handleDeleteAccountClick}  className="btn btn-danger btn-large btn-block">
-              Delete Account
             </button>
           </div>
 

@@ -11,10 +11,8 @@ $breakpoint-phone: 575px;
 }
 
 #password-form {
-  margin: auto;
-  border: 1px solid grey;
+  margin: 10px auto;
   padding: 30px;
-  border-radius: 20px;
   width: 500px;
   background: rgba(255, 255, 255, 1 );
   color: #000000;
@@ -30,7 +28,11 @@ $breakpoint-phone: 575px;
   color: #000000;
 }
 
-#user-edit-account-container, #user-edit-settings-container, #user-edit-looks-container, #user-edit-demographics-container {
+#user-edit-account-container,
+#user-edit-settings-container,
+#user-edit-looks-container,
+#user-edit-demographics-container,
+#user-edit-password-container {
   margin: 10px auto;
   padding: 30px;
   border-radius: 5px;
@@ -57,7 +59,8 @@ $breakpoint-phone: 575px;
   #user-edit-container,
   #user-edit-looks-container,
   #user-edit-demographics-container,
-  #user-edit-account-container {
+  #user-edit-account-container,
+  #user-edit-password-container {
     width: 100%;
   }
 }
@@ -228,16 +231,6 @@ $breakpoint-phone: 575px;
 
 .custom-control-label::before {
   background-color: #919191;
-}
-
-.change-password-button {
-  color: #777777;
-  background: #ffffff;
-  &:hover {
-    color: #777777;
-    background: #f8f9fa;
-    border: 1px solid #777777;
-  }
 }
 
 .user-title {

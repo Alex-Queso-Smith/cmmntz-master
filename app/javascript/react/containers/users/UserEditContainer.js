@@ -5,6 +5,7 @@ import UserEditSettingsContainer from './UserEditSettingsContainer';
 import UserEditAccountContainer from './UserEditAccountContainer';
 import UserEditLooksContainer from './UserEditLooksContainer';
 import UserEditDemographicsContainer from './UserEditDemographicsContainer';
+import UserEditPasswordContainer from './UserEditPasswordContainer';
 
 class UserEditContainer extends React.Component {
   constructor(props){
@@ -43,6 +44,10 @@ class UserEditContainer extends React.Component {
       case "settings":
         page =
         <UserEditSettingsContainer userId={ userId } />
+        break;
+      case "password":
+        page =
+        <UserEditPasswordContainer userId={ userId } history={this.props.history} />
         break;
       default:
 
