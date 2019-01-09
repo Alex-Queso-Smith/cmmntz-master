@@ -649,6 +649,18 @@ class CommentingContainer extends React.Component {
               />
           </div>
           <div className="d-none d-md-block col-md-6">
+            <div className="row justify-content-center margin-top-10px">
+              <div className="vid-box">
+                <iframe src="https://www.youtube.com/embed/zGGJfR3FHKs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="video"></iframe>
+              </div>
+            </div>
+
+            <div className="row justify-content-center margin-top-10px">
+              <div className="vid-box">
+                <iframe src="https://www.youtube.com/embed/zGGJfR3FHKs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="video"></iframe>
+              </div>
+            </div>
+
             <FeedbackFormContainer
               userId={this.props.userId}
             />
