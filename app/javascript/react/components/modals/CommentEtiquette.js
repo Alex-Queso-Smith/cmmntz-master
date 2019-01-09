@@ -9,7 +9,7 @@ export const CommentEtiquette = props => {
     <p>{props.galleryCommentEtiquette}</p>
   } else {
     etiquette =
-    <div className="cf-commenting-etiquette-body">
+    <div>
       <p>Please be respectful of others when commenting, including refraining from threatening, bullying or harassing as well as commenting for the sake of trolling.</p>
       <p>Spamming is frowned upon and could result in a ban as well as deletion of all comments.</p>
       <p>Impersonating other individuals is not allowed, nor is publishing personal contact information.</p>

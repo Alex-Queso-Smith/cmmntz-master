@@ -559,7 +559,12 @@ class CommentingContainer extends React.Component {
   recordTutorialClick(){
     this.setState({ tutorialShow: true })
 
-    
+    var videoType = new FormData();
+
+    videoType.append("user_video_click[video_title]", "tutorial")
+
+    FetchBasic(this, `/api/v1/user_video_clicks.json`, videoType, 'POST')
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   render(){
