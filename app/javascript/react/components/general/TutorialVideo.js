@@ -53,8 +53,8 @@ class TutorialVideo extends React.Component {
         <div className="cf-tutorial-options">
           <p>Struggling to figure out how to use the widget after watching the videos?</p>
 
-          <button className="float-left btn btn-sm btn-dark" onClick={this.nextState} >Yes</button>
-          <button className="float-right btn btn-sm btn-dark" onClick={this.cancel} >No</button>
+          <button className="float-right btn btn-sm btn-dark" onClick={this.nextState} >Yes</button>
+          <button className="float-left btn btn-sm btn-dark" onClick={this.cancel} >No</button>
         </div>
         break;
       case 2:
@@ -62,14 +62,15 @@ class TutorialVideo extends React.Component {
           <div className="cf-tutorial-options">
             <p>Need to see a detailed tutorial video as well?</p>
 
-            <button className="float-left btn btn-sm btn-dark" onClick={this.handleShowVideo}>Yes</button>
-            <button className="float-right btn btn-sm btn-dark" onClick={this.cancel}>No</button>
+            <button className="float-right btn btn-sm btn-dark" onClick={this.handleShowVideo}>Yes</button>
+            <button className="float-left btn btn-sm btn-dark" onClick={this.cancel}>No</button>
           </div>
         break;
       case 3:
         shown =
           <div className="cf-tutorial-video">
-            <div className="vid-box">
+            <h5>Video coming soon...</h5>
+            <div className="d-none vid-box">
               <iframe src="https://www.youtube.com/embed/zGGJfR3FHKs" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="video"></iframe>
             </div>
           </div>

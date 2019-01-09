@@ -186,6 +186,20 @@ $breakpoint-phone: 575px;
       }
     }
 
+    .vid-box {
+      position: relative;
+      width: 90%;
+      height: 0;
+      padding-bottom: 56.25%;
+
+      .video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 90%;
+        height: 90%;
+      }
+    }
   }
 }
 .article-wrapper {

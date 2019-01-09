@@ -33,20 +33,20 @@ $breakpoint-phone: 575px;
   }
 }
 
-.vid-box {
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-bottom: 56.25%;
-
-  .video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-}
+// .vid-box {
+//   position: relative;
+//   width: 100%;
+//   height: 0;
+//   padding-bottom: 56.25%;
+//
+//   .video {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//   }
+// }
 
 .adverts-container {
   padding-left: 25px;
@@ -487,8 +487,8 @@ a:hover {
 }
 
 .cf-tutorial-options {
-  margin: auto;
   width: 204px;
+  margin: auto;
 
   p {
     font-weight: 500;
