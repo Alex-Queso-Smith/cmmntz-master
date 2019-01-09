@@ -56,6 +56,7 @@ class CommentingContainer extends React.Component {
     userText: "",
     feedbackCategory: "",
     feedbackType: "",
+    tutorialShow: false,
     feedbackErrors: {}
   }
 
@@ -80,6 +81,7 @@ class CommentingContainer extends React.Component {
   showVoteCountTrigger = this.showVoteCountTrigger.bind(this);
   handleShowVoteModal = this.handleShowVoteModal.bind(this);
   handleShowFilterModal = this.handleShowFilterModal.bind(this);
+  recordTutorialClick = this.recordTutorialClick.bind(this);
 
   componentDidMount(){
     FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
@@ -554,6 +556,10 @@ class CommentingContainer extends React.Component {
     }
   }
 
+  recordTutorialClick(){
+    
+  }
+
   render(){
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
@@ -624,7 +630,7 @@ class CommentingContainer extends React.Component {
     var bodyRect = document.body.getBoundingClientRect()
     var appRect = document.getElementById('cf-comments-app').getBoundingClientRect()
     var widgetPageY = appRect.top - bodyRect.top
-    // debugger
+
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         {showVoteModal}
