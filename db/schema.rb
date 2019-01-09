@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_04_135350) do
+ActiveRecord::Schema.define(version: 2019_01_09_150633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -388,6 +388,16 @@ ActiveRecord::Schema.define(version: 2019_01_04_135350) do
     t.datetime "updated_at", null: false
     t.index ["gallery_id"], name: "index_user_gallery_moderators_on_gallery_id"
     t.index ["user_id"], name: "index_user_gallery_moderators_on_user_id"
+  end
+
+  create_table "user_video_clicks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.string "video_title"
+    t.datetime "created_at"
+    t.index ["created_at"], name: "index_user_video_clicks_on_created_at"
+    t.index ["user_id", "video_title"], name: "index_user_video_clicks_on_user_id_and_video_title", unique: true
+    t.index ["user_id"], name: "index_user_video_clicks_on_user_id"
+    t.index ["video_title"], name: "index_user_video_clicks_on_video_title"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

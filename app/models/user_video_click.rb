@@ -1,0 +1,2 @@
+class UserVideoClick < ApplicationRecord
+end
