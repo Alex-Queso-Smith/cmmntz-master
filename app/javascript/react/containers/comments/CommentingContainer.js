@@ -557,6 +557,8 @@ class CommentingContainer extends React.Component {
   }
 
   recordTutorialClick(){
+    this.setState({ tutorialShow: true })
+
     
   }
 
@@ -627,6 +629,18 @@ class CommentingContainer extends React.Component {
       </div>
     }
 
+    var tutorialVideo =
+    <button onClick={ this.recordTutorialClick } className="btn btn-md btn-dark margin-top-bottom-10px">
+      Tutorial Video
+    </button>
+
+    if (this.state.tutorialShow) {
+      tutorialVideo =
+
+      <div className="vid-box">
+        <iframe src="https://www.youtube.com/embed/zGGJfR3FHKs" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="video"></iframe>
+      </div>
+    }
     var bodyRect = document.body.getBoundingClientRect()
     var appRect = document.getElementById('cf-comments-app').getBoundingClientRect()
     var widgetPageY = appRect.top - bodyRect.top
@@ -638,6 +652,7 @@ class CommentingContainer extends React.Component {
         <div />
 
         <div className="row">
+
           <div className="col-sm-12 col-md-6">
             <CommentFormContainer
               handleSubmit={this.handleCommentForm}
@@ -648,23 +663,23 @@ class CommentingContainer extends React.Component {
               loginStatement={loginStatement}
               />
           </div>
+
           <div className="d-none d-md-block col-md-6">
             <div className="row justify-content-center margin-top-10px">
               <div className="vid-box">
-                <iframe src="https://www.youtube.com/embed/zGGJfR3FHKs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="video"></iframe>
+                <iframe src="https://www.youtube.com/embed/zGGJfR3FHKs" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="video"></iframe>
               </div>
             </div>
 
             <div className="row justify-content-center margin-top-10px">
-              <div className="vid-box">
-                <iframe src="https://www.youtube.com/embed/zGGJfR3FHKs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="video"></iframe>
-              </div>
+              {tutorialVideo}
             </div>
 
             <FeedbackFormContainer
               userId={this.props.userId}
             />
           </div>
+
         </div>
 
         <div>
