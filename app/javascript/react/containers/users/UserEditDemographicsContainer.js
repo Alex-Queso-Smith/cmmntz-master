@@ -227,6 +227,9 @@ class UserEditDemographicsContainer extends React.Component {
             locationAnon={locationAnon}
           />
           <div className="form-group actions">
+            <button className="btn btn-sm btn-dark float-left margin-top-10px" onClick={ () => { this.props.history.goBack() } }>
+              Back
+            </button>
             <button id="user-edit-demographics-button" type="submit" className="btn btn-sm float-right btn-dark margin-top-10px" value="Submit">
               Update
             </button>

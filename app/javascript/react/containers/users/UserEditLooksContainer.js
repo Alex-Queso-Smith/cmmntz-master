@@ -78,6 +78,9 @@ class UserEditLooksContainer extends React.Component {
             />
 
           <div className="form-group actions">
+            <button className="btn btn-sm btn-dark float-left margin-top-10px" onClick={ () => { this.props.history.goBack() } }>
+              Back
+            </button>
             <button id="user-edit-looks-button" type="submit" className="btn btn-sm btn-dark float-right margin-top-10px" value="Submit">
               Update
             </button>
