@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_09_183713) do
+ActiveRecord::Schema.define(version: 2019_01_09_194657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -427,8 +427,12 @@ ActiveRecord::Schema.define(version: 2019_01_09_183713) do
     t.string "current_login_ip"
     t.string "last_login_ip"
     t.index ["age_range"], name: "index_users_on_age_range"
+    t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["gender"], name: "index_users_on_gender"
+    t.index ["last_login_at"], name: "index_users_on_last_login_at"
+    t.index ["last_request_at"], name: "index_users_on_last_request_at"
     t.index ["latitude", "longitude"], name: "index_users_on_latitude_and_longitude"
+    t.index ["login_count"], name: "index_users_on_login_count"
     t.index ["user_name"], name: "index_users_on_user_name", unique: true
   end
 
