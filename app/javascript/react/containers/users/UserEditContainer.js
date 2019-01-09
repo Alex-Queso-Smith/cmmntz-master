@@ -57,7 +57,6 @@ class UserEditContainer extends React.Component {
 
     return(
       <div id="user-edit-container">
-        <Link className="margin-left-10px" to={''} onClick={ () => { this.props.history.goBack() } }>Back to Articles</Link>
         <Tabs
           display={this.state.display}
           onClick={this.handleTabClick}

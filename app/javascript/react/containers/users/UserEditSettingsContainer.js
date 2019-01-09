@@ -280,6 +280,9 @@ class UserEditSettingsContainer extends React.Component {
           checked={this.state.showCensoredComments}
         />
         <div className="margin-top-10px text-center">
+          <button className="btn btn-sm btn-dark float-left" onClick={ () => { this.props.history.goBack() } }>
+            Back
+          </button>
           <button className="btn btn-sm float-right btn-dark" onClick={this.handleSubmit}>
             Update
           </button>

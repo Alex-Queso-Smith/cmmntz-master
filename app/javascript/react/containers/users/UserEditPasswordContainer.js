@@ -58,7 +58,7 @@ class UserEditPasswordContainer extends React.Component {
   }
 
   render(){
-    
+
     var passwordClass, passwordError, passwordConfirmationClass, passwordConfirmationError;
     var { passwordErrors } = this.state
 
