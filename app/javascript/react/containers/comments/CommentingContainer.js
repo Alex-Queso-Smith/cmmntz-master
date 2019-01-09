@@ -11,6 +11,7 @@ import BasicModal from '../../components/modals/BasicModal';
 import PreSetFilters from '../../components/filters/PreSetFilters';
 import { presetOptions } from '../../components/filters/SortSelect';
 import { BugForm } from '../../components/form/BetaTesting';
+import TutorialVideo from '../../components/general/TutorialVideo';
 import FeedbackFormContainer from '../FeedbackFormContainer';
 
 class CommentingContainer extends React.Component {
@@ -81,7 +82,6 @@ class CommentingContainer extends React.Component {
   showVoteCountTrigger = this.showVoteCountTrigger.bind(this);
   handleShowVoteModal = this.handleShowVoteModal.bind(this);
   handleShowFilterModal = this.handleShowFilterModal.bind(this);
-  recordTutorialClick = this.recordTutorialClick.bind(this);
 
   componentDidMount(){
     FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
@@ -556,17 +556,6 @@ class CommentingContainer extends React.Component {
     }
   }
 
-  recordTutorialClick(){
-    this.setState({ tutorialShow: true })
-
-    var videoType = new FormData();
-
-    videoType.append("user_video_click[video_title]", "tutorial")
-
-    FetchBasic(this, `/api/v1/user_video_clicks.json`, videoType, 'POST')
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
   render(){
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
@@ -634,18 +623,6 @@ class CommentingContainer extends React.Component {
       </div>
     }
 
-    var tutorialVideo =
-    <button onClick={ this.recordTutorialClick } className="btn btn-md btn-dark margin-top-bottom-10px">
-      Tutorial Video
-    </button>
-
-    if (this.state.tutorialShow) {
-      tutorialVideo =
-
-      <div className="vid-box">
-        <iframe src="https://www.youtube.com/embed/zGGJfR3FHKs" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="video"></iframe>
-      </div>
-    }
     var bodyRect = document.body.getBoundingClientRect()
     var appRect = document.getElementById('cf-comments-app').getBoundingClientRect()
     var widgetPageY = appRect.top - bodyRect.top
@@ -670,14 +647,9 @@ class CommentingContainer extends React.Component {
           </div>
 
           <div className="d-none d-md-block col-md-6">
-            <div className="row justify-content-center margin-top-10px">
-              <div className="vid-box">
-                <iframe src="https://www.youtube.com/embed/zGGJfR3FHKs" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="video"></iframe>
-              </div>
-            </div>
 
             <div className="row justify-content-center margin-top-10px">
-              {tutorialVideo}
+              <TutorialVideo />
             </div>
 
             <FeedbackFormContainer
