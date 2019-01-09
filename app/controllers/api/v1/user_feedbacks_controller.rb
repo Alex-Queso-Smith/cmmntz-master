@@ -6,8 +6,14 @@ class Api::V1::UserFeedbacksController < ApiController
   def create
     @user_feedback = UserFeedback.new(user_feedback_params)
 
+    user_agent = UserAgent.parse(request.user_agent)
+    @user_feedback.browser= user_agent.browser
+    @user_feedback.browser_version= user_agent.version
+    @user_feedback.platform= user_agent.platform
+    @user_feedback.os= user_agent.os
+
     if @user_feedback.save
-      render json: { message: "Thank You for your feedback!" } 
+      render json: { message: "Thank You for your feedback!" }
     else
       render json: { errors: @user_feedback.errors, status: :unprocessable_entity }
     end
