@@ -162,24 +162,25 @@ class Comment extends React.Component {
   }
 
   render(){
-    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState, galleryId } = this.props
+    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState, galleryId, postedAsGuest } = this.props
     var { replies, editStatus, edited, text, userFollowed, userBlocked } = this.state
 
     var followStar, blockSym, starOpacity, blockOpacity;
     if (
       commentUserId != currentUserId &&
       userName != "Anonymous" &&
-      !this.props.guestStatus
+      !this.props.guestStatus &&
+      !postedAsGuest
     ) {
       if (!userFollowed) { starOpacity = "translucent" }
       followStar =
-      <div className={`col-sm-2 padding-cancel block-follow-box-start cursor-pointer ${starOpacity}`}>
+      <div className={`col-2 padding-cancel block-follow-box-start cursor-pointer ${starOpacity}`}>
         <img onClick={this.handleFollow} src="/images/icons-v2/star.png" height="20px" width="20px" />
       </div>
 
       if (!userBlocked) { blockOpacity = "translucent" }
       blockSym =
-      <div className={`col-sm-2 padding-cancel cursor-pointer ${blockOpacity}`}>
+      <div className={`col-2 padding-cancel cursor-pointer ${blockOpacity}`}>
         <img onClick={this.handleBlock} src="/images/icons-v2/block.png" height="20px" width="20px" />
       </div>
 

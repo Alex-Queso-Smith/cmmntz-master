@@ -135,7 +135,7 @@ class CommentFormContainer extends React.Component {
 
   render(){
 
-    var { commentFormErrors, artSettings } = this.props
+    var { commentFormErrors, artSettings, userSettings } = this.props
     var { text, formInvalid, selfVotes, selfVoteStatus, anonModalShow } = this.state
     var textError, timer, anonModal, selfVoteButtonsRowOne, selfVoteButtonsRowTwo, approvalMsg;
 
@@ -196,12 +196,23 @@ class CommentFormContainer extends React.Component {
         handleClose={this.handleCloseAnonModal}
         modalTitle={'Do you wish to post anonymously?'}
       >
-      If you wish to take advantage of ...... please do not post anonymously, thanks pal!
+      Please be aware that default settings are for Anonymous & Guest comments to be filtered out so the likelihood of this comment being read are greatly reduced.
       </Modal>
     }
     if (artSettings.disabled) {
       approvalMsg =
       <span className="helper-text">Note: This thread requires approval of all comments before they will be displayed.</span>
+    }
+
+    var anonCheckBox;
+    if (!userSettings.guest) {
+      anonCheckBox =
+      <Checkbox
+        name="anonymous"
+        onChange={this.handleChange}
+        label="Submit Anonymously"
+        className=""
+      />
     }
 
     var commentForm;
@@ -262,12 +273,7 @@ class CommentFormContainer extends React.Component {
             <button className="btn btn-sm btn-dark" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
           </div>
           <div className="col-6">
-            <Checkbox
-              name="anonymous"
-              onChange={this.handleChange}
-              label="Submit Anonymously"
-              className=""
-            />
+            {anonCheckBox}
           </div>
           <div className="margin-top-10px col-3">
             <div className="float-right">

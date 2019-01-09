@@ -47,6 +47,12 @@ class UserEditDemographicsContainer extends React.Component {
         case 2:
             gender = "male"
           break;
+        default:
+          gender = ""
+      }
+      var noLocation = false
+      if (user.latitude === "" ) {
+        noLocation = true
       }
 
       if (this._isMounted) {
@@ -55,6 +61,9 @@ class UserEditDemographicsContainer extends React.Component {
           gender: gender,
           latitude: user.latitude,
           longitude: user.longitude,
+          locationAnon: noLocation,
+          ageRangeAnon: user.age_range === "",
+          genderAnon: user.gender === "",
           x: x,
           y: y,
           geoPin: {

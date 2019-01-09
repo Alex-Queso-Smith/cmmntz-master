@@ -164,7 +164,9 @@ class UserNewContainer extends React.Component {
       }
 
       if (
-        !genderAnon && gender === ""
+        !genderAnon && gender === "" ||
+        !locationAnon && latitude === "" & longitude == "" ||
+        !ageRangeAnon && ageRange === ""
       ) {
         this.handleSubmissionWarning()
       } else {
@@ -185,7 +187,7 @@ class UserNewContainer extends React.Component {
           if (body.errors) {
             this.setState({currentPage: 1})
           } else {
-            window.location = '/articles'
+            this.props.history.goBack()
           }
         })
         .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -317,6 +319,11 @@ class UserNewContainer extends React.Component {
     return(
       <div className="login-container">
         <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
+          <div className="row">
+            <div className="col-3">
+              <button className="btn btn-sm fade-button" onClick={ () => window.location = "/login" }>Login</button>
+            </div>
+          </div>
           <h5 className="user-title text-center">User Registration</h5>
 
           {page}

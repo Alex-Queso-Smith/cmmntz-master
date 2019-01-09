@@ -123,6 +123,7 @@ export const FetchDeleteBasicWithPush = (object, path, push) => {
        if (push != '') {
          object.props.history.push(push)
        }
+       return response 
      } else {
        let errorMessage = `${response.status} (${response.statusText})`,
            error = new Error(errorMessage)

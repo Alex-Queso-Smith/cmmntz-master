@@ -1,3 +1,9 @@
+/* disable display of Whisper logout button */
+#wwwhisper-iframe {
+  display: none;
+}
+/* end */
+
 $grey: #D3D3D3;
 $grayline: #D3D3D3;
 
@@ -211,6 +217,8 @@ $breakpoint-phone: 575px;
     letter-spacing: -.2px;
     font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
     text-align: justify;
+
+    word-wrap: break-word;
   }
 
   .article-header {
@@ -258,10 +266,10 @@ $breakpoint-phone: 575px;
   }
 
   .article-footer {
-    margin-top: 10px;
+    margin-top: 20px;
     p {
-      line-height: 3em;
-      font-size: 2em;
+      line-height: 30px;
+      font-size: 28px;
     }
   }
 }

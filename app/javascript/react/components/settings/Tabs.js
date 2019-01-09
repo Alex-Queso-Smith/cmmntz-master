@@ -16,7 +16,8 @@ const Tabs = (props) => {
     ["Account", ""],
     ["Demographics", "demographics"],
     ["Looks", "looks"],
-    ["Search", "settings"]
+    ["Search", "settings"],
+    ["Password", "password"]
   ]
 
   var links = types.map(type => {
@@ -32,7 +33,7 @@ const Tabs = (props) => {
   })
 
   return(
-    <div className="cf-manage-comments-tabs">
+    <div className="cf-manage-comments-tabs margin-top-10px">
       <ul className="nav nav-tabs">
         {links}
       </ul>

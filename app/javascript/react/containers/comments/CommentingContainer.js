@@ -557,7 +557,7 @@ class CommentingContainer extends React.Component {
   render(){
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
-    var { totalComments, comments, commentFormErrors, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored } = this.state;
+    var { totalComments, comments, commentFormErrors, userSettings, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored } = this.state;
 
     var endComments;
     if (totalComments === comments.length) {
@@ -621,6 +621,10 @@ class CommentingContainer extends React.Component {
       </div>
     }
 
+    var bodyRect = document.body.getBoundingClientRect()
+    var appRect = document.getElementById('cf-comments-app').getBoundingClientRect()
+    var widgetPageY = appRect.top - bodyRect.top
+    // debugger
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         {showVoteModal}
@@ -633,6 +637,7 @@ class CommentingContainer extends React.Component {
               handleSubmit={this.handleCommentForm}
               commentFormErrors={commentFormErrors}
               artSettings={artSettings}
+              userSettings={userSettings}
               commentEtiquette={this.state.commentEtiquette}
               loginStatement={loginStatement}
               />
@@ -718,6 +723,8 @@ class CommentingContainer extends React.Component {
         </BasicModal>
         <ScrollUpButton
           ToggledStyle={ {left: '75px'} }
+          ShowAtPosition={widgetPageY + 150}
+          StopPosition={widgetPageY - 100}
         />
         <BottomScollListener
           onBottom={this.handleLoadMoreComments}

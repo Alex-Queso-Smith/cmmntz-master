@@ -50,7 +50,7 @@ class CommentsList extends React.Component {
         }
 
         var { id, edited, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text, vote_counts, total_interactions, replies } = comment
-        var { user_name, gender, age_range, user_id, show_censored} = comment.user
+        var { user_name, gender, age_range, user_id, show_censored, posted_as_guest} = comment.user
 
         var shownText = text;
         if (censored && censored_text) {
@@ -103,6 +103,7 @@ class CommentsList extends React.Component {
                 showVoteCountTrigger={this.props.showVoteCountTrigger}
                 handleEditUpdate={this.handleEditUpdate}
                 isReply={comment.reply}
+                postedAsGuest={posted_as_guest}
 
                 artId={artId}
                 artType={artType}
