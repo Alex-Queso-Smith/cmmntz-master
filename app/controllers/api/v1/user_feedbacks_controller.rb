@@ -11,6 +11,7 @@ class Api::V1::UserFeedbacksController < ApiController
     @user_feedback.browser_version= user_agent.version
     @user_feedback.platform= user_agent.platform
     @user_feedback.os= user_agent.os
+    @user_feedback.ip= request.remote_ip
 
     if @user_feedback.save
       render json: { message: "Thank You for your feedback!" }

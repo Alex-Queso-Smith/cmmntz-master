@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_09_153436) do
+ActiveRecord::Schema.define(version: 2019_01_09_182255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -382,6 +382,7 @@ ActiveRecord::Schema.define(version: 2019_01_09_153436) do
     t.string "browser_version"
     t.string "platform"
     t.string "os"
+    t.string "ip"
     t.index ["user_id"], name: "index_user_feedbacks_on_user_id"
   end
 
