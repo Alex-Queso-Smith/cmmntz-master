@@ -19,7 +19,11 @@
               = article_image_link article
             .col-7.col-sm-8.col-md-9
               %h3= link_to article.title, article_path(article.slug)
-              .pub-date.sentinel= article.publish_date.strftime("%B %d, %Y")
+              .pub-date.sentinel
+                = article.publish_date.strftime("%B %d, %Y")
+                .float-right
+                  %i.ion-chatboxes
+                  = article.art.grand_total_comments(current_user).size if article.art.present?
               .preview.sentinel.d-none.d-sm-block= truncate(article.introduction, length: 150)
         %br/
         %br/
