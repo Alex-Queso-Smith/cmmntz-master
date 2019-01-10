@@ -9,7 +9,7 @@ import GeoSelect from '../filters/GeoSelect';
 class CommentFilters extends React.Component {
   state = {
     hideAnonAndGuest: this.props.sortOpts.hideAnonAndGuest,
-    filtersExpanded: true
+    filtersExpanded: false
   }
 
   expandFilters = this.expandFilters.bind(this);
