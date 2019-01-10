@@ -96,7 +96,7 @@ class CommentingContainer extends React.Component {
       if (userId.length > 0){
         FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
         .then(userData => {
-          
+
           var newSortOpts = this.state.sortOpts;
           var { followed_users, blocked_users, admin, guest, user_name } = userData.user
           var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, hide_anon_and_guest, set_from } = userData.user.sort_opts
@@ -718,7 +718,6 @@ class CommentingContainer extends React.Component {
         {filterModal}
 
         <div className="row">
-
           <div className="col-sm-12 col-md-6">
             <CommentFormContainer
               handleSubmit={this.handleCommentForm}
@@ -728,30 +727,14 @@ class CommentingContainer extends React.Component {
               commentEtiquette={this.state.commentEtiquette}
               loginStatement={loginStatement}
               />
-          </div>
 
-          <div className="d-none d-md-block col-md-6">
-
-            <div className="row justify-content-center cf-margin-top-10px">
-              <TutorialVideo />
+            <div>
+              <PreSetFilters
+                onChange={this.handlePresetFilterChange}
+                option={this.state.presetFilter}
+                />
             </div>
 
-            <FeedbackFormContainer
-              userId={this.props.userId}
-            />
-          </div>
-
-        </div>
-
-        <div>
-          <PreSetFilters
-            onChange={this.handlePresetFilterChange}
-            option={this.state.presetFilter}
-          />
-        </div>
-
-        <div className="row">
-          <div className="col-sm-12 col-md-6">
             <CommentFilters
               sortOpts={sortOpts}
               onChange={this.handleFilterSubmitMan}
@@ -764,19 +747,11 @@ class CommentingContainer extends React.Component {
               handleShowFilterModal={this.handleShowFilterModal}
               clearFilters={this.clearFilters}
               />
-          </div>
-          <div className="d-none d-md-block col-md-6 cf-video-container">
 
-          </div>
-        </div>
+            <div>
+              <p>{this.state.grandTotalComments} comments | {filteredCount} filtered | {totalComments} shown</p>
+            </div>
 
-        <div>
-          <p>{this.state.grandTotalComments} comments | {filteredCount} filtered | {totalComments} shown</p>
-        </div>
-
-        <div className="row">
-
-          <div className="col-sm-12 col-md-6">
             <CommentsList
               artId={artId}
               artType={artType}
@@ -796,34 +771,43 @@ class CommentingContainer extends React.Component {
               showVoteCountTrigger={this.showVoteCountTrigger}
               />
             {endComments}
+
           </div>
 
-          <div className="d-none d-md-block col-md-6 cf-adverts-container">
+          <div className="d-none d-md-block col-md-6">
+            <div className="row justify-content-center cf-margin-top-10px">
+              <TutorialVideo />
+            </div>
+
+            <div className="cf-adverts-container">
+              <FeedbackFormContainer
+                userId={this.props.userId}
+                />
+            </div>
+          </div>
+
+          <BasicModal
+            modalButtonId={"cf-feedback-button"}
+            modalButtonText={"Feedback / Bugs"}
+            modalButtonClass="btn-primary"
+            modalTitle="Please select the appropriate button for reporting."
+            >
             <FeedbackFormContainer
               userId={this.props.userId}
               />
-          </div>
+          </BasicModal>
 
+          <ScrollUpButton
+            ToggledStyle={ {left: '75px'} }
+            ShowAtPosition={widgetPageY + 150}
+            StopPosition={widgetPageY - 100}
+            />
+          <BottomScollListener
+            onBottom={this.handleLoadMoreComments}
+            offset={500}
+            />
         </div>
-        <BasicModal
-          modalButtonId={"cf-feedback-button"}
-          modalButtonText={"Feedback / Bugs"}
-          modalButtonClass="btn-primary"
-          modalTitle="Please select the appropriate button for reporting."
-        >
-          <FeedbackFormContainer
-            userId={this.props.userId}
-          />
-        </BasicModal>
-        <ScrollUpButton
-          ToggledStyle={ {left: '75px'} }
-          ShowAtPosition={widgetPageY + 150}
-          StopPosition={widgetPageY - 100}
-        />
-        <BottomScollListener
-          onBottom={this.handleLoadMoreComments}
-          offset={500}
-        />
+
       </div>
     )
   }
