@@ -69,7 +69,6 @@ class VotingContainerBase extends React.Component {
           artSettings[artErrors[1]] = true
           this.props.updateAppState("artSettings", artSettings)
         } else if (body.errors["comment"]) {
-          debugger
           var message = body.errors["comment"][1]
           var r = confirm(message);
 
