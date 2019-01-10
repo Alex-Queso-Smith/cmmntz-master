@@ -31,6 +31,9 @@ gem 'haml'
 # CRUD authorization via cancancan
 gem 'cancancan'
 
+# use useragent to detect information about the logged int user's devive
+gem 'useragent'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password

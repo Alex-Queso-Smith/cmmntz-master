@@ -2,16 +2,31 @@
   %tbody
     %tr
       %th User Name
-      %td #{@feedback.user.user_name}
+      %td #{@user.guest? ? "Guest" : @user.user_name}
     %tr
       %th Email
-      %td #{@feedback.user.email}
+      %td #{@user.guest? ? "Guest" : @user.email}
     %tr
       %th Type
       %td #{@feedback.type}
     %tr
       %th Category
       %td #{@feedback.category}
+    %tr
+      %th Browser
+      %td #{@feedback.browser}
+    %tr
+      %th Browser Version
+      %td #{@feedback.browser_version}
+    %tr
+      %th Platform
+      %td #{@feedback.platform}
+    %tr
+      %th OS
+      %td #{@feedback.os}
+    %tr
+      %th IP
+      %td #{@feedback.ip}
     %tr
       %th Feedback
       %td #{@feedback.text}

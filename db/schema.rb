@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_04_135350) do
+ActiveRecord::Schema.define(version: 2019_01_09_203646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -371,6 +371,14 @@ ActiveRecord::Schema.define(version: 2019_01_04_135350) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_article_views", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "article_id"
+    t.datetime "created_at"
+    t.index ["user_id", "article_id"], name: "index_user_article_views_on_user_id_and_article_id", unique: true
+    t.index ["user_id"], name: "index_user_article_views_on_user_id"
+  end
+
   create_table "user_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.string "type"
@@ -378,6 +386,11 @@ ActiveRecord::Schema.define(version: 2019_01_04_135350) do
     t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "browser"
+    t.string "browser_version"
+    t.string "platform"
+    t.string "os"
+    t.string "ip"
     t.index ["user_id"], name: "index_user_feedbacks_on_user_id"
   end
 
@@ -388,6 +401,16 @@ ActiveRecord::Schema.define(version: 2019_01_04_135350) do
     t.datetime "updated_at", null: false
     t.index ["gallery_id"], name: "index_user_gallery_moderators_on_gallery_id"
     t.index ["user_id"], name: "index_user_gallery_moderators_on_user_id"
+  end
+
+  create_table "user_video_clicks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.string "video_title"
+    t.datetime "created_at"
+    t.index ["created_at"], name: "index_user_video_clicks_on_created_at"
+    t.index ["user_id", "video_title"], name: "index_user_video_clicks_on_user_id_and_video_title", unique: true
+    t.index ["user_id"], name: "index_user_video_clicks_on_user_id"
+    t.index ["video_title"], name: "index_user_video_clicks_on_video_title"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -404,9 +427,20 @@ ActiveRecord::Schema.define(version: 2019_01_04_135350) do
     t.datetime "updated_at", null: false
     t.string "email"
     t.text "settings"
+    t.integer "login_count", default: 0, null: false
+    t.integer "failed_login_count", default: 0, null: false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string "current_login_ip"
+    t.string "last_login_ip"
     t.index ["age_range"], name: "index_users_on_age_range"
+    t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["gender"], name: "index_users_on_gender"
+    t.index ["last_login_at"], name: "index_users_on_last_login_at"
+    t.index ["last_request_at"], name: "index_users_on_last_request_at"
     t.index ["latitude", "longitude"], name: "index_users_on_latitude_and_longitude"
+    t.index ["login_count"], name: "index_users_on_login_count"
     t.index ["user_name"], name: "index_users_on_user_name", unique: true
   end
 

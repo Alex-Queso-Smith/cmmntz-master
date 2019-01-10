@@ -3,6 +3,7 @@ class FeedbackMailer < ApplicationMailer
 
   def email_team(feedback)
     @feedback = feedback
+    @user = @feedback.user
     from_email = "Beta#{@feedback.type}s@classibridge.com"
     mail(from: from_email, to: "betatest@classibridge.com", subject: "Classifilter: #{@feedback.type} report")
   end

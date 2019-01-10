@@ -7,6 +7,7 @@ import UserEditAccountContainer from './UserEditAccountContainer';
 import UserEditLooksContainer from './UserEditLooksContainer';
 import UserEditDemographicsContainer from './UserEditDemographicsContainer';
 import UserEditPasswordContainer from './UserEditPasswordContainer';
+import FeedbackFormContainer from '../FeedbackFormContainer';
 
 class UserEditContainer extends React.Component {
   constructor(props){
@@ -56,12 +57,15 @@ class UserEditContainer extends React.Component {
 
     return(
       <div id="user-edit-container">
-        <Link className="margin-left-10px" to={''} onClick={ () => { this.props.history.goBack() } }>Back to Articles</Link>
         <Tabs
           display={this.state.display}
           onClick={this.handleTabClick}
         />
         {page}
+        <hr />
+        <FeedbackFormContainer
+          userId={this.state.userId}
+        />
       </div>
     )
   }

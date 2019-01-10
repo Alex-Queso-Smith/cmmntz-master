@@ -11,6 +11,7 @@ import BasicModal from '../../components/modals/BasicModal';
 import PreSetFilters from '../../components/filters/PreSetFilters';
 import { presetOptions } from '../../components/filters/SortSelect';
 import { BugForm } from '../../components/form/BetaTesting';
+import TutorialVideo from '../../components/general/TutorialVideo';
 import FeedbackFormContainer from '../FeedbackFormContainer';
 
 class CommentingContainer extends React.Component {
@@ -56,6 +57,7 @@ class CommentingContainer extends React.Component {
     userText: "",
     feedbackCategory: "",
     feedbackType: "",
+    tutorialShow: false,
     feedbackErrors: {}
   }
 
@@ -624,7 +626,7 @@ class CommentingContainer extends React.Component {
     var bodyRect = document.body.getBoundingClientRect()
     var appRect = document.getElementById('cf-comments-app').getBoundingClientRect()
     var widgetPageY = appRect.top - bodyRect.top
-    // debugger
+
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
         {showVoteModal}
@@ -632,6 +634,7 @@ class CommentingContainer extends React.Component {
         <div />
 
         <div className="row">
+
           <div className="col-sm-12 col-md-6">
             <CommentFormContainer
               handleSubmit={this.handleCommentForm}
@@ -642,11 +645,18 @@ class CommentingContainer extends React.Component {
               loginStatement={loginStatement}
               />
           </div>
+
           <div className="d-none d-md-block col-md-6">
+
+            <div className="row justify-content-center margin-top-10px">
+              <TutorialVideo />
+            </div>
+
             <FeedbackFormContainer
               userId={this.props.userId}
             />
           </div>
+
         </div>
 
         <div>

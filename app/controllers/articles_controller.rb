@@ -14,6 +14,8 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.json
   def show
+    UserArticleView.create_for_user_and_article(current_user.id, @article.id)
+
     url = @article.url(request)
     @art = Art.find_or_create_for_url(url, "Customer Newspaper Site-Test", @article.topics, @article.publish_date, @article.author.name, "article")
   end

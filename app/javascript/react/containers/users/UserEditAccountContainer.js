@@ -136,6 +136,9 @@ class UserEditAccountContainer extends React.Component {
           </div>
 
           <div className="form-group actions">
+            <button className="btn btn-sm btn-dark float-left" onClick={ () => { this.props.history.goBack() } }>
+              Back
+            </button>
             <button id="user-registration-button" type="submit" className="btn float-right btn-sm btn-dark" value="Submit">
               Update
             </button>

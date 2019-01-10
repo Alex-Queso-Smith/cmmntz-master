@@ -32,6 +32,7 @@ class Ability
     can :crud, Blocking, { blocker_id: user.id } # can block other users
     can :create, GalleryBlacklisting
     can :create, UserFeedback, { user_id: user.id } # can crud own user_feedback
+    can :create, UserVideoClick, { user_id: user.id } # can crud own user_feedback
 
     # TODO: move this to admin app
     # this is only here until this feature gets moved to the admin app

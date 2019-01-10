@@ -1,3 +1,9 @@
+/* disable display of Whisper logout button */
+#wwwhisper-iframe {
+  display: none;
+}
+/* end */
+
 $grey: #D3D3D3;
 $grayline: #D3D3D3;
 
@@ -158,7 +164,6 @@ $breakpoint-phone: 575px;
         line-height: 1.5em;
         letter-spacing: -.2px;
         font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
-        text-align: justify;
       }
 
     }
@@ -195,7 +200,6 @@ $breakpoint-phone: 575px;
         height: 90%;
       }
     }
-
   }
 }
 .article-wrapper {
@@ -210,7 +214,6 @@ $breakpoint-phone: 575px;
     line-height: 1.5em;
     letter-spacing: -.2px;
     font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
-    text-align: justify;
 
     word-wrap: break-word;
   }
