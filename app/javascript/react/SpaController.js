@@ -4,15 +4,22 @@ import CfCommentsApp from './CfCommentsApp';
 import UserEditContainer from './containers/users/UserEditContainer';
 import SessionLoginContainer from './containers/sessions/SessionLoginContainer';
 import UserNewContainer from './containers/users/UserNewContainer';
+import { FetchDeleteBasic } from './util/CoreUtil';
 
 class SpaController extends React.Component {
   state = {
     display: "",
-    userId: document.getElementById('cf-comments-app').getAttribute('data-user-id')
+    userId: document.getElementById('cf-comments-app').getAttribute('data-user-id'),
+    themeSettings: {
+      font: document.getElementById('cf-comments-app').getAttribute('data-user-font'),
+      color: document.getElementById('cf-comments-app').getAttribute('data-user-theme')
+    }
   }
 
   updateDisplay = this.updateDisplay.bind(this);
   handleLogin = this.handleLogin.bind(this);
+  handleLogout = this.handleLogout.bind(this);
+  handleUpdateSpaId = this.handleUpdateSpaId.bind(this);
 
   updateDisplay(page){
     this.setState({ display: page })
@@ -21,6 +28,23 @@ class SpaController extends React.Component {
   handleLogin(userId){
     this.setState({
       userId: userId
+    })
+  }
+
+  handleUpdateSpaId(id){
+    this.setState({
+      userId: id,
+      themeSettings: {
+        font: "serif",
+        color: "light"
+      }
+    })
+  }
+
+  handleLogout(){
+    FetchDeleteBasic(this, `/api/v1/user_sessions/${this.state.userId}.json`)
+    .then(finished => {
+      this.handleUpdateSpaId(finished.user_id);
     })
   }
 
@@ -34,6 +58,8 @@ class SpaController extends React.Component {
           <CfCommentsApp
             updateDisplay={this.updateDisplay}
             userId={userId}
+            handleLogout={this.handleLogout}
+            themeSettings={this.state.themeSettings}
           />
         break;
       case "settings":
@@ -41,6 +67,7 @@ class SpaController extends React.Component {
           <UserEditContainer
             userId={userId}
             updateDisplay={this.updateDisplay}
+            updateSpaId={this.handleUpdateSpaId}
           />
         break;
       case "login":
@@ -62,6 +89,9 @@ class SpaController extends React.Component {
         page  =
           <CfCommentsApp
             updateDisplay={this.updateDisplay}
+            userId={userId}
+            handleLogout={this.handleLogout}
+            themeSettings={this.state.themeSettings}
           />
     }
     return(
