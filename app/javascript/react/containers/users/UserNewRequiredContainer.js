@@ -112,9 +112,11 @@ class UserNewRequiredContainer extends React.Component {
         />
 
         <div className="actions cf-margin-top-10px">
-          <button className="btn btn-sm btn-dark cf-float-left" onClick={ updateDisplayComments }>
-            Back
-          </button>
+          {
+            // <button className="btn btn-sm btn-dark cf-float-left" onClick={ updateDisplayComments }>
+            //   Back
+            // </button>
+          }
           <button className="btn btn-sm btn-dark cf-float-right" onClick={this.props.handleButtonClick} disabled={this.props.disabled}>
             Next Page
           </button>

@@ -4,11 +4,11 @@ import CfCommentsApp from './CfCommentsApp';
 import UserEditContainer from './containers/users/UserEditContainer';
 import SessionLoginContainer from './containers/sessions/SessionLoginContainer';
 import UserNewContainer from './containers/users/UserNewContainer';
-import { FetchDeleteBasic } from './util/CoreUtil';
+import { FetchDeleteBasic, FetchDidMount } from './util/CoreUtil';
 
 class SpaController extends React.Component {
   state = {
-    display: "",
+    display: "login",
     userId: document.getElementById('cf-comments-app').getAttribute('data-user-id'),
     themeSettings: {
       font: document.getElementById('cf-comments-app').getAttribute('data-user-font'),
@@ -20,6 +20,16 @@ class SpaController extends React.Component {
   handleLogin = this.handleLogin.bind(this);
   handleLogout = this.handleLogout.bind(this);
   handleUpdateSpaId = this.handleUpdateSpaId.bind(this);
+
+  componentDidMount(){
+    FetchDidMount(this, `/api/v1/users/${this.state.userId}.json`)
+    .then(userData => {
+      if (!userData.user.guest) {
+        this.setState({ display: "" })
+      }
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
 
   updateDisplay(page){
     this.setState({ display: page })
@@ -43,9 +53,12 @@ class SpaController extends React.Component {
 
   handleLogout(){
     FetchDeleteBasic(this, `/api/v1/user_sessions/${this.state.userId}.json`)
-    .then(finished => {
-      this.handleUpdateSpaId(finished.user_id);
-    })
+    .then(finished => this.updateDisplay("login"))
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+
+    // .then(finished => {
+    //   this.handleUpdateSpaId(finished.user_id);
+    // })
   }
 
   render(){

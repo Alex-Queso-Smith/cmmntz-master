@@ -107,9 +107,11 @@ class SessionLoginContainer extends React.Component {
             </button>
           </div>
         </form>
-        <button className="btn btn-sm btn-dark float-left" onClick={ changeDisplayComments }>
-          Back
-        </button>
+        {
+          // <button className="btn btn-sm btn-dark float-left" onClick={ changeDisplayComments }>
+          //   Back
+          // </button>
+        }
         <button className="btn btn-sm btn-dark float-right cf-margin-right-10px" onClick={ changeDisplayRegister }>
           Register
         </button>
