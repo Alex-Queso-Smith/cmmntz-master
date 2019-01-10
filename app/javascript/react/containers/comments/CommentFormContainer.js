@@ -2,7 +2,7 @@ import React from 'react'
 import Textarea from 'react-expanding-textarea'
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
-import Modal from '../../components/modals/Modal';
+import { ConfirmCancelModal } from '../../components/modals/ConfirmCancelModal';
 import PrivacyPolicy from '../../components/modals/PrivacyPolicy';
 import VoteButtonRowOne from '../../components/voting/VoteButtonRowOne';
 import { CreateErrorElements, CheckInputValidation, FetchWithUpdate } from '../../util/CoreUtil';
@@ -29,6 +29,7 @@ class CommentFormContainer extends React.Component {
   handleShowAnonModal = this.handleShowAnonModal.bind(this);
   handleCloseAnonModal = this.handleCloseAnonModal.bind(this);
   handleSelfVoteButtonClick = this.handleSelfVoteButtonClick.bind(this);
+  handleConfirmAnonModal = this.handleConfirmAnonModal.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (prevState.text != this.state.text) {
@@ -48,11 +49,7 @@ class CommentFormContainer extends React.Component {
     const name = target.name;
 
     if (name === 'anonymous' && !this.state.anonModalShown) {
-      this.setState({
-        [name]: value,
-        anonModalShow: true,
-        anonModalShown: true
-      })
+      this.handleShowAnonModal()
     } else {
       this.setState({ [name]: value })
     }
@@ -129,7 +126,17 @@ class CommentFormContainer extends React.Component {
   }
 
   handleCloseAnonModal(){
-    this.setState({ anonModalShow: false });
+    this.setState({
+      anonModalShow: false
+    });
+    document.body.classList.remove("cf-modal-locked");
+  }
+
+  handleConfirmAnonModal(){
+    this.setState({
+      anonModalShow: false,
+      anonymous: true
+    })
     document.body.classList.remove("cf-modal-locked");
   }
 
@@ -192,12 +199,13 @@ class CommentFormContainer extends React.Component {
 
     if (anonModalShow) {
       anonModal =
-      <Modal
-        handleClose={this.handleCloseAnonModal}
+      <ConfirmCancelModal
+        closeAction={this.handleCloseAnonModal}
+        confirmAction={this.handleConfirmAnonModal}
         modalTitle={'Do you wish to post anonymously?'}
       >
-      Please be aware that default settings are for Anonymous & Guest comments to be filtered out so the likelihood of this comment being read are greatly reduced.
-      </Modal>
+      Please be aware that default settings are for Anonymous & Guest comments to be filtered out so the likelihood of this comment being read are greatly reduced. Click 'OK' to post anonymously or Cancel to post as yourself.
+    </ConfirmCancelModal>
     }
     if (artSettings.disabled) {
       approvalMsg =
@@ -210,6 +218,7 @@ class CommentFormContainer extends React.Component {
       <Checkbox
         name="anonymous"
         onChange={this.handleChange}
+        checked={this.state.anonymous}
         label="Submit Anonymously"
         className=""
       />
