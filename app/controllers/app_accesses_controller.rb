@@ -13,8 +13,11 @@ class AppAccessesController < ApplicationController
       cookies['cf-super-secure-app-1'] = {value: "a", expires: expiration}
       cookies['cf-super-betatester-email'] = {value: @app_access.email, expires: expiration}
       flash[:notice] = "Login successful!"
+
+      output_log_stream("activity.user.app_access", @app_access.email, "status: successful")
       redirect_to root_url
     else
+      output_log_stream("activity.user.app_access", @app_access.email, "status: failed, errors: #{@app_access.errors.full_messages}")
       render :action => :new
     end
   end
@@ -22,6 +25,7 @@ class AppAccessesController < ApplicationController
   def destroy
     cookies.delete('cf-super-secure-app-1')
     cookies.delete('cf-super-betatester-email')
+    output_log_stream("activity.user.app_access", cookies['cf-super-betatester-email'], "status: deauthorized")
     redirect_to root_url
   end
 

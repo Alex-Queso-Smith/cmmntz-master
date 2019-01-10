@@ -17,16 +17,17 @@ class Api::V1::UserSessionsController < ApiController
     end
 
     if @user_session.save
-      puts "login good~~~~~~~~~~~~~"
+      output_log_stream("activity.user.login", cookies['cf-super-betatester-email'], "status: successful")
       render json: { message: "Logged in successfully" }
     else
-      puts "login BADDDDDD~~~~~~~~~~~~~#{@user_session.errors.full_messages}"
+      output_log_stream("activity.user.login", cookies['cf-super-betatester-email'], "status: failure")
       render json: { errors: @user_session.errors, status: :unprocessable_entity }
     end
   end
 
   def destroy
     current_user_session.destroy
+    output_log_stream("activity.user.logout", cookies['cf-super-betatester-email'])
     render json: { message: "Logged out successfully" }
   end
 

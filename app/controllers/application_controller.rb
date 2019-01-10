@@ -3,18 +3,39 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user_session, :current_user, :output_log_stream
   ALL_FILTERS = [:require_app_access, :require_user, :current_user, :current_user_session, :create_guest_unless_logged_in]
-  LOG_FILTERS= [:log_activity]
-  before_action *ALL_FILTERS, *LOG_FILTERS
+  BEFORE_LOG_FILTERS= [:before_log_activity]
+  AFTER_LOG_FILTERS= [:after_log_activity]
+  before_action *ALL_FILTERS, *BEFORE_LOG_FILTERS
+  after_action *AFTER_LOG_FILTERS
+
+
 
   private
-  def log_activity
+  def before_log_activity
     return unless cookies['cf-super-secure-app-1'] && cookies['cf-super-secure-app-1'] == "a"
 
     email = current_user.guest? ? cookies['cf-super-betatester-email'] : current_user.email
-    output_log_stream("activity.user.action", email)
+    output_log_stream("activity.user.action", email, "params: #{params}")
   end
 
-  def output_log_stream(log_type, email)
+  def after_log_activity
+    return unless cookies['cf-super-secure-app-1'] && cookies['cf-super-secure-app-1'] == "a"
+    # raise "#{response.inspect}"
+    email = current_user.guest? ? cookies['cf-super-betatester-email'] : current_user.email
+    xtra = ""
+    if request.format == "application/json"
+      xtra = "response_body: #{response.body}"
+    end
+
+    output_log_stream("activity.system.response", email, xtra)
+  end
+
+  def output_log_stream(log_type, email, extra_stuff = "")
+    if !extra_stuff.blank?
+      extra_stuff = ", " + extra_stuff
+    end
+
+
     puts "~~~~~~~~~~~~~~~~~~~~~~"
     puts "~~~~~~~~~~~~~~~~~~~~~~"
     puts "~~~~~~~~~~~~~~~~~~~~~~"
@@ -22,7 +43,7 @@ class ApplicationController < ActionController::Base
     puts "~~~~~~~~~~~~~~~~~~~~~~"
     puts "~~~~~~~~~~~~~~~~~~~~~~"
     puts "~~~~~~~~~~~~~~~~~~~~~~"
-    puts "#{log_type}: #{Time.now.utc.strftime("%Y-%m-%d %H:%M")}, email: #{email}, user_id: #{current_user.id}, ip: #{request.remote_ip}, controller: #{params[:controller]}, action: #{params[:action]}, object_id: #{params[:id]}, ua_string: #{request.user_agent}"
+    puts "#{log_type}: #{Time.now.utc.strftime("%Y-%m-%d %H:%M")}, email: #{email}, user_id: #{current_user.id}, ip: #{request.remote_ip}, controller: #{params[:controller]}, action: #{params[:action]}, object_id: #{params[:id]}, ua_string: #{request.user_agent}, request_type: #{request.format}#{extra_stuff}"
     puts "~~~~~~~~~~~~~~~~~~~~~~"
     puts "~~~~~~~~~~~~~~~~~~~~~~"
     puts "~~~~~~~~~~~~~~~~~~~~~~"
