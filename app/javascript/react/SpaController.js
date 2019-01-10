@@ -96,6 +96,7 @@ class SpaController extends React.Component {
           <UserNewContainer
             userId={userId}
             updateDisplay={this.updateDisplay}
+            handleUpdateSpaId={this.handleUpdateSpaId}
           />
         break;
       default:

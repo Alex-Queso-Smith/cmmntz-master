@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApiController
     @user = current_user
 
     if @user.save
-      render json: { message: "Created successfully" }
+      render json: { message: "Created successfully", user_id: @user.id }
     else
       render json: { errors: @user.errors, status: :unprocessable_entity }
     end

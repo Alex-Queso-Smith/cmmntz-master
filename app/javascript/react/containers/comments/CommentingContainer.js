@@ -83,8 +83,11 @@ class CommentingContainer extends React.Component {
   handleShowVoteModal = this.handleShowVoteModal.bind(this);
   handleShowFilterModal = this.handleShowFilterModal.bind(this);
   tempLogout = this.tempLogout.bind(this);
+  _isMounted = false;
 
   componentDidMount(){
+    this._isMounted = true;
+
     FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
     .then(artData => {
       this.setState({
@@ -99,6 +102,10 @@ class CommentingContainer extends React.Component {
 
           var newSortOpts = this.state.sortOpts;
           var { followed_users, blocked_users, admin, guest, user_name } = userData.user
+
+          if (guest) {
+            this.props.updateDisplay("login")
+          }
           var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, hide_anon_and_guest, set_from } = userData.user.sort_opts
           var censorComments = censor === "true" || censor == true ? true : false
 
@@ -119,20 +126,30 @@ class CommentingContainer extends React.Component {
           var newUserInfo = this.state.userInfo;
           newUserInfo.userName = user_name;
 
-          this.setState({
-            userSettings: newUserSettings,
-            userInfo: newUserInfo,
-            sortOpts: newSortOpts,
-            censor: censorComments,
-            blockedUsers: blocked_users,
-            followedUsers: followed_users
-           })
+          if (this._isMounted) {
+            this.setState({
+              userSettings: newUserSettings,
+              userInfo: newUserInfo,
+              sortOpts: newSortOpts,
+              censor: censorComments,
+              blockedUsers: blocked_users,
+              followedUsers: followed_users
+            })
+          }
         })
-        .then(finished => { this.handleFilterSubmit() })
+        .then(finished => {
+          if (this._isMounted) {
+            this.handleFilterSubmit() 
+          }
+        })
         .catch(error => console.error(`Error in fetch: ${error.message}`));
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
   }
 
   handleChange(event){

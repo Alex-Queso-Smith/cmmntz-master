@@ -62,7 +62,7 @@ class UserEditPasswordContainer extends React.Component {
       FetchDeleteBasic(this, `/api/v1/users/${this.props.userId}.json`)
       .then(finished => {
 
-        // this.props.updateSpaId(finished.user_id);
+        this.props.updateSpaId(finished.user_id);
         this.props.updateDisplay("login")
         }
       )
