@@ -21,6 +21,8 @@ class FeedbackFormContainer extends React.Component {
   cancelFeedbackForm = this.cancelFeedbackForm.bind(this);
 
   handleChange(event){
+    event.preventDefault();
+
     this.setState({ [event.target.name]: event.target.value })
   }
 
@@ -71,9 +73,7 @@ class FeedbackFormContainer extends React.Component {
           userBugForm: false,
           userText: "",
           feedbackCategory: "",
-          feedbackType: "",
-          userFirstName: "",
-          userLastName: ""
+          feedbackType: ""
         })
         setTimeout(function() {alert(feedbackData.message), 1})
       }
