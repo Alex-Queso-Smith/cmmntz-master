@@ -2,16 +2,14 @@ class ApplicationController < ActionController::Base
   # include ControllerIncludes::CurrentUser # methods regarding current_user
 
   helper_method :current_user_session, :current_user
-  ALL_FILTERS = [:require_app_access, :require_user, :current_user, :current_user_session, :create_guest_unless_logged_in, :log_activity]
-  before_action *ALL_FILTERS
+  ALL_FILTERS = [:require_app_access, :require_user, :current_user, :current_user_session, :create_guest_unless_logged_in]
+  LOG_FILTERS= [:log_activity]
+  before_action *ALL_FILTERS, *LOG_FILTERS
 
   private
   def log_activity
-    unless cookies['cf-super-secure-app-1'] && cookies['cf-super-secure-app-1'] == "a"
-      puts "~~~~~~~~~~~~~~~~~~~~~~"
-      puts "activity.user.action: #{cookies['cf-super-betatester-email']} #{params[:controller]},#{params[:action]}}"
-      puts "~~~~~~~~~~~~~~~~~~~~~~"
-    end
+    return unless cookies['cf-super-secure-app-1'] && cookies['cf-super-secure-app-1'] == "a"
+    puts "activity.user.action: #{Time.now.utc.strftime("%Y-%m-%d %H:%M")} ,#{cookies['cf-super-betatester-email']}, #{request.remote_ip}, #{params[:controller]},#{params[:action]}}"
   end
 
   def create_guest_unless_logged_in

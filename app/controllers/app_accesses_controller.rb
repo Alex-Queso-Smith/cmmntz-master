@@ -28,6 +28,6 @@ class AppAccessesController < ApplicationController
   private
 
   def app_access_params
-    params.require(:app_access).permit(:password)
+    params.require(:app_access).permit(:email, :password)
   end
 end
