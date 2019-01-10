@@ -32,7 +32,7 @@ export const AgeSlider = props => {
         {ageImage}
         Age Range: {ageRange}
       </label>
-      <input onChange={props.onChange} type="range" min="10" max="75" step="5" value={selectedRange} name={props.name} className="slider" id="age-range-slider" />
+      <input autoFocus={props.focus} onChange={props.onChange} type="range" min="10" max="75" step="5" value={selectedRange} name={props.name} className="slider" id="age-range-slider" />
     </div>
 
   )
@@ -102,10 +102,11 @@ const GenderButton = props => {
 };
 
 export const Input = props => {
+
   return(
     <div className="form-group">
       <label className="cf-text-medium" htmlFor={props.name}>{props.label}</label>
-      <input className={`form-control cf-margin-top-10px ${props.addClass}`} type={props.type} name={props.name} value={props.content} onChange={props.onChange}></input>
+      <input autoFocus={props.focus} className={`form-control cf-margin-top-10px ${props.addClass}`} type={props.type} name={props.name} value={props.content} onChange={props.onChange}></input>
     </div>
   );
 };

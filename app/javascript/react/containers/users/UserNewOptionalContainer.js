@@ -40,6 +40,7 @@ class UserNewOptionalContainer extends React.Component {
           label="Age Range"
           onChange={this.props.handleSliderChange}
           value={this.props.ageRange}
+          focus={true}
         />
         <Checkbox
           name="ageRangeAnon"

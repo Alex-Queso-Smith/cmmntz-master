@@ -71,6 +71,7 @@ class UserNewRequiredContainer extends React.Component {
           content={this.props.userName}
           type="text"
           addClass={userNameClass}
+          focus={true}
         />
         {this.props.userNameError}
         <Input
