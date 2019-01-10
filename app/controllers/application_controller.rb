@@ -14,14 +14,14 @@ class ApplicationController < ActionController::Base
   def before_log_activity
     return unless cookies['cf-super-secure-app-1'] && cookies['cf-super-secure-app-1'] == "a"
 
-    email = current_user.guest? ? cookies['cf-super-betatester-email'] : current_user.email
+    email = cookies['cf-super-betatester-email']
     output_log_stream("activity.user.action", email, "params: #{params}")
   end
 
   def after_log_activity
     return unless cookies['cf-super-secure-app-1'] && cookies['cf-super-secure-app-1'] == "a"
     # raise "#{response.inspect}"
-    email = current_user.guest? ? cookies['cf-super-betatester-email'] : current_user.email
+    email = cookies['cf-super-betatester-email']
     xtra = ""
     if request.format == "application/json"
       xtra = "response_body: #{response.body}"
@@ -102,4 +102,28 @@ class ApplicationController < ActionController::Base
       return false
     end
   end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    output_log_stream("action.user.access", cookies['cf-super-betatester-email'], "status: not_authorized")
+    respond_to do |format|
+      format.json { head :forbidden }
+      format.html { render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false }
+    end
+  end if Rails.env.production?
+
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    output_log_stream("action.user.access", cookies['cf-super-betatester-email'], "status: resource_does_not_exist")
+    respond_to do |format|
+      format.json { head :not_found }
+      format.html { render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false }
+    end
+  end if Rails.env.production?
+
+  rescue_from Exception do |exception|
+    output_log_stream("action.user.access", cookies['cf-super-betatester-email'], "exception: #{exception.inspect}")
+    respond_to do |format|
+      format.json { head :status => 500 }
+      format.html { render :file => "#{Rails.root}/public/500.html", :status => 500, :layout => false }
+    end
+  end if Rails.env.production?
 end

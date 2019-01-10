@@ -14,10 +14,12 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.json
   def show
+    raise "fake exception"
     UserArticleView.create_for_user_and_article(current_user.id, @article.id)
 
     url = @article.url(request)
     @art = Art.find_or_create_for_url(url, "Customer Newspaper Site-Test", @article.topics, @article.publish_date, @article.author.name, "article")
+    output_log_stream("activity.user.art_view", cookies['cf-super-betatester-email'], "art: #{@art.url}")
   end
 
   private
