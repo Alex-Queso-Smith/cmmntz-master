@@ -6,7 +6,7 @@ import { Input } from './FormComponents';
 
 export const BugForm = (props)  => {
   const selectStyle = {
-    width: "65%"
+    width: "52%"
   }
 
   var buttons;
@@ -52,6 +52,26 @@ export const BugForm = (props)  => {
   return(
     <form  className="cf-user-feedback-form" onSubmit={ props.feedbackFormSubmit }>
       <div className="form-inline">
+        <Input
+          name="userFirstName"
+          label="First Name"
+          onChange={props.onChange}
+          content={props.firstName}
+          type="text"
+          addClass="margin-left-10px"
+          />
+        {fNmError}
+        <Input
+          name="userLastName"
+          label="Last Name"
+          onChange={props.onChange}
+          content={props.lastName}
+          type="text"
+          addClass="margin-left-12px"
+          />
+        {lNmError}
+      </div>
+      <div className="form-inline margin-top-10px margin-left-12px">
         <label htmlFor="feedbackCategory" className="text-medium margin-right-10px">Category</label>
         <select style={selectStyle} className="form-control" name="feedbackCategory" value={props.feedbackCategory} onChange={props.onChange}>
           <option />
@@ -83,28 +103,6 @@ export const BugForm = (props)  => {
           rows={7}
         />
       {tError}
-      <div className="form-inline">
-        <Input
-          name="userFirstName"
-          label="First Name "
-          onChange={props.onChange}
-          content={props.firstName}
-          type="text"
-          addClass="margin-left-10px"
-          />
-      </div>
-      {fNmError}
-      <div className="form-inline">
-        <Input
-          name="userLastName"
-          label="Last Name "
-          onChange={props.onChange}
-          content={props.lastName}
-          type="text"
-          addClass="margin-left-10px"
-          />
-      </div>
-      {lNmError}
       <input type="hidden" name="feedbackType" value={props.type} />
       {buttons}
     </form>
