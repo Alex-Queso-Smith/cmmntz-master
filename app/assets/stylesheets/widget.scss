@@ -384,9 +384,10 @@ a:hover {
 
 .cf-login-statement {
   line-height: 2em;
-  text-align: top;
   padding-left: 25px !important;
   font-size: 1.5em;
+  font-weight: bold;
+  color: #800080 !important;
 }
 
 @media (max-width: $breakpoint-phone) {
