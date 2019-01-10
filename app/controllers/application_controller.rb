@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # include ControllerIncludes::CurrentUser # methods regarding current_user
 
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user, :output_log_stream
   ALL_FILTERS = [:require_app_access, :require_user, :current_user, :current_user_session, :create_guest_unless_logged_in]
   LOG_FILTERS= [:log_activity]
   before_action *ALL_FILTERS, *LOG_FILTERS
@@ -9,7 +9,27 @@ class ApplicationController < ActionController::Base
   private
   def log_activity
     return unless cookies['cf-super-secure-app-1'] && cookies['cf-super-secure-app-1'] == "a"
-    puts "activity.user.action: #{Time.now.utc.strftime("%Y-%m-%d %H:%M")} ,#{cookies['cf-super-betatester-email']}, #{request.remote_ip}, #{params[:controller]},#{params[:action]}}"
+
+    email = current_user.guest? ? cookies['cf-super-betatester-email'] : current_user.email
+    output_log_stream("activity.user.action", email)
+  end
+
+  def output_log_stream(log_type, email)
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "#{log_type}: #{Time.now.utc.strftime("%Y-%m-%d %H:%M")}, email: #{email}, user_id: #{current_user.id}, ip: #{request.remote_ip}, controller: #{params[:controller]}, action: #{params[:action]}, object_id: #{params[:id]}, ua_string: #{request.user_agent}"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
   end
 
   def create_guest_unless_logged_in
