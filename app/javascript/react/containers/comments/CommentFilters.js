@@ -40,6 +40,9 @@ class CommentFilters extends React.Component {
         <div id="advanced-filters">
           <GeoSelect
             parentSetLatLongClick={this.props.parentSetLatLongClick}
+            radius={radius}
+            userLat={this.props.userInfo.latitude}
+            userLong={this.props.userInfo.longitude}
             />
         </div>
 

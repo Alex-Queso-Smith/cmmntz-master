@@ -1,7 +1,7 @@
 import React from 'react'
 class GeoSelect extends React.Component {
   state = {
-    radius: '',
+    radius: this.props.radius,
     latitude: '',
     longitude: '',
     x: '',
