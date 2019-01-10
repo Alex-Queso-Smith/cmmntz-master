@@ -17,14 +17,14 @@ export const BugForm = (props)  => {
         <button className="btn btn-sm btn-dark float-left margin-top-10px" onClick={ props.cancelFeedbackForm }>Cancel</button>
       </div>
       <div className="col-6">
-        <button className="btn btn-sm btn-dark float-right margin-top-10px" type="submit" value="Submit" >Submit</button>
+        <button className="btn btn-sm btn-dark float-right margin-top-10px" onClick={ props.feedbackFormSubmit } >Submit</button>
       </div>
     </div>
   } else {
     buttons =
     <div className="row">
       <div className="col-6">
-        <button className="btn btn-sm btn-dark float-right margin-top-10px" type="submit" value="Submit" >Submit</button>
+        <button className="btn btn-sm btn-dark float-right margin-top-10px" onClick={ props.feedbackFormSubmit } >Submit</button>
       </div>
     </div>
   }
@@ -50,7 +50,7 @@ export const BugForm = (props)  => {
   }
 
   return(
-    <form  className="cf-user-feedback-form" onSubmit={ props.feedbackFormSubmit }>
+    <div  className="cf-user-feedback-form" >
       <div className="form-inline">
         <Input
           name="userFirstName"
@@ -105,6 +105,6 @@ export const BugForm = (props)  => {
       {tError}
       <input type="hidden" name="feedbackType" value={props.type} />
       {buttons}
-    </form>
+    </div>
   )
 }

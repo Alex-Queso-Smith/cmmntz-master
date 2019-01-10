@@ -238,11 +238,15 @@ class CommentingContainer extends React.Component {
         if (body.comment.approved) {
           var newComments = this.state.comments
           newComments.unshift(body.comment)
-          var totalComments = this.state.totalComments
+          var newGrand = this.state.grandTotalComments;
+          newGrand++;
+          var newTotal = this.state.totalComments;
+          newTotal++
 
           this.setState({
             comments: newComments,
-            totalComments: totalComments++
+            grandTotalComments: newGrand,
+            totalComments: newTotal
           })
         }
 
