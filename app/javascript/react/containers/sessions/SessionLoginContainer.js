@@ -84,7 +84,6 @@ class SessionLoginContainer extends React.Component {
             content={this.userName}
             type="text"
             addClass={userNameClass}
-            focus={true}
           />
           {userNameError}
           <Input
