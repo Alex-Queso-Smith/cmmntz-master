@@ -9,7 +9,9 @@ class AppAccessesController < ApplicationController
     @app_access = AppAccess.new(app_access_params)
     if @app_access.valid?
       # set cookie
-      cookies['cf-super-secure-app'] = "a"
+      expiration = Time.now + 1.year
+      cookies['cf-super-secure-app-1'] = {value: "a", expires: expiration}
+      cookies['cf-super-betatester-email'] = {value: @app_access.email, expires: expiration}
       flash[:notice] = "Login successful!"
       redirect_to root_url
     else
@@ -18,7 +20,8 @@ class AppAccessesController < ApplicationController
   end
 
   def destroy
-    cookies.delete('cf-super-secure-app')
+    cookies.delete('cf-super-secure-app-1')
+    cookies.delete('cf-super-betatester-email')
     redirect_to root_url
   end
 

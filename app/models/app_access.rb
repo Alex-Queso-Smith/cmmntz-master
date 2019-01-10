@@ -1,7 +1,8 @@
 class AppAccess < Tableless
   attribute :password, :string
+  attribute :email, :string
 
-  validates :password, presence: true
+  validates :password, :email, presence: true
   validate :password_is_correct?, unless: Proc.new { |a| a.password.blank? }
 
   private

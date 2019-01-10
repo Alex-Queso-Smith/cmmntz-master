@@ -1,6 +1,9 @@
 %table
   %tbody
     %tr
+      %th User ID
+      %td #{@user.guest? ? "Guest" : @user.id}
+    %tr
       %th User Name
       %td #{@user.guest? ? "Guest" : @user.user_name}
     %tr
