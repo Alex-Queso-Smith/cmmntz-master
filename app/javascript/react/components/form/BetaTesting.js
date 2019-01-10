@@ -39,6 +39,16 @@ export const BugForm = (props)  => {
     tError = props.textError
   }
 
+  var fNmError;
+  if (props.firstNameError) {
+    fNmError = props.firstNameError
+  }
+
+  var lNmError;
+  if (props.lastNameError) {
+    lNmError = props.lastNameError
+  }
+
   return(
     <form  className="cf-user-feedback-form" onSubmit={ props.feedbackFormSubmit }>
       <div className="form-inline">
@@ -73,6 +83,28 @@ export const BugForm = (props)  => {
           rows={7}
         />
       {tError}
+      <div className="form-inline">
+        <Input
+          name="userFirstName"
+          label="First Name "
+          onChange={props.onChange}
+          content={props.firstName}
+          type="text"
+          addClass="margin-left-10px"
+          />
+      </div>
+      {fNmError}
+      <div className="form-inline">
+        <Input
+          name="userLastName"
+          label="Last Name "
+          onChange={props.onChange}
+          content={props.lastName}
+          type="text"
+          addClass="margin-left-10px"
+          />
+      </div>
+      {lNmError}
       <input type="hidden" name="feedbackType" value={props.type} />
       {buttons}
     </form>

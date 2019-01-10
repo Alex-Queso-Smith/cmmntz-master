@@ -1,7 +1,7 @@
 class UserFeedback < ApplicationRecord
   belongs_to :user
 
-  validates :type, :category, :text, presence: true
+  validates :type, :category, :first_name, :last_name, :text, presence: true
 
   after_create :email_team#, :email_user
 

@@ -10,6 +10,8 @@ class FeedbackFormContainer extends React.Component {
     userText: "",
     feedbackCategory: "",
     feedbackType: "",
+    userFirstName: "",
+    userLastName: "",
     feedbackErrors: {}
   }
 
@@ -45,7 +47,7 @@ class FeedbackFormContainer extends React.Component {
   feedbackFormSubmit(event){
     event.preventDefault();
 
-    var { userText, feedbackCategory, feedbackType } = this.state;
+    var { userText, feedbackCategory, feedbackType, userFirstName, userLastName } = this.state;
 
     var newFeedback = new FormData();
 
@@ -53,6 +55,8 @@ class FeedbackFormContainer extends React.Component {
     newFeedback.append("user_feedback[category]", feedbackCategory)
     newFeedback.append("user_feedback[user_id]", this.props.userId)
     newFeedback.append("user_feedback[type]", feedbackType)
+    newFeedback.append("user_feedback[first_name]", userFirstName)
+    newFeedback.append("user_feedback[last_name]", userLastName)
 
     FetchBasic(this, '/api/v1/user_feedbacks.json', newFeedback, 'POST')
     .then(feedbackData => {
@@ -67,7 +71,9 @@ class FeedbackFormContainer extends React.Component {
           userBugForm: false,
           userText: "",
           feedbackCategory: "",
-          feedbackType: ""
+          feedbackType: "",
+          userFirstName: "",
+          userLastName: ""
         })
         setTimeout(function() {alert(feedbackData.message), 1})
       }
@@ -106,6 +112,16 @@ class FeedbackFormContainer extends React.Component {
       textError = CreateErrorElements(feedbackErrors.text, "Text area")
     }
 
+    var firstNameError;
+    if (feedbackErrors.first_name) {
+      firstNameError = CreateErrorElements(feedbackErrors.first_name, "First Name")
+    }
+
+    var lastNameError;
+    if (feedbackErrors.last_name) {
+      lastNameError = CreateErrorElements(feedbackErrors.last_name, "Last Name")
+    }
+
     var userFeedbackForm;
 
     if (this.state.userFeedbackForm) {
@@ -115,11 +131,15 @@ class FeedbackFormContainer extends React.Component {
         type="feedback"
         textError={textError}
         categoryError={categoryError}
+        firstNameError={firstNameError}
+        lastNameError={lastNameError}
         placeholder={"Provide your feedback here. Thank you!"}
         feedbackFormSubmit={this.feedbackFormSubmit}
         feedbackCategory={this.state.feedbackCategory}
         onChange={this.handleChange}
         text={this.state.userText}
+        firstName={this.state.userFirstName}
+        lastName={this.state.userLastName}
         cancelFeedbackForm={this.cancelFeedbackForm}
       />
     } else if (this.state.userBugForm) {
@@ -129,11 +149,15 @@ class FeedbackFormContainer extends React.Component {
         type="bug"
         textError={textError}
         categoryError={categoryError}
+        firstNameError={firstNameError}
+        lastNameError={lastNameError}
         placeholder={"Please describe bug with context of how it occurred. Thank you!"}
         feedbackFormSubmit={this.feedbackFormSubmit}
         feedbackCategory={this.state.feedbackCategory}
         onChange={this.handleChange}
         text={this.state.userText}
+        firstName={this.state.userFirstName}
+        lastName={this.state.userLastName}
         cancelFeedbackForm={this.cancelFeedbackForm}
       />
     }

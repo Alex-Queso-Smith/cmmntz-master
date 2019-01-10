@@ -12,6 +12,7 @@ class Api::V1::UserFeedbacksController < ApiController
     @user_feedback.platform= user_agent.platform
     @user_feedback.os= user_agent.os
     @user_feedback.ip= request.remote_ip
+    @user_feedback.email= current_user.guest? ? cookies['cf-super-betatester-email'] : curent_user.email
 
     if @user_feedback.save
       render json: { message: "Thank You for your feedback!" }
@@ -23,6 +24,6 @@ class Api::V1::UserFeedbacksController < ApiController
   private
 
   def user_feedback_params
-    params.require(:user_feedback).permit(:user_id, :type, :category, :text)
+    params.require(:user_feedback).permit(:user_id, :type, :category, :text, :first_name, :last_name)
   end
 end

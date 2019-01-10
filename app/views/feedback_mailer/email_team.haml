@@ -8,7 +8,13 @@
       %td #{@user.guest? ? "Guest" : @user.user_name}
     %tr
       %th Email
-      %td #{@user.guest? ? "Guest" : @user.email}
+      %td #{@feedback.email}
+    %tr
+      %th First Name
+      %td #{@feedback.first_name}
+    %tr
+      %th Last_name
+      %td #{@feedback.last_name}
     %tr
       %th Type
       %td #{@feedback.type}

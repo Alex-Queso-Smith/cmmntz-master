@@ -10,11 +10,11 @@ class FeedbackMailer < ApplicationMailer
 
   def email_user_bug(feedback)
     @feedback = feedback
-    mail(to: feedback.user.email, subject: "Thanks From Classibridge - BUG")
+    mail(to: feedback.email, subject: "Thanks From Classibridge - BUG")
   end
 
   def email_user_feedback(feedback)
     @feedback = feedback
-    mail(to: feedback.user.email, subject: "Thanks From Classibridge - FEEDBACK")
+    mail(to: feedback.email, subject: "Thanks From Classibridge - FEEDBACK")
   end
 end
