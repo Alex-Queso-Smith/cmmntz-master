@@ -19,12 +19,15 @@ class UserEditLooksContainer extends React.Component {
 
     FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
     .then(body => {
+
       var user = body.user
 
+      var userFont = user.font.replace("cf-", '')
+      var userTheme = user.color_theme.replace("cf-", '')
       if (this._isMounted) {
         this.setState({
-          font: user.font,
-          colorTheme: user.color_theme
+          font: userFont,
+          colorTheme: userTheme
         })
       }
     })
@@ -37,7 +40,6 @@ class UserEditLooksContainer extends React.Component {
 
   handleChange(event){
     event.preventDefault();
-
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -78,11 +80,11 @@ class UserEditLooksContainer extends React.Component {
             />
 
           <div className="form-group actions">
-            <button className="btn btn-sm btn-dark cf-float-left cf-margin-top-10px" onClick={ () => { this.props.history.goBack() } }>
-              Back
-            </button>
             <button id="cf-user-edit-looks-button" type="submit" className="btn btn-sm btn-dark cf-float-right cf-margin-top-10px" value="Submit">
               Update
+            </button>
+            <button className="btn btn-sm btn-dark cf-float-left cf-margin-top-10px" onClick={ this.props.updateDisplay }>
+              Back
             </button>
           </div>
         </form>

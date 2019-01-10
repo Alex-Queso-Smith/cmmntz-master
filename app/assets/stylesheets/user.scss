@@ -1,8 +1,9 @@
 $breakpoint-phone: 575px;
+$grayline: #D3D3D3;
 
 #cf-user-registration-form {
-  margin: 60px auto;
-  border: 1px solid grey;
+  margin: 20px auto;
+  // border: 1px solid grey;
   padding: 30px;
   border-radius: 20px;
   width: 500px;
@@ -19,8 +20,8 @@ $breakpoint-phone: 575px;
 }
 
 #cf-user-login-container {
-  margin: 60px auto;
-  border: 1px solid grey;
+  margin: 20px auto;
+  // border: 1px solid grey;
   padding: 30px;
   border-radius: 20px;
   width: 500px;
@@ -43,12 +44,13 @@ $breakpoint-phone: 575px;
 
 #cf-user-edit-container {
   margin: auto;
+  margin-top: 10px;
   width: 600px;
   padding-bottom: 10px;
   background: rgba(255, 255, 255, 1 );
   border-radius: 5px;
   color: #000000;
-  border: 1px solid grey;
+  // border: 1px solid $grayline;
 }
 
 @media (max-width: $breakpoint-phone) {

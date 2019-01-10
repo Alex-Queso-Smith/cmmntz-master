@@ -108,9 +108,10 @@ class UserEditSettingsContainer extends React.Component {
   handleRevertSettings(event){
     const target = event.target;
     const name = target.name;
+    const value = target.checked;
 
     this.setState({
-      useGalleryDefault: !this.state.useGalleryDefault,
+      useGalleryDefault: value,
       sortOpts: {
         sortDir: 'desc',
         sortType: 'created_at',
@@ -280,11 +281,11 @@ class UserEditSettingsContainer extends React.Component {
           checked={this.state.showCensoredComments}
         />
         <div className="cf-margin-top-10px cf-text-center">
-          <button className="btn btn-sm btn-dark cf-float-left" onClick={ () => { this.props.history.goBack() } }>
-            Back
-          </button>
           <button className="btn btn-sm cf-float-right btn-dark" onClick={this.handleSubmit}>
             Update
+          </button>
+          <button className="btn btn-sm btn-dark cf-float-left" onClick={ this.props.updateDisplay }>
+            Back
           </button>
         </div>
       </div>

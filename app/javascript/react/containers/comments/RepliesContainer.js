@@ -150,7 +150,7 @@ class RepliesContainer extends React.Component {
           commentReplies.unshift(body.comment)
           this.setState({ replies: commentReplies })
         }
-        
+
         this.handleSuccessfulReply()
       }
     })

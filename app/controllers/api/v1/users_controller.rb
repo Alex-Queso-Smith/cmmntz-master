@@ -32,7 +32,13 @@ class Api::V1::UsersController < ApiController
 
   # DELETE /users/1.json
   def destroy
-    render json: { message: "Destroy successfull" } if @user.destroy
+    guest = User.create_guest_account
+    guest.reset_persistence_token!
+    @current_user_session = UserSession.create(guest)
+    @current_user = @current_user_session && @current_user_session.user
+
+    output_log_stream("activity.user.logout", cookies['cf-super-betatester-email'])
+    render json: { message: "Destroy successfull", user_id: @current_user.id } if @user.destroy
   end
 
   private

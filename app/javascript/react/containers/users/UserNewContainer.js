@@ -182,12 +182,12 @@ class UserNewContainer extends React.Component {
         newUser.append("user[gender]", gender);
         newUser.append("user[base_image]", avatar)
 
-        FetchWithPush(this, '/api/v1/users.json', '/', 'POST', 'registrationErrors', newUser)
+        FetchWithPush(this, '/api/v1/users.json', '', 'POST', 'registrationErrors', newUser)
         .then(body =>{
           if (body.errors) {
             this.setState({currentPage: 1})
           } else {
-            this.props.history.goBack()
+            this.props.updateDisplay("")
           }
         })
         .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -257,6 +257,7 @@ class UserNewContainer extends React.Component {
           onChange={this.handleChange}
           userName={this.state.userName}
           password={this.state.password}
+          privacyPolicy={this.state.privacyPolicy}
           passwordConfirmation={this.state.passwordConfirmation}
           email={this.state.email}
           handleButtonClick={this.handleNextClick}
@@ -266,6 +267,7 @@ class UserNewContainer extends React.Component {
           userNameError={userNameError}
           passwordError={passwordError}
           passwordConfirmationError={passwordConfirmationError}
+          updateDisplay={this.props.updateDisplay}
         />
         break;
       case 2:
@@ -316,16 +318,14 @@ class UserNewContainer extends React.Component {
       </Modal>
     }
 
+    var changeDisplayLogin = () => {
+      this.props.updateDisplay("login")
+    }
+
     return(
       <div className="login-container">
         <form className="form" id="cf-user-registration-form" onSubmit={this.handleSubmit} >
-          <div className="row">
-            <div className="col-3">
-              <button className="btn btn-sm cf-fade-button" onClick={ () => window.location = "/login" }>Login</button>
-            </div>
-          </div>
           <h5 className="cf-user-title cf-text-center">User Registration</h5>
-
           {page}
           {anonWarningModal}
           {anonSubmissionModal}

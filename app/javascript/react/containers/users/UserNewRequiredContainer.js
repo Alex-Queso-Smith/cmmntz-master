@@ -43,9 +43,17 @@ class UserNewRequiredContainer extends React.Component {
             Our servers and data reside in the United States but all users worldwide have the right to contact us via our Contact Us page to request that their personal data is modified or deleted, although, as stated earlier, our systems are configured to not store any PII.
           </li>
         </ol>
-
       </div>
     }
+
+    var updateDisplayComments = () => {
+      this.props.updateDisplay("")
+    }
+
+    var updateDisplayLogin = () => {
+      this.props.updateDisplay("login")
+    }
+
     return(
       <div id="reg-required" className="form-group">
         <h6 className="cf-text-center">Sign-Up Required Information</h6>
@@ -92,17 +100,20 @@ class UserNewRequiredContainer extends React.Component {
           name="privacyPolicy"
           onChange={this.props.onChange}
           label="I agree to the privacy policy"
+          checked={this.props.privacyPolicy}
         />
 
-        <div className="row actions cf-margin-top-10px cf-text-center">
-          <div className="col-12">
-            <div className="cf-float-right">
-              <button id="user-registration-button-next" className="btn btn-sm btn-dark" onClick={this.props.handleButtonClick} disabled={this.props.disabled}>
-                Next Page
-              </button>
-            </div>
-          </div>
-        </div>
+        <div className="actions cf-margin-top-10px">
+          <button className="btn btn-sm btn-dark cf-float-left" onClick={ updateDisplayComments }>
+            Back
+          </button>
+          <button className="btn btn-sm btn-dark cf-float-right" onClick={this.props.handleButtonClick} disabled={this.props.disabled}>
+            Next Page
+          </button>
+          <button className="btn btn-sm btn-dark cf-float-right cf-margin-right-10px" onClick={ updateDisplayLogin }>
+            Login
+          </button>
+      </div>
       </div>
     )
   }

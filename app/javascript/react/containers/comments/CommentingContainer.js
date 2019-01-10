@@ -595,30 +595,44 @@ class CommentingContainer extends React.Component {
 
     var loginStatement;
     if (this.state.userSettings.guest) {
+      var changeDisplayLogin = () => {
+        this.props.updateDisplay("login")
+      }
+
+      var changeDisplayRegister = () => {
+        this.props.updateDisplay("register")
+      }
+
       loginStatement =
       <div className="cf-login-statement-container row">
         <div className="col-6 cf-login-statement">
           Guest
         </div>
         <div className="col-3">
-          <button className="btn btn-sm cf-fade-button" onClick={ () => window.location = "/login" }>Login</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayLogin }>Login</button>
         </div>
         <div className="col-3">
-          <button className="btn btn-sm cf-fade-button" onClick={ () => window.location = "/register" }>Register</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayRegister }>Register</button>
         </div>
       </div>
     } else {
-      var edit_url = `/users/${this.props.userId}/edit_settings`
+
+      var changeDisplaySettings = () => {
+        this.props.updateDisplay("settings")
+      }
+
+      var edit_url = `/users/${this.props.userId}/edit_settings`;
+
       loginStatement =
       <div className="cf-login-statement-container row">
         <div className="col-6 cf-login-statement">
           {this.state.userInfo.userName}
         </div>
         <div className="col-3">
-          <button className="btn btn-sm cf-fade-button" onClick={ () => window.location = edit_url }>Settings</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ changeDisplaySettings }>Settings</button>
         </div>
         <div className="col-3">
-          <button className="btn btn-sm cf-fade-button" onClick={ () => window.location = "/logout" }>Logout</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ this.props.handleLogout }>Logout</button>
         </div>
       </div>
     }

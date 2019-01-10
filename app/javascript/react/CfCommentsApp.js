@@ -8,14 +8,9 @@ class CfCommentsApp extends React.Component {
     super(props);
     this.state = {
       commentRoot: document.getElementById('cf-comments-app'),
-      userId: document.getElementById('cf-comments-app').getAttribute('data-user-id'),
       artType: document.getElementById('cf-comments-app').getAttribute('data-art-type'),
       artId: document.getElementById('cf-comments-app').getAttribute('data-art-id'),
       galleryId: document.getElementById('cf-comments-app').getAttribute('data-gallery-id'),
-      themeSettings: {
-        font: document.getElementById('cf-comments-app').getAttribute('data-user-font'),
-        color: document.getElementById('cf-comments-app').getAttribute('data-user-theme'),
-      },
       artSettings: {
         disabled: false,
         deactivated: false,
@@ -52,7 +47,9 @@ class CfCommentsApp extends React.Component {
   }
 
   render(){
-    var { commentRoot, userId, artType, artId, artSettings, gallerySettings, userSettings, galleryId } = this.state;
+    var { commentRoot, artType, artId, artSettings, gallerySettings, userSettings, galleryId } = this.state;
+    var { userId } = this.props;
+
     var displayContainer;
 
     if (artSettings.userBlacklisted) {
@@ -73,6 +70,8 @@ class CfCommentsApp extends React.Component {
         updateAppState={this.handleAppSetState}
         gallerySettings={gallerySettings}
         banUser={this.banUser}
+        updateDisplay={this.props.updateDisplay}
+        handleLogout={this.props.handleLogout}
         />
     } else {
       var msg = "This thread has been deactivated by the site Admins."
@@ -86,7 +85,7 @@ class CfCommentsApp extends React.Component {
       </div>
     }
 
-    var {font, color} = this.state.themeSettings;
+    var {font, color} = this.props.themeSettings;
     font = !font ? "cf-serif" : font
     color = !color ? "cf-light" : color
 
