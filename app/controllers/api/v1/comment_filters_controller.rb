@@ -5,8 +5,10 @@ class Api::V1::CommentFiltersController < ApiController
     # due to new exclusion param, always pull the first page
     page = 1
     search = params[:search] || {}
+
     @comments = Comment.filter_and_sort(current_user, params[:art_id], params[:art_type], search, page)
     # raise "#{@comments.to_sql}"
+    @total_results = Comment.filter_and_sort(current_user, params[:art_id], params[:art_type], search.except(:previous_comment_ids), page).total_entries
     comment_ids = @comments.map(&:id)
     @replies = Comment.tabulation_for_comments_list(current_user, comment_ids, search)
     comment_ids += @replies.map(&:id)

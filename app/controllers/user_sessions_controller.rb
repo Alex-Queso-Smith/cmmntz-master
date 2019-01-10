@@ -1,5 +1,5 @@
 class UserSessionsController < ApplicationController
-  skip_before_action *ALL_FILTERS - [:require_app_access], only: [:new, :create]
+  skip_before_action *ALL_FILTERS - [:require_app_access, :create_guest_unless_logged_in], only: [:new, :create]
   before_action :require_no_user, only: [:new, :create]
 
   def new

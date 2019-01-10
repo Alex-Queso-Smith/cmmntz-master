@@ -1,4 +1,4 @@
-json.total_comments comments.total_entries
+json.total_comments total_results
 json.grand_total_comments all_comments_size
 if params[:old_top_id]
   json.old_top_id params[:old_top_id]

@@ -239,11 +239,15 @@ class CommentingContainer extends React.Component {
         if (body.comment.approved) {
           var newComments = this.state.comments
           newComments.unshift(body.comment)
-          var totalComments = this.state.totalComments
+          var newGrand = this.state.grandTotalComments;
+          newGrand++;
+          var newTotal = this.state.totalComments;
+          newTotal++
 
           this.setState({
             comments: newComments,
-            totalComments: totalComments++
+            grandTotalComments: newGrand,
+            totalComments: newTotal
           })
         }
 
@@ -346,6 +350,9 @@ class CommentingContainer extends React.Component {
     opts.notFilterList = [];
     opts.filterList = [];
     opts.hideAnonAndGuest = false;
+    opts.radius = '';
+    opts.latitude = '';
+    opts.longitude = '';
     this.setState({
       sortOpts: opts,
       presetFilter: ""
@@ -702,9 +709,13 @@ class CommentingContainer extends React.Component {
 
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
+        <div className="row d-block d-md-none">
+          <div className="col-12">
+            <TutorialVideo />
+          </div>
+        </div>
         {showVoteModal}
         {filterModal}
-        <div />
 
         <div className="row">
 
