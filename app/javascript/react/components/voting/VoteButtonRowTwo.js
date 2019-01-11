@@ -29,9 +29,9 @@ class VoteButtonRowTwo extends React.Component {
     var { shownNumber } = this.state;
 
     return(
-      <div className={`col-1 col-sm-1 col-md-1 justify-content-center ${this.props.className} vote-button-box`}>
-        <img className={`vote-btn cursor-pointer vote-${this.props.name} ${this.props.visibility} ${this.props.opacity}`} onClick={this.props.onClick} name={this.props.name} src={this.props.image} />
-        <div onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} className="cursor-pointer text-center">{shownNumber}</div>
+      <div className={`col-1 col-sm-1 col-md-1 justify-content-center ${this.props.className} cf-vote-button-box`}>
+        <img className={`cf-vote-btn cf-cursor-pointer vote-${this.props.name} ${this.props.visibility} ${this.props.opacity}`} onClick={this.props.onClick} name={this.props.name} src={this.props.image} />
+        <div onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} className="cf-cursor-pointer cf-text-center">{shownNumber}</div>
       </div>
     )
   }

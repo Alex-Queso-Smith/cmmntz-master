@@ -53,7 +53,7 @@ class UserAvatar extends React.Component {
     var blockFollowBox;
     if (followStar) {
       blockFollowBox =
-      <div className="row justify-content-start block-follow-box">
+      <div className="row justify-content-start cf-block-follow-box">
         {followStar}
         {blockSym}
         <div className="col-8"/>
@@ -68,12 +68,12 @@ class UserAvatar extends React.Component {
           <div className="border-1px-bot">
             <div className="row">
               <div className="col-sm-12">
-                <h4 className="user-name-avatar">{user_name}</h4>
+                <h4 className="cf-user-name-avatar">{user_name}</h4>
               </div>
             </div>
             {blockFollowBox}
           </div>
-          <div className="row margin-top-10px gender-image-box">
+          <div className="row cf-margin-top-10px cf-gender-image-box">
             {genderImage}
             {ageRangeImage}
           </div>
@@ -81,7 +81,7 @@ class UserAvatar extends React.Component {
       </div>
     }
 
-    var avatarOpacity = "translucent";
+    var avatarOpacity = "cf-translucent";
     if (this.props.userVoted) { avatarOpacity = "" }
 
     return(
@@ -91,8 +91,8 @@ class UserAvatar extends React.Component {
           onMouseLeave={() => this.setState({ showInfoTile: false })}
         >
           <div className="cf-comment-user-avatar">
-            <span className="avatar-helper"></span>
-            <img className={`avatar-image ${avatarOpacity}`} src={avatarImage} />
+            <span className="cf-avatar-helper"></span>
+            <img className={`cf-avatar-image ${avatarOpacity}`} src={avatarImage} />
           </div>
           {infoTile}
         </div>

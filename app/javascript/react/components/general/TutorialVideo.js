@@ -41,8 +41,8 @@ class TutorialVideo extends React.Component {
   render(){
 
     var shown =
-    <div className="row justify-content-center margin-top-10px">
-      <button onClick={ this.nextState } className="btn btn-md btn-dark margin-top-bottom-10px">
+    <div className="row justify-content-center cf-margin-top-10px">
+      <button onClick={ this.nextState } className="btn btn-md btn-dark cf-margin-top-bottom-10px">
         Stumped?
       </button>
     </div>
@@ -53,8 +53,8 @@ class TutorialVideo extends React.Component {
         <div className="cf-tutorial-options">
           <p>Struggling to figure out how to use the widget after watching the videos?</p>
 
-          <button className="float-right btn btn-sm btn-dark" onClick={this.nextState} >Yes</button>
-          <button className="float-left btn btn-sm btn-dark" onClick={this.cancel} >No</button>
+          <button className="cf-float-right btn btn-sm btn-dark" onClick={this.nextState} >Yes</button>
+          <button className="cf-float-left btn btn-sm btn-dark" onClick={this.cancel} >No</button>
         </div>
         break;
       case 2:
@@ -62,8 +62,8 @@ class TutorialVideo extends React.Component {
           <div className="cf-tutorial-options">
             <p>Need to see a detailed tutorial video as well?</p>
 
-            <button className="float-right btn btn-sm btn-dark" onClick={this.handleShowVideo}>Yes</button>
-            <button className="float-left btn btn-sm btn-dark" onClick={this.cancel}>No</button>
+            <button className="cf-float-right btn btn-sm btn-dark" onClick={this.handleShowVideo}>Yes</button>
+            <button className="cf-float-left btn btn-sm btn-dark" onClick={this.cancel}>No</button>
           </div>
         break;
       case 3:
@@ -77,17 +77,17 @@ class TutorialVideo extends React.Component {
         break;
       default:
         shown =
-        <div className="row justify-content-center margin-top-10px">
-          <button onClick={this.nextState} className="btn btn-md btn-dark margin-top-bottom-10px">
+        <div className="row justify-content-center cf-margin-top-10px">
+          <button onClick={this.nextState} className="btn btn-md btn-dark cf-margin-top-bottom-10px">
             Stumped?
           </button>
         </div>
     }
 
     return(
-      <div className="cf-tutorial-video margin-top-bottom-10px">
+      <div className="cf-tutorial-video cf-margin-top-bottom-10px">
 
-        <div className="row justify-content-center margin-top-10px">
+        <div className="row justify-content-center cf-margin-top-10px">
           <div className="vid-box">
             <iframe src="https://www.youtube.com/embed/zyh2_kwDaqU" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="video"></iframe>
           </div>

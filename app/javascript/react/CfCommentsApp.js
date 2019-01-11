@@ -57,7 +57,7 @@ class CfCommentsApp extends React.Component {
 
     if (artSettings.userBlacklisted) {
       displayContainer =
-      <div className="deactivated-message">
+      <div className="cf-deactivated-message">
         <h3>You have been blacklisted from this site by the Admins.</h3>
       </div>
     } else if (!artSettings.deactivated) {
@@ -81,18 +81,18 @@ class CfCommentsApp extends React.Component {
         msg = artSettings.disabledMessage
       }
       displayContainer =
-      <div className="deactivated-message">
+      <div className="cf-deactivated-message">
         <h3>{msg}</h3>
       </div>
     }
 
     var {font, color} = this.state.themeSettings;
-    font = !font ? "serif" : font
-    color = !color ? "light" : color
+    font = !font ? "cf-serif" : font
+    color = !color ? "cf-light" : color
 
     return (
       <div id="cf-commenting-container" className={`container-fluid ${font} ${color}`}>
-        
+
         {displayContainer}
       </div>
     )

@@ -8,7 +8,7 @@ export const ReplyFieldActivated = (object) => {
   <div>
     <Textarea
       maxLength="1000"
-      className="form-control margin-top-10px textarea"
+      className="form-control cf-margin-top-10px textarea"
       name="replyText"
       value={object.state.replyText}
       rows={3}
@@ -18,7 +18,7 @@ export const ReplyFieldActivated = (object) => {
       name="replyAnonymous"
       onChange={object.handleChange}
       label="Submit Anonymously"
-      className="margin-top-bottom-10px"
+      className="cf-margin-top-bottom-10px"
       />
   </div>
   return field
@@ -26,7 +26,7 @@ export const ReplyFieldActivated = (object) => {
 
 export const ReplyButtonActive = (object) => {
   var replyButton =
-  <button className="btn reply-button btn-sm" onClick={object.handleReplySubmit} disabled={object.state.formInvalid}>
+  <button className="btn cf-fade-button btn-sm" onClick={object.handleReplySubmit} disabled={object.state.formInvalid}>
     Submit Reply
   </button>
   return replyButton
@@ -34,12 +34,12 @@ export const ReplyButtonActive = (object) => {
 
 export const ReplyButtonInactive = (object) => {
   var replyButton =
-  <button className="btn reply-button btn-sm" name="replyActive" onClick={object.handleStateFlip}>Reply</button>
+  <button className="btn cf-fade-button btn-sm" name="replyActive" onClick={object.handleStateFlip}>Reply</button>
   return replyButton
 }
 
 export const ReplyCancelButton = (object) => {
   var replyCancelButton =
-  <button className="btn cancel-reply-button btn-sm margin-left-5px" onClick={object.handleCancelReply}>Cancel Reply</button>
+  <button className="btn cf-fade-button btn-sm cf-margin-left-5px" onClick={object.handleCancelReply}>Cancel Reply</button>
   return replyCancelButton
 }

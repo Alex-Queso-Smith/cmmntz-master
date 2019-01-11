@@ -66,9 +66,9 @@ class UserEditPasswordContainer extends React.Component {
     passwordConfirmationError = CreateErrorElements(passwordErrors.password_confirmation, "Password Confirmation")
 
     return(
-      <div className="user-edit-password-container">
-        <form className="form" id="password-form" onSubmit={this.handleSubmit}>
-          <h1 className="user-title text-center">Edit Password</h1>
+      <div className="cf-user-edit-password-container">
+        <form className="form" id="cf-password-form" onSubmit={this.handleSubmit}>
+          <h1 className="cf-user-title cf-text-center">Edit Password</h1>
           <Input
             name="password"
             label="Password"
@@ -87,13 +87,13 @@ class UserEditPasswordContainer extends React.Component {
             addClass={passwordConfirmationClass}
           />
           {passwordConfirmationError}
-          <div className="form-group actions margin-top-10px">
-            <button onClick={this.handleDeleteAccount}  className="btn btn-danger btn-sm float-left">
+          <div className="form-group actions cf-margin-top-10px">
+            <button onClick={this.handleDeleteAccount}  className="btn btn-danger btn-sm cf-float-left">
               Delete Account
             </button>
           </div>
-          <div className="form-group actions margin-top-10px">
-            <button type="submit" className="btn float-right btn-sm btn-dark" value="Submit" disabled={this.state.formInvalid}>
+          <div className="form-group actions cf-margin-top-10px">
+            <button type="submit" className="btn cf-float-right btn-sm btn-dark" value="Submit" disabled={this.state.formInvalid}>
               Update
             </button>
           </div>

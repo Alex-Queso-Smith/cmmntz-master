@@ -172,15 +172,15 @@ class Comment extends React.Component {
       !this.props.guestStatus &&
       !postedAsGuest
     ) {
-      if (!userFollowed) { starOpacity = "translucent" }
+      if (!userFollowed) { starOpacity = "cf-translucent" }
       followStar =
-      <div className={`col-2 padding-cancel block-follow-box-start cursor-pointer ${starOpacity}`}>
+      <div className={`col-2 cf-padding-cancel cf-block-follow-box-start cf-cursor-pointer ${starOpacity}`}>
         <img onClick={this.handleFollow} src="/images/icons-v2/star.png" height="20px" width="20px" />
       </div>
 
-      if (!userBlocked) { blockOpacity = "translucent" }
+      if (!userBlocked) { blockOpacity = "cf-translucent" }
       blockSym =
-      <div className={`col-2 padding-cancel cursor-pointer ${blockOpacity}`}>
+      <div className={`col-2 cf-padding-cancel cf-cursor-pointer ${blockOpacity}`}>
         <img onClick={this.handleBlock} src="/images/icons-v2/block.png" height="20px" width="20px" />
       </div>
 
@@ -191,7 +191,7 @@ class Comment extends React.Component {
       textBox =
       <Textarea
         maxLength="3000"
-        className="form-control margin-top-10px textarea col-sm-10 cf-comment-text-area-edit"
+        className="form-control cf-margin-top-10px textarea col-sm-10 cf-comment-text-area-edit"
         name="text"
         value={text}
         onChange={ this.handleChange }
@@ -202,22 +202,22 @@ class Comment extends React.Component {
         if (!this.state.showFullText) {
           textBox =
           <div className="cf-comment-text" >
-            <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text.substring(0, text_length) + "..."}} />
+            <div className="cf-display-linebreak" dangerouslySetInnerHTML={{__html: text.substring(0, text_length) + "..."}} />
             <br />
-            <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show more</a>
+            <a href='#' onClick={this.handleStateFlip} name="showFullText" className="cf-link-text">show more</a>
           </div>
         } else {
           textBox =
           <div className="cf-comment-text" >
-            <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
+            <div className="cf-display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
             <br />
-            <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show less</a>
+            <a href='#' onClick={this.handleStateFlip} name="showFullText" className="cf-link-text">show less</a>
           </div>
         }
       } else {
         textBox =
         <div className="cf-comment-text" >
-          <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
+          <div className="cf-display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
         </div>
       }
     }
@@ -233,10 +233,10 @@ class Comment extends React.Component {
     var editButton, cancelButton;
     if (!artSettings.disabled) {
       if (editStatus && currentUserId === commentUserId) {
-        editButton = <button className="btn btn-sm comment-button" onClick={this.handleEditSubmit}>Edit</button>
-        cancelButton = <button className="btn btn-sm comment-cancel-button" onClick={this.handleCancelEditComment}>Cancel</button>
+        editButton = <button className="btn btn-sm cf-fade-button" onClick={this.handleEditSubmit}>Edit</button>
+        cancelButton = <button className="btn btn-sm cf-fade-button" onClick={this.handleCancelEditComment}>Cancel</button>
       } else if (currentUserId === commentUserId) {
-        editButton = <button className="btn btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit</button>
+        editButton = <button className="btn btn-sm cf-fade-button" name="editStatus" onClick={this.handleStateFlip}>Edit</button>
       }
     }
 
@@ -249,7 +249,7 @@ class Comment extends React.Component {
     var deleteCommentButton, banUserButton;
     if (this.props.adminStatus && commentUserId != currentUserId) {
       deleteCommentButton =
-      <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteComment}>
+      <button className="btn btn-sm cf-red-outline-button cf-margin-all-5px" onClick={this.props.handleDeleteComment}>
         Delete Comment
       </button>
 
@@ -263,13 +263,13 @@ class Comment extends React.Component {
     if (!this.state.userVoted) {
 
       showVotesButton =
-      <div className="row comment-interaction-row">
+      <div className="row cf-comment-interaction-row">
         <div className="col-sm-2" />
-        <div className="col-sm-7 comment-interaction-line">
+        <div className="col-sm-7 cf-comment-interaction-line">
           {`${totalInteractions} votes`}
         </div>
         <div className="col-sm-3">
-          <button onClick={this.showVotes} className="btn btn-sm float-right show-votes-button">
+          <button onClick={this.showVotes} className="btn btn-sm cf-float-right cf-fade-button">
             Results
           </button>
         </div>
@@ -317,7 +317,7 @@ class Comment extends React.Component {
                 {this.props.userName}{adminFlag}
               </div>
               <div className="cf-comment-length col-2">
-                <div className="float-right">
+                <div className="cf-float-right">
                   <img src={lengthImage} height="20px" width="20px"/>
                 </div>
               </div>
@@ -332,7 +332,7 @@ class Comment extends React.Component {
 
             {textBox}
             {lastEdited}
-            <div className="cf-comment-button-group">
+            <div className="cf-cf-fade-button-group">
               {editButton}
               {cancelButton}
               {deleteCommentButton}

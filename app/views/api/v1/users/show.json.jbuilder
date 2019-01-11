@@ -5,9 +5,9 @@ json.user do
   json.gender @user.gender || ""
   json.longitude @user.longitude || ""
   json.latitude @user.latitude || ""
-  json.font @user.font || "serif"
+  json.font !@user.font.blank? ? "cf-#{@user.font}" : "cf-serif"
   json.avatar_image @user.base_image || ""
-  json.color_theme @user.color_theme || "light"
+  json.color_theme !@user.color_theme.blank? ? "cf-#{@user.color_theme}" : "cf-light"
   json.base_image @user.base_image
   json.followed_users @user.followed_user_ids
   json.blocked_users @user.blocked_user_ids

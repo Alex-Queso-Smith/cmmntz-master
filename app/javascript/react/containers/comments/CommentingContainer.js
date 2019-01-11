@@ -17,8 +17,8 @@ import FeedbackFormContainer from '../FeedbackFormContainer';
 class CommentingContainer extends React.Component {
   state = {
     userThemeSettings: {
-      font: 'serif',
-      theme: 'light'
+      font: 'cf-serif',
+      theme: 'cf-light'
       },
     totalComments: 0,
     grandTotalComments: 0,
@@ -564,7 +564,7 @@ class CommentingContainer extends React.Component {
     var endComments;
     if (totalComments === comments.length) {
       endComments =
-      <div className="text-center">
+      <div className="cf-text-center">
         ---  end of comments ---
       </div>
     }
@@ -596,29 +596,29 @@ class CommentingContainer extends React.Component {
     var loginStatement;
     if (this.state.userSettings.guest) {
       loginStatement =
-      <div className="login-statement-container row">
-        <div className="col-6 login-statement">
+      <div className="cf-login-statement-container row">
+        <div className="col-6 cf-login-statement">
           Guest
         </div>
         <div className="col-3">
-          <button className="btn btn-sm fade-button" onClick={ () => window.location = "/login" }>Login</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ () => window.location = "/login" }>Login</button>
         </div>
         <div className="col-3">
-          <button className="btn btn-sm fade-button" onClick={ () => window.location = "/register" }>Register</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ () => window.location = "/register" }>Register</button>
         </div>
       </div>
     } else {
       var edit_url = `/users/${this.props.userId}/edit_settings`
       loginStatement =
-      <div className="login-statement-container row">
-        <div className="col-6 login-statement">
+      <div className="cf-login-statement-container row">
+        <div className="col-6 cf-login-statement">
           {this.state.userInfo.userName}
         </div>
         <div className="col-3">
-          <button className="btn btn-sm fade-button" onClick={ () => window.location = edit_url }>Settings</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ () => window.location = edit_url }>Settings</button>
         </div>
         <div className="col-3">
-          <button className="btn btn-sm fade-button" onClick={ () => window.location = "/logout" }>Logout</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ () => window.location = "/logout" }>Logout</button>
         </div>
       </div>
     }
@@ -648,7 +648,7 @@ class CommentingContainer extends React.Component {
 
           <div className="d-none d-md-block col-md-6">
 
-            <div className="row justify-content-center margin-top-10px">
+            <div className="row justify-content-center cf-margin-top-10px">
               <TutorialVideo />
             </div>
 
@@ -681,7 +681,7 @@ class CommentingContainer extends React.Component {
               clearFilters={this.clearFilters}
               />
           </div>
-          <div className="d-none d-md-block col-md-6 video-container">
+          <div className="d-none d-md-block col-md-6 cf-video-container">
 
           </div>
         </div>
@@ -714,7 +714,7 @@ class CommentingContainer extends React.Component {
             {endComments}
           </div>
 
-          <div className="d-none d-md-block col-md-6 adverts-container">
+          <div className="d-none d-md-block col-md-6 cf-adverts-container">
             <FeedbackFormContainer
               userId={this.props.userId}
               />
@@ -722,7 +722,7 @@ class CommentingContainer extends React.Component {
 
         </div>
         <BasicModal
-          modalButtonId={"feedback-button"}
+          modalButtonId={"cf-feedback-button"}
           modalButtonText={"Feedback / Bugs"}
           modalButtonClass="btn-primary"
           modalTitle="Please select the appropriate button for reporting."

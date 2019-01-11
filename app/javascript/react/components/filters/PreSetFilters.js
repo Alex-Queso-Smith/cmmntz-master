@@ -5,9 +5,9 @@ class PreSetFilters extends React.Component {
 
   render(){
     return(
-      <div id="preset-filters-selector">
-        <div className="preset-filter-row row">
-          <h4 className="text-medium margin-right-5px">Need a suggestion? Show: </h4>
+      <div id="cf-preset-filters-selector">
+        <div className="cf-preset-filter-row row">
+          <h4 className="cf-text-medium cf-margin-right-5px">Need a suggestion? Show: </h4>
           <select name="presetFilter" value={this.props.option} onChange={this.props.onChange}>
             <option  value='0' />
             <option value="1" className="filter-list-item">

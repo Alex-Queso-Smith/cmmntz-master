@@ -318,13 +318,13 @@ class UserNewContainer extends React.Component {
 
     return(
       <div className="login-container">
-        <form className="form" id="user-registration-form" onSubmit={this.handleSubmit} >
+        <form className="form" id="cf-user-registration-form" onSubmit={this.handleSubmit} >
           <div className="row">
             <div className="col-3">
-              <button className="btn btn-sm fade-button" onClick={ () => window.location = "/login" }>Login</button>
+              <button className="btn btn-sm cf-fade-button" onClick={ () => window.location = "/login" }>Login</button>
             </div>
           </div>
-          <h5 className="user-title text-center">User Registration</h5>
+          <h5 className="cf-user-title cf-text-center">User Registration</h5>
 
           {page}
           {anonWarningModal}

@@ -4,7 +4,7 @@
       .row.justify-content-center
         %h3.main-title Articles
 
-      .row.justify-content-center.margin-top-10px
+      .row.justify-content-center.cf-margin-top-10px
         .col-sm-6
           = render "article_tile", article: @first_article
         .col-sm-6
@@ -27,7 +27,7 @@
               .preview.sentinel.d-none.d-sm-block= truncate(article.introduction, length: 150)
         %br/
         %br/
-        .row.justify-content-center.margin-top-10px
+        .row.justify-content-center.cf-margin-top-10px
           = will_paginate @articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
 
   .d-none.d-sm-none.d-md-block.d.col-md-4.articles-side

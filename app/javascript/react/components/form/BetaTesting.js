@@ -14,17 +14,17 @@ export const BugForm = (props)  => {
     buttons =
     <div className="row">
       <div className="col-6">
-        <button className="btn btn-sm btn-dark float-left margin-top-10px" onClick={ props.cancelFeedbackForm }>Cancel</button>
+        <button className="btn btn-sm btn-dark cf-float-left cf-margin-top-10px" onClick={ props.cancelFeedbackForm }>Cancel</button>
       </div>
       <div className="col-6">
-        <button className="btn btn-sm btn-dark float-right margin-top-10px" type="submit" value="Submit" >Submit</button>
+        <button className="btn btn-sm btn-dark cf-float-right cf-margin-top-10px" type="submit" value="Submit" >Submit</button>
       </div>
     </div>
   } else {
     buttons =
     <div className="row">
       <div className="col-6">
-        <button className="btn btn-sm btn-dark float-right margin-top-10px" type="submit" value="Submit" >Submit</button>
+        <button className="btn btn-sm btn-dark cf-float-right cf-margin-top-10px" type="submit" value="Submit" >Submit</button>
       </div>
     </div>
   }
@@ -52,7 +52,7 @@ export const BugForm = (props)  => {
   return(
     <form  className="cf-user-feedback-form" onSubmit={ props.feedbackFormSubmit }>
       <div className="form-inline">
-        <label htmlFor="feedbackCategory" className="text-medium margin-right-10px">Category</label>
+        <label htmlFor="feedbackCategory" className="cf-text-medium cf-margin-right-10px">Category</label>
         <select style={selectStyle} className="form-control" name="feedbackCategory" value={props.feedbackCategory} onChange={props.onChange}>
           <option />
           <option value="commenting" className="cf-category-item">
@@ -75,7 +75,7 @@ export const BugForm = (props)  => {
       </div>
         <Textarea
           maxLength="3000"
-          className="form-control margin-top-10px textarea"
+          className="form-control cf-margin-top-10px textarea"
           name="userText"
           placeholder={props.placeholder}
           value={props.userText}

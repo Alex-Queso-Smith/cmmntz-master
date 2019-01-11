@@ -247,7 +247,7 @@ class UserEditSettingsContainer extends React.Component {
   render(){
 
     return(
-      <div id="user-edit-settings-container">
+      <div id="cf-user-edit-settings-container">
         <br />
         <Checkbox
           onChange={this.handleRevertSettings}
@@ -256,7 +256,7 @@ class UserEditSettingsContainer extends React.Component {
           checked={this.state.useGalleryDefault}
         />
         <CommentFilters
-          className={"margin-top-10px"}
+          className={"cf-margin-top-10px"}
           sortOpts={this.state.sortOpts}
           handleFilterSubmit={this.handleChange}
           handleSortDirClick={this.handleSortDirClick}
@@ -279,11 +279,11 @@ class UserEditSettingsContainer extends React.Component {
           label={"Show Comment if Censored?"}
           checked={this.state.showCensoredComments}
         />
-        <div className="margin-top-10px text-center">
-          <button className="btn btn-sm btn-dark float-left" onClick={ () => { this.props.history.goBack() } }>
+        <div className="cf-margin-top-10px cf-text-center">
+          <button className="btn btn-sm btn-dark cf-float-left" onClick={ () => { this.props.history.goBack() } }>
             Back
           </button>
-          <button className="btn btn-sm float-right btn-dark" onClick={this.handleSubmit}>
+          <button className="btn btn-sm cf-float-right btn-dark" onClick={this.handleSubmit}>
             Update
           </button>
         </div>

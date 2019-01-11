@@ -137,7 +137,7 @@ export const CreateErrorElements = (errors, name) => {
   if (errors) {
     return errors.map((error) => {
       return(
-        <p className="error-text" key={`${error}`}>{`${name} ${error}`}</p>
+        <p className="cf-error-text" key={`${error}`}>{`${name} ${error}`}</p>
       )
     })
   }

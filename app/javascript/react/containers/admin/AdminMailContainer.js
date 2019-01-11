@@ -56,7 +56,7 @@ class AdminMailContainer extends React.Component {
     var contentErrors = CreateErrorElements(this.state.formErrors.content, "Content")
 
     return (
-      <div className="container">
+      <div className="cf-container">
         <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit} >
           <div className="row">
             <Input
@@ -80,7 +80,7 @@ class AdminMailContainer extends React.Component {
           <div className="row">
             <Textarea
               maxLength="1000"
-              className="form-control margin-top-10px textarea"
+              className="form-control cf-margin-top-10px textarea"
               name="content"
               placeholder="Type your message here"
               value={this.state.content}
@@ -90,8 +90,8 @@ class AdminMailContainer extends React.Component {
           </div>
           {contentErrors}
 
-          <div className="margin-top-10px col-12 col-sm-12">
-            <div className="float-right">
+          <div className="cf-margin-top-10px col-12 col-sm-12">
+            <div className="cf-float-right">
               <button id="comments-button" type="submit" className="btn btn-large btn-dark" value="Submit" disabled={this.state.formInvalid}>
                 Submit Admin Mail
               </button>

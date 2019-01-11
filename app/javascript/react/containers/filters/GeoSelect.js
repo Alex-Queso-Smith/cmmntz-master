@@ -83,7 +83,7 @@ class GeoSelect extends React.Component {
     }
 
     var radiusButtons = buttonTypes.map((type) => {
-      var btnClass = 'translucent'
+      var btnClass = 'cf-translucent'
       if (this.state.radius === type[0]) {
         btnClass = ""
       }
@@ -104,23 +104,23 @@ class GeoSelect extends React.Component {
           </div>
         </div>
 
-        <div className="row margin-top-5px">
+        <div className="row cf-margin-top-5px">
           <div className="col-sm-12">
             <div className="cf-geomap-wrapper">
-              <div className="cf-geomap-container margin-0" onMouseMove={this._onMouseMove} onClick={this.setLatLongClick}>
+              <div className="cf-geomap-container cf-margin-0" onMouseMove={this._onMouseMove} onClick={this.setLatLongClick}>
                 {geoMarker}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="row margin-top-10px">
+        <div className="row cf-margin-top-10px">
           <div className="col-sm-12">
             Search Within
           </div>
         </div>
 
-        <div className="row margin-top-5px">
+        <div className="row cf-margin-top-5px">
           <div className="col-sm-12">
             {radiusButtons}
           </div>

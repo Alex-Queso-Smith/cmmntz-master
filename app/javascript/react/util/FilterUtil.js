@@ -31,7 +31,7 @@ export const SortButtons = (object) => {
     var opacity, visibility, image;
     var image = ImageSelector(type[1])
 
-    sortType == type[0] ? opacity = "" : opacity = "translucent"
+    sortType == type[0] ? opacity = "" : opacity = "cf-translucent"
 
     return(
       <SortButton
@@ -41,7 +41,7 @@ export const SortButtons = (object) => {
         onClick={object.props.handleFilterSubmit}
         image={image}
         visibility={''}
-        className="tooltip-container"
+        className="cf-tooltip-container"
         title={type[2]}
         row="top"
         />
@@ -66,7 +66,7 @@ export const FilterButtonsRowOne = (object) => {
     var visibility, blankClass;
 
     var image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
-    var tooltipClass = "tooltip-container"
+    var tooltipClass = "cf-tooltip-container"
 
     var handleFilterClickParent = (event) => {
       object.props.handleFilterClick(event)
@@ -105,7 +105,7 @@ export const FilterButtonsRowTwo = (object) => {
     var visibility, tooltipClass;
 
     var image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
-    var tooltipClass = "tooltip-container"
+    var tooltipClass = "cf-tooltip-container"
 
     var handleFilterClickParent = (event) => {
       object.props.handleFilterClick(event)
@@ -138,7 +138,7 @@ export const FilterFromTypes = [
 export const FilterCommentsBy = (props) => {
   return(
     FilterFromTypes.map((type) => {
-      var opacity = props.commentsFrom == type[0] ? "" : "translucent"
+      var opacity = props.commentsFrom == type[0] ? "" : "cf-translucent"
       return(
         <FilterFromButton
           key={`filter_from_${type[1]}`}
@@ -156,7 +156,7 @@ export const FilterCommentsBy = (props) => {
 export const FilterVotesBy = (props) => {
   return(
     FilterFromTypes.map((type) => {
-      var opacity = props.votesFrom == type[0] ? "" : "translucent"
+      var opacity = props.votesFrom == type[0] ? "" : "cf-translucent"
       return(
         <FilterFromButton
           key={`filter_from_${type[1]}`}

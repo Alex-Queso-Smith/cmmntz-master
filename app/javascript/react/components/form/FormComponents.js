@@ -27,8 +27,8 @@ export const AgeSlider = props => {
   }
 
   return(
-    <div className="slider-container">
-      <label className="cf-slider-label text-medium" htmlFor={props.name}>
+    <div className="cf-slider-container">
+      <label className="cf-slider-label cf-text-medium" htmlFor={props.name}>
         {ageImage}
         Age Range: {ageRange}
       </label>
@@ -40,7 +40,7 @@ export const AgeSlider = props => {
 
 export const Checkbox = props => {
   return(
-    <div className={`custom-control custom-checkbox margin-top-10px ${props.className}`}>
+    <div className={`custom-control custom-checkbox cf-margin-top-10px ${props.className}`}>
       <input
       type="checkbox"
       className="custom-control-input cf-checkbox"
@@ -57,7 +57,7 @@ export const Checkbox = props => {
 };
 
 export const GenderSelector = props => {
-  var translucency = "translucent";
+  var translucency = "cf-translucent";
   var genders = [
     ["0", "female", "Female"],
     ["2", "male", "Male"],
@@ -65,7 +65,7 @@ export const GenderSelector = props => {
   ];
 
   var genderButtons = genders.map((gender) => {
-    var translucency = gender[1] === props.value ? "" : "translucent"
+    var translucency = gender[1] === props.value ? "" : "cf-translucent"
 
     return(
       <GenderButton
@@ -82,8 +82,8 @@ export const GenderSelector = props => {
 
   return(
     <div>
-      <label className="text-medium">Gender</label>
-      <div id="gender-selector" className="row margin-top-bottom-10px justify-content-center">
+      <label className="cf-text-medium">Gender</label>
+      <div id="gender-selector" className="row cf-margin-top-bottom-10px justify-content-center">
         {genderButtons}
       </div>
     </div>
@@ -93,8 +93,8 @@ export const GenderSelector = props => {
 const GenderButton = props => {
   return(
     <div className={`col-3`}>
-      <img className={`gender-btn ${props.translucency}`} onClick={props.onChange} name={props.name} value={props.value} src={`/images/icons-v2/genders/gender-${props.imageName}.png`} />
-      <div className="text-center">
+      <img className={`cf-gender-btn ${props.translucency}`} onClick={props.onChange} name={props.name} value={props.value} src={`/images/icons-v2/genders/gender-${props.imageName}.png`} />
+      <div className="cf-text-center">
         {props.label}
       </div>
     </div>
@@ -104,8 +104,8 @@ const GenderButton = props => {
 export const Input = props => {
   return(
     <div className="form-group">
-      <label className="text-medium" htmlFor={props.name}>{props.label}</label>
-      <input className={`form-control margin-top-10px ${props.addClass}`} type={props.type} name={props.name} value={props.content} onChange={props.onChange}></input>
+      <label className="cf-text-medium" htmlFor={props.name}>{props.label}</label>
+      <input className={`form-control cf-margin-top-10px ${props.addClass}`} type={props.type} name={props.name} value={props.content} onChange={props.onChange}></input>
     </div>
   );
 };

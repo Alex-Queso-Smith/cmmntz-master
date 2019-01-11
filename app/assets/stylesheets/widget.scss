@@ -12,11 +12,11 @@ $breakpoint-tablet: 900px;
 $breakpoint-phone: 575px;
 
 /* Side panels */
-.video-container {
+.cf-video-container {
   h4 {
   font-weight: bold;
   }
-  .video-wrapper {
+  .cf-video-wrapper {
     height: 200px;
     width: 350px;
     margin-bottom: 20px;
@@ -48,14 +48,14 @@ $breakpoint-phone: 575px;
 //   }
 // }
 
-.adverts-container {
+.cf-adverts-container {
   padding-left: 25px;
   height: 500px;
   position: -webkit-sticky;
   position: sticky;
   top: 110px;
 
-  .ad-container {
+  .cf-ad-container {
     height: auto;
     width: auto;
     margin-bottom: 20px;
@@ -79,14 +79,14 @@ $breakpoint-phone: 575px;
     max-width: 100%;
     margin-left: 5px;
   }
-  .vote-row {
+  .cf-vote-row {
     width: 450px;
   }
 
-  .filter-btn-container {
+  .cf-filter-btn-container {
     padding: 0px;
 
-    .filter-btn {
+    .cf-filter-btn {
       border-radius: 0;
     }
   }
@@ -106,13 +106,13 @@ $breakpoint-phone: 575px;
     width: 100%;
     margin-left: 0px;
   }
-  .vote-row {
+  .cf-vote-row {
     width: 100%;
   }
-  .filter-btn-container {
+  .cf-filter-btn-container {
     padding: 0px;
 
-    .filter-btn {
+    .cf-filter-btn {
       border-radius: 0;
       width: 33%
     }
@@ -127,126 +127,97 @@ $breakpoint-phone: 575px;
   }
 }
 
-#body {
-  background: #fff;
-  margin: 0;
-}
-
-#body-container {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.centered {
-  margin: 0 auto;
-}
-
-.link-text {
+.cf-link-text {
   color: blue;
 }
 
-.float-left {
+.cf-float-left {
   float: left;
 }
 
-.float-right {
+.cf-float-right {
   float: right;
 }
 
-.clear {
+.cf-clear {
   clear: both;
 }
 
-.translucent {
+.cf-translucent {
   opacity: .40;
 }
 
-.exclude-translucent {
-  opacity: .20;
-}
-
-.visibility-hidden {
+.cf-visibility-hidden {
   visibility: hidden;
 }
 
-.text-small {
-  font-size: 1em;
-}
 
-.text-medium {
+.cf-text-medium {
   font-size: 1.25em;
 }
 
-.text-large {
-  font-size: 2.25em;
-}
-
-.text-center {
+.cf-text-center {
   text-align: center;
 }
 
-.margin-top-10px {
+.cf-margin-top-10px {
   margin-top: 10px;
 }
 
-.margin-top-15px {
+.cf-margin-top-15px {
   margin-top: 15px;
 }
 
-.margin-top-5px {
+.cf-margin-top-5px {
   margin-top: 5px;
 }
 
-.margin-top-bottom-10px {
+.cf-margin-top-bottom-10px {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.margin-top-bottom-15px {
+.cf-margin-top-bottom-15px {
   margin-top: 15px;
   margin-bottom: 15px;
 }
 
-.margin-bottom-10px {
+.cf-margin-bottom-10px {
   margin-top: 10px;
 }
 
-.margin-left-10px {
+.cf-margin-left-10px {
   margin-left: 10px;
 }
 
-.margin-left-5px {
+.cf-margin-left-5px {
   margin-left: 5px;
 }
 
-.margin-right-10px {
+.cf-margin-right-10px {
   margin-right: 10px;
 }
 
-.margin-all-5px {
+.cf-margin-all-5px {
   margin: 5px 5px 5px 5px;
 }
 
-.margin-0 {
+.cf-margin-0 {
   margin: 0;
 }
 
-.hidden {
+.cf-hidden {
   display: none;
 }
 
-.error-text {
+.cf-error-text {
   color: #FF0001;
 }
 
-.cursor-pointer {
+.cf-cursor-pointer {
   cursor: pointer;
 }
 
-.w-450 {
-  width: 450px;
-}
-
-.serif {
+.cf-serif {
   font-family: "Times New Roman", Times, serif;
 
   p {
@@ -254,7 +225,7 @@ $breakpoint-phone: 575px;
   }
 }
 
-.sans-serif {
+.cf-sans-serif {
   font-family: "Comic Sans MS", cursive, sans-serif;
 
   p {
@@ -262,7 +233,7 @@ $breakpoint-phone: 575px;
   }
 }
 
-.light {
+.cf-light {
   background: $light-base;
 
   div, p {
@@ -270,17 +241,17 @@ $breakpoint-phone: 575px;
     color: #000;
   }
 
-  .bordered {
+  .cf-bordered {
     border: 1px solid $light-grayline;
     border-radius: 10px;
   }
 
-  .error-text {
+  .cf-error-text {
     color: #FF0001;
   }
 }
 
-.dark {
+.cf-dark {
   background-color: $dark-base;
 
   div, p {
@@ -288,7 +259,7 @@ $breakpoint-phone: 575px;
     color: #fff;
   }
 
-  .bordered {
+  .cf-bordered {
     border: 1px solid $dark-grayline;
     border-radius: 10px;
   }
@@ -305,7 +276,7 @@ a:hover {
   color: #5B3592;
 }
 
-.deactivated-message {
+.cf-deactivated-message {
   margin: 0 auto;
   text-align: center;
   color: #000;
@@ -322,21 +293,21 @@ a:hover {
 }
 
 @media (min-width: $breakpoint-phone) {
-  .deactivated-message {
+  .cf-deactivated-message {
     width: 90%;
   }
 }
 
 @media (max-width: $breakpoint-phone) {
-  .deactivated-message {
+  .cf-deactivated-message {
     width: 100%;
   }
 }
 
-.tooltip-container {
+.cf-tooltip-container {
   position: relative;
   &:hover {
-    .tooltip-content-top, .tooltip-content-bottom {
+    .cf-tooltip-content-top, .cf-tooltip-content-bottom {
       visibility: visible;
       opacity: 1;
       transition: opacity .2s ease-out;
@@ -345,7 +316,7 @@ a:hover {
   }
 }
 
-.tooltip-content-top {
+.cf-tooltip-content-top {
   visibility: hidden;
   opacity: 0;
   position: absolute;
@@ -374,7 +345,7 @@ a:hover {
   }
 }
 
-.tooltip-content-bottom {
+.cf-tooltip-content-bottom {
   visibility: hidden;
   opacity: 0;
   position: absolute;
@@ -403,11 +374,11 @@ a:hover {
   }
 }
 
-.login-statement-container {
+.cf-login-statement-container {
   width: auto;
 }
 
-.login-statement {
+.cf-login-statement {
   line-height: 2em;
   text-align: top;
   padding-left: 25px !important;
@@ -415,17 +386,17 @@ a:hover {
 }
 
 @media (max-width: $breakpoint-phone) {
-  .login-statement-container {
+  .cf-login-statement-container {
     width: 100%;
     margin: 5px 0px 5px 0px;
   }
 }
 
-.privacy-policy {
+.cf-privacy-policy {
   font-weight: 600;
 }
 
-#preset-filters-selector {
+#cf-preset-filters-selector {
   margin-bottom: 5px;
 
   h4 {
@@ -433,19 +404,12 @@ a:hover {
     margin-right: 10px;
   }
 
-  .preset-filter-row {
+  .cf-preset-filter-row {
     margin-left: 0px !important;
   }
 }
-.custom-checkbox > [type="checkbox"]:checked + label:before {
-  background: #000 !important;
-  box-shadow: none;
-}
-.custom-checkbox > [type="checkbox"]:not(:checked) + label:before {
-  box-shadow: none;
-}
 
-.checkbox-row {
+.cf-checkbox-row {
  margin-left: 0px !important;
 }
 
@@ -460,16 +424,16 @@ a:hover {
    }
  }
 
- .line-height-2-25 {
+ .cf-line-height-2-25 {
    line-height: 2.25;
  }
 
-#feedback-button {
+#cf-feedback-button {
   display: none;
   z-index: 50;
 }
 @media (max-width: $breakpoint-phone) {
-  #feedback-button {
+  #cf-feedback-button {
     display: block;
     position: fixed;
     bottom: 40px;

@@ -61,9 +61,9 @@ class SessionLoginContainer extends React.Component {
     passwordError = CreateErrorElements(loginErrors.password, "Password")
 
     return(
-      <div id="user-login-container" className="login-container">
+      <div id="cf-user-login-container" className="login-container">
         <form className="form" id="login-form" onSubmit={this.handleSubmit}>
-          <h3 className="user-title text-center">Login</h3>
+          <h3 className="cf-user-title cf-text-center">Login</h3>
           <Input
             name="userName"
             label="User Name"
@@ -87,12 +87,12 @@ class SessionLoginContainer extends React.Component {
             label="Remember Me"
             onChange={this.handleChange}
           />
-        <div className="form-group actions margin-top-10px text-center">
-            <button id="login-button" type="submit" className="btn btn-sm btn-dark margin-right-10px" value="Submit" disabled={this.state.formInvalid}>
+        <div className="form-group actions cf-margin-top-10px cf-text-center">
+            <button id="login-button" type="submit" className="btn btn-sm btn-dark cf-margin-right-10px" value="Submit" disabled={this.state.formInvalid}>
               Login
             </button>
               <Link to='/register'>
-                <button className="btn btn-sm btn-dark margin-left-10px">
+                <button className="btn btn-sm btn-dark cf-margin-left-10px">
                   Register
                 </button>
               </Link>

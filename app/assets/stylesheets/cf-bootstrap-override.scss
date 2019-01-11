@@ -1,0 +1,13 @@
+// override checkbox appearance
+.custom-checkbox > [type="checkbox"]:checked + label:before {
+  background: #000 !important;
+  box-shadow: none;
+}
+.custom-checkbox > [type="checkbox"]:not(:checked) + label:before {
+  box-shadow: none;
+}
+
+// override checkbox label color
+.custom-control-label::before {
+  background-color: #919191;
+}

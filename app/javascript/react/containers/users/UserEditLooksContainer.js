@@ -69,8 +69,8 @@ class UserEditLooksContainer extends React.Component {
     var { font, colorTheme } = this.state;
 
     return(
-      <div id="user-edit-looks-container">
-        <form className="form" id="user-edit-looks-form" onSubmit={this.handleSubmit}>
+      <div id="cf-user-edit-looks-container">
+        <form className="form" id="cf-user-edit-looks-form" onSubmit={this.handleSubmit}>
           <UserThemeSelector
             onChange={this.handleChange}
             font={font}
@@ -78,10 +78,10 @@ class UserEditLooksContainer extends React.Component {
             />
 
           <div className="form-group actions">
-            <button className="btn btn-sm btn-dark float-left margin-top-10px" onClick={ () => { this.props.history.goBack() } }>
+            <button className="btn btn-sm btn-dark cf-float-left cf-margin-top-10px" onClick={ () => { this.props.history.goBack() } }>
               Back
             </button>
-            <button id="user-edit-looks-button" type="submit" className="btn btn-sm btn-dark float-right margin-top-10px" value="Submit">
+            <button id="cf-user-edit-looks-button" type="submit" className="btn btn-sm btn-dark cf-float-right cf-margin-top-10px" value="Submit">
               Update
             </button>
           </div>

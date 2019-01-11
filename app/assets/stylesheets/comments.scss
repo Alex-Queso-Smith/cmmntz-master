@@ -15,21 +15,17 @@ $bootstrap-blue: #0069D9;
     }
   }
 
-  .blank1, .blank2 {
-    display: none;
-  }
-
-  .filter-btn-container {
+  .cf-filter-btn-container {
     padding: 0;
 
-    .filter-btn {
+    .cf-filter-btn {
       border-radius: 0;
     }
   }
 }
 
 @media (max-width: $breakpoint-phone) {
-  .container {
+  .cf-container {
     padding-left: 0;
     padding-right: 0;
   }
@@ -92,13 +88,13 @@ $bootstrap-blue: #0069D9;
         white-space: nowrap;
         text-align: center;
 
-        .avatar-helper {
+        .cf-avatar-helper {
           display: inline-block;
           height: 100%;
           vertical-align: middle;
         }
 
-        .avatar-image, .cf-comment-user-data {
+        .cf-avatar-image, .cf-comment-user-data {
           border-radius: 50%;
           width: 45px; height: 45px;
           vertical-align: middle;
@@ -170,7 +166,7 @@ $bootstrap-blue: #0069D9;
   border: 1px solid $bootstrap-blue;
 }
 
-.vote-btn {
+.cf-vote-btn {
   height: 25px;
   width: 25px;
   display: block;
@@ -180,24 +176,14 @@ $bootstrap-blue: #0069D9;
 .cf-votes-container {
   position: relative;
   margin-top: 5px;
-  .disabled-voting-overlay {
-    position: absolute;
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-  }
 }
 
-.red-outline-button {
+.cf-red-outline-button {
   border: 1px red solid;
   color: red;
 }
 
-.comment-button, .reply-button, .show-filters-button, .fade-button {
+.cf-fade-button {
   margin: 5px 5px 5px 0px;
   color: #777777;
   background: none;
@@ -212,8 +198,8 @@ $bootstrap-blue: #0069D9;
   }
 }
 
-.dark {
-  .comment-button, .reply-button, .show-filters-button, .fade-button {
+.cf-dark {
+  .cf-fade-button {
     color: #fff;
 
     &:hover {
@@ -224,52 +210,13 @@ $bootstrap-blue: #0069D9;
   }
 }
 
-.show-replies-button {
-  color: #777777;
-  background: #ffffff;
-
-  &:hover {
-    color: #777777;
-    background: #f8f9fa;
-    border: 1px solid #777777;
-  }
-  &:focus {
-    box-shadow: 0 0 0 0;
-  }
-}
-
-.show-votes-button {
-  // margin: 5px 0px 5px 0px;
-  color: #777777;
-  background: #ffffff;
-
-  &:hover {
-    color: #777777;
-    background: #f8f9fa;
-    border: 1px solid #777777;
-  }
-  &:focus {
-    box-shadow: 0 0 0 0;
-  }
-}
-
-.comment-cancel-button, .cancel-reply-button, .login-button {
-  margin: 5px 5px 5px 0px;
-  color: #777777;
-  background: #ffffff;
-  &:hover {
-    background: #f8f9fa;
-    border: 1px solid #777777;
-  }
-}
-
 .cf-clear-button {
   background: #f0f0f0;
   border: 1px solid $grayline;
   cursor: pointer;
 }
 
-.dark {
+.cf-dark {
   .cf-clear-button {
     color: #fff;
     border: 1px solid $dark-grayline;
@@ -281,34 +228,34 @@ $bootstrap-blue: #0069D9;
   border-radius: 0px;
 }
 
-.vote-button-box,  {
+.cf-vote-button-box,  {
   padding-left: 0 !important;
   padding-right: 0 !important;
   margin-left: 2px;
   margin-right: 2px;
 }
 
-.comment-interaction-line {
+.cf-comment-interaction-line {
   line-height: 2.5em;
 }
 
-.comment-interaction-row {
+.cf-comment-interaction-row {
   margin-top: 2px;
 }
 
-.comment-interaction-line-div {
+.cf-comment-interaction-line-div {
   padding-left: .9em !important;
 }
 
-.user-name-avatar {
+.cf-user-name-avatar {
   margin-bottom: 0 !important;
 }
 
-.gender-image-box {
+.cf-gender-image-box {
   min-width: 150px !important;
 }
 
-.display-linebreak {
+.cf-display-linebreak {
   white-space: pre-line;
 }
 
@@ -317,15 +264,15 @@ $bootstrap-blue: #0069D9;
   margin-bottom: 10px;
 }
 
-.padding-cancel {
+.cf-padding-cancel {
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
 
-.block-follow-box-start {
+.cf-block-follow-box-start {
   margin: 0px 0px 5px 15px;
 }
 
-.block-follow-box {
+.cf-block-follow-box {
   max-width: 150px;
 }

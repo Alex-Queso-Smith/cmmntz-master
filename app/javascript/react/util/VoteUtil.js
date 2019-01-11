@@ -106,7 +106,7 @@ const OpacityHandler = (selectedVotes, type) => {
   if(selectedVotes[type]){
     return ""
   } else {
-    return "translucent"
+    return "cf-translucent"
   }
 }
 
@@ -123,7 +123,7 @@ export const RowOneVoteButtons = (object) => {
 
     if ( !userVoted ) {
       if (!AlwaysVisible.includes(type[0])) {
-        visibility = 'visibility-hidden'
+        visibility = 'cf-visibility-hidden'
       }
     }
 
@@ -137,7 +137,7 @@ export const RowOneVoteButtons = (object) => {
     return(
       <VoteButtonRowOne
         key={`${object.props.commentId}_${type[0]}`}
-        className={`margin-top-10px`}
+        className={`cf-margin-top-10px`}
         name={type[0]}
         label={type[1]}
         onClick={clickFunction}
@@ -163,7 +163,7 @@ export const RowTwoVoteButtons = (object) => {
     }
 
     if ( !userVoted ) {
-      visibility = 'visibility-hidden'
+      visibility = 'cf-visibility-hidden'
     }
 
     var image = ImageSelector(type[0])
@@ -171,7 +171,7 @@ export const RowTwoVoteButtons = (object) => {
     return(
       <VoteButtonRowTwo
         key={`${object.props.commentId}_${type[0]}`}
-        className={`margin-top-10px`}
+        className={`cf-margin-top-10px`}
         name={type[0]}
         label={type[1]}
         onClick={object.handleClickVote}

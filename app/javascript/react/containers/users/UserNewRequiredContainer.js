@@ -19,7 +19,7 @@ class UserNewRequiredContainer extends React.Component {
     var privacyPolicy;
     if (this.state.privacyPolicyShow) {
       privacyPolicy =
-      <div className="margin-top-10px">
+      <div className="cf-margin-top-10px">
         <ol>
           <li>
             As is evident in our account creation process, Classibridge does not collect any Personally Identifiable Information (PII), nor do we track your usage of our systems besides the bare amount necessary to ensure our posting and voting processes operate as intended, and any data you upload is owned by you but perpetually licensed without royalties to Classibridge as stated in our Terms of Service (TOS).
@@ -48,7 +48,7 @@ class UserNewRequiredContainer extends React.Component {
     }
     return(
       <div id="reg-required" className="form-group">
-        <h6 className="text-center">Sign-Up Required Information</h6>
+        <h6 className="cf-text-center">Sign-Up Required Information</h6>
         <Input
           name="userName"
           label="User Name"
@@ -94,9 +94,9 @@ class UserNewRequiredContainer extends React.Component {
           label="I agree to the privacy policy"
         />
 
-        <div className="row actions margin-top-10px text-center">
+        <div className="row actions cf-margin-top-10px cf-text-center">
           <div className="col-12">
-            <div className="float-right">
+            <div className="cf-float-right">
               <button id="user-registration-button-next" className="btn btn-sm btn-dark" onClick={this.props.handleButtonClick} disabled={this.props.disabled}>
                 Next Page
               </button>

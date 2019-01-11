@@ -56,7 +56,7 @@ class UserEditContainer extends React.Component {
     }
 
     return(
-      <div id="user-edit-container">
+      <div id="cf-user-edit-container">
         <Tabs
           display={this.state.display}
           onClick={this.handleTabClick}
