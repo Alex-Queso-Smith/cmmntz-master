@@ -15,7 +15,8 @@ json.user do
   json.guest @user.guest?
 
   json.sort_opts do
-    object = @user.settings_updated ? @user : defined?(@gallery) ? @gallery : @user
+    # object = @user.settings_updated ? @user : defined?(@gallery) ? @gallery : @user
+    object = @user # disable curated views for beta
     json.sort_dir object.sort_dir || "desc"
     json.sort_type object.sort_type || "created_at"
     json.censor object.censor || nil
