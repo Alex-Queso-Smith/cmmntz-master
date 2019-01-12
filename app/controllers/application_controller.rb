@@ -34,7 +34,8 @@ class ApplicationController < ActionController::Base
     if !extra_stuff.blank?
       extra_stuff = ", " + extra_stuff
     end
-    puts "logging.#{log_type}: #{Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")}, email: #{email}, user_id: #{current_user.id}, ip: #{request.remote_ip}, controller: #{params[:controller]}, action: #{params[:action]}, object_id: #{params[:id]}, ua_string: #{request.user_agent}, request_type: #{request.format}#{extra_stuff}"
+    user_id = !current_user.blank? ? "n/a" : current_user.id
+    puts "logging.#{log_type}: #{Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")}, email: #{email}, user_id: #{user_id}, ip: #{request.remote_ip}, controller: #{params[:controller]}, action: #{params[:action]}, object_id: #{params[:id]}, ua_string: #{request.user_agent}, request_type: #{request.format}#{extra_stuff}"
   end
 
   def create_guest_unless_logged_in
