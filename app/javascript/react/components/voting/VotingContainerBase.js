@@ -236,7 +236,7 @@ class VotingContainerBase extends React.Component {
       >
       If you wish to flag this comment please click flag comment button !
       <div className="">
-        <button className="btn btn-med btn-dark" name="warn" onClick={this.handleFlagCommentModal}>
+        <button className="btn btn-med btn-dark margin-top-10px" name="warn" onClick={this.handleFlagCommentModal}>
           Flag Comment
         </button>
       </div>
