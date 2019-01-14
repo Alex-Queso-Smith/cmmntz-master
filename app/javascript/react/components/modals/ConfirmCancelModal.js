@@ -11,7 +11,7 @@ export const ConfirmCancelModal = (props) => {
         <div className="cf-modal-contents">
           {props.children}
           <div className="margin-top-10px">
-            <button className="float-right btn btn-dark btn-sm margin-right-10px" onClick={props.confirmAction}>
+            <button className="float-right btn btn-dark btn-sm margin-right-10px" name={props.name} onClick={props.confirmAction}>
               Ok
             </button>
             <button className="float-right btn btn-dark btn-sm margin-right-10px" onClick={props.closeAction}>

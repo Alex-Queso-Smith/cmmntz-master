@@ -3,7 +3,7 @@ import React from 'react';
 import { FetchBasic, FetchDidMount, FetchDeleteBasic } from '../../util/CoreUtil';
 import { VoteClick, ImageSelector, RowOneVoteButtons, RowTwoVoteButtons, bigFive } from '../../util/VoteUtil';
 import { Timeout } from '../../util/CommentUtil';
-import Modal from '../modals/Modal';
+import { ConfirmCancelModal } from '../modals/ConfirmCancelModal';
 
 class VotingContainerBase extends React.Component {
   constructor(props){
@@ -230,17 +230,14 @@ class VotingContainerBase extends React.Component {
 
     if (this.state.flagModalShow) {
       flagModal =
-      <Modal
-        handleClose={this.handleShowFlagModal}
+      <ConfirmCancelModal
+        closeAction={this.handleShowFlagModal}
+        confirmAction={this.handleFlagCommentModal}
         modalTitle={"Flag this comment?"}
+        name="warn"
       >
-      If you wish to flag this comment please click flag comment button !
-      <div className="">
-        <button className="btn btn-med btn-dark margin-top-10px" name="warn" onClick={this.handleFlagCommentModal}>
-          Flag Comment
-        </button>
-      </div>
-      </Modal>
+        If you wish to flag this comment please click OK or cancel to leave unflagged.
+      </ConfirmCancelModal>
     }
 
     return(
