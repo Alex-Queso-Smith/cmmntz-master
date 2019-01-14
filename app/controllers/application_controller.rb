@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
 
   def require_user
     puts "current_user: #{current_user.inspect}"
-    unless current_user
+    unless current_user && !current_user.guest?
       store_location
       flash[:notice] = "You must be logged in to access this page"
       redirect_to login_url
