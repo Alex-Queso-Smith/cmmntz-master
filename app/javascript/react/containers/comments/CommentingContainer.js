@@ -345,6 +345,9 @@ class CommentingContainer extends React.Component {
     opts.notFilterList = [];
     opts.filterList = [];
     opts.hideAnonAndGuest = false;
+    opts.radius = '';
+    opts.latitude = '';
+    opts.longitude = '';
     this.setState({
       sortOpts: opts,
       presetFilter: ""
