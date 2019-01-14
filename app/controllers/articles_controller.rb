@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  skip_before_action *ALL_FILTERS - [:require_app_access, :create_guest_unless_logged_in]
+  skip_before_action *ALL_FILTERS - [:require_user, :require_app_access, :create_guest_unless_logged_in]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   # GET /articles

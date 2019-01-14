@@ -7,6 +7,12 @@ class UserNewRequiredContainer extends React.Component {
   state = {
     privacyPolicyShow: false
   }
+  handlePrivacyPolicyClick = this.handlePrivacyPolicyClick.bind(this);
+
+  handlePrivacyPolicyClick(event) {
+    event.preventDefault();
+    this.setState({ privacyPolicyShow: !this.state.privacyPolicyShow })
+  }
 
   render(){
     var userNameClass, emailClass, passwordClass, passwordConfirmationClass;
@@ -15,6 +21,7 @@ class UserNewRequiredContainer extends React.Component {
     emailClass = ErrorClassValidation(this.props.emailError);
     passwordClass = ErrorClassValidation(this.props.passwordError);
     passwordConfirmationClass = ErrorClassValidation(this.props.passwordConfirmationError);
+
 
     var privacyPolicy;
     if (this.state.privacyPolicyShow) {
@@ -94,7 +101,7 @@ class UserNewRequiredContainer extends React.Component {
         />
         {this.props.passwordConfirmationError}
 
-        <button onClick={ () => { this.setState({ privacyPolicyShow: !this.state.privacyPolicyShow }) } } className="btn btn-dark btn-md cf-privacy-policy">Privacy Policy</button>
+        <button onClick={ this.handlePrivacyPolicyClick } className="btn btn-dark btn-md cf-privacy-policy">Privacy Policy</button>
         {privacyPolicy}
         <Checkbox
           name="privacyPolicy"
