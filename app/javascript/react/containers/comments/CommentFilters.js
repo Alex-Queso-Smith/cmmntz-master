@@ -9,7 +9,7 @@ import GeoSelect from '../filters/GeoSelect';
 class CommentFilters extends React.Component {
   state = {
     hideAnonAndGuest: this.props.sortOpts.hideAnonAndGuest,
-    filtersExpanded: true
+    filtersExpanded: false
   }
 
   expandFilters = this.expandFilters.bind(this);
@@ -130,7 +130,7 @@ class CommentFilters extends React.Component {
               />
           </div>
           <div className="col-sm-6 cf-filter-from-section">
-            <h4>Show only Votes By:</h4>
+            <h4>Count only Votes By:</h4>
             <FilterVotesBy
               votesFrom={this.props.sortOpts.votesFrom}
               onClick={this.props.handleFilterByClick}
