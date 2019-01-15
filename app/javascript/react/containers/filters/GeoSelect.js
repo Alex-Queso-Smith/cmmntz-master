@@ -1,7 +1,8 @@
 import React from 'react'
+
 class GeoSelect extends React.Component {
   state = {
-    radius: '',
+    radius: this.props.sortOpts.radius,
     latitude: '',
     longitude: '',
     x: '',
@@ -15,6 +16,27 @@ class GeoSelect extends React.Component {
   _onMouseMove = this._onMouseMove.bind(this);
   setLatLongClick = this.setLatLongClick.bind(this);
   handleChange = this.handleChange.bind(this);
+
+  componentDidUpdate(prevProps, prevState){
+    if (this.props.sortOpts.radius != prevProps.sortOpts.radius) {
+
+      var { radius } = this.props.sortOpts;
+
+      this.setState({
+        radius
+      })
+    }
+  }
+
+  componentDidMount(){
+    var { latitude, longitude, geoPin } = this.props.userInfo;
+
+    this.setState({
+      geoPin,
+      latitude,
+      longitude
+    })
+  }
 
   handleChange(event){
     event.preventDefault();

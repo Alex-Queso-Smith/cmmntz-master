@@ -101,7 +101,7 @@ class CommentingContainer extends React.Component {
         .then(userData => {
 
           var newSortOpts = this.state.sortOpts;
-          var { followed_users, blocked_users, admin, guest, user_name } = userData.user
+          var { followed_users, blocked_users, admin, guest, user_name, latitude, longitude } = userData.user
 
           if (guest) {
             this.props.updateDisplay("login")
@@ -125,7 +125,17 @@ class CommentingContainer extends React.Component {
 
           var newUserInfo = this.state.userInfo;
           newUserInfo.userName = user_name;
+          var x = Math.round( (longitude + 180) / (180 / 150) )
+          var y = Math.round( ((latitude / -1) + 180) / (180 / 100) )
 
+          newUserInfo.geoPin = {
+            x: x - 6,
+            y: y - 6
+          }
+
+          newUserInfo.latitude = latitude;
+          newUserInfo.longitude = longitude;
+          
           if (this._isMounted) {
             this.setState({
               userSettings: newUserSettings,
@@ -139,7 +149,7 @@ class CommentingContainer extends React.Component {
         })
         .then(finished => {
           if (this._isMounted) {
-            this.handleFilterSubmit() 
+            this.handleFilterSubmit()
           }
         })
         .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -395,7 +405,8 @@ class CommentingContainer extends React.Component {
       opts.notFilterList = filter.notFilterList;
       opts.radius = filter.radius;
       opts.sortType = filter.sortType;
-      opts.commentsFrom = filter.commentsFrom
+      opts.commentsFrom = filter.commentsFrom;
+      opts.showAdvancedFilters = true;
       opts.page = 1;
       opts.previousCommentIds = []
       this.setState({
@@ -763,6 +774,7 @@ class CommentingContainer extends React.Component {
               handleAdvancedFiltershow={this.handleAdvancedFiltershow}
               handleShowFilterModal={this.handleShowFilterModal}
               clearFilters={this.clearFilters}
+              userInfo={this.state.userInfo}
               />
 
             <div>
