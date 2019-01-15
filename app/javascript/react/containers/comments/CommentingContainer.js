@@ -125,14 +125,17 @@ class CommentingContainer extends React.Component {
 
           var newUserInfo = this.state.userInfo;
           newUserInfo.userName = user_name;
-          var x = ( (longitude + 180) / (180 / 150) )
-          var y = ( ((latitude / -1) + 180) / (180 / 100) )
+          var x = Math.round( (longitude + 180) / (180 / 150) )
+          var y = Math.round( ((latitude / -1) + 180) / (180 / 100) )
 
           newUserInfo.geoPin = {
             x: x - 6,
             y: y - 6
           }
 
+          newUserInfo.latitude = latitude;
+          newUserInfo.longitude = longitude;
+          
           if (this._isMounted) {
             this.setState({
               userSettings: newUserSettings,
