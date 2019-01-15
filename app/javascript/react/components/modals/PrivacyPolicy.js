@@ -6,7 +6,7 @@ export const PrivacyPolicy = props => {
     <BasicModal
       modalButtonText="Privacy Policy"
       modalTitle="Privacy Policy"
-      modalButtonClass="fade-button"
+      modalButtonClass="cf-fade-button"
     >
     <ol>
       <li>

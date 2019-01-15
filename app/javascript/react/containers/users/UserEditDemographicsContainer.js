@@ -129,10 +129,17 @@ class UserEditDemographicsContainer extends React.Component {
       value = "13"
     } else if (value === "10") {
       value = ""
+      this.setState({
+        [name]: value,
+        ageRangeAnon: true
+      })
+    } else {
+      this.setState({
+        [name]: value,
+        ageRangeAnon: false
+      })
     }
-    this.setState({
-      [name]: value
-    })
+
   }
 
   setLatLongClick(x, y){
@@ -187,8 +194,8 @@ class UserEditDemographicsContainer extends React.Component {
     var { ageRange, gender, x, y, latitude, longitude, geoPin, locationAnon, genderAnon, ageRangeAnon } = this.state;
 
     return(
-      <div id="user-edit-demographics-container">
-        <form className="form" id="user-edit-demographics-form" onSubmit={this.handleSubmit}>
+      <div id="cf-user-edit-demographics-container">
+        <form className="form" id="cf-user-edit-demographics-form" onSubmit={this.handleSubmit}>
           <AgeSlider
             name="ageRange"
             label="Age Range"
@@ -215,7 +222,7 @@ class UserEditDemographicsContainer extends React.Component {
             checked={genderAnon}
           />
           <hr />
-          <h4 className="text-medium">Click Near Where You Live</h4>
+          <h4 className="cf-text-medium">Click Near Where You Live</h4>
           <GeoPicker
             setLatLongClick={this.setLatLongClick}
             x={x}
@@ -227,11 +234,11 @@ class UserEditDemographicsContainer extends React.Component {
             locationAnon={locationAnon}
           />
           <div className="form-group actions">
-            <button className="btn btn-sm btn-dark float-left margin-top-10px" onClick={ () => { this.props.history.goBack() } }>
-              Back
-            </button>
-            <button id="user-edit-demographics-button" type="submit" className="btn btn-sm float-right btn-dark margin-top-10px" value="Submit">
+            <button id="cf-user-edit-demographics-button" type="submit" className="btn btn-sm cf-float-right btn-dark cf-margin-top-10px" value="Submit">
               Update
+            </button>
+            <button className="btn btn-sm btn-dark cf-float-left cf-margin-top-10px" onClick={ this.props.updateDisplay }>
+              Back
             </button>
           </div>
         </form>

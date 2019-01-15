@@ -9,7 +9,7 @@ export const BanUser = props => {
     <BasicModal
       modalButtonText="Ban User"
       modalTitle={"Ban this User?"}
-      modalButtonClass={"red-outline-button margin-all-5px"}
+      modalButtonClass={"cf-red-outline-button cf-margin-all-5px"}
     >
       Ban This User
       <select style={style}>
@@ -20,7 +20,7 @@ export const BanUser = props => {
         <option value="year">For 1 Year</option>
       </select>
 
-      <button style={style} className="btn btn-sm red-outline-button margin-all-5px" onClick={props.banAction}>
+      <button style={style} className="btn btn-sm cf-red-outline-button cf-margin-all-5px" onClick={props.banAction}>
         Ban User
       </button>
     </BasicModal>

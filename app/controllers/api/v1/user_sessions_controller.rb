@@ -18,7 +18,7 @@ class Api::V1::UserSessionsController < ApiController
 
     if @user_session.save
       output_log_stream("activity.user.login", cookies['cf-super-betatester-email'], "status: successful")
-      render json: { message: "Logged in successfully" }
+      render json: { message: "Logged in successfully", user_id: @user_session.user.id, theme: @user_session.user.color_theme, font: @user_session.user.font }
     else
       output_log_stream("activity.user.login", cookies['cf-super-betatester-email'], "status: failure")
       render json: { errors: @user_session.errors, status: :unprocessable_entity }
@@ -27,8 +27,15 @@ class Api::V1::UserSessionsController < ApiController
 
   def destroy
     current_user_session.destroy
+
+    guest = User.create_guest_account
+    guest.reset_persistence_token!
+    @current_user_session = UserSession.create(guest)
+    @current_user = @current_user_session && @current_user_session.user
+    
     output_log_stream("activity.user.logout", cookies['cf-super-betatester-email'])
-    render json: { message: "Logged out successfully" }
+
+    render json: { message: "Logged out successfully", user_id: @current_user.id }
   end
 
   private

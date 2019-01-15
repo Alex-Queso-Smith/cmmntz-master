@@ -160,15 +160,15 @@ class Reply extends React.Component {
 
     var starOpacity, followStar, blockSym, blockOpacity;
     if (userInfo.user_id != currentUserId && userName != "Anonymous") {
-      if (!userFollowed) { starOpacity = "translucent" }
+      if (!userFollowed) { starOpacity = "cf-translucent" }
       followStar =
-      <div className={`col-1 col-sm-1 col-md-1 cursor-pointer ${starOpacity}`}>
+      <div className={`col-1 col-sm-1 col-md-1 cf-cursor-pointer ${starOpacity}`}>
         <img onClick={this.handleFollow} src="/images/icons-v2/star.png" height="20px" width="20px" />
       </div>
 
-      if (!userBlocked) { blockOpacity = "translucent" }
+      if (!userBlocked) { blockOpacity = "cf-translucent" }
       blockSym =
-      <div className={`col-1 col-sm-1 col-md-1 cursor-pointer ${blockOpacity}`}>
+      <div className={`col-1 col-sm-1 col-md-1 cf-cursor-pointer ${blockOpacity}`}>
         <img onClick={this.handleBlock} src="/images/icons-v2/block.png" height="20px" width="20px" />
       </div>
     } else {
@@ -181,7 +181,7 @@ class Reply extends React.Component {
       textBox =
       <Textarea
         maxLength="3000"
-        className="form-control margin-top-10px textarea col-sm-10 cf-comment-text-area-edit"
+        className="form-control cf-margin-top-10px textarea col-sm-10 cf-comment-text-area-edit"
         name="text"
         value={text}
         onChange={this.handleChange}
@@ -192,22 +192,22 @@ class Reply extends React.Component {
         if (!this.state.showFullText) {
           textBox =
           <div className="cf-comment-text" >
-            <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text.substring(0, text_length) + "..."}} />
+            <div className="cf-display-linebreak" dangerouslySetInnerHTML={{__html: text.substring(0, text_length) + "..."}} />
             <br />
-            <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show more</a>
+            <a href='#' onClick={this.handleStateFlip} name="showFullText" className="cf-link-text">show more</a>
           </div>
         } else {
           textBox =
           <div className="cf-comment-text" >
-            <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
+            <div className="cf-display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
             <br />
-            <a href='#' onClick={this.handleStateFlip} name="showFullText" className="link-text">show less</a>
+            <a href='#' onClick={this.handleStateFlip} name="showFullText" className="cf-link-text">show less</a>
           </div>
         }
       } else {
         textBox =
         <div className="cf-comment-text" >
-          <div className="display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
+          <div className="cf-display-linebreak" dangerouslySetInnerHTML={{__html: text}} />
         </div>
       }
     }
@@ -223,10 +223,10 @@ class Reply extends React.Component {
     var cancelButton, editButton;
     if (!artSettings.disabled) {
       if (editStatus && currentUserId === replyUserId) {
-        editButton = <button className="btn btn-dark btn-sm comment-button" onClick={this.handleEditSubmit}>Edit Comment</button>
-        cancelButton = <button className="btn btn-light btn-sm comment-button" onClick={this.handleCancelEditReply}>Cancel Edit</button>
+        editButton = <button className="btn btn-dark btn-sm cf-fade-button" onClick={this.handleEditSubmit}>Edit Comment</button>
+        cancelButton = <button className="btn btn-light btn-sm cf-fade-button" onClick={this.handleCancelEditReply}>Cancel Edit</button>
       } else if (currentUserId === replyUserId) {
-        editButton = <button className="btn btn-dark btn-sm comment-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+        editButton = <button className="btn btn-dark btn-sm cf-fade-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
       }
     }
 
@@ -239,7 +239,7 @@ class Reply extends React.Component {
     var deleteReplyButton, banUserButton;
     if (this.props.adminStatus && currentUserId != replyUserId) {
       deleteReplyButton =
-      <button className="btn btn-sm red-outline-button margin-all-5px" onClick={this.props.handleDeleteReply}>
+      <button className="btn btn-sm cf-red-outline-button cf-margin-all-5px" onClick={this.props.handleDeleteReply}>
         Delete Reply
       </button>
 
@@ -254,13 +254,13 @@ class Reply extends React.Component {
       showVotesButton =
       <div className="row">
         <div className="col-sm-2" />
-        <div className="col-sm-7 comment-interaction-line">
-          <div className="comment-interaction-line-div">
+        <div className="col-sm-7 cf-comment-interaction-line">
+          <div className="cf-comment-interaction-line-div">
             {`Comment has ${totalInteractions} votes`}
           </div>
         </div>
         <div className="col-sm-3">
-          <button onClick={this.showVotes} className="btn btn-sm float-right show-votes-button">
+          <button onClick={this.showVotes} className="btn btn-sm cf-float-right cf-fade-button">
             Show Results
           </button>
         </div>
@@ -268,7 +268,7 @@ class Reply extends React.Component {
     }
 
     return(
-      <div className="cf-comment cf-comment-reply margin-top-10px">
+      <div className="cf-comment cf-comment-reply cf-margin-top-10px">
         <div className="cf-comment-wrapper">
           <UserAvatar
             userInfo={userInfo}
@@ -283,7 +283,7 @@ class Reply extends React.Component {
                 {this.props.userName}{adminFlag}
               </div>
               <div className="cf-comment-length col-2">
-                <div className="float-right">
+                <div className="cf-float-right">
                   <img src={lengthImage} height="20px" width="20px"/>
                 </div>
               </div>
@@ -298,7 +298,7 @@ class Reply extends React.Component {
 
             {textBox}
             {lastEdited}
-            <div className="cf-reply-button-group">
+            <div className="cf-cf-fade-button-group">
               {editButton}
               {cancelButton}
               {deleteReplyButton}

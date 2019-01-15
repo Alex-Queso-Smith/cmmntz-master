@@ -96,15 +96,15 @@ class UserEditAccountContainer extends React.Component {
       }
 
       selectedAvatar =
-      <div className="text-center">
+      <div className="cf-text-center">
         <h5>Selected Avatar</h5>
         <img style={style} src={`/images/avatars/${avatar}.png`} />
       </div>
     }
 
     return(
-      <div id="user-edit-account-container">
-        <form className="form" id="user-edit-form" onSubmit={this.handleSubmit} >
+      <div id="cf-user-edit-account-container">
+        <form className="form" id="cf-user-edit-form" onSubmit={this.handleSubmit} >
           <Input
             name="userName"
             label="User Name"
@@ -126,8 +126,8 @@ class UserEditAccountContainer extends React.Component {
 
           <hr />
 
-          <div className="form-group margin-top-10px">
-            <label className="text-medium text-center" htmlFor="avatar">Choose Your Avatar</label>
+          <div className="form-group cf-margin-top-10px">
+            <label className="cf-text-medium cf-text-center" htmlFor="avatar">Choose Your Avatar</label>
             <br />
             {selectedAvatar}
             <Carousel
@@ -136,11 +136,11 @@ class UserEditAccountContainer extends React.Component {
           </div>
 
           <div className="form-group actions">
-            <button className="btn btn-sm btn-dark float-left" onClick={ () => { this.props.history.goBack() } }>
-              Back
-            </button>
-            <button id="user-registration-button" type="submit" className="btn float-right btn-sm btn-dark" value="Submit">
+            <button id="user-registration-button" type="submit" className="btn cf-float-right btn-sm btn-dark" value="Submit">
               Update
+            </button>
+            <button className="btn btn-sm btn-dark float-left" onClick={ this.props.updateDisplay }>
+              Back
             </button>
           </div>
 

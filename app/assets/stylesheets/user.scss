@@ -1,8 +1,9 @@
 $breakpoint-phone: 575px;
+$grayline: #D3D3D3;
 
-#user-registration-form {
-  margin: 60px auto;
-  border: 1px solid grey;
+#cf-user-registration-form {
+  margin: 20px auto;
+  // border: 1px solid grey;
   padding: 30px;
   border-radius: 20px;
   width: 500px;
@@ -10,7 +11,7 @@ $breakpoint-phone: 575px;
   color: #000000;
 }
 
-#password-form {
+#cf-password-form {
   margin: 10px auto;
   padding: 30px;
   width: 500px;
@@ -18,9 +19,9 @@ $breakpoint-phone: 575px;
   color: #000000;
 }
 
-#user-login-container {
-  margin: 60px auto;
-  border: 1px solid grey;
+#cf-user-login-container {
+  margin: 20px auto;
+  // border: 1px solid grey;
   padding: 30px;
   border-radius: 20px;
   width: 500px;
@@ -28,11 +29,11 @@ $breakpoint-phone: 575px;
   color: #000000;
 }
 
-#user-edit-account-container,
-#user-edit-settings-container,
-#user-edit-looks-container,
-#user-edit-demographics-container,
-#user-edit-password-container {
+#cf-user-edit-account-container,
+#cf-user-edit-settings-container,
+#cf-user-edit-looks-container,
+#cf-user-edit-demographics-container,
+#cf-user-edit-password-container {
   margin: 10px auto;
   padding: 30px;
   border-radius: 5px;
@@ -41,52 +42,35 @@ $breakpoint-phone: 575px;
   color: #000000;
 }
 
-#user-edit-container {
+#cf-user-edit-container {
   margin: auto;
+  margin-top: 10px;
   width: 600px;
   padding-bottom: 10px;
   background: rgba(255, 255, 255, 1 );
   border-radius: 5px;
   color: #000000;
-  border: 1px solid grey;
+  // border: 1px solid $grayline;
 }
 
 @media (max-width: $breakpoint-phone) {
-  #user-edit-form,
-  #password-form,
-  #user-registration-form,
-  #user-login-container,
-  #user-edit-settings-container,
-  #user-edit-container,
-  #user-edit-looks-container,
-  #user-edit-demographics-container,
-  #user-edit-account-container,
-  #user-edit-password-container {
+  #cf-user-edit-form,
+  #cf-password-form,
+  #cf-user-registration-form,
+  #cf-user-login-container,
+  #cf-user-edit-settings-container,
+  #cf-user-edit-container,
+  #cf-user-edit-looks-container,
+  #cf-user-edit-demographics-container,
+  #cf-user-edit-account-container,
+  #cf-user-edit-password-container {
     width: 100%;
-  }
-}
-
-#delete-account {
-  margin: 50px 0 20px 0;
-  padding: 20px 10% 20px 10%;
-  border-radius: 20px;
-  border: 2px solid red;
-
-  color: red;
-
-  h3 {
-    width: 100%;
-    text-align: center;
-  }
-
-  .warning-text {
-
   }
 }
 
 
 /* UserThemeSelector style */
-#theme-selector-options-wrapper {
+#cf-theme-selector-options-wrapper {
   position: relative;
   width: 100%;
 
@@ -96,7 +80,7 @@ $breakpoint-phone: 575px;
     width: 90%;
   }
 
-  #theme-selector-options-left {
+  #cf-theme-selector-options-left {
     width: 50%;
     padding: 0 5% 0 5%;
     position: absolute;
@@ -104,7 +88,7 @@ $breakpoint-phone: 575px;
     left: 0;
   }
 
-  #theme-selector-options-right {
+  #cf-theme-selector-options-right {
     width: 50%;
     padding: 0 5% 0 5%;
     position: absolute;
@@ -113,7 +97,7 @@ $breakpoint-phone: 575px;
   }
 }
 
-#theme-selector-demo-wrapper {
+#cf-theme-selector-demo-wrapper {
   width: 60%;
   height: 75px;
   line-height: 70px;
@@ -131,11 +115,6 @@ $breakpoint-phone: 575px;
   }
 }
 
-#login-button {
-  width: 25%;
-  margin: auto;
-}
-
 /* AgeRangeSelector style */
 .cf-slider-label {
   text-align: center;
@@ -146,12 +125,12 @@ $breakpoint-phone: 575px;
   width: 50px;
   text-align: center;
 }
-
-.slidecontainer {
+.cf-slider-container {
+  .slidecontainer {
     width: 100%;
-}
+  }
 
-.slider {
+  .slider {
     -webkit-appearance: none;
     width: 100%;
     height: 15px;
@@ -161,13 +140,13 @@ $breakpoint-phone: 575px;
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
-}
+  }
 
-.slider:hover {
+  .slider:hover {
     opacity: 1;
-}
+  }
 
-.slider::-webkit-slider-thumb {
+  .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 25px;
@@ -175,14 +154,15 @@ $breakpoint-phone: 575px;
     border-radius: 50%;
     background: #4CAF50;
     cursor: pointer;
-}
+  }
 
-.slider::-moz-range-thumb {
+  .slider::-moz-range-thumb {
     width: 25px;
     height: 25px;
     border-radius: 50%;
     background: #4CAF50;
     cursor: pointer;
+  }
 }
 
 .cf-geomap-wrapper {
@@ -223,19 +203,11 @@ $breakpoint-phone: 575px;
   height: 48px; width: 48px;
 }
 
-.gender-btn {
+.cf-gender-btn {
   height: 50px;
   width: 50px;
   display: block;
   margin: auto;
-}
-
-.custom-control-label::before {
-  background-color: #919191;
-}
-
-.user-title {
-  font-size: 1.5em;
 }
 
 .cf-user-feedback-form {

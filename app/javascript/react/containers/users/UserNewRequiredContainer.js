@@ -26,7 +26,7 @@ class UserNewRequiredContainer extends React.Component {
     var privacyPolicy;
     if (this.state.privacyPolicyShow) {
       privacyPolicy =
-      <div className="margin-top-10px">
+      <div className="cf-margin-top-10px">
         <ol>
           <li>
             As is evident in our account creation process, Classibridge does not collect any Personally Identifiable Information (PII), nor do we track your usage of our systems besides the bare amount necessary to ensure our posting and voting processes operate as intended, and any data you upload is owned by you but perpetually licensed without royalties to Classibridge as stated in our Terms of Service (TOS).
@@ -50,12 +50,20 @@ class UserNewRequiredContainer extends React.Component {
             Our servers and data reside in the United States but all users worldwide have the right to contact us via our Contact Us page to request that their personal data is modified or deleted, although, as stated earlier, our systems are configured to not store any PII.
           </li>
         </ol>
-
       </div>
     }
+
+    var updateDisplayComments = () => {
+      this.props.updateDisplay("")
+    }
+
+    var updateDisplayLogin = () => {
+      this.props.updateDisplay("login")
+    }
+
     return(
       <div id="reg-required" className="form-group">
-        <h6 className="text-center">Sign-Up Required Information</h6>
+        <h6 className="cf-text-center">Sign-Up Required Information</h6>
         <Input
           name="userName"
           label="User Name"
@@ -63,6 +71,7 @@ class UserNewRequiredContainer extends React.Component {
           content={this.props.userName}
           type="text"
           addClass={userNameClass}
+          focus={true}
         />
         {this.props.userNameError}
         <Input
@@ -99,17 +108,22 @@ class UserNewRequiredContainer extends React.Component {
           name="privacyPolicy"
           onChange={this.props.onChange}
           label="I agree to the privacy policy"
+          checked={this.props.privacyPolicy}
         />
 
-        <div className="row actions margin-top-10px text-center">
-          <div className="col-12">
-            <div className="float-right">
-              <button id="user-registration-button-next" className="btn btn-sm btn-dark" onClick={this.props.handleButtonClick} disabled={this.props.disabled}>
-                Next Page
-              </button>
-            </div>
-          </div>
-        </div>
+        <div className="actions cf-margin-top-10px">
+          {
+            // <button className="btn btn-sm btn-dark cf-float-left" onClick={ updateDisplayComments }>
+            //   Back
+            // </button>
+          }
+          <button className="btn btn-sm btn-dark cf-float-right" onClick={this.props.handleButtonClick} disabled={this.props.disabled}>
+            Next Page
+          </button>
+          <button className="btn btn-sm btn-dark cf-float-right cf-margin-right-10px" onClick={ updateDisplayLogin }>
+            Login
+          </button>
+      </div>
       </div>
     )
   }

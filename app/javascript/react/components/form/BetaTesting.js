@@ -6,7 +6,7 @@ import { Input } from './FormComponents';
 
 export const BugForm = (props)  => {
   const selectStyle = {
-    width: "52%"
+    width: "65%"
   }
 
   var buttons;
@@ -14,17 +14,17 @@ export const BugForm = (props)  => {
     buttons =
     <div className="row">
       <div className="col-6">
-        <button className="btn btn-sm btn-dark float-left margin-top-10px" onClick={ props.cancelFeedbackForm }>Cancel</button>
+        <button className="btn btn-sm btn-dark cf-float-left cf-margin-top-10px" onClick={ props.cancelFeedbackForm }>Cancel</button>
       </div>
       <div className="col-6">
-        <button className="btn btn-sm btn-dark float-right margin-top-10px" onClick={ props.feedbackFormSubmit } >Submit</button>
+        <button className="btn btn-sm btn-dark cf-float-right cf-margin-top-10px" onClick={ props.feedbackFormSubmit } >Submit</button>
       </div>
     </div>
   } else {
     buttons =
     <div className="row">
       <div className="col-6">
-        <button className="btn btn-sm btn-dark float-right margin-top-10px" onClick={ props.feedbackFormSubmit } >Submit</button>
+        <button className="btn btn-sm btn-dark cf-float-right cf-margin-top-10px" onClick={ props.feedbackFormSubmit } >Submit</button>
       </div>
     </div>
   }
@@ -58,21 +58,21 @@ export const BugForm = (props)  => {
           onChange={props.onChange}
           content={props.firstName}
           type="text"
-          addClass="margin-left-10px"
+          addClass="cf-margin-left-10px"
           />
         {fNmError}
         <Input
           name="userLastName"
-          label="Last Name"
+          label="Last Name "
           onChange={props.onChange}
           content={props.lastName}
           type="text"
-          addClass="margin-left-12px"
+          addClass="cf-margin-left-12px"
           />
         {lNmError}
       </div>
-      <div className="form-inline margin-top-10px margin-left-12px">
-        <label htmlFor="feedbackCategory" className="text-medium margin-right-10px">Category</label>
+      <div className="form-inline cf-margin-top-10px cf-margin-left-12px">
+        <label htmlFor="feedbackCategory" className="cf-text-medium cf-margin-right-10px">Category</label>
         <select style={selectStyle} className="form-control" name="feedbackCategory" value={props.feedbackCategory} onChange={props.onChange}>
           <option />
           <option value="commenting" className="cf-category-item">
@@ -95,7 +95,7 @@ export const BugForm = (props)  => {
       </div>
         <Textarea
           maxLength="3000"
-          className="form-control margin-top-10px textarea"
+          className="form-control cf-margin-top-10px textarea"
           name="userText"
           placeholder={props.placeholder}
           value={props.userText}

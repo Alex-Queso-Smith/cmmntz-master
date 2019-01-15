@@ -10,7 +10,19 @@ $grayline: #D3D3D3;
 $breakpoint-tablet: 900px;
 $breakpoint-phone: 575px;
 
+#body {
+  background: #fff;
+  margin: 0;
+}
 
+#body-container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.float-right {
+  float: right;
+}
 .sentinel {
   font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
 }
@@ -280,4 +292,11 @@ $breakpoint-phone: 575px;
   font-weight: bold;
   font-size: 36px;
   font-family: sans-serif;
+}
+
+@media (max-width: $breakpoint-phone) {
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

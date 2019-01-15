@@ -12,7 +12,7 @@ import { render } from 'react-dom';
 import RedBox from 'redbox-react';
 
 import App from '../react/App';
-import CfCommentsApp from '../react/CfCommentsApp';
+import SpaController from '../react/SpaController';
 import AdminMailApp from '../react/AdminMailApp';
 
 
@@ -37,13 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (commentElement) {
     if(window.railsEnv && window.railsEnv === 'development'){
       try {
-        render(<CfCommentsApp />, commentElement)
+        render(<SpaController />, commentElement)
       } catch (e) {
         render(<RedBox error={e} />, commentElement)
       }
     }
     else {
-      render(<CfCommentsApp />, commentElement)
+      render(<SpaController />, commentElement)
     }
   }
 

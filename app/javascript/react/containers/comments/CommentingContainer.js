@@ -17,8 +17,8 @@ import FeedbackFormContainer from '../FeedbackFormContainer';
 class CommentingContainer extends React.Component {
   state = {
     userThemeSettings: {
-      font: 'serif',
-      theme: 'light'
+      font: 'cf-serif',
+      theme: 'cf-light'
       },
     totalComments: 0,
     grandTotalComments: 0,
@@ -82,6 +82,7 @@ class CommentingContainer extends React.Component {
   showVoteCountTrigger = this.showVoteCountTrigger.bind(this);
   handleShowVoteModal = this.handleShowVoteModal.bind(this);
   handleShowFilterModal = this.handleShowFilterModal.bind(this);
+  tempLogout = this.tempLogout.bind(this);
 
   componentDidMount(){
     FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
@@ -95,7 +96,7 @@ class CommentingContainer extends React.Component {
       if (userId.length > 0){
         FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
         .then(userData => {
-
+          
           var newSortOpts = this.state.sortOpts;
           var { followed_users, blocked_users, admin, guest, user_name } = userData.user
           var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, hide_anon_and_guest, set_from } = userData.user.sort_opts
@@ -563,6 +564,64 @@ class CommentingContainer extends React.Component {
     }
   }
 
+  tempLogout(){
+    this.props.handleLogout()
+
+    // setTimeout(function(){
+    //   FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
+    //   .then(artData => {
+    //     this.setState({
+    //       commentEtiquette: artData.art.gallery_comment_etiquette
+    //     })
+    //   })
+    //   .then(stuff => {
+    //     var { userId, galleryId } = this.props;
+    //     var test = this.props.userId;
+    //
+    //     if (userId.length > 0){
+    //       FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
+    //       .then(userData => {
+    //
+    //         var newSortOpts = this.state.sortOpts;
+    //         var { followed_users, blocked_users, admin, guest, user_name } = userData.user
+    //         var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, hide_anon_and_guest, set_from } = userData.user.sort_opts
+    //         var censorComments = censor === "true" || censor == true ? true : false
+    //
+    //         newSortOpts.sortDir = sort_dir
+    //         newSortOpts.sortType = sort_type
+    //         newSortOpts.commentsFrom = comments_from
+    //         newSortOpts.votesFrom = votes_from
+    //         newSortOpts.filterList = filter_list.length != 0 ? filter_list.split(',') : []
+    //         newSortOpts.notFilterList = not_filter_list.length != 0 ? not_filter_list.split(',') : []
+    //         newSortOpts.censor = censor
+    //         newSortOpts.setFrom = set_from
+    //         newSortOpts.hideAnonAndGuest = hide_anon_and_guest
+    //
+    //         var newUserSettings = this.state.userSettings;
+    //         newUserSettings.admin = admin;
+    //         newUserSettings.guest = guest;
+    //
+    //         var newUserInfo = this.state.userInfo;
+    //         newUserInfo.userName = user_name;
+    //
+    //         this.setState({
+    //           userSettings: newUserSettings,
+    //           userInfo: newUserInfo,
+    //           sortOpts: newSortOpts,
+    //           censor: censorComments,
+    //           blockedUsers: blocked_users,
+    //           followedUsers: followed_users
+    //         })
+    //       })
+    //       .then(finished => { this.handleFilterSubmit() })
+    //       .catch(error => console.error(`Error in fetch: ${error.message}`));
+    //     }
+    //   })
+    //   .catch(error => console.error(`Error in fetch: ${error.message}`));
+    //
+    // }.bind(this), 500)
+  }
+
   render(){
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
@@ -571,7 +630,7 @@ class CommentingContainer extends React.Component {
     var endComments;
     if (totalComments === comments.length) {
       endComments =
-      <div className="text-center">
+      <div className="cf-text-center">
         ---  end of comments ---
       </div>
     }
@@ -602,30 +661,44 @@ class CommentingContainer extends React.Component {
 
     var loginStatement;
     if (this.state.userSettings.guest) {
+      var changeDisplayLogin = () => {
+        this.props.updateDisplay("login")
+      }
+
+      var changeDisplayRegister = () => {
+        this.props.updateDisplay("register")
+      }
+
       loginStatement =
-      <div className="login-statement-container row">
-        <div className="col-6 login-statement">
+      <div className="cf-login-statement-container row">
+        <div className="col-6 cf-login-statement">
           Guest
         </div>
         <div className="col-3">
-          <button className="btn btn-sm fade-button" onClick={ () => window.location = "/login" }>Login</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayLogin }>Login</button>
         </div>
         <div className="col-3">
-          <button className="btn btn-sm fade-button" onClick={ () => window.location = "/register" }>Register</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayRegister }>Register</button>
         </div>
       </div>
     } else {
-      var edit_url = `/users/${this.props.userId}/edit_settings`
+
+      var changeDisplaySettings = () => {
+        this.props.updateDisplay("settings")
+      }
+
+      var edit_url = `/users/${this.props.userId}/edit_settings`;
+
       loginStatement =
-      <div className="login-statement-container row">
-        <div className="col-6 login-statement">
+      <div className="cf-login-statement-container row">
+        <div className="col-6 cf-login-statement">
           {this.state.userInfo.userName}
         </div>
         <div className="col-3">
-          <button className="btn btn-sm fade-button" onClick={ () => window.location = edit_url }>Settings</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ changeDisplaySettings }>Settings</button>
         </div>
         <div className="col-3">
-          <button className="btn btn-sm fade-button" onClick={ () => window.location = "/logout" }>Logout</button>
+          <button className="btn btn-sm cf-fade-button" onClick={ this.tempLogout }>Logout</button>
         </div>
       </div>
     }
@@ -659,7 +732,7 @@ class CommentingContainer extends React.Component {
 
           <div className="d-none d-md-block col-md-6">
 
-            <div className="row justify-content-center margin-top-10px">
+            <div className="row justify-content-center cf-margin-top-10px">
               <TutorialVideo />
             </div>
 
@@ -692,7 +765,7 @@ class CommentingContainer extends React.Component {
               clearFilters={this.clearFilters}
               />
           </div>
-          <div className="d-none d-md-block col-md-6 video-container">
+          <div className="d-none d-md-block col-md-6 cf-video-container">
 
           </div>
         </div>
@@ -725,7 +798,7 @@ class CommentingContainer extends React.Component {
             {endComments}
           </div>
 
-          <div className="d-none d-md-block col-md-6 adverts-container">
+          <div className="d-none d-md-block col-md-6 cf-adverts-container">
             <FeedbackFormContainer
               userId={this.props.userId}
               />
@@ -733,7 +806,7 @@ class CommentingContainer extends React.Component {
 
         </div>
         <BasicModal
-          modalButtonId={"feedback-button"}
+          modalButtonId={"cf-feedback-button"}
           modalButtonText={"Feedback / Bugs"}
           modalButtonClass="btn-primary"
           modalTitle="Please select the appropriate button for reporting."

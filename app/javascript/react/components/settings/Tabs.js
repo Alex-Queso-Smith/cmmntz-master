@@ -5,7 +5,7 @@ const LineItem = (props) => {
   if (props.value === props.display) { active = "active" }
 
   return(
-    <li className="nav-item cursor-pointer">
+    <li className="nav-item cf-cursor-pointer">
       <a data-value={props.value} className={`nav-link ${active}`} onClick={props.onClick}>{props.title}</a>
     </li>
   )

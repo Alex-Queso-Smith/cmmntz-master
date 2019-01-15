@@ -12,9 +12,9 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Route path='/register' component={UserNewContainer} />
-          <Route path='/users/:id/edit_settings' component={UserEditContainer} />
-          <Route path='/login' component={SessionLoginContainer} />
+          // <Route path='/register' component={UserNewContainer} />
+          // <Route path='/users/:id/edit_settings' component={UserEditContainer} />
+          // <Route path='/login' component={SessionLoginContainer} />
         </div>
       </Router>
     )

@@ -28,7 +28,7 @@ class UserNewOptionalContainer extends React.Component {
       }
 
       selectedAvatar =
-      <div className="text-center">
+      <div className="cf-text-center">
         <img style={style} src={`/images/avatars/${this.props.selectedAvatar}.png`} />
       </div>
     }
@@ -40,6 +40,7 @@ class UserNewOptionalContainer extends React.Component {
           label="Age Range"
           onChange={this.props.handleSliderChange}
           value={this.props.ageRange}
+          focus={true}
         />
         <Checkbox
           name="ageRangeAnon"
@@ -61,7 +62,7 @@ class UserNewOptionalContainer extends React.Component {
           checked={this.props.genderAnon}
         />
         <hr />
-        <h4 className="text-medium">Click Near Where You Live</h4>
+        <h4 className="cf-text-medium">Click Near Where You Live</h4>
         <GeoPicker
           setLatLongClick={this.props.setLatLongClick}
           x={x}
@@ -72,22 +73,22 @@ class UserNewOptionalContainer extends React.Component {
           handleChange={this.props.onChange}
           locationAnon={locationAnon}
         />
-        <div className="form-group margin-top-10px">
-          <label className="text-medium text-center" htmlFor="avatar">Avatar</label>
+        <div className="form-group cf-margin-top-10px">
+          <label className="cf-text-medium cf-text-center" htmlFor="avatar">Avatar</label>
           {selectedAvatar}
           <br />
           <Carousel
             onChange={this.props.handleAvatarClick}
           />
         </div>
-        <div className="row actions margin-top-10px">
+        <div className="row actions cf-margin-top-10px">
           <div className="col-sm-6">
-            <button id="user-registration-button-back" className="btn btn-sm btn-dark float-left" onClick={this.props.handleBackClick}>
+            <button id="user-registration-button-back" className="btn btn-sm btn-dark cf-float-left" onClick={this.props.handleBackClick}>
               Back
             </button>
           </div>
           <div className="col-sm-6">
-            <button id="user-registration-button" type="submit" className="btn btn-sm btn-dark float-right" value="Submit" disabled={this.props.disabled}>
+            <button id="user-registration-button" type="submit" className="btn btn-sm btn-dark cf-float-right" value="Submit" disabled={this.props.disabled}>
               Register
             </button>
           </div>

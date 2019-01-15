@@ -150,7 +150,7 @@ class RepliesContainer extends React.Component {
           commentReplies.unshift(body.comment)
           this.setState({ replies: commentReplies })
         }
-        
+
         this.handleSuccessfulReply()
       }
     })
@@ -290,7 +290,7 @@ class RepliesContainer extends React.Component {
     if (replies.length > 0){ // will alway show without the explicit len check
       var buttonText = this.state.showReplies ? "Hide" : "Show"
       var repliesCount;
-      var showRepliesButton = <button className="btn show-replies-button btn-sm margin-left-10px" name="showReplies" onClick={this.handleStateFlip}>{buttonText}</button>
+      var showRepliesButton = <button className="btn cf-fade-button btn-sm cf-margin-left-10px" name="showReplies" onClick={this.handleStateFlip}>{buttonText}</button>
 
       if (replies.length === 1) {
         repliesCount =
@@ -340,7 +340,7 @@ class RepliesContainer extends React.Component {
     return(
       <div className="cf-comment-replies-container">
         {repliesWrapper}
-        <div className="cf-comment-reply-field  margin-top-10px">
+        <div className="cf-comment-reply-field  cf-margin-top-10px">
         {replyField}
           <div>
             {replyErrorText}

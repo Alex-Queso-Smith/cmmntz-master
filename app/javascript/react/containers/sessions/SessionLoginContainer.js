@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
 import { FetchWithPush, CreateErrorElements, CheckInputValidation } from '../../util/CoreUtil';
@@ -36,10 +35,16 @@ class SessionLoginContainer extends React.Component {
       login.append("user_session[password]", this.state.password);
       login.append("user_session[remember_me]", this.state.rememberMe);
 
-      FetchWithPush(this, '/api/v1/user_sessions.json', '/', 'POST', 'loginErrors', login)
+      FetchWithPush(this, '/api/v1/user_sessions.json', '', 'POST', 'loginErrors', login)
       .then(body =>{
         if (!body.errors) {
-          window.location = '/articles'
+          var element = document.getElementById('cf-comments-app');
+          element.setAttribute('data-user-id', body.user_id);
+          element.setAttribute('data-user-font', `cf-${body.font}`);
+          element.setAttribute('data-user-theme', `cf-${body.theme}`);
+
+          this.props.updateDisplay("")
+          this.props.handleLogin(body.user_id, body.font, body.color)
         }
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -60,10 +65,18 @@ class SessionLoginContainer extends React.Component {
     userNameError = CreateErrorElements(loginErrors.user_name, "User Name")
     passwordError = CreateErrorElements(loginErrors.password, "Password")
 
+    var changeDisplayRegister = () => {
+      this.props.updateDisplay("register")
+    }
+
+    var changeDisplayComments = () => {
+      this.props.updateDisplay("")
+    }
+
     return(
-      <div id="user-login-container" className="login-container">
+      <div id="cf-user-login-container" className="login-container">
         <form className="form" id="login-form" onSubmit={this.handleSubmit}>
-          <h3 className="user-title text-center">Login</h3>
+          <h3 className="cf-user-title cf-text-center">Login</h3>
           <Input
             name="userName"
             label="User Name"
@@ -71,6 +84,7 @@ class SessionLoginContainer extends React.Component {
             content={this.userName}
             type="text"
             addClass={userNameClass}
+            focus={true}
           />
           {userNameError}
           <Input
@@ -87,17 +101,20 @@ class SessionLoginContainer extends React.Component {
             label="Remember Me"
             onChange={this.handleChange}
           />
-        <div className="form-group actions margin-top-10px text-center">
-            <button id="login-button" type="submit" className="btn btn-sm btn-dark margin-right-10px" value="Submit" disabled={this.state.formInvalid}>
+          <div className="form-group actions cf-margin-top-10px">
+            <button type="submit" className="btn btn-sm btn-dark cf-float-right" value="Submit" disabled={this.state.formInvalid}>
               Login
             </button>
-              <Link to='/register'>
-                <button className="btn btn-sm btn-dark margin-left-10px">
-                  Register
-                </button>
-              </Link>
           </div>
         </form>
+        {
+          // <button className="btn btn-sm btn-dark float-left" onClick={ changeDisplayComments }>
+          //   Back
+          // </button>
+        }
+        <button className="btn btn-sm btn-dark float-right cf-margin-right-10px" onClick={ changeDisplayRegister }>
+          Register
+        </button>
       </div>
     )
   }

@@ -156,10 +156,10 @@ class CommentFormContainer extends React.Component {
       RowOneVoteTypes.map((type) => {
         var visibility;
         var image = ImageSelector(type[0])
-        var opacity = selfVotes.includes(type[0]) ? "" : "translucent"
+        var opacity = selfVotes.includes(type[0]) ? "" : "cf-translucent"
 
         if (type[0].includes('blank')) {
-          visibility = "hidden"
+          visibility = "cf-hidden"
         }
 
         return(
@@ -167,7 +167,7 @@ class CommentFormContainer extends React.Component {
             key={type[0]}
             name={type[0]}
             opacity={opacity}
-            visibility={`margin-top-10px ${visibility}`}
+            visibility={`cf-margin-top-10px ${visibility}`}
             image={image}
             onClick={this.handleSelfVoteClick}
             />
@@ -178,10 +178,10 @@ class CommentFormContainer extends React.Component {
       RowTwoVoteTypes.map((type) => {
         var visibility;
         var image = ImageSelector(type[0])
-        var opacity = selfVotes.includes(type[0]) ? "" : "translucent"
+        var opacity = selfVotes.includes(type[0]) ? "" : "cf-translucent"
 
         if (type[0].includes('blank')) {
-          visibility = "hidden"
+          visibility = "cf-hidden"
         }
 
         return(
@@ -189,7 +189,7 @@ class CommentFormContainer extends React.Component {
             key={type[0]}
             name={type[0]}
             opacity={opacity}
-            visibility={`margin-top-10px ${visibility}`}
+            visibility={`cf-margin-top-10px ${visibility}`}
             image={image}
             onClick={this.handleSelfVoteClick}
             />
@@ -232,28 +232,28 @@ class CommentFormContainer extends React.Component {
         msg = artSettings.disabledMessage
       }
       commentForm =
-      <div className="deactivated-message">
+      <div className="cf-deactivated-message">
         <h4>{msg}</h4>
       </div>
     } else if (!artSettings.userCanPost) {
       commentForm =
-      <div className="deactivated-message">
+      <div className="cf-deactivated-message">
         <h4>You must have voted on at least 5 comments or replies to post a comment.</h4>
       </div>
     } else {
       commentForm =
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
-        <div className="text-center">
+        <div className="cf-text-center">
             <a target="_blank" href="https://www.classibridge.com"><img className="cf-logo-image-form" src="/images/Classifilter_Logo.png" /></a>
         </div>
         <div className="row">
           <div className="col-6">
-            <div className="float-left">
+            <div className="cf-float-left">
               <PrivacyPolicy />
             </div>
           </div>
           <div className="col-6">
-            <div className="float-right">
+            <div className="cf-float-right">
               <CommentEtiquette galleryCommentEtiquette={this.props.commentEtiquette} />
             </div>
           </div>
@@ -276,32 +276,32 @@ class CommentFormContainer extends React.Component {
         {textError}
         {approvalMsg}
         <div className="row">
-          <div className=" margin-top-10px float-left col-3">
+          <div className=" cf-margin-top-10px cf-float-left col-3">
             <button className="btn btn-sm btn-dark" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
           </div>
           <div className="col-6">
             {anonCheckBox}
           </div>
-          <div className="margin-top-10px col-3">
-            <div className="float-right">
+          <div className="cf-margin-top-10px col-3">
+            <div className="cf-float-right">
               <button id="comments-button" type="submit" className="btn btn-sm btn-dark" value="Submit" disabled={formInvalid}>
                 Submit Comment
               </button>
             </div>
           </div>
         </div>
-        <div className="row justify-content-center margin-top-10px">
+        <div className="row justify-content-center cf-margin-top-10px">
           {selfVoteButtonsRowOne}
         </div>
         <div className="row justify-content-center">
           {selfVoteButtonsRowTwo}
         </div>
-        <div className="clear"></div>
+        <div className="cf-clear"></div>
       </form>
     }
 
     return(
-      <div className="container">
+      <div className="cf-container">
         {anonModal}
         {commentForm}
         <hr />

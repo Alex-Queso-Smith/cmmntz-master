@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
-import { FetchWithPush, CreateErrorElements, CheckInputValidation, FetchDeleteBasicWithPush } from '../../util/CoreUtil';
+import { FetchWithPush, CreateErrorElements, CheckInputValidation, FetchDeleteBasic} from '../../util/CoreUtil';
 
 class UserEditPasswordContainer extends React.Component {
   state = {
@@ -42,7 +42,13 @@ class UserEditPasswordContainer extends React.Component {
       user.append("user[password]", this.state.password);
       user.append("user[password_confirmation]", this.state.passwordConfirmation);
 
-      FetchWithPush(this, `/api/v1/users/${this.props.userId}.json`, '/', 'PATCH', 'passwordErrors', user)
+      FetchWithPush(this, `/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'passwordErrors', user)
+      .then(body => {
+        if (!body.errors) {
+          alert(body.message);
+          this.setState({  passwordErrors: {} })
+        }
+      })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
     }
   }
@@ -53,7 +59,13 @@ class UserEditPasswordContainer extends React.Component {
     var confirm1 = confirm("Are you sure you wish to delete your account? Deleting your account is irreversible. Once you delete your accounts, all of your comments and interactions will become anonymous.");
 
     if (confirm1 == true) {
-      FetchDeleteBasicWithPush(this, `/api/v1/users/${this.props.userId}.json`, '/login')
+      FetchDeleteBasic(this, `/api/v1/users/${this.props.userId}.json`)
+      .then(finished => {
+
+        // this.props.updateSpaId(finished.user_id);
+        this.props.updateDisplay("login")
+        }
+      )
     }
   }
 
@@ -66,9 +78,9 @@ class UserEditPasswordContainer extends React.Component {
     passwordConfirmationError = CreateErrorElements(passwordErrors.password_confirmation, "Password Confirmation")
 
     return(
-      <div className="user-edit-password-container">
-        <form className="form" id="password-form" onSubmit={this.handleSubmit}>
-          <h1 className="user-title text-center">Edit Password</h1>
+      <div className="cf-user-edit-password-container">
+        <form className="form" id="cf-password-form" onSubmit={this.handleSubmit}>
+          <h1 className="cf-user-title cf-text-center">Edit Password</h1>
           <Input
             name="password"
             label="Password"
@@ -87,17 +99,18 @@ class UserEditPasswordContainer extends React.Component {
             addClass={passwordConfirmationClass}
           />
           {passwordConfirmationError}
-          <div className="form-group actions margin-top-10px">
-            <button onClick={this.handleDeleteAccount}  className="btn btn-danger btn-sm float-left">
-              Delete Account
-            </button>
-          </div>
-          <div className="form-group actions margin-top-10px">
-            <button type="submit" className="btn float-right btn-sm btn-dark" value="Submit" disabled={this.state.formInvalid}>
+
+          <div className="form-group actions cf-margin-top-10px">
+            <button type="submit" className="btn cf-float-right btn-sm btn-dark" value="Submit" disabled={this.state.formInvalid}>
               Update
             </button>
           </div>
         </form>
+        <div className="row justify-content-center">
+          <button onClick={this.handleDeleteAccount}  className="btn btn-danger btn-sm float-right">
+            Delete Account
+          </button>
+        </div>
       </div>
     )
   }
