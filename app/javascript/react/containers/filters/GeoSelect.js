@@ -18,9 +18,9 @@ class GeoSelect extends React.Component {
   handleChange = this.handleChange.bind(this);
 
   componentDidUpdate(prevProps, prevState){
-    if (this.props.sortOpts.radius != prevProps.sortOpts.radius) {
+    if (this.props.radius != prevProps.radius) {
 
-      var { radius } = this.props.sortOpts;
+      var { radius } = this.props;
 
       this.setState({
         radius

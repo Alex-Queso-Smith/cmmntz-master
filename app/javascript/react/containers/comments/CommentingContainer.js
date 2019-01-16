@@ -58,6 +58,7 @@ class CommentingContainer extends React.Component {
     feedbackCategory: "",
     feedbackType: "",
     tutorialShow: false,
+    filtersExpanded: false,
     feedbackErrors: {}
   }
 
@@ -135,7 +136,7 @@ class CommentingContainer extends React.Component {
 
           newUserInfo.latitude = latitude;
           newUserInfo.longitude = longitude;
-          
+
           if (this._isMounted) {
             this.setState({
               userSettings: newUserSettings,
@@ -411,7 +412,8 @@ class CommentingContainer extends React.Component {
       opts.previousCommentIds = []
       this.setState({
         sortOpts: opts,
-        [name]: value
+        [name]: value,
+        filtersExpanded: true
       })
       this.handleFilterSubmit()
     }
@@ -775,6 +777,7 @@ class CommentingContainer extends React.Component {
               handleShowFilterModal={this.handleShowFilterModal}
               clearFilters={this.clearFilters}
               userInfo={this.state.userInfo}
+              filtersExpanded={this.state.filtersExpanded}
               />
 
             <div>
