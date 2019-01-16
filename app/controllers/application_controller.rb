@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
     unless current_user #&& !current_user.guest?
       store_location
       flash[:notice] = "You must be logged in to access this page"
-      redirect_to login_url
+      redirect_to root_url
       return false
     end
   end
@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
     if current_user && !current_user.guest?
       store_location
       flash[:notice] = "You must be logged out to access this page"
-      redirect_to root_path
+      redirect_to root_url
       return false
     end
   end
