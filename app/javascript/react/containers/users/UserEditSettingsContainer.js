@@ -3,6 +3,9 @@ import React from 'react';
 import CommentFilters from '../comments/CommentFilters';
 import { FetchWithPush, FetchDidMount } from '../../util/CoreUtil';
 import { Checkbox } from '../../components/form/FormComponents';
+import { UserSortButtons } from '../../util/FilterUtil';
+import { ImageSelector } from '../../util/VoteUtil';
+import { SortDir } from '../../components/filters/SortSelect'
 
 class UserEditSettingsContainer extends React.Component {
   state = {
@@ -107,7 +110,9 @@ class UserEditSettingsContainer extends React.Component {
       })
 
     } else {
-      if (target.getAttribute('data-value')) {
+      if (name === "hideAnonAndGuest") {
+        value = !this.state.sortOpts.hideAnonAndGuest
+      } else if (target.getAttribute('data-value')) {
         value = target.getAttribute('data-value')
       } else {
         value = target.value
@@ -302,6 +307,8 @@ class UserEditSettingsContainer extends React.Component {
 
   render(){
 
+    var sortButtons = UserSortButtons(this);
+
     return(
       <div id="cf-user-edit-settings-container">
         <br />
@@ -311,6 +318,14 @@ class UserEditSettingsContainer extends React.Component {
           label={"Check to use the settings chosen by the websites I visit"}
           checked={this.state.useGalleryDefault}
         />
+        <div className="row cf-vote-row justify-content-center" >
+          {sortButtons}
+          <SortDir
+            value={this.state.sortOpts.sortDir}
+            onClick={this.handleSortDirClick}
+            image={ImageSelector(this.state.sortOpts.sortDir)}
+            />
+        </div>
         <CommentFilters
           className={"cf-margin-top-10px"}
           sortOpts={this.state.sortOpts}
@@ -321,7 +336,7 @@ class UserEditSettingsContainer extends React.Component {
           handleFilterByClick={this.handleFilterByClick}
           clearFilters={this.clearFilters}
           filtersExpanded={true}
-          onChange={this.handleSortOptCheckChange}
+          onChange={this.handleChange}
           hideFilterLink={true}
         />
         <Checkbox

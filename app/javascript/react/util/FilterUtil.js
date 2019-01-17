@@ -48,6 +48,30 @@ export const SortButtons = (object) => {
     )
   })
 }
+export const UserSortButtons = (object) => {
+  var { sortDir, sortType } = object.state.sortOpts;
+
+  return SortTypes.map((type) => {
+    var opacity, visibility, image;
+    var image = ImageSelector(type[1])
+
+    sortType == type[0] ? opacity = "" : opacity = "cf-translucent"
+
+    return(
+      <SortButton
+        key={`sort_${type[1]}`}
+        value={type[0]}
+        opacity={opacity}
+        onClick={object.handleChange}
+        image={image}
+        visibility={''}
+        className="cf-tooltip-container"
+        title={type[2]}
+        row="top"
+        />
+    )
+  })
+}
 
 export const RowOneFilterTypes = [
   ["top", "Top"],

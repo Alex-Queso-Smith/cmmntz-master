@@ -836,8 +836,6 @@ class CommentingContainer extends React.Component {
               option={this.state.presetFilter}
               />
 
-
-
             <hr />
 
             <div className="cf-margin-top-bottom-10px cf-results-count-container">
