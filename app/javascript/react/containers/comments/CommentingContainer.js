@@ -115,6 +115,7 @@ class CommentingContainer extends React.Component {
 
           newSortOpts.sortDir = sort_dir
           newSortOpts.sortType = sort_type
+          newSortOpts.hybridSortSelect = sort_type+"-"+sort_dir
           newSortOpts.commentsFrom = comments_from
           newSortOpts.votesFrom = votes_from
           newSortOpts.filterList = filter_list.length != 0 ? filter_list.split(',') : []
