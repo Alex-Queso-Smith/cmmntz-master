@@ -295,12 +295,12 @@ class RepliesContainer extends React.Component {
 
       if (replies.length === 1) {
         repliesCount =
-        <span className="btn cf-fade-button btn-sm cf-replies-count">
+        <span onClick={ () => { this.setState({ showReplies: !this.state.showReplies }) } } className="btn cf-fade-button btn-sm cf-replies-count">
           {replies.length} reply
         </span>
       } else {
         repliesCount =
-        <span className="btn cf-fade-button btn-sm cf-replies-count">
+        <span onClick={ () => { this.setState({ showReplies: !this.state.showReplies }) } } className="btn cf-fade-button btn-sm cf-replies-count">
           {replies.length} replies
         </span>
       }
