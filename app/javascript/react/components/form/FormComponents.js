@@ -83,7 +83,7 @@ export const GenderSelector = props => {
 
   return(
     <div>
-      <label className="cf-text-medium">Gender</label>
+      <label className="cf-text-medium">{props.label}</label>
       <div id="gender-selector" className="row cf-margin-top-bottom-10px justify-content-center">
         {genderButtons}
       </div>
