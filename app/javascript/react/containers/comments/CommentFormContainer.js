@@ -331,7 +331,7 @@ class CommentFormContainer extends React.Component {
               placeholder="Type your comment here"
               value={text}
               onChange={this.handleChange}
-              rows={7}
+              rows={3}
               />
           </div>
         </div>
