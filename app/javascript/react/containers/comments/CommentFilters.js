@@ -57,8 +57,8 @@ class CommentFilters extends React.Component {
       imageSrc = `/images/icons-v2/anonymous-selected.png`
     }
     anonCheckBox =
-    <div className="col-2">
-      <img className={`cf-vote-btn cf-cursor-pointer cf-margin-top-10px`} onClick={this.props.onChange} name='hideAnonAndGuest' src={imageSrc} />
+    <div>
+      <img className={`cf-vote-btn cf-cursor-pointer`} onClick={this.props.onChange} name='hideAnonAndGuest' src={imageSrc} />
       {this.state.hideAnonAndGuest}
     </div>
 
@@ -89,15 +89,16 @@ class CommentFilters extends React.Component {
 
         <hr />
 
+        <h5 className="cf-open-close cf-text-center">Show only comments from</h5>
+
         <div className="row">
           <div className="col-6 cf-filter-from-section">
-            <h4 className="cf-open-close">Show only comments from:</h4>
             <FilterCommentsBy
               commentsFrom={this.props.sortOpts.commentsFrom}
               onClick={this.props.handleFilterByClick}
               />
           </div>
-          <div className="col-6 cf-filter-from-section">
+          <div className="col-6 cf-filter-from-section justify-content-center">
             {anonCheckBox}
           </div>
         </div>
@@ -107,7 +108,7 @@ class CommentFilters extends React.Component {
           <div className="col-12 cf-filter-gender-section">
             <GenderSelector
               name="gender"
-              label="Gender"
+              label=""
               onChange={this.props.handleFilterByClick}
               value={this.props.sortOpts.gender}
             />
