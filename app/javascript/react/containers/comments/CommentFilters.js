@@ -1,10 +1,11 @@
 import React from 'react'
 
-import { Checkbox } from '../../components/form/FormComponents';
+import { AgeRangeSelector, AgeSlider, GenderSelector, Checkbox  } from '../../components/form/FormComponents';
 import { SortDir, SortButton } from '../../components/filters/SortSelect'
 import { ImageSelector } from '../../util/VoteUtil';
 import { SortButtons, FilterButtonsRowOne, FilterButtonsRowTwo, FilterCommentsBy, FilterVotesBy } from '../../util/FilterUtil'
 import GeoSelect from '../filters/GeoSelect';
+import PreSetFilters from '../../components/filters/PreSetFilters';
 
 class CommentFilters extends React.Component {
   state = {
@@ -18,6 +19,7 @@ class CommentFilters extends React.Component {
     if (this.props.sortOpts.hideAnonAndGuest != this.state.hideAnonAndGuest) {
       this.setState({ hideAnonAndGuest: this.props.sortOpts.hideAnonAndGuest })
     }
+
     if (this.props.filtersExpanded != prevProps.filtersExpanded) {
       this.setState({ filtersExpanded: this.props.filtersExpanded })
     }
@@ -29,18 +31,44 @@ class CommentFilters extends React.Component {
 
   render(){
 
-    var sortButtons = SortButtons(this)
     var filterButtonsRowOne = FilterButtonsRowOne(this)
     var filterButtonsRowTwo = FilterButtonsRowTwo(this)
 
-    const { showAdvancedFilters, radius, x, y, latitude, longitude, geoPin, hideAnonAndGuest } = this.props.sortOpts
+    const { showAdvancedFilters, radius, x, y, latitude, longitude, geoPin, hideAnonAndGuest } = this.props.sortOpts;
 
-    var advancedFilters, advancedFiltersToggle;
-    if (!this.props.hideAdvancedLink == true) {
+    var expandImg = this.state.filtersExpanded ? "minus.png" : "plus.png"
+    var spanExpand;
+    if (!this.props.hideFilterLink){
+      spanExpand =
+      <span className="cf-cursor-pointer cf-open-close" onClick={this.expandFilters}>
+        Filters <img src={`/images/icons-v2/${expandImg}`} />
+      </span>
+    } else {
+      spanExpand =
+      <span className="cf-open-close">
+        Filters
+      </span>
+    }
 
-      if (showAdvancedFilters == true) {
-        advancedFilters =
+    var anonCheckBox;
+    var imageSrc = `/images/icons-v2/anonymous-unselected.png`
+
+    if (!hideAnonAndGuest) {
+      imageSrc = `/images/icons-v2/anonymous-selected.png`
+    }
+    anonCheckBox =
+    <div className="col-2">
+      <img className={`cf-vote-btn cf-cursor-pointer cf-margin-top-10px`} onClick={this.props.onChange} name='hideAnonAndGuest' src={imageSrc} />
+      {this.state.hideAnonAndGuest}
+    </div>
+
+    var filters;
+    if (this.state.filtersExpanded) {
+      var geoShow;
+      if (this.props.showGeo) {
+        geoShow =
         <div id="advanced-filters">
+          <br />
           <GeoSelect
             parentSetLatLongClick={this.props.parentSetLatLongClick}
             radius={radius}
@@ -48,34 +76,8 @@ class CommentFilters extends React.Component {
             sortOpts={this.props.sortOpts}
             />
         </div>
-
-        advancedFiltersToggle =
-        <div className="row">
-          <div className="col-sm-12">
-            <button onClick={this.props.handleAdvancedFiltershow} className="btn cf-fade-button cf-float-left">
-              hide advanced filters
-            </button>
-          </div>
-        </div>
-      } else {
-        advancedFiltersToggle =
-        <div className="row">
-          <div className="col-sm-12">
-            <button onClick={this.props.handleAdvancedFiltershow}  className="btn cf-fade-button cf-float-left">
-              show advanced filters
-            </button>
-          </div>
-        </div>
       }
-    }
 
-    var spanExpand = <span className="cf-cursor-pointer" onClick={this.expandFilters}>  +  </span>
-    if (this.state.filtersExpanded) {
-      spanExpand = <span className="cf-cursor-pointer" onClick={this.expandFilters}>  -  </span>
-    }
-
-    var filters;
-    if (this.state.filtersExpanded) {
       filters =
       <div className="cf-filters-container">
         <div className="row justify-content-center cf-vote-row">
@@ -84,66 +86,79 @@ class CommentFilters extends React.Component {
         <div className="row justify-content-center cf-vote-row">
           {filterButtonsRowTwo}
         </div>
-        <br/>
-        <div className="row cf-checkbox-row">
-          <Checkbox
-            className="col-12 cf-margin-top-bottom-10px"
-            name={"hideAnonAndGuest"}
-            checked={this.state.hideAnonAndGuest}
-            label="Hide Anonymous and Guest Comments"
-            onChange={this.props.onChange}
-          />
+
+        <hr />
+
+        <div className="row">
+          <div className="col-6 cf-filter-from-section">
+            <h4 className="cf-open-close">Show only comments from:</h4>
+            <FilterCommentsBy
+              commentsFrom={this.props.sortOpts.commentsFrom}
+              onClick={this.props.handleFilterByClick}
+              />
+          </div>
+          <div className="col-6 cf-filter-from-section">
+            {anonCheckBox}
+          </div>
         </div>
+
+        <hr />
+        <div className="row cf-justify-content-center">
+          <div className="col-12 cf-filter-gender-section">
+            <GenderSelector
+              name="gender"
+              label="Gender"
+              onChange={this.props.handleFilterByClick}
+              value={this.props.sortOpts.gender}
+            />
+          </div>
+        </div>
+
+        <hr />
+        <div className="row cf-justify-content-center">
+          <div className="col-12 cf-filter-age-range-section">
+            <AgeSlider
+              name="ageRange"
+              label="Age Range"
+              onChange={this.props.handleFilterByClick}
+              value={this.props.sortOpts.ageRange}
+
+              noRangeMessageOverride="No Preference"
+            />
+          </div>
+        </div>
+        <hr />
+        {geoShow}
+        <hr />
       </div>
+
     }
 
     const marginTop0 = {
       marginTop: "0px"
     }
 
+    var handlePresetFilter = (event) => {
+      this.props.handlePresetFilterChange(event);
+      this.setState({ filtersExpanded: true })
+    }
+
     return(
       <div className={`cf-filter-block ${this.props.className}`}>
-
-        <div className="row cf-vote-row" >
-          <h4 className="col-2 col-sm-2 col-md-2">Sort</h4>
-
-          {sortButtons}
-          <SortDir
-            value={this.props.sortOpts.sortDir}
-            onClick={this.props.handleSortDirClick}
-            image={ImageSelector(this.props.sortOpts.sortDir)}
-          />
-        </div>
         <br/>
         <div className="row">
           <div className="col-6">
-            <h4 className="cf-line-height-2-25">Filters{spanExpand}</h4>
+            <h4 className="cf-line-height-2-25">{spanExpand}</h4>
           </div>
           <div className="col-6">
             <button style={marginTop0} className="cf-fade-button btn btn-sm cf-float-right" onClick={this.props.clearFilters}>Clear</button>
           </div>
         </div>
         {filters}
-        <div className="row">
-          <div className="col-sm-6 cf-filter-from-section">
-            <h4>Show only comments from:</h4>
-            <FilterCommentsBy
-              commentsFrom={this.props.sortOpts.commentsFrom}
-              onClick={this.props.handleFilterByClick}
-              />
-          </div>
-          <div className="col-sm-6 cf-filter-from-section">
-            <h4>Count only Votes By:</h4>
-            <FilterVotesBy
-              votesFrom={this.props.sortOpts.votesFrom}
-              onClick={this.props.handleFilterByClick}
-              />
-          </div>
-        </div>
-        <br />
-        {advancedFiltersToggle}
-        {advancedFilters}
-        <hr />
+        <PreSetFilters
+          onChange={handlePresetFilter}
+          option={this.props.option}
+        />
       </div>
     )
   }

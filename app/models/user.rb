@@ -21,7 +21,9 @@ class User < ApplicationRecord
     censor: :string,
     show_censored_comments: :bool,
     hide_anon_and_guest: :bool,
-    settings_updated: :bool
+    settings_updated: :bool,
+    age_range_search: :string,
+    gender_search: :string
   }
 
   GENDERS = [0, 1, 2]

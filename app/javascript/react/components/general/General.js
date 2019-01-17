@@ -4,7 +4,6 @@ export const AgeRangeImageSelector = (props) => {
   var age = props.age
   var ageRange, ageImage;
 
-
   switch (age.toString()) {
     case "":
       ageRange = "Prefer Not To Say"

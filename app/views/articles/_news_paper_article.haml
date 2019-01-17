@@ -1,0 +1,17 @@
+.article-body.row.justify-content-center
+  .body_text.sentinel
+    = markdown(@article.body)
+.center-block
+  = article_image @article.top_image
+- if !@article.body_2.blank?
+  .article-body.row.justify-content-center
+    .body_text.sentinel
+      = markdown(@article.body_2)
+.center-block
+  = article_image @article.middle_image
+- if !@article.body_3.blank?
+  .article-body.row.justify-content-center
+    .body_text.sentinel
+      = markdown(@article.body_3)
+.center-block
+  = article_image @article.footer_image

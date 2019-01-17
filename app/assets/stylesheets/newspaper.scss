@@ -221,6 +221,21 @@ $breakpoint-phone: 575px;
   padding: 20px 20px;
   border-bottom: 1px solid $grayline;
 
+  .vid-box {
+    position: relative;
+    width: 90%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    .video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 90%;
+      height: 90%;
+    }
+  }
+
   p {
     font-size: 1.25em;
     line-height: 1.5em;

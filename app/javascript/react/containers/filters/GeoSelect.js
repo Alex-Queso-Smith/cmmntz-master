@@ -3,14 +3,14 @@ import React from 'react'
 class GeoSelect extends React.Component {
   state = {
     radius: this.props.sortOpts.radius,
+    geoPin: {
+      x: '',
+      y: ''
+    },
     latitude: '',
     longitude: '',
     x: '',
     y: '',
-    geoPin: {
-      x: '',
-      y: ''
-    }
   }
 
   _onMouseMove = this._onMouseMove.bind(this);
@@ -29,13 +29,15 @@ class GeoSelect extends React.Component {
   }
 
   componentDidMount(){
-    var { latitude, longitude, geoPin } = this.props.userInfo;
+    if (this.props.userInfo.geoPin) {
+      var { latitude, longitude, geoPin } = this.props.userInfo;
 
-    this.setState({
-      geoPin,
-      latitude,
-      longitude
-    })
+      this.setState({
+        geoPin,
+        latitude,
+        longitude
+      })
+    }
   }
 
   handleChange(event){

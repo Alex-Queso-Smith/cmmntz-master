@@ -45,8 +45,8 @@ class CommentFormContainer extends React.Component {
 
   handleChange(event){
     const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
+    const value = target.type === "checkbox" ? target.checked : name === 'anonymous' ? !this.state.anonymous : target.value;
 
     if (name === 'anonymous' && !this.state.anonModalShown) {
       this.handleShowAnonModal()
@@ -150,6 +150,59 @@ class CommentFormContainer extends React.Component {
       textError = CreateErrorElements(commentFormErrors.text, "Comment text")
     }
 
+    var userNameButton, buttonOne, buttonTwo;
+    if (this.props.userSettings.guest) {
+      var changeDisplayLogin = () => {
+        this.props.updateDisplay("login")
+      }
+
+      var changeDisplayRegister = () => {
+        this.props.updateDisplay("register")
+      }
+
+      userNameButton =
+      <div className="col-6 cf-login-statement">
+        Guest
+      </div>
+      buttonOne =
+      <div className="col-2">
+        <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayLogin }>Login</button>
+      </div>
+      buttonTwo =
+      <div className="col-2">
+        <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayRegister }>Register</button>
+      </div>
+
+    } else {
+
+      var changeDisplaySettings = () => {
+        this.props.updateDisplay("settings")
+      }
+
+      var userNameStyle;
+      if (this.state.anonymous) {
+        userNameStyle = {
+          textDecoration: "line-through"
+        }
+      }
+
+      userNameButton =
+      <div className="col-6 cf-login-statement cf-cursor-pointer" style={userNameStyle}  onClick={ changeDisplaySettings }>
+        {this.props.userInfo.userName}
+      </div>
+      buttonOne =
+      <div className="col-2">
+        <button className="btn btn-sm cf-fade-button" onClick={ changeDisplaySettings }>
+          <img className={`cf-vote-btn cf-cursor-pointer`} src="/images/icons-v2/gear.png" />
+        </button>
+      </div>
+      buttonTwo =
+      <div className="col-2">
+        <button className="btn btn-sm cf-fade-button" onClick={ this.props.tempLogout }>Logout</button>
+      </div>
+
+    }
+
     if (selfVoteStatus) {
 
       selfVoteButtonsRowOne =
@@ -189,7 +242,8 @@ class CommentFormContainer extends React.Component {
             key={type[0]}
             name={type[0]}
             opacity={opacity}
-            visibility={`cf-margin-top-10px ${visibility}`}
+            className="cf-self-vote-button"
+            visibility={`${visibility}`}
             image={image}
             onClick={this.handleSelfVoteClick}
             />
@@ -214,14 +268,16 @@ class CommentFormContainer extends React.Component {
 
     var anonCheckBox;
     if (!userSettings.guest) {
+      var imageSrc = `/images/icons-v2/anonymous-unselected.png`
+
+      if (this.state.anonymous) {
+        imageSrc = `/images/icons-v2/anonymous-selected.png`
+      }
+
       anonCheckBox =
-      <Checkbox
-        name="anonymous"
-        onChange={this.handleChange}
-        checked={this.state.anonymous}
-        label="Submit Anonymously"
-        className=""
-      />
+      <div className="col-2">
+        <img className={`cf-vote-btn cf-cursor-pointer cf-margin-top-10px`} onClick={this.handleChange} name='anonymous' src={imageSrc} />
+      </div>
     }
 
     var commentForm;
@@ -241,6 +297,7 @@ class CommentFormContainer extends React.Component {
         <h4>You must have voted on at least 5 comments or replies to post a comment.</h4>
       </div>
     } else {
+
       commentForm =
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
         <div className="cf-text-center">
@@ -259,7 +316,12 @@ class CommentFormContainer extends React.Component {
           </div>
         </div>
         <hr className="cf-login-hr" />
-        {this.props.loginStatement}
+        <div className="cf-login-statement-container row">
+          {userNameButton}
+          {anonCheckBox}
+          {buttonOne}
+          {buttonTwo}
+        </div>
         <div className="row">
           <div className="col-12">
             <Textarea
@@ -276,25 +338,22 @@ class CommentFormContainer extends React.Component {
         {textError}
         {approvalMsg}
         <div className="row">
-          <div className=" cf-margin-top-10px cf-float-left col-3">
+          <div className=" cf-margin-top-10px cf-float-left col-2">
             <button className="btn btn-sm btn-dark" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
           </div>
-          <div className="col-6">
-            {anonCheckBox}
-          </div>
-          <div className="cf-margin-top-10px col-3">
+          <div id="cf-filters-top" />
+          <div className="col-8">
+            <div className="row justify-content-center">
+              {selfVoteButtonsRowTwo}
+            </div>
+            </div>
+          <div className="cf-margin-top-10px col-2">
             <div className="cf-float-right">
               <button id="comments-button" type="submit" className="btn btn-sm btn-dark" value="Submit" disabled={formInvalid}>
-                Submit Comment
+                Submit
               </button>
             </div>
           </div>
-        </div>
-        <div className="row justify-content-center cf-margin-top-10px">
-          {selfVoteButtonsRowOne}
-        </div>
-        <div className="row justify-content-center">
-          {selfVoteButtonsRowTwo}
         </div>
         <div className="cf-clear"></div>
       </form>

@@ -67,7 +67,9 @@ class Api::V1::UsersController < ApiController
         :censor,
         :show_censored_comments,
         :settings_updated,
-        :hide_anon_and_guest
+        :hide_anon_and_guest,
+        :age_range_search,
+        :gender_search
       )
     end
 end

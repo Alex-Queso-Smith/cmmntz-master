@@ -41,7 +41,9 @@ class SpaController extends React.Component {
     })
   }
 
-  handleUpdateSpaId(id){
+  handleUpdateSpaId(id, event){
+    event.preventDefault();
+
     this.setState({
       userId: id,
       themeSettings: {

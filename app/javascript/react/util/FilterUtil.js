@@ -25,7 +25,7 @@ export const SortTypes = [
 ]
 
 export const SortButtons = (object) => {
-  var { sortDir, sortType } = object.props.sortOpts
+  var { sortDir, sortType } = object.props.sortOpts;
 
   return SortTypes.map((type) => {
     var opacity, visibility, image;
@@ -117,7 +117,7 @@ export const FilterButtonsRowTwo = (object) => {
     return(
       <SortButton
         key={`filter_${type[1]}`}
-        className={`${tooltipClass}`}
+        className={`${tooltipClass} cf-margin-bottom-15px`}
         value={`${type[0]}_percent`}
         onClick={handleFilterClickParent}
         image={image}
@@ -131,8 +131,7 @@ export const FilterButtonsRowTwo = (object) => {
 }
 export const FilterFromTypes = [
   ["", "Everyone"],
-  ["network", "Network"],
-  ["friends", "Friends"]
+  ["friends", "Starred"]
 ]
 
 export const FilterCommentsBy = (props) => {

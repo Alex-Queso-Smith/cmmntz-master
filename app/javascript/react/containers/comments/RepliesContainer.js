@@ -102,7 +102,8 @@ class RepliesContainer extends React.Component {
     this.setState({
       replyErrors: {},
       replyText: '',
-      showReplies: true
+      showReplies: true,
+      replyActive: false
     })
   }
 
@@ -294,12 +295,12 @@ class RepliesContainer extends React.Component {
 
       if (replies.length === 1) {
         repliesCount =
-        <span className="cf-replies-count">
+        <span className="btn cf-fade-button btn-sm cf-replies-count">
           {replies.length} reply
         </span>
       } else {
         repliesCount =
-        <span className="cf-replies-count">
+        <span className="btn cf-fade-button btn-sm cf-replies-count">
           {replies.length} replies
         </span>
       }
@@ -331,7 +332,6 @@ class RepliesContainer extends React.Component {
       repliesWrapper =
       <div className="cf-comment-replies-wrapper">
         {repliesCount}
-        {showRepliesButton}
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         {repliesList}
       </div>

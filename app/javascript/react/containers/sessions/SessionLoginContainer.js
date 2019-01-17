@@ -111,7 +111,7 @@ class SessionLoginContainer extends React.Component {
           //   Back
           // </button>
         }
-        <button className="btn btn-sm btn-dark float-right cf-margin-right-10px" onClick={ changeDisplayRegister }>
+        <button className="btn btn-sm btn-dark float-left cf-margin-right-10px" onClick={ changeDisplayRegister }>
           Register
         </button>
       </div>

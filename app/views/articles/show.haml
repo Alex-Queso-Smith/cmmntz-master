@@ -9,23 +9,11 @@
     %h4.grey= @article.publish_date.strftime("%B %d, %Y")
     .article-header-image
       = article_banner @article
-  .article-body.row.justify-content-center
-    .body_text.sentinel
-      = markdown(@article.body)
-  .center-block
-    = article_image @article.top_image
-  - if !@article.body_2.blank?
-    .article-body.row.justify-content-center
-      .body_text.sentinel
-        = markdown(@article.body_2)
-  .center-block
-    = article_image @article.middle_image
-  - if !@article.body_3.blank?
-    .article-body.row.justify-content-center
-      .body_text.sentinel
-        = markdown(@article.body_3)
-  .center-block
-    = article_image @article.footer_image
+
+  - if !@article.youtube_url.blank?
+    = render "youtube_video", article: @article
+  - else @article.body
+    = render "news_paper_article", article: @article
   .article-footer
     .row.justify-content-center
       %p Hope you enjoyed the article. Now it's time to beta test the ClassiFilter widget!

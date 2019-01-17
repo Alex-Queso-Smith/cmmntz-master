@@ -50,6 +50,7 @@ class UserEditDemographicsContainer extends React.Component {
         default:
           gender = ""
       }
+
       var noLocation = false
       if (user.latitude === "" ) {
         noLocation = true

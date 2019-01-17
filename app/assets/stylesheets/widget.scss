@@ -114,7 +114,7 @@ $breakpoint-phone: 575px;
 
     .cf-filter-btn {
       border-radius: 0;
-      width: 33%
+      width: 43%
     }
   }
 
@@ -168,6 +168,10 @@ $breakpoint-phone: 575px;
   margin-top: 15px;
 }
 
+.cf-margin-bottom-15px {
+  margin-bottom: 15px;
+}
+
 .cf-margin-top-5px {
   margin-top: 5px;
 }
@@ -176,13 +180,14 @@ $breakpoint-phone: 575px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 .cf-margin-top-bottom-15px {
   margin-top: 15px;
   margin-bottom: 15px;
 }
 
 .cf-margin-bottom-10px {
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .cf-margin-left-10px {
@@ -273,7 +278,10 @@ h4 {
   font-size: 1em;
 }
 
-
+hr {
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
 
 a:hover {
   background-color: rgba(255,255,255,0.0);
@@ -402,7 +410,8 @@ a:hover {
 }
 
 #cf-preset-filters-selector {
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  margin-top: 15px;
 
   h4 {
     margin-bottom: 0px;
@@ -435,14 +444,15 @@ a:hover {
 
 #cf-feedback-button {
   display: none;
-  z-index: 50;
+  z-index: 100;
 }
 @media (max-width: $breakpoint-phone) {
   #cf-feedback-button {
     display: block;
     position: fixed;
-    bottom: 40px;
+    bottom: 10px;
     right: 15px;
+    z-index: 100;
   }
 }
 
@@ -462,5 +472,42 @@ a:hover {
   p {
     font-weight: 500;
     font-size: 16px;
+  }
+}
+
+.cf-self-vote-button {
+  margin: 13px 0px 0px 10px !important;
+}
+
+.cf-results-count-container {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 96px;
+  font-size: 1.25em;
+  background: #ffffff;
+  z-index: 100;
+
+  @media (max-width: 1000px) {
+    top: 45px;
+  }
+  @media (max-width: $breakpoint-tablet) {
+    top: 45px;
+  }
+  @media (max-width: $breakpoint-phone) {
+    top: 70px;
+  }
+}
+
+.cf-open-close {
+  font-weight: 700;
+  img {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.cf-link-no-ul {
+  &:hover {
+    text-decoration: none;
   }
 }

@@ -11,8 +11,9 @@ export const AgeSlider = props => {
     age={selectedRange}
   />
 
+  var { noRangeMessageOverride } = props
   if (selectedRange == "") {
-    ageRange = "Prefer Not To Say"
+    ageRange = noRangeMessageOverride ? noRangeMessageOverride : "Prefer Not To Say"
     selectedRange = "10"
   } else {
     var age = parseInt(selectedRange)
@@ -200,21 +201,20 @@ const randomAvatars = [
 
 export const NukaCarousel = props => {
 
+  var style = {
+    height: '55px',
+    width: '55px'
+  }
+
   var avatarImages = newAvatars.map((a) => {
-    var style = {
-      height: '55px',
-      width: '55px'
-    }
+
     return(
       <img style={style} onClick={props.onChange} name={`${a}_ffffff_000000`} key ={a} src={`/images/avatars/${a}_ffffff_000000.png`} />
     )
   })
 
   var redImages = newAvatars.map((a) => {
-    var style = {
-      height: '55px',
-      width: '55px'
-    }
+
     return(
       <img style={style} onClick={props.onChange} name={`${a}_ffffff_ff0000`} key ={a} src={`/images/avatars/${a}_ffffff_ff0000.png`} />
     )
@@ -228,10 +228,7 @@ export const NukaCarousel = props => {
   }
 
   var randomImages = randomAvatars.map((a) => {
-    var style = {
-      height: '55px',
-      width: '55px'
-    }
+
     return(
       <img style={style} onClick={props.onChange} name={`${a}`} key ={a} src={`/images/avatars/${a}.png`} />
     )

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_10_203506) do
+ActiveRecord::Schema.define(version: 2019_01_16_192157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_203506) do
     t.datetime "updated_at", null: false
     t.text "body_2"
     t.text "body_3"
+    t.string "youtube_url"
     t.index ["article_category_id"], name: "index_articles_on_article_category_id"
     t.index ["author_id"], name: "index_articles_on_author_id"
     t.index ["publish_date"], name: "index_articles_on_publish_date"

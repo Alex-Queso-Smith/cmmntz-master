@@ -8,6 +8,7 @@ import CommentFilters from './CommentFilters';
 import { CreateErrorElements, FetchDidMount, FetchWithUpdate, FetchBasic, FetchIndividual, FetchDeleteBasic } from '../../util/CoreUtil';
 import Modal from '../../components/modals/Modal';
 import BasicModal from '../../components/modals/BasicModal';
+import HybridSortSelect from '../../components/filters/HybridSortSelect'
 import PreSetFilters from '../../components/filters/PreSetFilters';
 import { presetOptions } from '../../components/filters/SortSelect';
 import { BugForm } from '../../components/form/BetaTesting';
@@ -29,9 +30,9 @@ class CommentingContainer extends React.Component {
     comments: [],
     commentFormErrors: {},
     sortOpts: {
-      showAdvancedFilters: false,
       sortDir: 'desc',
-      sortType: 'created_at',
+      sortType: 'funny_percent',
+      hybridSortSelect: 'funny_percent-desc',
       notFilterList: [],
       filterList: [],
       page: 1,
@@ -40,7 +41,9 @@ class CommentingContainer extends React.Component {
       radius: '',
       latitude: '',
       longitude: '',
-      hideAnonAndGuest: false,
+      gender: '',
+      ageRange: '',
+      hideAnonAndGuest: true,
       setFrom: 'gallery',
       previousCommentIds: []
     },
@@ -68,7 +71,6 @@ class CommentingContainer extends React.Component {
   handleTopChange = this.handleTopChange.bind(this);
   handleLoadMoreComments = this.handleLoadMoreComments.bind(this);
   handleFilterByClick = this.handleFilterByClick.bind(this);
-  handleAdvancedFiltershow = this.handleAdvancedFiltershow.bind(this);
   setLatLongClick = this.setLatLongClick.bind(this);
 
   handleChange = this.handleChange.bind(this);
@@ -76,6 +78,7 @@ class CommentingContainer extends React.Component {
   handleFilterSubmitMan = this.handleFilterSubmitMan.bind(this);
   handleSortDirClick = this.handleSortDirClick.bind(this);
   handleFilterClick = this.handleFilterClick.bind(this);
+  handleSortSelectChange = this.handleSortSelectChange.bind(this);
   submitterMan = this.submitterMan.bind(this);
   deleteComment = this.deleteComment.bind(this);
   banUser = this.banUser.bind(this);
@@ -107,7 +110,7 @@ class CommentingContainer extends React.Component {
           if (guest) {
             this.props.updateDisplay("login")
           }
-          var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, hide_anon_and_guest, set_from } = userData.user.sort_opts
+          var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, hide_anon_and_guest, set_from, gender_search, age_range_search } = userData.user.sort_opts
           var censorComments = censor === "true" || censor == true ? true : false
 
           newSortOpts.sortDir = sort_dir
@@ -119,6 +122,22 @@ class CommentingContainer extends React.Component {
           newSortOpts.censor = censor
           newSortOpts.setFrom = set_from
           newSortOpts.hideAnonAndGuest = hide_anon_and_guest
+          newSortOpts.ageRange = age_range_search
+
+          switch (gender_search) {
+            case "0":
+                gender_search = "female"
+              break;
+            case "1":
+                gender_search = "other"
+              break;
+            case "2":
+                gender_search = "male"
+              break;
+            default:
+              gender_search = ""
+          }
+          newSortOpts.gender = gender_search
 
           var newUserSettings = this.state.userSettings;
           newUserSettings.admin = admin;
@@ -176,6 +195,8 @@ class CommentingContainer extends React.Component {
       value = target.checked
     } else if (target.getAttribute('data-value')) {
       value = target.getAttribute('data-value')
+    } else if (name === "hideAnonAndGuest") {
+      value = !this.state.sortOpts.hideAnonAndGuest
     } else {
       value = target.value
     };
@@ -185,6 +206,7 @@ class CommentingContainer extends React.Component {
     opts[name] = value
     opts.page = 1
     opts.previousCommentIds = []
+    opts.hybridSortSelect = opts.sortType+"-"+opts.sortDir
     this.setState({ sortOpts: opts })
   };
 
@@ -308,7 +330,7 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit(){
     var search = new FormData();
 
-    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius, hideAnonAndGuest, previousCommentIds } = this.state.sortOpts;
+    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius, gender, ageRange, hideAnonAndGuest, previousCommentIds } = this.state.sortOpts;
     var { artType, artId } = this.props;
     search.append("art_type", artType)
     search.append("art_id", artId)
@@ -334,6 +356,25 @@ class CommentingContainer extends React.Component {
 
     if (previousCommentIds.length) {
       search.append("search[previous_comment_ids]", previousCommentIds)
+    }
+
+    if (ageRange) {
+      search.append("search[age_range]", ageRange)
+    }
+
+    if (gender) {
+      switch (gender) {
+        case "female":
+            gender = 0
+          break;
+        case "other":
+            gender = 1
+          break;
+        case "male":
+            gender = 2
+          break;
+      }
+      search.append("search[gender]", gender)
     }
 
     FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
@@ -365,12 +406,6 @@ class CommentingContainer extends React.Component {
     setTimeout(function() { //Start the timer
       this.handleFilterSubmit();
     }.bind(this), 1)
-  }
-
-  handleAdvancedFiltershow(){
-    var newOpts = this.state.sortOpts
-    newOpts.showAdvancedFilters = !newOpts.showAdvancedFilters
-    this.setState({ sortOpts: newOpts })
   }
 
   clearFilters(){
@@ -407,13 +442,11 @@ class CommentingContainer extends React.Component {
       opts.radius = filter.radius;
       opts.sortType = filter.sortType;
       opts.commentsFrom = filter.commentsFrom;
-      opts.showAdvancedFilters = true;
       opts.page = 1;
       opts.previousCommentIds = []
       this.setState({
         sortOpts: opts,
         [name]: value,
-        filtersExpanded: true
       })
       this.handleFilterSubmit()
     }
@@ -427,6 +460,7 @@ class CommentingContainer extends React.Component {
     opts.sortDir = value
     opts.page = 1
     opts.previousCommentIds = []
+    opts.hybridSortSelect = opts.sortType+"-"+opts.sortDir
 
     this.setState({
       sortOpts: opts
@@ -438,9 +472,31 @@ class CommentingContainer extends React.Component {
   handleFilterByClick(event){
     const target = event.target;
     const name = target.name;
-    const value = target.value;
-
+    var value;
     var opts = this.state.sortOpts
+
+    switch (name) {
+      case "gender":
+        value = target.getAttribute('value')
+        if (value === opts.gender) {
+          value = ""
+        }
+        break;
+
+      case "ageRange":
+        value = target.value
+        if (value === "15") {
+          value = "13"
+        } else if (value === "10") {
+          value = ""
+        }
+        break;
+      default:
+        value = target.value
+    }
+
+
+
     opts[name] = value;
     opts.page = 1
     opts.previousCommentIds = []
@@ -451,6 +507,23 @@ class CommentingContainer extends React.Component {
     })
 
     this.submitterMan(event);
+  }
+
+  handleSortSelectChange(event) {
+    var value = event.target.value
+    var newOpts = this.state.sortOpts
+    newOpts.hybridSortSelect = value
+
+
+    if (value != "") {
+      var parsed = value.split("-")
+      newOpts.sortType = parsed[0]
+      newOpts.sortDir = parsed[1]
+      this.setState({sortOpts: newOpts})
+      this.submitterMan(event)
+    } else {
+      this.setState({sortOpts: newOpts})
+    }
   }
 
   handleFilterClick(event){
@@ -580,18 +653,18 @@ class CommentingContainer extends React.Component {
   }
 
   handleShowFilterModal(){
-    if (this.state.showFilterModal) {
-      document.body.classList.remove("cf-modal-locked");
-      this.setState({
-        showFilterModal: false,
-        filterModalShown: true
-      })
-    } else if (!this.state.filterModalShown) {
-      document.body.classList.add("cf-modal-locked");
-      this.setState({
-        showFilterModal: true
-      })
-    }
+    // if (this.state.showFilterModal) {
+    //   document.body.classList.remove("cf-modal-locked");
+    //   this.setState({
+    //     showFilterModal: false,
+    //     filterModalShown: true
+    //   })
+    // } else if (!this.state.filterModalShown) {
+    //   document.body.classList.add("cf-modal-locked");
+    //   this.setState({
+    //     showFilterModal: true
+    //   })
+    // }
   }
 
   tempLogout(){
@@ -689,53 +762,31 @@ class CommentingContainer extends React.Component {
 
     var filteredCount = this.state.grandTotalComments - this.state.totalComments
 
-    var loginStatement;
-    if (this.state.userSettings.guest) {
-      var changeDisplayLogin = () => {
-        this.props.updateDisplay("login")
-      }
-
-      var changeDisplayRegister = () => {
-        this.props.updateDisplay("register")
-      }
-
-      loginStatement =
-      <div className="cf-login-statement-container row">
-        <div className="col-6 cf-login-statement">
-          Guest
-        </div>
-        <div className="col-3">
-          <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayLogin }>Login</button>
-        </div>
-        <div className="col-3">
-          <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayRegister }>Register</button>
-        </div>
-      </div>
-    } else {
-
-      var changeDisplaySettings = () => {
-        this.props.updateDisplay("settings")
-      }
-
-      var edit_url = `/users/${this.props.userId}/edit_settings`;
-
-      loginStatement =
-      <div className="cf-login-statement-container row">
-        <div className="col-6 cf-login-statement">
-          {this.state.userInfo.userName}
-        </div>
-        <div className="col-3">
-          <button className="btn btn-sm cf-fade-button" onClick={ changeDisplaySettings }>Settings</button>
-        </div>
-        <div className="col-3">
-          <button className="btn btn-sm cf-fade-button" onClick={ this.tempLogout }>Logout</button>
-        </div>
-      </div>
-    }
-
     var bodyRect = document.body.getBoundingClientRect()
     var appRect = document.getElementById('cf-comments-app').getBoundingClientRect()
     var widgetPageY = appRect.top - bodyRect.top
+
+    var checkXStyle = {
+      width: "15px",
+      height: "15px"
+    }
+
+    var greenStyle = {
+      color: "#009E09"
+    }
+
+    var redStyle = {
+      color: "#DF3939"
+    }
+
+    var purpleStyle = {
+      color: "#800080"
+    }
+
+    var handleFilterSubmitSorting = (event) => {
+      this.handleChange(event);
+      this.handleFilterSubmit();
+    }
 
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
@@ -755,16 +806,18 @@ class CommentingContainer extends React.Component {
               artSettings={artSettings}
               userSettings={userSettings}
               commentEtiquette={this.state.commentEtiquette}
-              loginStatement={loginStatement}
+              updateDisplay={this.props.updateDisplay}
+              userInfo={this.state.userInfo}
+              tempLogout={this.tempLogout}
               />
+            <HybridSortSelect
+              onChange={this.handleSortSelectChange}
+              option={this.state.sortOpts.hybridSortSelect}
+              handleFilterSubmit={handleFilterSubmitSorting}
 
-            <div>
-              <PreSetFilters
-                onChange={this.handlePresetFilterChange}
-                option={this.state.presetFilter}
-                />
-            </div>
-
+              sortOpts={sortOpts}
+              handleSortDirClick={this.handleSortDirClick}
+              />
             <CommentFilters
               sortOpts={sortOpts}
               onChange={this.handleFilterSubmitMan}
@@ -778,10 +831,19 @@ class CommentingContainer extends React.Component {
               clearFilters={this.clearFilters}
               userInfo={this.state.userInfo}
               filtersExpanded={this.state.filtersExpanded}
+              showGeo={true}
+              handlePresetFilterChange={this.handlePresetFilterChange}
+              option={this.state.presetFilter}
               />
 
-            <div>
-              <p>{this.state.grandTotalComments} comments | {filteredCount} filtered | {totalComments} shown</p>
+
+
+            <hr />
+
+            <div className="cf-margin-top-bottom-10px cf-results-count-container">
+              <span>
+                <a href="#cf-filters-top" className="cf-link-no-ul" onClick={this.clearFilters}><span style={purpleStyle}>{this.state.grandTotalComments}</span> <img style={checkXStyle} src='/images/icons-v2/speech-bubble.png' /></a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={greenStyle}>{totalComments}</span> <img style={checkXStyle} src='/images/icons-v2/check.png' /> </a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={redStyle}>{filteredCount}</span> <img style={checkXStyle} src='/images/icons-v2/x.png' /></a>
+              </span>
             </div>
 
             <CommentsList
@@ -822,18 +884,21 @@ class CommentingContainer extends React.Component {
             modalButtonId={"cf-feedback-button"}
             modalButtonText={"Feedback / Bugs"}
             modalButtonClass="btn-primary"
-            modalTitle="Please select the appropriate button for reporting."
+            modalTitle="Feedback / Bugs"
             >
+            <h5>Please select the appropriate button for reporting.</h5>
             <FeedbackFormContainer
               userId={this.props.userId}
               />
           </BasicModal>
 
-          <ScrollUpButton
-            ToggledStyle={ {left: '75px'} }
-            ShowAtPosition={widgetPageY + 150}
-            StopPosition={widgetPageY - 100}
-            />
+          <div className="cf-scroll-up-button">
+            <ScrollUpButton
+              ToggledStyle={ {left: '20px', bottom: '10px'} }
+              ShowAtPosition={widgetPageY + 150}
+              StopPosition={widgetPageY - 100}
+              />
+          </div>
           <BottomScollListener
             onBottom={this.handleLoadMoreComments}
             offset={500}

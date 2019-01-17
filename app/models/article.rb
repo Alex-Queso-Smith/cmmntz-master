@@ -17,7 +17,8 @@ class Article < ApplicationRecord
 
   before_validation :generate_slug!, on: :create
 
-  validates :title, :publish_date, :body, :introduction, presence: true
+  validates :title, :publish_date, :introduction, :body, presence: true
+
   validates :slug, Fae.validation_helpers.slug
 
   def fae_display_field

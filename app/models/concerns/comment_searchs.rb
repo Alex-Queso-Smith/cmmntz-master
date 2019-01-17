@@ -79,6 +79,14 @@ module CommentSearchs
       where("users.longitude BETWEEN #{lon - bound} AND #{lon + bound}")
     }
 
+    scope :users_gender_is, -> (gender) {
+      where("users.gender = ?", gender)
+    }
+
+    scope :users_age_range_is, -> (age_range) {
+      where("users.age_range = ?", age_range)
+    }
+
     scope :not_deleted, -> { where(deleted: false) }
 
     scope :excluded_ids, -> (previous_ids) {
@@ -162,7 +170,6 @@ module CommentSearchs
       # lat 69 per degree
       # long 66 per degree
       bounds = GEO_BOXES[radius.to_s]
-      scope = scope.joins("left join users on users.id = comments.user_id")
       scope = scope.lat_bound_box(lat.to_i, bounds[:factor])
       scope = scope.lon_bound_box(lon.to_i, bounds[:factor])
       scope
@@ -217,8 +224,17 @@ module CommentSearchs
       scope
     end
 
+    def self.conditional_join_on_users(scope, filter_opts)
+      return scope unless filter_opts[:radius] || filter_opts[:gender] || filter_opts[:age_range]
+
+      scope = scope.joins("left join users on users.id = comments.user_id")
+      scope = scope.not_anon_or_guest
+      scope
+    end
+
     def self.base_search(scope, user, filter_opts = {})
       scope = scope.select_tabulation.includes(:user).approved.not_deleted.for_non_blocked_users
+      scope = self.conditional_join_on_users(scope, filter_opts)
       scope = self.filter_by_list(scope, filter_opts[:filter_list]) if filter_opts[:filter_list]
       scope = self.filter_by_not_list(scope, filter_opts[:not_filter_list]) if filter_opts[:not_filter_list]
       scope = self.geo_filtering(scope, filter_opts[:lat], filter_opts[:lon], filter_opts[:radius]) if filter_opts[:radius]
@@ -226,6 +242,8 @@ module CommentSearchs
       scope = self.get_comments_from(scope, user, filter_opts[:comments_from])
       scope = self.eliminate_blocked(scope, user)
       scope = self.not_for_anon_or_guest(scope) if filter_opts[:hide_anon_and_guest]
+      scope = scope.users_gender_is(filter_opts[:gender]) if filter_opts[:gender]
+      scope = scope.users_age_range_is(filter_opts[:age_range]) if filter_opts[:age_range]
       scope = self.sort_list(scope, filter_opts[:sort_dir], filter_opts[:sort_type])
     end
 

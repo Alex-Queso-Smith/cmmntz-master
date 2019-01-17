@@ -13,6 +13,8 @@ class UserEditSettingsContainer extends React.Component {
       filterList: [],
       commentsFrom: "",
       votesFrom: "",
+      gender: "",
+      ageRange: "",
       hideAnonAndGuest: false
     },
     censor: "",
@@ -37,7 +39,7 @@ class UserEditSettingsContainer extends React.Component {
     FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
     .then(userData => {
       var opts = this.state.sortOpts
-      var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, show_censored_comments, hide_anon_and_guest } = userData.user.sort_opts
+      var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, show_censored_comments, hide_anon_and_guest, age_range_search, gender_search } = userData.user.sort_opts
       var censored = censor === "true" || censor == true ? true : false;
       var showCenComment = show_censored_comments === "false" ? false : true;
 
@@ -48,6 +50,22 @@ class UserEditSettingsContainer extends React.Component {
       opts.filterList = filter_list.length != 0 ? filter_list.split(',') : []
       opts.notFilterList = not_filter_list.length != 0 ? not_filter_list.split(',') : []
       opts.hideAnonAndGuest = hide_anon_and_guest
+      opts.ageRange = age_range_search
+
+      switch (gender_search) {
+        case "0":
+            gender_search = "female"
+          break;
+        case "1":
+            gender_search = "other"
+          break;
+        case "2":
+            gender_search = "male"
+          break;
+        default:
+          gender_search = ""
+      }
+      opts.gender = gender_search
 
       if (this._isMounted) {
         this.setState({
@@ -118,7 +136,9 @@ class UserEditSettingsContainer extends React.Component {
         notFilterList: [],
         filterList: [],
         commentsFrom: "",
-        votesFrom: ""
+        votesFrom: "",
+        gender: "",
+        ageRange: ""
       },
       censor: "",
       showCensoredComments: true
@@ -135,9 +155,30 @@ class UserEditSettingsContainer extends React.Component {
   handleFilterByClick(event){
     const target = event.target;
     const name = target.name;
-    const value = target.value;
+    var value;
+    var opts = this.state.sortOpts
 
-    var opts = this.state.sortOpts;
+    switch (name) {
+      case "gender":
+        value = target.getAttribute('value')
+        if (value === opts.gender) {
+          value = ""
+        }
+        break;
+
+      case "ageRange":
+        value = target.value
+        if (value === "15") {
+          value = "13"
+        } else if (value === "10") {
+          value = ""
+        }
+        break;
+      default:
+        value = target.value
+    }
+
+
 
     opts[name] = value;
     opts.page = 1
@@ -212,7 +253,7 @@ class UserEditSettingsContainer extends React.Component {
   handleSubmit(event){
     event.preventDefault();
 
-    var { sortDir, sortType, notFilterList, filterList, commentsFrom, votesFrom, hideAnonAndGuest } = this.state.sortOpts;
+    var { sortDir, sortType, notFilterList, filterList, commentsFrom, votesFrom, hideAnonAndGuest, gender, ageRange } = this.state.sortOpts;
     var { censor, showCensoredComments, useGalleryDefault } = this.state;
 
     var user = new FormData();
@@ -226,6 +267,20 @@ class UserEditSettingsContainer extends React.Component {
     user.append("user[show_censored_comments]", showCensoredComments)
     user.append("user[settings_updated]", !useGalleryDefault)
     user.append("user[hide_anon_and_guest]", hideAnonAndGuest)
+    user.append("user[age_range_search]", ageRange)
+
+    switch (gender) {
+      case "female":
+          gender = 0
+        break;
+      case "other":
+          gender = 1
+        break;
+      case "male":
+          gender = 2
+        break;
+    }
+    user.append("user[gender_search]", gender)
 
     hideAnonAndGuest
     FetchWithPush(this, `/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
@@ -265,8 +320,9 @@ class UserEditSettingsContainer extends React.Component {
           handleFilterClick={this.handleFilterClick}
           handleFilterByClick={this.handleFilterByClick}
           clearFilters={this.clearFilters}
-          hideAdvancedLink={true}
+          filtersExpanded={true}
           onChange={this.handleSortOptCheckChange}
+          hideFilterLink={true}
         />
         <Checkbox
           onChange={this.handleChange}

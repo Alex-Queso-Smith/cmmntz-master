@@ -1,0 +1,9 @@
+
+.vid-box
+  <iframe src="#{article.youtube_url}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="video"></iframe>
+.article-body.row.justify-content-center
+  .body_text.sentinel
+    #{article.youtube_url}
+    %br/
+    %br/
+    = markdown(@article.body)
