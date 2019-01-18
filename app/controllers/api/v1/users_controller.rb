@@ -37,7 +37,7 @@ class Api::V1::UsersController < ApiController
     @current_user_session = UserSession.create(guest)
     @current_user = @current_user_session && @current_user_session.user
 
-    output_log_stream("activity.user.logout", cookies['cf-super-betatester-email'])
+    output_log_stream("activity.user.logout")
     render json: { message: "Destroy successfull", user_id: @current_user.id } if @user.destroy
   end
 

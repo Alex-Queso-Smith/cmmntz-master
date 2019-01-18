@@ -47,15 +47,10 @@ Rails.application.routes.draw do
   # temp routes
   resources :admin_mails, only: [:new]
 
-  resources :app_accesses, only: [:new, :create, :destroy]
-
   ### named routes be here
   get 'register' => "users#new",           as: :register
   get 'login' => "user_sessions#new",      as: :login
   get 'logout' => "user_sessions#destroy", as: :logout
-
-  get 'authorize_access' => "app_accesses#new", as: :authorize_access
-  get 'deauthorize_access' => "app_accesses#destroy", as: :deauthorize_access
 
   # root
   root :to => 'articles#index'

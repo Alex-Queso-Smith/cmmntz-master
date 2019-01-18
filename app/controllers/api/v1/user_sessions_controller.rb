@@ -17,10 +17,10 @@ class Api::V1::UserSessionsController < ApiController
     end
 
     if @user_session.save
-      output_log_stream("activity.user.login", cookies['cf-super-betatester-email'], "status: successful")
+      output_log_stream("activity.user.login", "status: successful")
       render json: { message: "Logged in successfully", user_id: @user_session.user.id, theme: @user_session.user.color_theme, font: @user_session.user.font }
     else
-      output_log_stream("activity.user.login", cookies['cf-super-betatester-email'], "status: failure")
+      output_log_stream("activity.user.login", "status: failure")
       render json: { errors: @user_session.errors, status: :unprocessable_entity }
     end
   end
@@ -32,8 +32,8 @@ class Api::V1::UserSessionsController < ApiController
     guest.reset_persistence_token!
     @current_user_session = UserSession.create(guest)
     @current_user = @current_user_session && @current_user_session.user
-    
-    output_log_stream("activity.user.logout", cookies['cf-super-betatester-email'])
+
+    output_log_stream("activity.user.logout")
 
     render json: { message: "Logged out successfully", user_id: @current_user.id }
   end

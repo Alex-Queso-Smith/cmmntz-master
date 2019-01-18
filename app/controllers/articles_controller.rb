@@ -18,7 +18,7 @@ class ArticlesController < ApplicationController
 
     url = @article.url(request)
     @art = Art.find_or_create_for_url(url, "Customer Newspaper Site-Test", @article.topics, @article.publish_date, @article.author.name, "article")
-    output_log_stream("activity.user.art_view", cookies['cf-super-betatester-email'], "art: #{@art.url}")
+    output_log_stream("activity.user.art_view", "art: #{@art.url}")
   end
 
   private
