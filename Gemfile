@@ -4,6 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 
+# required to allow external access to features (widget)
+gem 'rack-cors', require: 'rack/cors'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
@@ -51,7 +53,7 @@ gem 'newrelic_rpm'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'authlogic'
+gem 'authlogic', '~> 4.4.2'
 gem 'bootstrap', '~> 4.1.3'
 gem 'jquery-rails'
 gem 'react-rails'

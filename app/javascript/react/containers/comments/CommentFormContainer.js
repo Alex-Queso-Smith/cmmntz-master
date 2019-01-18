@@ -193,7 +193,7 @@ class CommentFormContainer extends React.Component {
       buttonOne =
       <div className="col-2">
         <button className="btn btn-sm cf-fade-button" onClick={ changeDisplaySettings }>
-          <img className={`cf-vote-btn cf-cursor-pointer`} src="/images/icons-v2/gear.png" />
+          <img className={`cf-vote-btn cf-cursor-pointer`} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/gear.png`} />
         </button>
       </div>
       buttonTwo =
@@ -208,7 +208,7 @@ class CommentFormContainer extends React.Component {
       selfVoteButtonsRowOne =
       RowOneVoteTypes.map((type) => {
         var visibility;
-        var image = ImageSelector(type[0])
+        var image = ImageSelector(type[0], this.props.globalSettings.baseUrl)
         var opacity = selfVotes.includes(type[0]) ? "" : "cf-translucent"
 
         if (type[0].includes('blank')) {
@@ -230,7 +230,7 @@ class CommentFormContainer extends React.Component {
       selfVoteButtonsRowTwo =
       RowTwoVoteTypes.map((type) => {
         var visibility;
-        var image = ImageSelector(type[0])
+        var image = ImageSelector(type[0], this.props.globalSettings.baseUrl)
         var opacity = selfVotes.includes(type[0]) ? "" : "cf-translucent"
 
         if (type[0].includes('blank')) {
@@ -268,10 +268,10 @@ class CommentFormContainer extends React.Component {
 
     var anonCheckBox;
     if (!userSettings.guest) {
-      var imageSrc = `/images/icons-v2/anonymous-unselected.png`
+      var imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-unselected.png`
 
       if (this.state.anonymous) {
-        imageSrc = `/images/icons-v2/anonymous-selected.png`
+        imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-selected.png`
       }
 
       anonCheckBox =
@@ -301,7 +301,7 @@ class CommentFormContainer extends React.Component {
       commentForm =
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
         <div className="cf-text-center">
-            <a target="_blank" href="https://www.classibridge.com"><img className="cf-logo-image-form" src="/images/Classifilter_Logo.png" /></a>
+            <a target="_blank" href="https://www.classibridge.com"><img className="cf-logo-image-form" src={`${this.props.globalSettings.baseUrl}/images/Classifilter_Logo.png`} /></a>
         </div>
         <div className="row">
           <div className="col-6">

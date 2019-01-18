@@ -19,8 +19,7 @@ class UserEditAccountContainer extends React.Component {
 
   componentDidMount(){
     this._isMounted = true;
-
-    FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
+    FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`)
     .then(body => {
       var user = body.user
 
@@ -63,7 +62,7 @@ class UserEditAccountContainer extends React.Component {
     user.append("user[email]", this.state.email);
     user.append("user[base_image]", this.state.avatar);
 
-    FetchWithPush(this, `/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
+    FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
     .then(body => {
       if (!body.errors) {
         this.setState({ saveErrors: {} })
@@ -98,7 +97,7 @@ class UserEditAccountContainer extends React.Component {
       selectedAvatar =
       <div className="cf-text-center">
         <h5>Selected Avatar</h5>
-        <img style={style} src={`/images/avatars/${avatar}.png`} />
+        <img style={style} src={`${this.props.globalSettings.baseUrl}/images/avatars/${avatar}.png`} />
       </div>
     }
 
@@ -132,6 +131,7 @@ class UserEditAccountContainer extends React.Component {
             {selectedAvatar}
             <Carousel
               onChange={this.handleAvatarClick}
+              baseUrl={this.props.globalSettings.baseUrl}
             />
           </div>
 

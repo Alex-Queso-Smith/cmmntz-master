@@ -4,23 +4,20 @@ import CommentingContainer from './containers/comments/CommentingContainer';
 import { FetchDidMount, FetchIndividual } from './util/CoreUtil';
 
 class CfCommentsApp extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      commentRoot: document.getElementById('cf-comments-app'),
-      artType: document.getElementById('cf-comments-app').getAttribute('data-art-type'),
-      artId: document.getElementById('cf-comments-app').getAttribute('data-art-id'),
-      galleryId: document.getElementById('cf-comments-app').getAttribute('data-gallery-id'),
-      artSettings: {
-        disabled: false,
-        deactivated: false,
-        blacklisted: false,
-        disabledMessage: "",
-        userCanPost: true
-      }
+  state = {
+    commentRoot: document.getElementById('cf-comments-app'),
+    artType: document.getElementById('cf-comments-app').getAttribute('data-art-type'),
+    artId: document.getElementById('cf-comments-app').getAttribute('data-art-id'),
+    galleryId: document.getElementById('cf-comments-app').getAttribute('data-gallery-id'),
+    artSettings: {
+      disabled: false,
+      deactivated: false,
+      blacklisted: false,
+      disabledMessage: "",
+      userCanPost: true
     }
-    this.handleAppSetState = this.handleAppSetState.bind(this)
   }
+  handleAppSetState = this.handleAppSetState.bind(this)
 
   handleAppSetState(key, val) {
     this.setState({ [key]: val })
@@ -28,7 +25,7 @@ class CfCommentsApp extends React.Component {
 
   componentDidMount() {
 
-    FetchDidMount(this, `/api/v1/arts/${this.state.artId}.json`)
+    FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/arts/${this.state.artId}.json`)
     .then(artData => {
 
       var newArtSettings = this.state.artSettings
@@ -72,6 +69,7 @@ class CfCommentsApp extends React.Component {
         banUser={this.banUser}
         updateDisplay={this.props.updateDisplay}
         handleLogout={this.props.handleLogout}
+        globalSettings={this.props.globalSettings}
         />
     } else {
       var msg = "This thread has been deactivated by the site Admins."

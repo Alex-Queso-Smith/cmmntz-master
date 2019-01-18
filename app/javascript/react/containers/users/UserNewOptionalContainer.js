@@ -29,7 +29,7 @@ class UserNewOptionalContainer extends React.Component {
 
       selectedAvatar =
       <div className="cf-text-center">
-        <img style={style} src={`/images/avatars/${this.props.selectedAvatar}.png`} />
+        <img style={style} src={`${this.props.globalSettings.baseUrl}/images/avatars/${this.props.selectedAvatar}.png`} />
       </div>
     }
     return(
@@ -40,6 +40,7 @@ class UserNewOptionalContainer extends React.Component {
           label="Age Range"
           onChange={this.props.handleSliderChange}
           value={this.props.ageRange}
+          baseUrl={this.props.globalSettings.baseUrl}
           focus={true}
         />
         <Checkbox
@@ -54,6 +55,7 @@ class UserNewOptionalContainer extends React.Component {
           label="Gender"
           onChange={this.props.onChange}
           value={this.props.gender}
+          baseUrl={this.props.globalSettings.baseUrl}
         />
         <Checkbox
           name="genderAnon"
@@ -79,6 +81,7 @@ class UserNewOptionalContainer extends React.Component {
           <br />
           <Carousel
             onChange={this.props.handleAvatarClick}
+            baseUrl={this.props.globalSettings.baseUrl}
           />
         </div>
         <div className="row actions cf-margin-top-10px">

@@ -39,7 +39,7 @@ class UserEditSettingsContainer extends React.Component {
   componentDidMount(){
     this._isMounted = true;
 
-    FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
+    FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`)
     .then(userData => {
       var opts = this.state.sortOpts
       var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, show_censored_comments, hide_anon_and_guest, age_range_search, gender_search } = userData.user.sort_opts
@@ -288,7 +288,7 @@ class UserEditSettingsContainer extends React.Component {
     user.append("user[gender_search]", gender)
 
     hideAnonAndGuest
-    FetchWithPush(this, `/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
+    FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
     .then(body => {
       if (!body.errors) {
         this.setState({ saveErrors: {} })
@@ -338,6 +338,7 @@ class UserEditSettingsContainer extends React.Component {
           filtersExpanded={true}
           onChange={this.handleChange}
           hideFilterLink={true}
+          globalSettings={this.props.globalSettings}
         />
         <Checkbox
           onChange={this.handleChange}

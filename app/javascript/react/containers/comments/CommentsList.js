@@ -57,7 +57,7 @@ class CommentsList extends React.Component {
           shownText = censored_text
         }
 
-        var lengthImage = CommentLengthSorter(text)
+        var lengthImage = CommentLengthSorter(text, this.props.globalSettings.baseUrl)
         var userFollowed = followedUsers.includes(user_id)
         var userBlocked = blockedUsers.includes(user_id)
 
@@ -118,6 +118,8 @@ class CommentsList extends React.Component {
                 replies={replies}
                 followedUsers={followedUsers}
                 blockedUsers={blockedUsers}
+
+                globalSettings={this.props.globalSettings}
                 />
               <hr />
             </div>

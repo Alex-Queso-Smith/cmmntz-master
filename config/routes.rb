@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :widget_inits, only: [:create]
       resources :users, only: [:show, :create, :update, :destroy]
       resources :user_sessions, only: [:new, :create, :destroy]
       resources :comments, only: [:index, :show, :create, :update, :destroy]

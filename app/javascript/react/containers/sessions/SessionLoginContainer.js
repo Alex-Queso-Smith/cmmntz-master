@@ -35,7 +35,7 @@ class SessionLoginContainer extends React.Component {
       login.append("user_session[password]", this.state.password);
       login.append("user_session[remember_me]", this.state.rememberMe);
 
-      FetchWithPush(this, '/api/v1/user_sessions.json', '', 'POST', 'loginErrors', login)
+      FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/user_sessions.json`, '', 'POST', 'loginErrors', login)
       .then(body =>{
         if (!body.errors) {
           var element = document.getElementById('cf-comments-app');

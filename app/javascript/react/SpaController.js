@@ -10,12 +10,16 @@ class SpaController extends React.Component {
   state = {
     display: "login",
     userId: document.getElementById('cf-comments-app').getAttribute('data-user-id'),
+    globalSettings: {
+      baseUrl: this.getBaseUrl()
+    },
     themeSettings: {
       font: document.getElementById('cf-comments-app').getAttribute('data-user-font'),
       color: document.getElementById('cf-comments-app').getAttribute('data-user-theme')
     }
   }
 
+  getBaseUrl = this.getBaseUrl.bind(this);
   updateDisplay = this.updateDisplay.bind(this);
   handleLogin = this.handleLogin.bind(this);
   handleLogout = this.handleLogout.bind(this);
@@ -29,6 +33,16 @@ class SpaController extends React.Component {
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  getBaseUrl() {
+    var mode = document.getElementById('cf-comments-app').getAttribute('data-mode')
+    if (mode) {
+      return mode == "staging" ? "https://classifilter-staging.herokuapp.com" : "http://localhost:3000"
+    } else {
+      // return "http://localhost:3000"
+      return "https://www.classifilter.com"
+    }
   }
 
   updateDisplay(page){
@@ -54,7 +68,7 @@ class SpaController extends React.Component {
   }
 
   handleLogout(){
-    FetchDeleteBasic(this, `/api/v1/user_sessions/${this.state.userId}.json`)
+    FetchDeleteBasic(this, `${this.state.globalSettings.baseUrl}/api/v1/user_sessions/${this.state.userId}.json`)
     .then(finished => this.updateDisplay("login"))
     .catch(error => console.error(`Error in fetch: ${error.message}`));
 
@@ -64,7 +78,7 @@ class SpaController extends React.Component {
   }
 
   render(){
-    var { userId, display } = this.state;
+    var { userId, display, globalSettings } = this.state;
 
     var page;
     switch (display) {
@@ -75,6 +89,7 @@ class SpaController extends React.Component {
             userId={userId}
             handleLogout={this.handleLogout}
             themeSettings={this.state.themeSettings}
+            globalSettings={globalSettings}
           />
         break;
       case "settings":
@@ -83,6 +98,7 @@ class SpaController extends React.Component {
             userId={userId}
             updateDisplay={this.updateDisplay}
             updateSpaId={this.handleUpdateSpaId}
+            globalSettings={globalSettings}
           />
         break;
       case "login":
@@ -91,6 +107,7 @@ class SpaController extends React.Component {
             userId={userId}
             updateDisplay={this.updateDisplay}
             handleLogin={this.handleLogin}
+            globalSettings={globalSettings}
           />
         break;
       case "register":
@@ -99,6 +116,7 @@ class SpaController extends React.Component {
             userId={userId}
             updateDisplay={this.updateDisplay}
             handleUpdateSpaId={this.handleUpdateSpaId}
+            globalSettings={globalSettings}
           />
         break;
       default:
@@ -108,6 +126,7 @@ class SpaController extends React.Component {
             userId={userId}
             handleLogout={this.handleLogout}
             themeSettings={this.state.themeSettings}
+            globalSettings={globalSettings}
           />
     }
     return(

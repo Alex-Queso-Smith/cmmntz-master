@@ -10,6 +10,13 @@ module ClassifilterMaster
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins Proc::new { true } #'*'
+        resource '*', headers: :any, methods: [:get, :post, :patch, :options], credentials: true
+      end
+    end
+
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
     end

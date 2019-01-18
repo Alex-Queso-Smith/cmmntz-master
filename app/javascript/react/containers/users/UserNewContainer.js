@@ -182,7 +182,7 @@ class UserNewContainer extends React.Component {
         newUser.append("user[gender]", gender);
         newUser.append("user[base_image]", avatar)
 
-        FetchWithPush(this, '/api/v1/users.json', '', 'POST', 'registrationErrors', newUser)
+        FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users.json`, '', 'POST', 'registrationErrors', newUser)
         .then(body =>{
           
           if (body.errors) {
@@ -271,6 +271,7 @@ class UserNewContainer extends React.Component {
           passwordError={passwordError}
           passwordConfirmationError={passwordConfirmationError}
           updateDisplay={this.props.updateDisplay}
+          globalSettings={this.props.globalSettings}
         />
         break;
       case 2:
@@ -295,6 +296,7 @@ class UserNewContainer extends React.Component {
           handleAvatarClick={this.handleAvatarClick}
           locationAnon={this.state.locationAnon}
           ageRangeAnon={this.state.ageRangeAnon}
+          globalSettings={this.props.globalSettings}
         />
         break;
     }

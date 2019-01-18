@@ -12,13 +12,13 @@ class UserAvatar extends React.Component {
     var { user_name, gender, age_range, base_image } = this.props.userInfo
 
     var { followStar, blockSym } = this.props
-    var avatarImage = '/images/avatars/anonymous-avatar.png';
+    var avatarImage = `${this.props.globalSettings.baseUrl}/images/avatars/anonymous-avatar.png`;
 
     if (user_name === 'Anonymous') {
-      avatarImage = `/images/avatars/anonymous-avatar.png`
+      avatarImage = `${this.props.globalSettings.baseUrl}/images/avatars/anonymous-avatar.png`;
     }
     else if (base_image) {
-      avatarImage = `/images/avatars/${base_image}.png`
+      avatarImage = `${this.props.globalSettings.baseUrl}/images/avatars/${base_image}.png`
     }
 
     var ageRangeImage;
@@ -34,7 +34,7 @@ class UserAvatar extends React.Component {
       }
       ageRangeImage =
       <div className="col-6">
-        <img style={style} src={`/images/icons-v2/age-ranges/${age_range}.png`} />
+        <img style={style} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/age-ranges/${age_range}.png`} />
       </div>
     }
 
@@ -46,7 +46,7 @@ class UserAvatar extends React.Component {
       }
       genderImage =
       <div className="col-6">
-        <img style={style} src={`/images/icons-v2/genders/gender-${gender}.png`} />
+        <img style={style} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/genders/gender-${gender}.png`} />
       </div>
     }
 

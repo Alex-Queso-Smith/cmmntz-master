@@ -42,7 +42,7 @@ class UserEditPasswordContainer extends React.Component {
       user.append("user[password]", this.state.password);
       user.append("user[password_confirmation]", this.state.passwordConfirmation);
 
-      FetchWithPush(this, `/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'passwordErrors', user)
+      FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'passwordErrors', user)
       .then(body => {
         if (!body.errors) {
           alert(body.message);
@@ -59,7 +59,7 @@ class UserEditPasswordContainer extends React.Component {
     var confirm1 = confirm("Are you sure you wish to delete your account? Deleting your account is irreversible. Once you delete your accounts, all of your comments and interactions will become anonymous.");
 
     if (confirm1 == true) {
-      FetchDeleteBasic(this, `/api/v1/users/${this.props.userId}.json`)
+      FetchDeleteBasic(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`)
       .then(finished => {
 
         this.props.updateSpaId(finished.user_id);

@@ -53,7 +53,8 @@ class HybridSortSelect extends React.Component {
         <SortDir
           value={this.props.sortOpts.sortDir}
           onClick={this.props.handleSortDirClick}
-          image={ImageSelector(this.props.sortOpts.sortDir)}
+          image={ImageSelector(this.props.sortOpts.sortDir, this.props.globalSettings.baseUrl)}
+          baseUrl
           />
       </div>
     }

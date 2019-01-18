@@ -122,7 +122,7 @@ class RepliesContainer extends React.Component {
     newReply.append("comment[anonymous]", replyAnonymous)
     newReply.append("comment[parent_id]", commentId)
 
-    FetchWithUpdate(this, `/api/v1/comments.json`, 'POST', newReply)
+    FetchWithUpdate(this, `${this.props.globalSettings.baseUrl}/api/v1/comments.json`, 'POST', newReply)
     .then(body => {
       if (body.errors) {
         var artErrors = body.errors["art"]
@@ -173,7 +173,7 @@ class RepliesContainer extends React.Component {
       var updateComment = new FormData()
       updateComment.append("comment[deleted]", true)
 
-      FetchWithUpdate(this, `/api/v1/comments/${replyId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
+      FetchWithUpdate(this, `${this.props.globalSettings.baseUrl}/api/v1/comments/${replyId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
       .then(success => {
         var allReplies = this.state.replies;
         var filteredReplies = allReplies.filter(reply => reply.id != replyId)
@@ -189,7 +189,7 @@ class RepliesContainer extends React.Component {
     var { galleryId, artId } = this.props;
 
     if (c) {
-      FetchIndividual(this, `/api/v1/gallery_blacklistings.json?gallery_id=${galleryId}&user_id=${userId}`, "POST")
+      FetchIndividual(this, `${this.props.globalSettings.baseUrl}/api/v1/gallery_blacklistings.json?gallery_id=${galleryId}&user_id=${userId}`, "POST")
       .then(success => { alert("This user has been banned, login to admin console if you wish to unban at a future date.") })
       .then(finished => {
         var allReplies = this.state.replies;
@@ -229,7 +229,7 @@ class RepliesContainer extends React.Component {
           shownText = censored_text
         }
 
-        var lengthImage = CommentLengthSorter(text)
+        var lengthImage = CommentLengthSorter(text, this.props.globalSettings.baseUrl)
         var userFollowed = followedUsers.includes(user_id)
         var userBlocked = blockedUsers.includes(user_id)
 
@@ -276,6 +276,7 @@ class RepliesContainer extends React.Component {
                 isReply={reply.reply}
 
                 handleNewReplyBox={handleNewReplyBox}
+                globalSettings={this.props.globalSettings}
                 />
               <hr />
             </div>

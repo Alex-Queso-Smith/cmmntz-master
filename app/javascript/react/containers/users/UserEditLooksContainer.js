@@ -17,7 +17,7 @@ class UserEditLooksContainer extends React.Component {
   componentDidMount(){
     this._isMounted = true;
 
-    FetchDidMount(this, `/api/v1/users/${this.props.userId}.json`)
+    FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`)
     .then(body => {
 
       var user = body.user
@@ -56,7 +56,7 @@ class UserEditLooksContainer extends React.Component {
     user.append("user[font]", font);
     user.append("user[color_theme]", colorTheme);
 
-    FetchWithPush(this, `/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
+    FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
     .then(body => {
       if (!body.errors) {
         this.setState({ saveErrors: {} })

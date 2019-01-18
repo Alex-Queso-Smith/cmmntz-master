@@ -92,7 +92,7 @@ class CommentingContainer extends React.Component {
   componentDidMount(){
     this._isMounted = true;
 
-    FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
+    FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/arts/${this.props.artId}.json`)
     .then(artData => {
       this.setState({
         commentEtiquette: artData.art.gallery_comment_etiquette
@@ -101,7 +101,7 @@ class CommentingContainer extends React.Component {
     .then(stuff => {
       var { userId, galleryId } = this.props;
       if (userId.length > 0){
-        FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
+        FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
         .then(userData => {
 
           var newSortOpts = this.state.sortOpts;
@@ -251,7 +251,7 @@ class CommentingContainer extends React.Component {
   commentFormSubmitter(newComment, handleClear) {
     var { artType, artId } = this.props;
 
-    FetchWithUpdate(this, `/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
+    FetchWithUpdate(this, `${this.props.globalSettings.baseUrl}/api/v1/comments.json?art_type=${artType}&art_id=${artId}`, 'POST', newComment )
     .then(body => {
       if (body.errors) {
 
@@ -318,7 +318,7 @@ class CommentingContainer extends React.Component {
       var updateComment = new FormData()
       updateComment.append("comment[deleted]", true)
 
-      FetchWithUpdate(this, `/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
+      FetchWithUpdate(this, `${this.props.globalSettings.baseUrl}/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
       .then(success => {
         var allComments = this.state.comments;
         var filteredComments = allComments.filter(comment => comment.id != commentId)
@@ -378,7 +378,7 @@ class CommentingContainer extends React.Component {
       search.append("search[gender]", gender)
     }
 
-    FetchBasic(this, '/api/v1/comment_filters.json', search, 'POST')
+    FetchBasic(this, `${this.props.globalSettings.baseUrl}/api/v1/comment_filters.json`, search, 'POST')
     .then(commentData => {
 
       var append = this.state.sortOpts.page > 1
@@ -610,7 +610,7 @@ class CommentingContainer extends React.Component {
     setTimeout(function() { //Start the timer
       if (this.state.comments.find( c => c.id === oldTopCommentId)) {
         // replace comment with updated version
-        FetchIndividual(this, `/api/v1/comments/${oldTopCommentId}.json`, "GET")
+        FetchIndividual(this, `${this.props.globalSettings.baseUrl}/api/v1/comments/${oldTopCommentId}.json`, "GET")
         .then(body => {
           var updatedComments = this.state.comments
           var comment = updatedComments.find( c => c.id === oldTopCommentId);
@@ -631,7 +631,7 @@ class CommentingContainer extends React.Component {
 
     if (c) {
       var l = event.target.previousSibling.value
-      FetchIndividual(this, `/api/v1/gallery_blacklistings.json?gallery_id=${galleryId}&user_id=${userId}&dur=${l}`, "POST")
+      FetchIndividual(this, `${this.props.globalSettings.baseUrl}/api/v1/gallery_blacklistings.json?gallery_id=${galleryId}&user_id=${userId}&dur=${l}`, "POST")
       .then(success => { alert("This user has been banned, login to admin console if you wish to unban at a future date.") })
       .then(finished => { this.handleFilterSubmit() })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -814,14 +814,15 @@ class CommentingContainer extends React.Component {
               updateDisplay={this.props.updateDisplay}
               userInfo={this.state.userInfo}
               tempLogout={this.tempLogout}
+              globalSettings={this.props.globalSettings}
               />
             <HybridSortSelect
               onChange={this.handleSortSelectChange}
               option={this.state.sortOpts.hybridSortSelect}
               handleFilterSubmit={handleFilterSubmitSorting}
-
               sortOpts={sortOpts}
               handleSortDirClick={this.handleSortDirClick}
+              globalSettings={this.props.globalSettings}
               />
             <CommentFilters
               sortOpts={sortOpts}
@@ -839,13 +840,14 @@ class CommentingContainer extends React.Component {
               showGeo={true}
               handlePresetFilterChange={this.handlePresetFilterChange}
               option={this.state.presetFilter}
+              globalSettings={this.props.globalSettings}
               />
 
             <hr />
 
             <div className="cf-margin-top-bottom-10px cf-results-count-container">
               <span>
-                <a href="#cf-filters-top" className="cf-link-no-ul" onClick={this.clearFilters}><span style={purpleStyle}>{this.state.grandTotalComments}</span> <img style={checkXStyle} src='/images/icons-v2/speech-bubble.png' /></a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={greenStyle}>{totalComments}</span> <img style={checkXStyle} src='/images/icons-v2/check.png' /> </a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={redStyle}>{filteredCount}</span> <img style={checkXStyle} src='/images/icons-v2/x.png' /></a>
+                <a href="#cf-filters-top" className="cf-link-no-ul" onClick={this.clearFilters}><span style={purpleStyle}>{this.state.grandTotalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/speech-bubble.png`} /></a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={greenStyle}>{totalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/check.png`} /> </a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={redStyle}>{filteredCount}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/x.png`} /></a>
               </span>
             </div>
 
@@ -866,6 +868,7 @@ class CommentingContainer extends React.Component {
               banUser={this.banUser}
               galleryId={this.props.galleryId}
               showVoteCountTrigger={this.showVoteCountTrigger}
+              globalSettings={this.props.globalSettings}
               />
             {endComments}
 
@@ -892,6 +895,7 @@ class CommentingContainer extends React.Component {
             <h5>Please select the appropriate button for reporting.</h5>
             <FeedbackFormContainer
               userId={this.props.userId}
+              globalSettings={this.props.globalSettings}
               />
           </BasicModal>
 

@@ -1,5 +1,4 @@
 class Api::V1::UserSessionsController < ApiController
-  skip_before_action *ALL_FILTERS - [:require_app_access], only: [:new, :create]
   before_action :require_no_user, only: [:new, :create]
 
   def new
@@ -32,7 +31,7 @@ class Api::V1::UserSessionsController < ApiController
     guest.reset_persistence_token!
     @current_user_session = UserSession.create(guest)
     @current_user = @current_user_session && @current_user_session.user
-    
+
     output_log_stream("activity.user.logout", cookies['cf-super-betatester-email'])
 
     render json: { message: "Logged out successfully", user_id: @current_user.id }

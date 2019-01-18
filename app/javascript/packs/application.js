@@ -14,9 +14,7 @@ import RedBox from 'redbox-react';
 import App from '../react/App';
 import SpaController from '../react/SpaController';
 import AdminMailApp from '../react/AdminMailApp';
-
-
-document.addEventListener('DOMContentLoaded', () => {
+function startReact() {
   let userElement = document.getElementById('app');
 
   if (userElement) {
@@ -61,4 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
       render(<AdminMailApp />, adminElement)
     }
   }
-})
+}
+
+startReact();

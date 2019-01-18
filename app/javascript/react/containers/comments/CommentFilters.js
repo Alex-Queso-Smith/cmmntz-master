@@ -51,10 +51,10 @@ class CommentFilters extends React.Component {
     }
 
     var anonCheckBox;
-    var imageSrc = `/images/icons-v2/anonymous-unselected.png`
+    var imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-unselected.png`
 
     if (!hideAnonAndGuest) {
-      imageSrc = `/images/icons-v2/anonymous-selected.png`
+      imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-selected.png`
     }
     anonCheckBox =
     <div>

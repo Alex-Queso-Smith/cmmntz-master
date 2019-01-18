@@ -163,13 +163,13 @@ class Reply extends React.Component {
       if (!userFollowed) { starOpacity = "cf-translucent" }
       followStar =
       <div className={`col-1 col-sm-1 col-md-1 cf-cursor-pointer ${starOpacity}`}>
-        <img onClick={this.handleFollow} src="/images/icons-v2/star.png" height="20px" width="20px" />
+        <img onClick={this.handleFollow} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/star.png`} height="20px" width="20px" />
       </div>
 
       if (!userBlocked) { blockOpacity = "cf-translucent" }
       blockSym =
       <div className={`col-1 col-sm-1 col-md-1 cf-cursor-pointer ${blockOpacity}`}>
-        <img onClick={this.handleBlock} src="/images/icons-v2/block.png" height="20px" width="20px" />
+        <img onClick={this.handleBlock} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/block.png`} height="20px" width="20px" />
       </div>
     } else {
       blockSym = <div className={`col-1 col-sm-1 col-md-1`} />
