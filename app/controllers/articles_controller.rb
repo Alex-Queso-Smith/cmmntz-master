@@ -18,7 +18,6 @@ class ArticlesController < ApplicationController
 
     url = @article.url(request)
     @gallery = Gallery.find_by(name: "Customer Newspaper Site-Test")
-    output_log_stream("activity.user.art_view", "art: #{@art.url}")
   end
 
   private
