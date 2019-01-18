@@ -184,10 +184,11 @@ class UserNewContainer extends React.Component {
 
         FetchWithPush(this, '/api/v1/users.json', '', 'POST', 'registrationErrors', newUser)
         .then(body =>{
-          
+
           if (body.errors) {
             this.setState({currentPage: 1})
           } else {
+            alert("Registration Successful")
             this.props.handleUpdateSpaId(body.user_id)
 
             this.props.updateDisplay("")
