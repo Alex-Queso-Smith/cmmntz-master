@@ -12,7 +12,7 @@ class Api::V1::UserFeedbacksController < ApiController
     @user_feedback.platform= user_agent.platform
     @user_feedback.os= user_agent.os
     @user_feedback.ip= request.remote_ip
-    @user_feedback.email= current_user.guest? ? cookies['cf-super-betatester-email'] : current_user.email
+    @user_feedback.email= current_user.guest? ? "n/a" : current_user.email
 
     if @user_feedback.save
       render json: { message: "Thank You for your feedback!" }
