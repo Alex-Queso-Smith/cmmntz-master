@@ -32,11 +32,7 @@ class Api::V1::UserSessionsController < ApiController
     @current_user_session = UserSession.create(guest)
     @current_user = @current_user_session && @current_user_session.user
 
-<<<<<<< HEAD
-    output_log_stream("activity.user.logout", cookies['cf-super-betatester-email'])
-=======
     output_log_stream("activity.user.logout")
->>>>>>> master
 
     render json: { message: "Logged out successfully", user_id: @current_user.id }
   end
