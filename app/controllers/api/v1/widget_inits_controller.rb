@@ -4,9 +4,6 @@ class Api::V1::WidgetInitsController < ApiController
 
     if !@widget_init.valid?
 
-      expiration = Time.now + 1.year
-      cookies['cf-super-betatester-email'] = {value: @widget_init.email, expires: expiration}
-
       raise "#{@widget_init.errors.full_messages}"
       render json: { errors: @widget_init.errors, status: :unprocessable_entity }
     end
