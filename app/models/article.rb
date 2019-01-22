@@ -38,7 +38,7 @@ class Article < ApplicationRecord
   end
 
   def url(request = {})
-    if !request.base_url.to_s.match('staging').nil?
+    if !request.blank? && !request.base_url.to_s.match('staging').nil?
       base_url = "classifilter-staging.herokuapp.com"
     elsif Rails.env.production?
       base_url = "www.classifilter.com"
@@ -48,6 +48,7 @@ class Article < ApplicationRecord
       base_url = "#{request.base_url.gsub("http://", "")}"
     end
     "#{base_url}/#{self.class.to_s.pluralize.downcase}/#{slug}"
+
   end
 
   # dealing with topics
