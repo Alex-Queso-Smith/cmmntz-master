@@ -50,7 +50,7 @@ class CommentsList extends React.Component {
         }
 
         var { id, edited, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text, vote_counts, total_interactions, replies } = comment
-        var { user_name, gender, age_range, user_id, show_censored, posted_as_guest, latitude, longitude} = comment.user
+        var { user_name, gender, age_range, user_id, show_censored, posted_as_guest } = comment.user
 
         var shownText = text;
         if (censored && censored_text) {
@@ -72,14 +72,6 @@ class CommentsList extends React.Component {
           if (show_censored === "false") {
             showCensored = false
           }
-        }
-
-        var x = Math.round( (longitude + 180) / (180 / 75) )
-        var y = Math.round( ((latitude / -1) + 180) / (180 / 50) )
-
-        var geoPin = {
-          x: x - 3,
-          y: y - 3
         }
 
         if (!userBlocked && showCensored ) {
@@ -112,7 +104,6 @@ class CommentsList extends React.Component {
                 handleEditUpdate={this.handleEditUpdate}
                 isReply={comment.reply}
                 postedAsGuest={posted_as_guest}
-                geoPin={geoPin}
 
                 artId={artId}
                 artType={artType}
