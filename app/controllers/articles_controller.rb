@@ -17,8 +17,8 @@ class ArticlesController < ApplicationController
     UserArticleView.create_for_user_and_article(current_user.id, @article.id)
 
     url = @article.url(request)
-    @gallery = Gallery.find_by(name: "Customer Newspaper Site-Test")
-    output_log_stream("activity.user.art_view", cookies['cf-super-betatester-email'], "art: #{url}")
+    @art = Art.find_or_create_for_url(url, "Customer Newspaper Site-Test", @article.topics, @article.publish_date, @article.author.name, "article")
+    output_log_stream("activity.user.art_view", "art: #{@art.url}")
   end
 
   private
