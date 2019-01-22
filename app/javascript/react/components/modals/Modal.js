@@ -4,7 +4,7 @@ const Modal = props => {
 
   return (
     <div className="cf-modal">
-      <section className="cf-modal-main">
+      <section className={`cf-modal-main cf-modal-main-${props.className}`}>
         <div className="cf-modal-close" onClick={props.handleClose} >&times;</div>
           <h3>{props.modalTitle}</h3>
           <hr />

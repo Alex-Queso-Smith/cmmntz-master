@@ -33,7 +33,7 @@ $breakpoint-phone: 575px;
     width: 100%;
     text-align: justify;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     h3, p, li {
       font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
@@ -58,6 +58,40 @@ $breakpoint-phone: 575px;
     font-weight: 700;
     cursor: pointer;
   }
+}
+
+.cf-modal-main-privacy-policy {
+  height: 75%;
+  width: 50%;
+}
+
+.cf-modal-main-commenting-etiquette {
+
+}
+
+.cf-modal-main-flag-comment {
+  height: 250px;
+  width: 30%;
+}
+
+.cf-modal-main-curated-views {
+
+}
+
+.cf-modal-main-results-count {
+
+}
+
+.cf-modal-main-demographic-warning-dns {
+
+}
+
+.cf-modal-main-demographic-warning-select-option {
+
+}
+
+.cf-modal-main-anonymous-warning {
+
 }
 
 .cf-modal-locked {
