@@ -284,7 +284,7 @@ class CommentFormContainer extends React.Component {
       }
 
       anonCheckBox =
-      <div style={anonStyle} className="col-1 cf-padding-cancel cf-tooltip-container">
+      <div className="col-1 cf-padding-cancel cf-tooltip-container cf-anon-login-button">
         <img className={`cf-vote-btn cf-cursor-pointer cf-margin-top-10px`} onClick={this.handleChange} name='anonymous' src={imageSrc} />
         <span className="cf-tooltip-content-top cf-tooltip-content-top-anon">{anonMessage}</span>
       </div>

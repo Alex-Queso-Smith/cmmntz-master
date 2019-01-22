@@ -28,7 +28,8 @@ topics: '#{@article.topics}',
 publishDate: '#{@article.publish_date}',
 artistName: '#{@article.author.name}',
 type: "article",
-mode: "development"
+- if !Rails.env.production?
+  mode: '#{widget_mode}'
 });
 </script>
 
