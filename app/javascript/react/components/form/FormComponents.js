@@ -29,10 +29,12 @@ export const AgeSlider = props => {
   }
 
   return(
-    <div className="cf-slider-container">
+    <div className="cf-slider-container cf-text-center">
       <label className="cf-slider-label cf-text-medium" htmlFor={props.name}>
         {ageImage}
-        Age Range: {ageRange}
+        <div className="cf-slider-age-range">
+          Age Range: {ageRange}
+        </div>
       </label>
       <input autoFocus={props.focus} onChange={props.onChange} type="range" min="10" max="75" step="5" value={selectedRange} name={props.name} className="slider" id="age-range-slider" />
     </div>

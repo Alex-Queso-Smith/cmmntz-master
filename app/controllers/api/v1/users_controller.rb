@@ -14,11 +14,20 @@ class Api::V1::UsersController < ApiController
     current_user.attributes = attrs
     @user = current_user
 
-    if @user.save
-      render json: { message: "Created successfully", user_id: @user.id }
+    if params[:page] == "1"
+      if @user.invalid? && @user.errors.any?
+        render json: { errors: @user.errors }
+      else
+        render json: { message: "Required info correct" }
+      end
     else
-      render json: { errors: @user.errors, status: :unprocessable_entity }
+      if @user.save
+        render json: { message: "Created successfully", user_id: @user.id }
+      else
+        render json: { errors: @user.errors, status: :unprocessable_entity }
+      end
     end
+
   end
 
   # PATCH/PUT /users/1.json

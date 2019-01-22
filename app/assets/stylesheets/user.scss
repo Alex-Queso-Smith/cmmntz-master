@@ -132,7 +132,7 @@ $grayline: #D3D3D3;
 
   .slider {
     -webkit-appearance: none;
-    width: 100%;
+    width: 75%;
     height: 15px;
     border-radius: 5px;
     background: #d3d3d3;
@@ -163,6 +163,10 @@ $grayline: #D3D3D3;
     background: #4CAF50;
     cursor: pointer;
   }
+}
+
+.cf-slider-age-range {
+  font-size: 1rem;
 }
 
 .cf-geomap-wrapper {

@@ -53,7 +53,7 @@ export const UserSortButtons = (object) => {
 
   return SortTypes.map((type) => {
     var opacity, visibility, image;
-    var image = ImageSelector(type[1])
+    var image = ImageSelector(type[1], object.props.globalSettings.baseUrl)
 
     sortType == type[0] ? opacity = "" : opacity = "cf-translucent"
 

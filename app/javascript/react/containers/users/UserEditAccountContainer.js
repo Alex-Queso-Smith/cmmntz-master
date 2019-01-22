@@ -140,7 +140,7 @@ class UserEditAccountContainer extends React.Component {
               Update
             </button>
             <button className="btn btn-sm btn-dark float-left" onClick={ this.props.updateDisplay }>
-              Back
+              Close
             </button>
           </div>
 

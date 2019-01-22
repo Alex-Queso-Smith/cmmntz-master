@@ -87,7 +87,7 @@ class UserNewOptionalContainer extends React.Component {
         <div className="row actions cf-margin-top-10px">
           <div className="col-sm-6">
             <button id="user-registration-button-back" className="btn btn-sm btn-dark cf-float-left" onClick={this.props.handleBackClick}>
-              Back
+              Close
             </button>
           </div>
           <div className="col-sm-6">

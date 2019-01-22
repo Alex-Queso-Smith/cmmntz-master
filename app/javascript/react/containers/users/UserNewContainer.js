@@ -182,7 +182,7 @@ class UserNewContainer extends React.Component {
         newUser.append("user[gender]", gender);
         newUser.append("user[base_image]", avatar)
 
-        FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users.json`, '', 'POST', 'registrationErrors', newUser)
+        FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users.json?page=2`, '', 'POST', 'registrationErrors', newUser)
         .then(body =>{
 
           if (body.errors) {
@@ -249,10 +249,7 @@ class UserNewContainer extends React.Component {
     var errorDiv, page, emailError, userNameError, passwordError, passwordConfirmationError;
     var { registrationErrors } = this.state
 
-    emailError = CreateErrorElements(registrationErrors.email, "Email")
-    userNameError = CreateErrorElements(registrationErrors.user_name, "User Name")
-    passwordError = CreateErrorElements(registrationErrors.password, "Password")
-    passwordConfirmationError = CreateErrorElements(registrationErrors.password_confirmation, "Password Confirmation")
+    
 
     switch (this.state.currentPage) {
       case 1:
@@ -260,19 +257,17 @@ class UserNewContainer extends React.Component {
         <UserNewRequiredContainer
           onChange={this.handleChange}
           userName={this.state.userName}
-          password={this.state.password}
-          privacyPolicy={this.state.privacyPolicy}
-          passwordConfirmation={this.state.passwordConfirmation}
           email={this.state.email}
-          handleButtonClick={this.handleNextClick}
+          password={this.state.password}
+          passwordConfirmation={this.state.passwordConfirmation}
+          privacyPolicy={this.state.privacyPolicy}
+          handleNextClick={this.handleNextClick}
           handleBackClick={this.handleBackClick}
           disabled={this.state.formInvalid}
-          emailError={emailError}
-          userNameError={userNameError}
-          passwordError={passwordError}
-          passwordConfirmationError={passwordConfirmationError}
+          regErrors={this.state.regErrors}
           updateDisplay={this.props.updateDisplay}
           globalSettings={this.props.globalSettings}
+          baseUrl={this.props.globalSettings.baseUrl}
         />
         break;
       case 2:

@@ -308,7 +308,9 @@ class UserEditSettingsContainer extends React.Component {
   render(){
 
     var sortButtons = UserSortButtons(this);
-
+    var sortStyle = {
+      fontWeight: "bold"
+    }
     return(
       <div id="cf-user-edit-settings-container">
         <br />
@@ -318,12 +320,13 @@ class UserEditSettingsContainer extends React.Component {
           label={"Check to use the settings chosen by the websites I visit"}
           checked={this.state.useGalleryDefault}
         />
+      <h4 style={sortStyle} className="cf-margin-top-5px">Sort</h4>
         <div className="row cf-vote-row justify-content-center" >
           {sortButtons}
           <SortDir
             value={this.state.sortOpts.sortDir}
             onClick={this.handleSortDirClick}
-            image={ImageSelector(this.state.sortOpts.sortDir)}
+            image={ImageSelector(this.state.sortOpts.sortDir, this.props.globalSettings.baseUrl)}
             />
         </div>
         <CommentFilters
@@ -338,6 +341,7 @@ class UserEditSettingsContainer extends React.Component {
           filtersExpanded={true}
           onChange={this.handleChange}
           hideFilterLink={true}
+          widgetFilters={false}
           globalSettings={this.props.globalSettings}
         />
         <Checkbox
@@ -357,7 +361,7 @@ class UserEditSettingsContainer extends React.Component {
             Update
           </button>
           <button className="btn btn-sm btn-dark cf-float-left" onClick={ this.props.updateDisplay }>
-            Back
+            Close
           </button>
         </div>
       </div>

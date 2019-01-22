@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       resources :gallery_blacklistings, only: [:create]
       resources :user_feedbacks, only: [:create]
       resources :user_video_clicks, only: [:create]
+      resources :heatmaps, only: [:index]
 
       # this only lives here temporarily
       resources :admin_mails, only: [:create]

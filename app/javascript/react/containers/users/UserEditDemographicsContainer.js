@@ -241,7 +241,7 @@ class UserEditDemographicsContainer extends React.Component {
               Update
             </button>
             <button className="btn btn-sm btn-dark cf-float-left cf-margin-top-10px" onClick={ this.props.updateDisplay }>
-              Back
+              Close
             </button>
           </div>
         </form>

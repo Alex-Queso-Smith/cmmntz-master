@@ -18,4 +18,5 @@ module CommentsHelper
   def comment_user_show_censored(comment)
     comment.render_anonymously? ? true : (comment.guest? || comment.user.nil?) ? true : comment.user.show_censored_comments
   end
+
 end

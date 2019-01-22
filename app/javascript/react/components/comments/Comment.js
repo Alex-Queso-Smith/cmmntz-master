@@ -172,16 +172,26 @@ class Comment extends React.Component {
       !this.props.guestStatus &&
       !postedAsGuest
     ) {
-      if (!userFollowed) { starOpacity = "cf-translucent" }
+      var starMessage = "Unfollow"
+      if (!userFollowed) {
+        starOpacity = "cf-translucent"
+        starMessage = "Follow"
+      }
       followStar =
-      <div className={`col-2 cf-padding-cancel cf-block-follow-box-start cf-cursor-pointer ${starOpacity}`}>
-        <img onClick={this.handleFollow} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/star.png`} height="20px" width="20px" />
+      <div className={`col-2 cf-padding-cancel cf-block-follow-box-start cf-cursor-pointer cf-tooltip-container`}>
+        <img className={`${starOpacity}`} onClick={this.handleFollow} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/star.png`} height="20px" width="20px" />
+        <span className="cf-tooltip-content-top cf-tooltip-content-top-user-tile">{starMessage}</span>
       </div>
 
-      if (!userBlocked) { blockOpacity = "cf-translucent" }
+      var blockMessage = "Unblock"
+      if (!userBlocked) {
+        blockOpacity = "cf-translucent"
+        blockMessage = "Block"
+      }
       blockSym =
-      <div className={`col-2 cf-padding-cancel cf-cursor-pointer ${blockOpacity}`}>
-        <img onClick={this.handleBlock} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/block.png`} height="20px" width="20px" />
+      <div className={`col-2 cf-padding-cancel cf-cursor-pointer cf-tooltip-container`}>
+        <img className={`${blockOpacity}`} onClick={this.handleBlock} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/block.png`} height="20px" width="20px" />
+        <span className="cf-tooltip-content-top cf-tooltip-content-top-user-tile">{blockMessage}</span>
       </div>
 
     } else

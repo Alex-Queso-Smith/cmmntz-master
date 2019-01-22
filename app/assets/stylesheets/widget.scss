@@ -356,6 +356,35 @@ a:hover {
       border-color: #D3D3D3 transparent transparent transparent;
   }
 }
+.cf-tooltip-content-top-anon {
+  left: -15px;
+  top: -30px;
+
+  &:after {
+    top: 100%;
+    left: 40px;
+  }
+}
+
+.cf-tooltip-content-top-anon-filter {
+  left: -15px;
+  top: -38px;
+
+  &:after {
+    top: 100%;
+    left: 100px;
+  }
+}
+
+.cf-tooltip-content-top-user-tile {
+  left: -15px;
+  top: -33px;
+
+  &:after {
+    top: 100%;
+    left: 15px;
+  }
+}
 
 .cf-tooltip-content-bottom {
   visibility: hidden;
@@ -386,13 +415,13 @@ a:hover {
   }
 }
 
-.cf-login-statement-container {
-  width: auto;
-}
+// .cf-login-statement-container {
+//   width: auto;
+// }
 
 .cf-login-statement {
   line-height: 2em;
-  padding-left: 25px !important;
+  // padding-left: 25px !important;
   font-size: 1.5em;
   font-weight: bold;
   color: #800080 !important;
@@ -410,16 +439,20 @@ a:hover {
 }
 
 #cf-preset-filters-selector {
-  margin-bottom: 15px;
-  margin-top: 15px;
+  margin: 15px 0px 15px 50px;
 
   h4 {
     margin-bottom: 0px;
     margin-right: 10px;
+    line-height: 1.6;
+  }
+
+  select {
+    width: 230px;
   }
 
   .cf-preset-filter-row {
-    margin-left: 0px !important;
+    // margin-left: 0px !important;
   }
 }
 

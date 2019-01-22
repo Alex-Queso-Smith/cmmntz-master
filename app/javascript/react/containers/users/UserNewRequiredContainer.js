@@ -1,27 +1,59 @@
 import React from 'react';
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
-import { ErrorClassValidation } from '../../util/CoreUtil';
+import { CreateErrorElements, ErrorClassValidation, FetchBasic } from '../../util/CoreUtil';
 
 class UserNewRequiredContainer extends React.Component {
   state = {
-    privacyPolicyShow: false
+    privacyPolicyShow: false,
+    regErrors: {}
   }
+
   handlePrivacyPolicyClick = this.handlePrivacyPolicyClick.bind(this);
+  handleRequiredValidation = this.handleRequiredValidation.bind(this);
 
   handlePrivacyPolicyClick(event) {
     event.preventDefault();
     this.setState({ privacyPolicyShow: !this.state.privacyPolicyShow })
   }
 
+  handleRequiredValidation(event){
+    event.preventDefault();
+
+    var userValidate = new FormData();
+
+    var { userName, email, password, passwordConfirmation } = this.props;
+
+    userValidate.append("user[user_name]", userName);
+    userValidate.append("user[email]", email);
+    userValidate.append("user[password]", password);
+    userValidate.append("user[password_confirmation]", passwordConfirmation);
+
+    FetchBasic(this, `${this.props.baseUrl}/api/v1/users.json?page=1`, userValidate, 'POST')
+    .then(body => {
+      if (body.errors) {
+        this.setState({ regErrors: body.errors })
+      } else {
+        this.setState({ regErrors: {} })
+        this.props.handleNextClick()
+      }
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
   render(){
-    var userNameClass, emailClass, passwordClass, passwordConfirmationClass;
+    var userNameClass, emailClass, passwordClass, passwordConfirmationClass, emailError, userNameError, passwordError, passwordConfirmationError;
+    var { regErrors } = this.state;
 
-    userNameClass = ErrorClassValidation(this.props.userNameError);
-    emailClass = ErrorClassValidation(this.props.emailError);
-    passwordClass = ErrorClassValidation(this.props.passwordError);
-    passwordConfirmationClass = ErrorClassValidation(this.props.passwordConfirmationError);
+    userNameClass = ErrorClassValidation(this.state.regErrors.user_name);
+    emailClass = ErrorClassValidation(this.state.regErrors.email);
+    passwordClass = ErrorClassValidation(this.state.regErrors.password);
+    passwordConfirmationClass = ErrorClassValidation(this.state.regErrors.password_confirmation);
 
+    emailError = CreateErrorElements(regErrors.email, "Email");
+    userNameError = CreateErrorElements(regErrors.user_name, "User Name");
+    passwordError = CreateErrorElements(regErrors.password, "Password");
+    passwordConfirmationError = CreateErrorElements(regErrors.password_confirmation, "Password Confirmation");
 
     var privacyPolicy;
     if (this.state.privacyPolicyShow) {
@@ -73,7 +105,7 @@ class UserNewRequiredContainer extends React.Component {
           addClass={userNameClass}
           focus={true}
         />
-        {this.props.userNameError}
+        {userNameError}
         <Input
           name="email"
           label="Email"
@@ -82,7 +114,7 @@ class UserNewRequiredContainer extends React.Component {
           type="text"
           addClass={emailClass}
         />
-        {this.props.emailError}
+        {emailError}
         <Input
           name="password"
           label="Password"
@@ -91,7 +123,7 @@ class UserNewRequiredContainer extends React.Component {
           type="password"
           addClass={passwordClass}
         />
-        {this.props.passwordError}
+        {passwordError}
         <Input
           name="passwordConfirmation"
           label="Password Confirmation"
@@ -100,7 +132,7 @@ class UserNewRequiredContainer extends React.Component {
           type="password"
           addClass={passwordConfirmationClass}
         />
-        {this.props.passwordConfirmationError}
+        {passwordConfirmationError}
 
         <button onClick={ this.handlePrivacyPolicyClick } className="btn btn-dark btn-md cf-privacy-policy">Privacy Policy</button>
         {privacyPolicy}
@@ -117,7 +149,7 @@ class UserNewRequiredContainer extends React.Component {
             //   Back
             // </button>
           }
-          <button className="btn btn-sm btn-dark cf-float-right" onClick={this.props.handleButtonClick} disabled={this.props.disabled}>
+          <button className="btn btn-sm btn-dark cf-float-right" onClick={this.handleRequiredValidation} disabled={this.props.disabled}>
             Next Page
           </button>
           <button className="btn btn-sm btn-dark cf-float-right cf-margin-right-10px" onClick={ updateDisplayLogin }>

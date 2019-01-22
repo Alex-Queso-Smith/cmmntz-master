@@ -92,7 +92,9 @@ class CommentingContainer extends React.Component {
   componentDidMount(){
     this._isMounted = true;
 
-    FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/arts/${this.props.artId}.json`)
+    var { artId, globalSettings } = this.props;
+
+    FetchDidMount(this, `${globalSettings.baseUrl}/api/v1/arts/${artId}.json`)
     .then(artData => {
       this.setState({
         commentEtiquette: artData.art.gallery_comment_etiquette
@@ -100,8 +102,9 @@ class CommentingContainer extends React.Component {
     })
     .then(stuff => {
       var { userId, galleryId } = this.props;
+
       if (userId.length > 0){
-        FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
+        FetchDidMount(this, `${globalSettings.baseUrl}/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
         .then(userData => {
 
           var newSortOpts = this.state.sortOpts;
@@ -177,6 +180,13 @@ class CommentingContainer extends React.Component {
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+
+    FetchDidMount(this, `${globalSettings.baseUrl}/api/v1/heatmaps.json?art_id=${artId}`)
+    .then(heatMapData => {
+      // this.handleHeatMapping(heatMapData.geo_data)
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+
   }
 
   componentWillUnmount(){
@@ -837,10 +847,13 @@ class CommentingContainer extends React.Component {
               clearFilters={this.clearFilters}
               userInfo={this.state.userInfo}
               filtersExpanded={this.state.filtersExpanded}
-              showGeo={true}
+              widgetFilters={true}
               handlePresetFilterChange={this.handlePresetFilterChange}
               option={this.state.presetFilter}
               globalSettings={this.props.globalSettings}
+              grandTotalComments={this.state.grandTotalComments}
+              totalComments={this.state.totalComments}
+              filteredCount={filteredCount}
               />
 
             <hr />

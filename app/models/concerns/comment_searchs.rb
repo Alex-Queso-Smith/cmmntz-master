@@ -253,6 +253,12 @@ module CommentSearchs
       scope
     end
 
+    def self.complete_listing_for_thread_heatmap(article_id)
+      scope = for_art_type_and_id("art", article_id).not_anon_or_guest
+      scope = scope.includes(:user).approved.not_deleted.for_non_blocked_users
+      scope
+    end
+
     # sort and filter for art listings
     def self.filter_and_sort(user, article_id, article_type, filter_opts = {}, page)
       scope = for_art_type_and_id(article_type, article_id)

@@ -81,9 +81,9 @@ class GeoSelect extends React.Component {
 
     var buttonTypes = [
       ['', 'Anywhere', 0],
-      ['huge', "Huge Circle", 48],
-      ['medium', "Big Circle", 24],
-      ['small', "Small Circle", 0]
+      ['huge', "Huge", 48],
+      ['medium', "Big", 24],
+      ['small', "Small", 0]
     ]
 
     if (latitude && longitude) {
@@ -122,16 +122,10 @@ class GeoSelect extends React.Component {
     return(
       <div className="geo-select-container">
 
-        <div className="row">
-          <div className="col-sm-12">
-            Click an Area of the map to center your search
-          </div>
-        </div>
-
         <div className="row cf-margin-top-5px">
           <div className="col-sm-12">
             <div className="cf-geomap-wrapper">
-              <div className="cf-geomap-container cf-margin-0" onMouseMove={this._onMouseMove} onClick={this.setLatLongClick}>
+              <div className="cf-geomap-container" onMouseMove={this._onMouseMove} onClick={this.setLatLongClick}>
                 {geoMarker}
               </div>
             </div>
@@ -139,13 +133,13 @@ class GeoSelect extends React.Component {
         </div>
 
         <div className="row cf-margin-top-10px">
-          <div className="col-sm-12">
+          <div className="col-sm-12 cf-text-center">
             Search Within
           </div>
         </div>
 
         <div className="row cf-margin-top-5px">
-          <div className="col-sm-12">
+          <div className="col-sm-12 cf-text-center">
             {radiusButtons}
           </div>
         </div>
