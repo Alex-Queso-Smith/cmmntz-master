@@ -18,7 +18,19 @@
     .row.justify-content-center
       %p Hope you enjoyed the article. Now it's time to beta test the ClassiFilter widget!
 
-<div id="cf-comments-app" class="cf-bs" data-gallery-id="#{@art.gallery_id}" data-art-id="#{@art.id}" data-art-type="art" data-user-id="#{current_user.id if current_user}" data-user-font="cf-#{user_font(current_user)}" data-user-theme="cf-#{user_theme(current_user)}"/>
+
+
+<script src="/javascripts/classifilter-init.js"></script>
+<script type="text/javascript">
+Classifilter.init({
+galleryId: '#{@gallery.id}',
+topics: '#{@article.topics}',
+publishDate: '#{@article.publish_date}',
+artistName: '#{@article.author.name}',
+type: "article",
+mode: "development"
+});
+</script>
 
 
 - content_for :bottom do

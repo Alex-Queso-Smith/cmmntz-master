@@ -18,4 +18,13 @@ module CommentsHelper
   def comment_user_show_censored(comment)
     comment.render_anonymously? ? true : (comment.guest? || comment.user.nil?) ? true : comment.user.show_censored_comments
   end
+
+  def comment_user_longitude(comment)
+    comment.render_anonymously? ? "" : (comment.guest? || comment.user.nil?) ? "" : comment.user.longitude
+  end
+
+  def comment_user_latitude(comment)
+    comment.render_anonymously? ? "" : (comment.guest? || comment.user.nil?) ? "" : comment.user.latitude
+  end
+
 end

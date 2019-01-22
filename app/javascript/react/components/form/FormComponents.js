@@ -9,6 +9,7 @@ export const AgeSlider = props => {
   var ageImage =
   <AgeRangeImageSelector
     age={selectedRange}
+    baseUrl={props.baseUrl}
   />
 
   var { noRangeMessageOverride } = props
@@ -28,10 +29,12 @@ export const AgeSlider = props => {
   }
 
   return(
-    <div className="cf-slider-container">
+    <div className="cf-slider-container cf-text-center">
       <label className="cf-slider-label cf-text-medium" htmlFor={props.name}>
         {ageImage}
-        Age Range: {ageRange}
+        <div className="cf-slider-age-range">
+          Age Range: {ageRange}
+        </div>
       </label>
       <input autoFocus={props.focus} onChange={props.onChange} type="range" min="10" max="75" step="5" value={selectedRange} name={props.name} className="slider" id="age-range-slider" />
     </div>
@@ -77,6 +80,7 @@ export const GenderSelector = props => {
         value={gender[1]}
         label={gender[2]}
         name={"gender"}
+        baseUrl={props.baseUrl}
       />
     )
   })
@@ -94,7 +98,7 @@ export const GenderSelector = props => {
 const GenderButton = props => {
   return(
     <div className={`col-3`}>
-      <img className={`cf-gender-btn ${props.translucency}`} onClick={props.onChange} name={props.name} value={props.value} src={`/images/icons-v2/genders/gender-${props.imageName}.png`} />
+      <img className={`cf-gender-btn ${props.translucency}`} onClick={props.onChange} name={props.name} value={props.value} src={`${props.baseUrl}/images/icons-v2/genders/gender-${props.imageName}.png`} />
       <div className="cf-text-center">
         {props.label}
       </div>
@@ -209,7 +213,7 @@ export const NukaCarousel = props => {
   var avatarImages = newAvatars.map((a) => {
 
     return(
-      <img style={style} onClick={props.onChange} name={`${a}_ffffff_000000`} key ={a} src={`/images/avatars/${a}_ffffff_000000.png`} />
+      <img style={style} onClick={props.onChange} name={`${a}_ffffff_000000`} key ={a} src={`${props.baseUrl}/images/avatars/${a}_ffffff_000000.png`} />
     )
   })
 

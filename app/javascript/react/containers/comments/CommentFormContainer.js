@@ -144,7 +144,7 @@ class CommentFormContainer extends React.Component {
 
     var { commentFormErrors, artSettings, userSettings } = this.props
     var { text, formInvalid, selfVotes, selfVoteStatus, anonModalShow } = this.state
-    var textError, timer, anonModal, selfVoteButtonsRowOne, selfVoteButtonsRowTwo, approvalMsg;
+    var textError, timer, anonModal, selfVoteButtonsRowOne, selfVoteButtonsRowTwo;
 
     if (commentFormErrors.text) {
       textError = CreateErrorElements(commentFormErrors.text, "Comment text")
@@ -186,29 +186,36 @@ class CommentFormContainer extends React.Component {
         }
       }
 
+      var gearStyle = {
+        marginLeft: "5px"
+      }
+
+      var logoutStyle = {
+        marginLeft: "20px"
+      }
+
       userNameButton =
       <div className="col-6 cf-login-statement cf-cursor-pointer" style={userNameStyle}  onClick={ changeDisplaySettings }>
         {this.props.userInfo.userName}
       </div>
       buttonOne =
-      <div className="col-2">
+      <div style={gearStyle} className="col-1 cf-padding-cancel">
         <button className="btn btn-sm cf-fade-button" onClick={ changeDisplaySettings }>
-          <img className={`cf-vote-btn cf-cursor-pointer`} src="/images/icons-v2/gear.png" />
+          <img className={`cf-vote-btn cf-cursor-pointer`} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/gear.png`} />
         </button>
       </div>
       buttonTwo =
-      <div className="col-2">
+      <div style={logoutStyle} className="col-2">
         <button className="btn btn-sm cf-fade-button" onClick={ this.props.tempLogout }>Logout</button>
       </div>
 
     }
 
     if (selfVoteStatus) {
-
       selfVoteButtonsRowOne =
       RowOneVoteTypes.map((type) => {
         var visibility;
-        var image = ImageSelector(type[0])
+        var image = ImageSelector(type[0], this.props.globalSettings.baseUrl)
         var opacity = selfVotes.includes(type[0]) ? "" : "cf-translucent"
 
         if (type[0].includes('blank')) {
@@ -230,7 +237,7 @@ class CommentFormContainer extends React.Component {
       selfVoteButtonsRowTwo =
       RowTwoVoteTypes.map((type) => {
         var visibility;
-        var image = ImageSelector(type[0])
+        var image = ImageSelector(type[0], this.props.globalSettings.baseUrl)
         var opacity = selfVotes.includes(type[0]) ? "" : "cf-translucent"
 
         if (type[0].includes('blank')) {
@@ -261,36 +268,44 @@ class CommentFormContainer extends React.Component {
       Please be aware that default settings are for Anonymous & Guest comments to be filtered out so the likelihood of this comment being read are greatly reduced. Click 'OK' to post anonymously or Cancel to post as yourself.
     </ConfirmCancelModal>
     }
-    if (artSettings.disabled) {
-      approvalMsg =
-      <span className="helper-text">Note: This thread requires approval of all comments before they will be displayed.</span>
-    }
 
     var anonCheckBox;
     if (!userSettings.guest) {
-      var imageSrc = `/images/icons-v2/anonymous-unselected.png`
+      var imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-unselected.png`
+      var anonMessage = "Post Anonymously"
 
       if (this.state.anonymous) {
-        imageSrc = `/images/icons-v2/anonymous-selected.png`
+        imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-selected.png`
+        anonMessage = "Post as Myself"
+      }
+
+      var anonStyle = {
+        marginLeft: "35px"
       }
 
       anonCheckBox =
-      <div className="col-2">
+      <div style={anonStyle} className="col-1 cf-padding-cancel cf-tooltip-container">
         <img className={`cf-vote-btn cf-cursor-pointer cf-margin-top-10px`} onClick={this.handleChange} name='anonymous' src={imageSrc} />
+        <span className="cf-tooltip-content-top cf-tooltip-content-top-anon">{anonMessage}</span>
       </div>
     }
 
-    var commentForm;
+    var commentForm, approvalMsg;
     if (artSettings.disabled) {
-      var msg = "Commenting on this thread has been disabled by the site Admins."
+      var msg = "Commenting on this thread has been disabled by the site Admins.";
+
+      approvalMsg =
+      <span className="helper-text">Note: This thread requires approval of all comments before they will be displayed.</span>
 
       if (artSettings.disabledMessage) {
         msg = artSettings.disabledMessage
       }
+
       commentForm =
       <div className="cf-deactivated-message">
         <h4>{msg}</h4>
       </div>
+
     } else if (!artSettings.userCanPost) {
       commentForm =
       <div className="cf-deactivated-message">
@@ -301,7 +316,7 @@ class CommentFormContainer extends React.Component {
       commentForm =
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
         <div className="cf-text-center">
-            <a target="_blank" href="https://www.classibridge.com"><img className="cf-logo-image-form" src="/images/Classifilter_Logo.png" /></a>
+            <a target="_blank" href="https://www.classibridge.com"><img className="cf-logo-image-form" src={`${this.props.globalSettings.baseUrl}/images/Classifilter_Logo.png`} /></a>
         </div>
         <div className="row">
           <div className="col-6">
@@ -316,7 +331,7 @@ class CommentFormContainer extends React.Component {
           </div>
         </div>
         <hr className="cf-login-hr" />
-        <div className="cf-login-statement-container row">
+        <div className="cf-login-statement-container row cf-margin-top-5px">
           {userNameButton}
           {anonCheckBox}
           {buttonOne}

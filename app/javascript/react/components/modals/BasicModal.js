@@ -29,6 +29,7 @@ class BasicModal extends React.Component {
         show={this.state.show}
         handleClose={this.hideModal}
         modalTitle={this.props.modalTitle}
+        className={this.props.className}
       >
         {this.props.children}
       </Modal>

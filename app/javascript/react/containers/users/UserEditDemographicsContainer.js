@@ -29,7 +29,7 @@ class UserEditDemographicsContainer extends React.Component {
 
     var { userId } = this.props;
 
-    FetchDidMount(this, `/api/v1/users/${userId}.json`)
+    FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${userId}.json`)
     .then(body => {
       var user = body.user
 
@@ -180,7 +180,7 @@ class UserEditDemographicsContainer extends React.Component {
     user.append("user[longitude]", this.state.longitude);
     user.append("user[gender]", gender);
 
-    FetchWithPush(this, `/api/v1/users/${userId}.json`, '', 'PATCH', 'saveErrors', user)
+    FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${userId}.json`, '', 'PATCH', 'saveErrors', user)
     .then(body => {
       if (!body.errors) {
         this.setState({ saveErrors: {} })
@@ -202,6 +202,7 @@ class UserEditDemographicsContainer extends React.Component {
             label="Age Range"
             onChange={this.handleSliderChange}
             value={ageRange}
+            baseUrl={this.props.globalSettings.baseUrl}
           />
           <Checkbox
             name="ageRangeAnon"
@@ -215,6 +216,7 @@ class UserEditDemographicsContainer extends React.Component {
             label="Gender"
             onChange={this.handleChange}
             value={gender}
+            baseUrl={this.props.globalSettings.baseUrl}
           />
           <Checkbox
             name="genderAnon"
@@ -239,7 +241,7 @@ class UserEditDemographicsContainer extends React.Component {
               Update
             </button>
             <button className="btn btn-sm btn-dark cf-float-left cf-margin-top-10px" onClick={ this.props.updateDisplay }>
-              Back
+              Close
             </button>
           </div>
         </form>

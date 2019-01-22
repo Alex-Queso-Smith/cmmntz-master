@@ -3,14 +3,14 @@ import React from "react"
 import { SortDir, SortButton, FilterFromButton } from '../components/filters/SortSelect'
 import { ImageSelector } from './VoteUtil';
 
-export const ImageSelectorTemp = (filterList, notFilterList, type) => {
+export const ImageSelectorTemp = (filterList, notFilterList, type, baseUrl) => {
 
   if (filterList.includes(`${type}_percent`)) {
-    return `/images/icons-v2/${type}-selected.png`
+    return `${baseUrl}/images/icons-v2/${type}-selected.png`
   } else if (notFilterList.includes(`${type}_percent`)) {
-    return  `/images/icons-v2/${type}-unselected.png`
+    return  `${baseUrl}/images/icons-v2/${type}-unselected.png`
   } else {
-    return `/images/icons-v2/${type}.png`
+    return `${baseUrl}/images/icons-v2/${type}.png`
   }
 }
 
@@ -29,7 +29,7 @@ export const SortButtons = (object) => {
 
   return SortTypes.map((type) => {
     var opacity, visibility, image;
-    var image = ImageSelector(type[1])
+    var image = ImageSelector(type[1], object.props.globalSettings.baseUrl)
 
     sortType == type[0] ? opacity = "" : opacity = "cf-translucent"
 
@@ -53,7 +53,7 @@ export const UserSortButtons = (object) => {
 
   return SortTypes.map((type) => {
     var opacity, visibility, image;
-    var image = ImageSelector(type[1])
+    var image = ImageSelector(type[1], object.props.globalSettings.baseUrl)
 
     sortType == type[0] ? opacity = "" : opacity = "cf-translucent"
 
@@ -89,7 +89,7 @@ export const FilterButtonsRowOne = (object) => {
   return RowOneFilterTypes.map((type) => {
     var visibility, blankClass;
 
-    var image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
+    var image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0], object.props.globalSettings.baseUrl)
     var tooltipClass = "cf-tooltip-container"
 
     var handleFilterClickParent = (event) => {
@@ -128,7 +128,7 @@ export const FilterButtonsRowTwo = (object) => {
   return RowTwoFilterTypes.map((type) => {
     var visibility, tooltipClass;
 
-    var image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0])
+    var image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0], object.props.globalSettings.baseUrl)
     var tooltipClass = "cf-tooltip-container"
 
     var handleFilterClickParent = (event) => {

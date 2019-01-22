@@ -1,5 +1,4 @@
 class Api::V1::UserSessionsController < ApiController
-  skip_before_action *ALL_FILTERS - [:require_app_access], only: [:new, :create]
   before_action :require_no_user, only: [:new, :create]
 
   def new

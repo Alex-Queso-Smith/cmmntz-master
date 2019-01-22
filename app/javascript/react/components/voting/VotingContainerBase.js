@@ -57,7 +57,7 @@ class VotingContainerBase extends React.Component {
   }
 
   handlePost(payload, name){
-    FetchBasic(this, '/api/v1/votes.json', payload, 'POST')
+    FetchBasic(this, `${this.props.globalSettings.baseUrl}/api/v1/votes.json`, payload, 'POST')
     .then(body => {
 
       if (body.errors) {
@@ -118,7 +118,7 @@ class VotingContainerBase extends React.Component {
   }
 
   handleUpdate(payload, id){
-    FetchBasic(this, `/api/v1/votes/${id}.json`, payload, 'PATCH')
+    FetchBasic(this, `${this.props.globalSettings.baseUrl}/api/v1/votes/${id}.json`, payload, 'PATCH')
     .then(body => {
       if (body.errors) {
         var artErrors = body.errors["art"]
@@ -141,7 +141,7 @@ class VotingContainerBase extends React.Component {
   }
 
   handleDestroy(id, name){
-    FetchDeleteBasic(this, `/api/v1/votes/${id}.json`)
+    FetchDeleteBasic(this, `${this.props.globalSettings.baseUrl}/api/v1/votes/${id}.json`)
     .then(body => {
       if (body.errors) {
         var artErrors = body.errors["art"]
@@ -235,6 +235,8 @@ class VotingContainerBase extends React.Component {
         confirmAction={this.handleFlagCommentModal}
         modalTitle={"Flag this comment?"}
         name="warn"
+        confirmText="Flag"
+        className={"flag-comment"}
       >
         If you wish to flag this comment please click OK or cancel to leave unflagged.
       </ConfirmCancelModal>

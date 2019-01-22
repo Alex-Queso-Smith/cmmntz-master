@@ -8,6 +8,8 @@ json.reply comment.parent_id?
 json.user do
   json.user_id comment.user_id
   json.user_name comment_user_user_name(comment)
+  json.latitude comment_user_latitude(comment)
+  json.longitude comment_user_longitude(comment)
   json.gender comment_user_gender(comment)
   json.age_range comment_user_age_range(comment)
   json.base_image comment_user_base_image(comment)

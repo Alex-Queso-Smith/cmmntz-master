@@ -196,6 +196,14 @@ $bootstrap-blue: #0069D9;
   }
 }
 
+.cf-fade-button-purple {
+  color: #800080;
+  &:hover {
+    color: #800080;
+    border-color: #800080;
+  }
+}
+
 .cf-dark {
   .cf-fade-button {
     color: #fff;

@@ -1,23 +1,23 @@
 import React from 'react';
 
-export const CommentLengthSorter = (text) => {
+export const CommentLengthSorter = (text, baseUrl) => {
   var length = text.length
   var image;
   switch (true) {
     case (length <= 120):
-      image = '/images/icons-v2/length1.png'
+      image = `${baseUrl}/images/icons-v2/length1.png`
       break;
     case (length <= 240):
-      image = '/images/icons-v2/length2.png'
+      image = `${baseUrl}/images/icons-v2/length2.png`
       break;
     case (length <= 420):
-      image = '/images/icons-v2/length3.png'
+      image = `${baseUrl}/images/icons-v2/length3.png`
       break;
     case (length <= 600):
-      image = '/images/icons-v2/length4.png'
+      image = `${baseUrl}/images/icons-v2/length4.png`
       break;
     case (length > 600):
-      image = '/images/icons-v2/length5.png'
+      image = `${baseUrl}/images/icons-v2/length5.png`
       break;
   }
 

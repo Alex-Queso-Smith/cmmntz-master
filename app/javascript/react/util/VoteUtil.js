@@ -65,12 +65,12 @@ export const VoteClick = (object, event) => {
   }
 }
 
-export const ImageSelector = (type) => {
+export const ImageSelector = (type, baseUrl) => {
 
   if (type.includes('blank')) {
     return ''
   } else {
-    return `/images/icons-v2/${type}.png`
+    return `${baseUrl}/images/icons-v2/${type}.png`
   }
 }
 
@@ -127,7 +127,7 @@ export const RowOneVoteButtons = (object) => {
       }
     }
 
-    var image = ImageSelector(type[0])
+    var image = ImageSelector(type[0], object.props.globalSettings.baseUrl)
     var clickFunction = object.handleClickVote;
 
     if (type[0] === "warn") {
@@ -166,7 +166,7 @@ export const RowTwoVoteButtons = (object) => {
       visibility = 'cf-visibility-hidden'
     }
 
-    var image = ImageSelector(type[0])
+    var image = ImageSelector(type[0], object.props.globalSettings.baseUrl)
 
     return(
       <VoteButtonRowTwo

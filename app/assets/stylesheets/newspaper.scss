@@ -10,6 +10,15 @@ $grayline: #D3D3D3;
 $breakpoint-tablet: 900px;
 $breakpoint-phone: 575px;
 
+a:hover {
+  background-color: rgba(255,255,255,0.0);
+  color: #5B3592;
+}
+
+h4 {
+  font-size: 1em;
+}
+
 #body {
   background: #fff;
   margin: 0;

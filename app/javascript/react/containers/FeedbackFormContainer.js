@@ -60,7 +60,7 @@ class FeedbackFormContainer extends React.Component {
     newFeedback.append("user_feedback[first_name]", userFirstName)
     newFeedback.append("user_feedback[last_name]", userLastName)
 
-    FetchBasic(this, '/api/v1/user_feedbacks.json', newFeedback, 'POST')
+    FetchBasic(this, `${this.props.globalSettings.baseUrl}/api/v1/user_feedbacks.json`, newFeedback, 'POST')
     .then(feedbackData => {
 
       if (feedbackData.errors) {

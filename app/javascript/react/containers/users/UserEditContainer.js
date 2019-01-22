@@ -25,7 +25,6 @@ class UserEditContainer extends React.Component {
 
   render(){
     var { display, userId } = this.state;
-
     var updateDisplayComments = () => {
       this.props.updateDisplay("")
     }
@@ -37,6 +36,7 @@ class UserEditContainer extends React.Component {
         <UserEditAccountContainer
           userId={ userId }
           updateDisplay={updateDisplayComments}
+          globalSettings={this.props.globalSettings}
         />
       break;
       case "looks":
@@ -44,6 +44,7 @@ class UserEditContainer extends React.Component {
         <UserEditLooksContainer
           userId={ userId }
           updateDisplay={updateDisplayComments}
+          globalSettings={this.props.globalSettings}
         />
       break;
       case "demographics":
@@ -51,6 +52,7 @@ class UserEditContainer extends React.Component {
         <UserEditDemographicsContainer
           userId={ userId }
           updateDisplay={updateDisplayComments}
+          globalSettings={this.props.globalSettings}
         />
       break;
       case "settings":
@@ -58,6 +60,7 @@ class UserEditContainer extends React.Component {
         <UserEditSettingsContainer
           userId={ userId }
           updateDisplay={updateDisplayComments}
+          globalSettings={this.props.globalSettings}
         />
         break;
       case "password":
@@ -66,6 +69,7 @@ class UserEditContainer extends React.Component {
           userId={ userId }
           updateDisplay={updateDisplayComments}
           updateSpaId={this.props.updateSpaId}
+          globalSettings={this.props.globalSettings}
         />
         break;
       default:
@@ -73,6 +77,7 @@ class UserEditContainer extends React.Component {
         <UserEditAccountContainer
           userId={ userId }
           updateDisplay={updateDisplayComments}
+          globalSettings={this.props.globalSettings}
         />
     }
 
@@ -89,6 +94,7 @@ class UserEditContainer extends React.Component {
 
         <FeedbackFormContainer
           userId={this.state.userId}
+          globalSettings={this.props.globalSettings.baseUrl}
         />
 
       </div>
