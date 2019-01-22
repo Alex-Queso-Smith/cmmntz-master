@@ -22,8 +22,8 @@ class HybridSortSelect extends React.Component {
       ["funny_percent-desc", "Funniest"],
       ["created_at-desc", "Newest"],
       ["created_at-asc", "Oldest"],
-      ["comment_length-desc", "Shortest"],
-      ["comment_length-asc", "Longest"]
+      ["comment_length-asc", "Shortest"],
+      ["comment_length-desc", "Longest"]
     ]
 
     var options = sortTypes.map((type) => {
