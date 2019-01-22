@@ -28,6 +28,7 @@ topics: '#{@article.topics}',
 publishDate: '#{@article.publish_date}',
 artistName: '#{@article.author.name}',
 type: "article",
+urlOverride: '#{@article.url(request)}',
 - if Rails.env.development?
   mode: 'development'
 - else
