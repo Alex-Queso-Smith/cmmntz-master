@@ -10,6 +10,7 @@ const Modal = props => {
         <div className="cf-modal-contents">
           {props.children}
         </div>
+        <button onClick={props.handleClose} className="btn btn-dark btn-sm float-right cf-margin-top-10px cf-margin-right-5px">Ok</button>
       </section>
     </div>
   );
