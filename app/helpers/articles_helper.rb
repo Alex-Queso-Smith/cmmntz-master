@@ -28,6 +28,6 @@ module ArticlesHelper
 
   def widget_mode
     return if request.base_url.to_s.match('staging').nil?
-    "mode: 'staging'"
+    "mode: 'staging'".html_safe
   end
 end
