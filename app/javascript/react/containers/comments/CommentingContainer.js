@@ -846,6 +846,7 @@ class CommentingContainer extends React.Component {
               handleShowFilterModal={this.handleShowFilterModal}
               clearFilters={this.clearFilters}
               userInfo={this.state.userInfo}
+              followedUsers={this.state.followedUsers}
               filtersExpanded={this.state.filtersExpanded}
               widgetFilters={true}
               handlePresetFilterChange={this.handlePresetFilterChange}

@@ -76,17 +76,23 @@ class CommentFilters extends React.Component {
 
       if (this.state.filtersExpanded) {
 
+        var filterBy;
+        if (this.props.followedUsers.length > 2) {
+          filterBy =
+          <div className="col-6 cf-filter-from-section cf-text-center">
+            <FilterCommentsBy
+              commentsFrom={this.props.sortOpts.commentsFrom}
+              onClick={this.props.handleFilterByClick}
+              />
+          </div>
+        }
+
         var commentsFrom;
         if (this.state.commentsFromExpanded) {
           commentsFrom =
           <div>
-            <div className="row">
-              <div className="col-6 cf-filter-from-section cf-text-center">
-                <FilterCommentsBy
-                  commentsFrom={this.props.sortOpts.commentsFrom}
-                  onClick={this.props.handleFilterByClick}
-                  />
-              </div>
+            <div className="row justify-content-center">
+              {filterBy}
               <div className="col-6 cf-filter-from-section justify-content-center">
                 {anonCheckBox}
               </div>
