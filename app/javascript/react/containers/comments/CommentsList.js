@@ -78,8 +78,8 @@ class CommentsList extends React.Component {
         var y = Math.round( ((latitude / -1) + 180) / (180 / 50) )
 
         var geoPin = {
-          x: x - 6,
-          y: y - 6
+          x: x - 3,
+          y: y - 3
         }
 
         if (!userBlocked && showCensored ) {
