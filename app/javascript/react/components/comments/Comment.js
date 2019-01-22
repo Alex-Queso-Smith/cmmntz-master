@@ -328,6 +328,7 @@ class Comment extends React.Component {
             blockSym={blockSym}
             userVoted={this.state.userVoted}
             globalSettings={this.props.globalSettings}
+            geoPin={this.props.geoPin}
           />
 
           <div className="cf-comment-w-meta">

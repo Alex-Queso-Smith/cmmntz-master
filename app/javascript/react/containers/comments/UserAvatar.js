@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { AgeRangeImageSelector } from '../../components/general/General';
+import GeoInfo from '../../components/comments/GeoInfo';
 
 class UserAvatar extends React.Component {
   state = {
@@ -60,6 +61,15 @@ class UserAvatar extends React.Component {
       </div>
     }
 
+    var { geoPin } = this.props;
+    var geoLocation;
+    if (geoPin) {
+      geoLocation =
+      <GeoInfo
+        geoPin={geoPin}
+      />
+    }
+
     var infoTile;
     if (this.state.showInfoTile) {
       infoTile=
@@ -76,6 +86,7 @@ class UserAvatar extends React.Component {
           <div className="row cf-margin-top-10px cf-gender-image-box">
             {genderImage}
             {ageRangeImage}
+            {geoLocation}
           </div>
         </div>
       </div>
