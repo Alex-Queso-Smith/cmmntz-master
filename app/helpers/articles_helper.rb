@@ -27,6 +27,7 @@ module ArticlesHelper
   end
 
   def widget_mode
-    request.base_url.to_s.match('localhost').nil? ? 'staging' : 'development'
+    return if request.base_url.to_s.match('staging').nil?
+    "mode: 'staging'"
   end
 end
