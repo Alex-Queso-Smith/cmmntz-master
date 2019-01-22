@@ -178,7 +178,7 @@ class CommentFilters extends React.Component {
             <div className="col-1 col-sm-1 cf-cursor-pointer" onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } }>
               <img style={expandStyle} src={`/images/icons-v2/${expandImg}`} />
             </div>
-            <div className="col-11 col-sm-11 cf-cursor-pointer" onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } }>
+            <div className="col-10 col-sm-10 cf-cursor-pointer" onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } }>
               <h4 style={fromStyle} className="cf-open-close">Show only comments from</h4>
             </div>
           </div>
