@@ -272,11 +272,11 @@ class CommentFormContainer extends React.Component {
     var anonCheckBox;
     if (!userSettings.guest) {
       var imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-unselected.png`
-      var anonMessage = "Post Anonymously"
+      var anonMessage = "Post as Myself"
 
       if (this.state.anonymous) {
         imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-selected.png`
-        anonMessage = "Post as Myself"
+        anonMessage = "Post Anonymously"
       }
 
       var anonStyle = {
@@ -284,9 +284,11 @@ class CommentFormContainer extends React.Component {
       }
 
       anonCheckBox =
-      <div className="col-1 cf-padding-cancel cf-tooltip-container cf-anon-login-button">
-        <img className={`cf-vote-btn cf-cursor-pointer cf-margin-top-10px`} onClick={this.handleChange} name='anonymous' src={imageSrc} />
-        <span className="cf-tooltip-content-top cf-tooltip-content-top-anon">{anonMessage}</span>
+      <div className="col-1 cf-padding-cancel cf-anon-login-button">
+        <div className="cf-tooltip-container">
+          <img className={`cf-vote-btn cf-cursor-pointer cf-margin-top-10px`} onClick={this.handleChange} name='anonymous' src={imageSrc} />
+          <span className="cf-tooltip-content-top">{anonMessage}</span>
+        </div>
       </div>
     }
 

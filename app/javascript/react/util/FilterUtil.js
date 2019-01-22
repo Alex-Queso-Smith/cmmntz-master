@@ -41,7 +41,8 @@ export const SortButtons = (object) => {
         onClick={object.props.handleFilterSubmit}
         image={image}
         visibility={''}
-        className="cf-tooltip-container"
+        tooltipClass={'cf-tooltip-container'}
+        className=""
         title={type[2]}
         row="top"
         />
@@ -90,7 +91,6 @@ export const FilterButtonsRowOne = (object) => {
     var visibility, blankClass;
 
     var image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0], object.props.globalSettings.baseUrl)
-    var tooltipClass = "cf-tooltip-container"
 
     var handleFilterClickParent = (event) => {
       object.props.handleFilterClick(event)
@@ -102,7 +102,8 @@ export const FilterButtonsRowOne = (object) => {
     return(
       <SortButton
         key={`filter_${type[1]}`}
-        className={`${tooltipClass}`}
+        tooltipClass={"cf-tooltip-container"}
+        className=""
         value={`${type[0]}_percent`}
         onClick={handleFilterClickParent}
         image={image}
@@ -129,7 +130,6 @@ export const FilterButtonsRowTwo = (object) => {
     var visibility, tooltipClass;
 
     var image = ImageSelectorTemp(object.props.sortOpts.filterList, object.props.sortOpts.notFilterList, type[0], object.props.globalSettings.baseUrl)
-    var tooltipClass = "cf-tooltip-container"
 
     var handleFilterClickParent = (event) => {
       object.props.handleFilterClick(event)
@@ -141,7 +141,8 @@ export const FilterButtonsRowTwo = (object) => {
     return(
       <SortButton
         key={`filter_${type[1]}`}
-        className={`${tooltipClass} cf-margin-bottom-15px`}
+        className={`cf-margin-bottom-15px`}
+        tooltipClass="cf-tooltip-container"
         value={`${type[0]}_percent`}
         onClick={handleFilterClickParent}
         image={image}
