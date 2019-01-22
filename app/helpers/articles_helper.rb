@@ -25,4 +25,8 @@ module ArticlesHelper
   def article_body_display_class article
     article.middle_image.present? && article.middle_image.asset.present? ? "col-sm-7" : "col-sm-12"
   end
+
+  def widget_mode
+    request.base_url.to_s.match('localhost').nil? ? 'staging' : 'development'
+  end
 end

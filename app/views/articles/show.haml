@@ -27,7 +27,9 @@ galleryId: '#{@gallery.id}',
 topics: '#{@article.topics}',
 publishDate: '#{@article.publish_date}',
 artistName: '#{@article.author.name}',
-type: "article"
+type: "article",
+- if !Rails.env.production?
+  mode: '#{widget_mode}'
 });
 </script>
 
