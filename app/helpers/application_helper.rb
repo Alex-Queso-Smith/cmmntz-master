@@ -1,13 +1,18 @@
 require 'redcarpet'
 
 module ApplicationHelper
-def widget_js_url
+def widget_pack_url
   asset_url(Webpacker.instance.manifest.lookup!('application.js'))
+end
+
+def widget_js_url
+  asset_url('cf-widget.js')
 end
 
 def widget_css_url
   asset_url('cf-widget.css')
 end
+
 
   # Convert markdown to HTML
   def markdown(text)

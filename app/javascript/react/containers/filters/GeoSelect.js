@@ -2,6 +2,8 @@ import React from 'react'
 
 class GeoSelect extends React.Component {
   state = {
+    rawGeoData: this.props.sortOpts.rawGeoData,
+    processedGeoData: [],
     radius: this.props.sortOpts.radius,
     geoPin: {
       x: '',
@@ -16,6 +18,8 @@ class GeoSelect extends React.Component {
   _onMouseMove = this._onMouseMove.bind(this);
   setLatLongClick = this.setLatLongClick.bind(this);
   handleChange = this.handleChange.bind(this);
+
+  processGeoData = this.processGeoData.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (this.props.radius != prevProps.radius) {
@@ -38,6 +42,7 @@ class GeoSelect extends React.Component {
         longitude
       })
     }
+    this.processGeoData(this.state.rawGeoData)
   }
 
   handleChange(event){
@@ -76,8 +81,23 @@ class GeoSelect extends React.Component {
      this.props.parentSetLatLongClick(x, y, radius);
   }
 
+  processGeoData(geoData) {
+    var range = new CfRectangle(150, 100, 150, 100)
+    var tree = new CfQuadTree(range, 1, 6)
+    var p;
+    for (var i = 0; i < geoData.length; i++) {
+      var x = Math.round( (geoData[i].long + 180) / (180 / 150) )
+      var y = Math.round( ((geoData[i].lat / -1) + 180) / (180 / 100) )
+      p = new CfPoint(x, y)
+      tree.insert(p)
+    }
+    var dataPoints = [];
+    tree.getResBreakdown(dataPoints)
+    this.setState({ processedGeoData: dataPoints})
+  }
+
   render() {
-    const { x, y, latitude, longitude, geoPin, radius } = this.state
+    const { x, y, latitude, longitude, geoPin, radius, processedGeoData, rawGeoData } = this.state
 
     var buttonTypes = [
       ['', 'Anywhere', 0],
@@ -106,6 +126,27 @@ class GeoSelect extends React.Component {
         <div className={`cf-geomarker ${radius}`} style={style} />
     }
 
+    var heatMarkers;
+    if (processedGeoData) {
+      var i = 0
+      heatMarkers=
+      processedGeoData.map((geo) => {
+        var style;
+        var r = (geo.val / rawGeoData.length) * 40
+
+        style = {
+          top: geo.y - r/2 ,
+          left: geo.x - r/2,
+          height: `${r}px`,
+          width: `${r}px`
+        }
+        i++
+        return(
+          <div key={`heat_${i}`}  className={`cf-heatmap-marker`} style={style} />
+        )
+      })
+    }
+
     var radiusButtons = buttonTypes.map((type) => {
       var btnClass = 'cf-translucent'
       if (this.state.radius === type[0]) {
@@ -126,7 +167,7 @@ class GeoSelect extends React.Component {
           <div className="col-sm-12">
             <div className="cf-geomap-wrapper">
               <div className="cf-geomap-container" onMouseMove={this._onMouseMove} onClick={this.setLatLongClick}>
-                {geoMarker}
+                {geoMarker} {heatMarkers}
               </div>
             </div>
           </div>
