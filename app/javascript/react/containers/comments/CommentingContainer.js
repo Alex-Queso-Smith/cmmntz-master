@@ -182,11 +182,12 @@ class CommentingContainer extends React.Component {
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
 
-    // FetchDidMount(this, `${globalSettings.baseUrl}/api/v1/heatmaps.json?art_id=${artId}`)
-    // .then(heatMapData => {
-      // this.handleHeatMapping(heatMapData.geo_data)
-    // })
-    // .catch(error => console.error(`Error in fetch: ${error.message}`));
+    FetchDidMount(this, `${globalSettings.baseUrl}/api/v1/heatmaps.json?art_id=${artId}`)
+    .then(heatMapData => {
+      var newOpts = this.state.sortOpts
+      newOpts.rawGeoData = heatMapData.geo_data
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
 
   }
 
