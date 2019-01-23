@@ -1,14 +1,15 @@
 import React from 'react';
 
 export const ConfirmCancelModal = (props) => {
-
+  var contentStyle = {
+    marginTop: "20px"
+  }
   return(
-    <div className="cf-modal">
-      <section className={`cf-modal-main cf-modal-main-${props.className}`}>
+    <div className="cf-modal-container">
+      <section className={`cf-modal-main cf-modal-${props.className}`}>
         <div className="cf-modal-close" onClick={props.closeAction} >&times;</div>
-          <h3>{props.modalTitle}</h3>
-          <hr />
-        <div className="cf-modal-contents">
+        <h3 className="cf-text-center cf-margin-bottom-10px">{props.modalTitle}</h3>
+        <div style={contentStyle} className="cf-modal-contents">
           {props.children}
           <div className="cf-margin-top-10px">
             <button className="cf-float-right btn btn-dark btn-sm cf-margin-right-10px" name={props.name} onClick={props.confirmAction}>

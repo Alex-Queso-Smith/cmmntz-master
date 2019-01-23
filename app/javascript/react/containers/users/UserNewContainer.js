@@ -292,6 +292,7 @@ class UserNewContainer extends React.Component {
           locationAnon={this.state.locationAnon}
           ageRangeAnon={this.state.ageRangeAnon}
           globalSettings={this.props.globalSettings}
+          updateDisplay={this.props.updateDisplay}
         />
         break;
     }
@@ -303,7 +304,7 @@ class UserNewContainer extends React.Component {
         modalTitle="For your consideration"
         handleClose={this.handleShowAnonWarning}
       >
-      "Please be aware that by listing some of your information as anonymous, the likelihood that any comments you post will be filtered out via default settings goes up substantially. You always have the option to post specific comments as an anonymous user, but the system works best when your main account has the demographic details entered."
+      Please be aware that by listing some of your information as anonymous, the likelihood that any comments you post will be filtered out via default settings goes up substantially. You always have the option to post specific comments as an anonymous user, but the system works best when your main account has the demographic details entered.
       </Modal>
     }
 

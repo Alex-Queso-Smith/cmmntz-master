@@ -336,8 +336,8 @@ a:hover {
   border-radius: 15px;
   background: #fff;
   white-space: nowrap;
-  left: -15px;
-  top: -25px;
+  left: -14px;
+  top: -35px;
   padding: 3px 15px 3px ;
   font-size: 15px;
   width: auto;
@@ -354,25 +354,6 @@ a:hover {
       top: 100%;
       left: 25px;
       border-color: #D3D3D3 transparent transparent transparent;
-  }
-}
-.cf-tooltip-content-top-anon {
-  left: -15px;
-  top: -30px;
-
-  &:after {
-    top: 100%;
-    left: 40px;
-  }
-}
-
-.cf-tooltip-content-top-anon-filter {
-  left: -15px;
-  top: -38px;
-
-  &:after {
-    top: 100%;
-    left: 100px;
   }
 }
 
@@ -395,7 +376,7 @@ a:hover {
   background: #fff;
   white-space: nowrap;
   left: -20%;
-  top: 45px;
+  top: 35px;
   padding: 3px 15px 3px ;
   font-size: 15px;
   width: auto;

@@ -198,8 +198,8 @@ $grayline: #D3D3D3;
 .cf-geomarker {
   position: absolute;
   border-radius: 50%;
-  border: solid 1px red;
-  background-color: red;
+  border: solid 1px #800080;
+  background-color: #800080;
   height: 12px;
   width: 12px;
   pointer-events: none;
@@ -225,6 +225,17 @@ $grayline: #D3D3D3;
 .cf-geomarker.huge {
   display: block;
   height: 48px; width: 48px;
+}
+
+.cf-heatmap-marker {
+  position: absolute;
+  border-radius: 50%;
+  border: solid 1px red;
+  background-color: red;
+  height: 12px;
+  width: 12px;
+  pointer-events: none;
+  z-index: 15;
 }
 
 .cf-gender-btn {

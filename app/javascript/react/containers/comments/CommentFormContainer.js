@@ -30,6 +30,7 @@ class CommentFormContainer extends React.Component {
   handleCloseAnonModal = this.handleCloseAnonModal.bind(this);
   handleSelfVoteButtonClick = this.handleSelfVoteButtonClick.bind(this);
   handleConfirmAnonModal = this.handleConfirmAnonModal.bind(this);
+  handleOutsideClick = this.handleOutsideClick.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (prevState.text != this.state.text) {
@@ -122,6 +123,7 @@ class CommentFormContainer extends React.Component {
       anonModalShow: true,
       anonModalShown: true
     });
+    document.addEventListener('click', this.handleOutsideClick, false)
     document.body.classList.add("cf-modal-locked");
   }
 
@@ -129,6 +131,7 @@ class CommentFormContainer extends React.Component {
     this.setState({
       anonModalShow: false
     });
+    document.removeEventListener('click', this.handleOutsideClick, false)
     document.body.classList.remove("cf-modal-locked");
   }
 
@@ -137,7 +140,16 @@ class CommentFormContainer extends React.Component {
       anonModalShow: false,
       anonymous: true
     })
+    document.removeEventListener('click', this.handleOutsideClick, false)
     document.body.classList.remove("cf-modal-locked");
+  }
+
+  handleOutsideClick(event) {
+    if (!event.target.classList.value.includes("cf-modal-container")) {
+      return;
+    } else {
+      this.handleCloseAnonModal();
+    }
   }
 
   render(){
@@ -263,8 +275,9 @@ class CommentFormContainer extends React.Component {
       <ConfirmCancelModal
         closeAction={this.handleCloseAnonModal}
         confirmAction={this.handleConfirmAnonModal}
-        modalTitle={'Do you wish to post anonymously?'}
-        confirmText="Ok"
+        modalTitle={'Post Anonymously?'}
+        confirmText="Continue"
+        className="anonymous-warning"
       >
       Please be aware that default settings are for Anonymous & Guest comments to be filtered out so the likelihood of this comment being read are greatly reduced. Click 'OK' to post anonymously or Cancel to post as yourself.
     </ConfirmCancelModal>
@@ -273,11 +286,11 @@ class CommentFormContainer extends React.Component {
     var anonCheckBox;
     if (!userSettings.guest) {
       var imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-unselected.png`
-      var anonMessage = "Post Anonymously"
+      var anonMessage = "Post as Myself"
 
       if (this.state.anonymous) {
         imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-selected.png`
-        anonMessage = "Post as Myself"
+        anonMessage = "Post Anonymously"
       }
 
       var anonStyle = {
@@ -285,9 +298,11 @@ class CommentFormContainer extends React.Component {
       }
 
       anonCheckBox =
-      <div className="col-1 cf-padding-cancel cf-tooltip-container cf-anon-login-button">
-        <img className={`cf-vote-btn cf-cursor-pointer cf-margin-top-10px`} onClick={this.handleChange} name='anonymous' src={imageSrc} />
-        <span className="cf-tooltip-content-top cf-tooltip-content-top-anon">{anonMessage}</span>
+      <div className="col-1 cf-padding-cancel cf-anon-login-button">
+        <div className="cf-tooltip-container">
+          <img className={`cf-vote-btn cf-cursor-pointer cf-margin-top-10px`} onClick={this.handleChange} name='anonymous' src={imageSrc} />
+          <span className="cf-tooltip-content-top">{anonMessage}</span>
+        </div>
       </div>
     }
 

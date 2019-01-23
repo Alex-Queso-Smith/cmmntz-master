@@ -6,24 +6,23 @@ import { Timeout } from '../../util/CommentUtil';
 import { ConfirmCancelModal } from '../modals/ConfirmCancelModal';
 
 class VotingContainerBase extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      selectedBigFive: '',
-      selectedVotes: this.props.commentVotes,
-      votePercents: this.props.votePercents,
-      voteCounts: this.props.voteCounts,
-      totalInteractions: this.props.totalInteractions,
-      userVoted: this.props.userVoted,
-      percentShow: this.props.userVoted,
-      flagModalShow: false
-    }
-    this.handleClickVote = this.handleClickVote.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
-    this.handleDestroy = this.handleDestroy.bind(this);
-    this.handleShowFlagModal = this.handleShowFlagModal.bind(this);
-    this.handleFlagCommentModal = this.handleFlagCommentModal.bind(this);
+  state = {
+    selectedBigFive: '',
+    selectedVotes: this.props.commentVotes,
+    votePercents: this.props.votePercents,
+    voteCounts: this.props.voteCounts,
+    totalInteractions: this.props.totalInteractions,
+    userVoted: this.props.userVoted,
+    percentShow: this.props.userVoted,
+    flagModalShow: false
   }
+
+  handleClickVote = this.handleClickVote.bind(this);
+  handleUpdate = this.handleUpdate.bind(this);
+  handleDestroy = this.handleDestroy.bind(this);
+  handleShowFlagModal = this.handleShowFlagModal.bind(this);
+  handleFlagCommentModal = this.handleFlagCommentModal.bind(this);
+  handleOutsideClick = this.handleOutsideClick.bind(this);
 
   componentDidMount(){
     const BigFive = ["like", "like_a_lot", "indifferent", "dislike", "dislike_a_lot"]
@@ -204,8 +203,10 @@ class VotingContainerBase extends React.Component {
   handleShowFlagModal(event){
     if (this.state.selectedVotes.warn === null) {
       if (this.state.flagModalShow) {
+        document.removeEventListener('click', this.handleOutsideClick, false)
         document.body.classList.remove("cf-modal-locked");
       } else {
+        document.addEventListener('click', this.handleOutsideClick, false)
         document.body.classList.add("cf-modal-locked");
       }
       this.setState({ flagModalShow: !this.state.flagModalShow })
@@ -217,6 +218,14 @@ class VotingContainerBase extends React.Component {
   handleFlagCommentModal(event){
     this.handleShowFlagModal()
     this.handleClickVote(event)
+  }
+
+  handleOutsideClick(event) {
+    if (!event.target.classList.value.includes("cf-modal-container")) {
+      return;
+    } else {
+      this.handleShowFlagModal(event);
+    }
   }
 
   render(){
@@ -236,9 +245,9 @@ class VotingContainerBase extends React.Component {
         modalTitle={"Flag this comment?"}
         name="warn"
         confirmText="Flag"
-        className={"flag-comment"}
+        className={"small"}
       >
-        If you wish to flag this comment please click OK or cancel to leave unflagged.
+        If you wish to flag this comment please click Flag or Cancel to leave unflagged.
       </ConfirmCancelModal>
     }
 

@@ -11,8 +11,10 @@ export const SortDir = props => {
 export const SortButton = props => {
   return(
     <div className={`col-1 cf-vote-button-box ${props.className}`}>
-      <img className={`sort-btn cf-cursor-pointer cf-margin-top-10px cf-vote-btn sort-${props.name} ${props.visibility} ${props.opacity}`} onClick={props.onClick} name="sortType" data-value={props.value} src={props.image} />
-      <span className={`cf-tooltip-content-${props.row}`}>{`${props.title}`}</span>
+      <div className={`${props.tooltipClass}`}>
+        <img className={`sort-btn cf-cursor-pointer cf-margin-top-10px cf-vote-btn sort-${props.name} ${props.visibility} ${props.opacity}`} onClick={props.onClick} name="sortType" data-value={props.value} src={props.image} />
+        <span className={`cf-tooltip-content-${props.row}`}>{`${props.title}`}</span>
+      </div>
     </div>
   )
 };

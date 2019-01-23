@@ -61,17 +61,27 @@ class UserAvatar extends React.Component {
       </div>
     }
 
-    var { geoPin } = this.props;
-    var geoLocation;
-    if (geoPin) {
-      geoLocation =
-      <GeoInfo
-        geoPin={geoPin}
-      />
-    }
-
     var infoTile;
     if (this.state.showInfoTile) {
+
+      var { latitude, longitude } = this.props.userInfo;
+
+      var geoPin, geoLocation;
+      if (latitude != "" && longitude != "") {
+        var x = Math.round( (longitude + 180) / (180 / 75) )
+        var y = Math.round( ((latitude / -1) + 180) / (180 / 50) )
+
+        geoPin = {
+          x: x - 3,
+          y: y - 3
+        }
+
+        geoLocation =
+        <GeoInfo
+          geoPin={geoPin}
+        />
+      }
+
       infoTile=
       <div className="cf-avatar-infoTile">
         <div className="cf-avatar-infoTile-content">

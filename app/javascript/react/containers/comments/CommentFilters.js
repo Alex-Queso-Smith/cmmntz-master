@@ -37,23 +37,7 @@ class CommentFilters extends React.Component {
 
     const { showAdvancedFilters, radius, x, y, latitude, longitude, geoPin, hideAnonAndGuest } = this.props.sortOpts;
 
-    var anonCheckBox;
-    var imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-unselected.png`
-    var anonMessage = "Show from Anonymous and Guest"
-
-    if (!hideAnonAndGuest) {
-      imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-selected.png`
-      anonMessage = "Hide from Anonymous and Guest"
-    }
-    anonCheckBox =
-    <div className="cf-tooltip-container">
-      <img className={`cf-vote-btn cf-cursor-pointer`} onClick={this.props.onChange} name='hideAnonAndGuest' src={imageSrc} />
-      <span className="cf-tooltip-content-top cf-tooltip-content-top-anon-filter">{anonMessage}</span>
-    </div>
-
     var filters, clearButton, commentInfo;
-
-
     if (!this.props.widgetFilters) {
       var sortStyle = {
         fontWeight: "bold"
@@ -87,14 +71,30 @@ class CommentFilters extends React.Component {
           </div>
         }
 
+        var imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-unselected.png`
+        var anonMessage = "Show from Anonymous and Guest"
+
+        if (!hideAnonAndGuest) {
+          imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-selected.png`
+          anonMessage = "Hide from Anonymous and Guest"
+        }
+
         var commentsFrom;
         if (this.state.commentsFromExpanded) {
+          var containerStyle = {
+            margin: "auto",
+            width: "19%"
+          }
+
           commentsFrom =
           <div>
             <div className="row justify-content-center">
               {filterBy}
               <div className="col-6 cf-filter-from-section justify-content-center">
-                {anonCheckBox}
+                <div style={containerStyle} className="cf-tooltip-container">
+                  <img className={`cf-vote-btn cf-cursor-pointer`} onClick={this.props.onChange} name='hideAnonAndGuest' src={imageSrc} />
+                  <span className="cf-tooltip-content-top">{anonMessage}</span>
+                </div>
               </div>
             </div>
 

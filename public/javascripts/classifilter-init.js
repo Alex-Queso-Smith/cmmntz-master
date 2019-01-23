@@ -13,40 +13,21 @@ var Classifilter = Classifilter || (function(){
 
           var galleryId = _args['galleryId']
           // var [authorized, packUrl, cssUrl, artId, userId, userFont, userTheme] = this.authorize_and_retrieve_art_info();
-          var [authorized, packUrl, cssUrl, artId, userId, userFont, userTheme] = await(this.authorize_and_retrieve_art_info())
+          var [authorized, packUrl, jsUrl, cssUrl, artId, userId, userFont, userTheme] = await(this.authorize_and_retrieve_art_info())
 
           if (authorized) {
             // add needed react js files and system css files to the page
-            this.load_externals(packUrl, cssUrl);
+            this.load_externals(packUrl, jsUrl, cssUrl);
             // setup the comment div
             var commentDiv = this.form_comments_container(galleryId, artId, userId, userFont, userTheme, _args['mode']);
             // insert the comment div into the dropin container
             cfDropinContainer.innerHTML = commentDiv;
           };
         },
-        load_externals : function(packUrl, cssUrl) {
-          new LukesLazyLoader(packUrl, cssUrl, function() {
+        load_externals : function(packUrl, jsUrl, cssUrl) {
+          new LukesLazyLoader(packUrl, jsUrl, cssUrl, function() {
             console.log('All files have been loaded');
           });
-        },
-        load_scripts : function(packUrl) {
-          // alert(packUrl)
-          var script = document.createElement('script');
-          script.async = true;
-          script.src = packUrl;
-
-          var entry = document.getElementsByTagName('script')[0];
-          entry.parentNode.insertBefore(script, entry)
-        },
-        load_css : function(cssUrl) {
-          // alert(cssUrl)
-          var link = document.createElement('link');
-          link.rel = 'stylesheet';
-          link.type = 'text.css';
-          link.href = cssUrl;
-
-          var entry = document.getElementsByTagName('link')[0];
-          entry.parentNode.insertBefore(link, entry)
         },
         authorize_and_retrieve_art_info : function() {
           current_url = window.location.href
@@ -93,6 +74,7 @@ var Classifilter = Classifilter || (function(){
                return [
                  widget_settings.authorized,
                  widget_settings.packUrl,
+                 widget_settings.jsUrl,
                  widget_settings.cssUrl,
                  widget_settings.artId,
                  widget_settings.userId,

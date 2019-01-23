@@ -32,6 +32,20 @@ class UserNewOptionalContainer extends React.Component {
         <img style={style} src={`${this.props.globalSettings.baseUrl}/images/avatars/${this.props.selectedAvatar}.png`} />
       </div>
     }
+
+    var updateDisplayLogin = () => {
+      this.props.updateDisplay("login")
+    }
+
+    var loginSpanStyle = {
+      fontSize: "13px",
+      fontWeight: "bold"
+    }
+
+    var loginDivStyle = {
+      lineHeight: "2"
+    }
+    
     return(
       <div id="reg-optional-1" className="form-group">
         <hr />
@@ -87,9 +101,12 @@ class UserNewOptionalContainer extends React.Component {
         </div>
         <hr />
         <div className="cf-margin-top-10px">
-            <button id="user-registration-button-back" className="btn btn-sm btn-dark cf-float-left" onClick={this.props.handleBackClick}>
-              Back
-            </button>
+            <div style={loginDivStyle} className="cf-float-left">
+              <span style={loginSpanStyle}>Already Registered?</span>
+              <button className="btn btn-sm btn-link cf-margin-right-10px" onClick={ updateDisplayLogin }>
+                Login
+              </button>
+            </div>
             <button id="user-registration-button" type="submit" className="btn btn-sm btn-dark cf-float-right" value="Submit" disabled={this.props.disabled}>
               Register
             </button>

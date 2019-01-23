@@ -7,7 +7,7 @@ export const PrivacyPolicy = props => {
       modalButtonText="Privacy Policy"
       modalTitle="Privacy Policy"
       modalButtonClass="cf-fade-button"
-      className={"privacy-policy"}
+      className={"large"}
     >
     <ol>
       <li>
