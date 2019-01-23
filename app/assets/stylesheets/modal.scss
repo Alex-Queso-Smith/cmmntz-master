@@ -19,11 +19,13 @@ $breakpoint-phone: 575px;
   left: 50%;
   transform: translate(-50%,-50%);
   padding: 15px;
+  border-radius: 5px;
+  border: 2px solid black;
 
   text-align: center;
 
   h3 {
-    height: 5%;
+    height: 8%;
     font-family: 'Sentinel SSm A','Sentinel SSm B',serif;
     font-size: 1.75em;
     line-height: 1em;
@@ -37,6 +39,8 @@ $breakpoint-phone: 575px;
   .cf-modal-contents {
     height: 82%;
     width: 100%;
+    padding-right: 15px;
+    margin-top: 15px;
     text-align: justify;
     overflow-x: hidden;
     overflow-y: auto;
@@ -69,38 +73,23 @@ $breakpoint-phone: 575px;
   }
 }
 
-.cf-modal-main-privacy-policy {
+.cf-modal-large {
   height: 75%;
   width: 50%;
 }
 
-.cf-modal-main-commenting-etiquette {
-
+.cf-modal-medium {
+  height: 60%;
+  width: 40%;
 }
 
-.cf-modal-main-flag-comment {
-  height: 250px;
-  width: 30%;
+.cf-modal-small {
+  height: 25%;
+  width: 40%;
 }
 
-.cf-modal-main-curated-views {
-
-}
-
-.cf-modal-main-results-count {
-
-}
-
-.cf-modal-main-demographic-warning-dns {
-
-}
-
-.cf-modal-main-demographic-warning-select-option {
-
-}
-
-.cf-modal-main-anonymous-warning {
-
+.cf-modal-ok-button {
+  margin: 5px;
 }
 
 .cf-modal-locked {
@@ -120,4 +109,9 @@ $breakpoint-phone: 575px;
   .cf-modal-main-anonymous-warning {
     height: 35%;
   }
+
+  .cf-modal-small {
+    height: 25%;
+  }
+
 }

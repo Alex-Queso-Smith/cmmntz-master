@@ -906,6 +906,7 @@ class CommentingContainer extends React.Component {
             modalButtonText={"Feedback / Bugs"}
             modalButtonClass="btn-primary"
             modalTitle="Feedback / Bugs"
+            hideButton={true}
             >
             <h5>Please select the appropriate button for reporting.</h5>
             <FeedbackFormContainer

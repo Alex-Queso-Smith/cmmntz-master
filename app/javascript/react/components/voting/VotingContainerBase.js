@@ -236,9 +236,9 @@ class VotingContainerBase extends React.Component {
         modalTitle={"Flag this comment?"}
         name="warn"
         confirmText="Flag"
-        className={"flag-comment"}
+        className={"small"}
       >
-        If you wish to flag this comment please click OK or cancel to leave unflagged.
+        If you wish to flag this comment please click Flag or Cancel to leave unflagged.
       </ConfirmCancelModal>
     }
 

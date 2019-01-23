@@ -30,6 +30,7 @@ class BasicModal extends React.Component {
         handleClose={this.hideModal}
         modalTitle={this.props.modalTitle}
         className={this.props.className}
+        hideButton={this.props.hideButton}
       >
         {this.props.children}
       </Modal>

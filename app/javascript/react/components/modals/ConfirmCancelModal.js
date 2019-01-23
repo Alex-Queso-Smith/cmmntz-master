@@ -6,7 +6,7 @@ export const ConfirmCancelModal = (props) => {
   }
   return(
     <div className="cf-modal">
-      <section className={`cf-modal-main cf-modal-main-${props.className}`}>
+      <section className={`cf-modal-main cf-modal-${props.className}`}>
         <div className="cf-modal-close" onClick={props.closeAction} >&times;</div>
         <h3 className="cf-text-center cf-margin-bottom-10px">{props.modalTitle}</h3>
         <div style={contentStyle} className="cf-modal-contents">
