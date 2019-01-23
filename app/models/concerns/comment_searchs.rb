@@ -254,7 +254,7 @@ module CommentSearchs
     end
 
     def self.complete_listing_for_thread_heatmap(article_id, user)
-      scope = for_art_type_and_id("art", article_id).not_anon_or_guest
+      scope = for_art_type_and_id("art", article_id).not_anon_or_guest.not_replies
       scope = self.eliminate_blocked(scope, user)
       scope = scope.includes(:user).approved.not_deleted.for_non_blocked_users
       scope
