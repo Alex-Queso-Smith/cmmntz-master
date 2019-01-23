@@ -292,6 +292,7 @@ class UserNewContainer extends React.Component {
           locationAnon={this.state.locationAnon}
           ageRangeAnon={this.state.ageRangeAnon}
           globalSettings={this.props.globalSettings}
+          updateDisplay={this.props.updateDisplay}
         />
         break;
     }
