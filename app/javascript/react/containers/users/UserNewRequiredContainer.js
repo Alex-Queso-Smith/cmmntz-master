@@ -93,9 +93,17 @@ class UserNewRequiredContainer extends React.Component {
       this.props.updateDisplay("login")
     }
 
+    var loginSpanStyle = {
+      fontSize: "13px",
+      fontWeight: "bold"
+    }
+
+    var loginDivStyle = {
+      lineHeight: "2"
+    }
+
     return(
       <div id="reg-required" className="form-group">
-        <h6 className="cf-text-center">Sign-Up Required Information</h6>
         <Input
           name="userName"
           label="User Name"
@@ -134,14 +142,24 @@ class UserNewRequiredContainer extends React.Component {
         />
         {passwordConfirmationError}
 
-        <button onClick={ this.handlePrivacyPolicyClick } className="btn btn-dark btn-md cf-privacy-policy">Privacy Policy</button>
+        <div className="row">
+          <div className="col-4">
+            <button onClick={ this.handlePrivacyPolicyClick } className="btn cf-non-fade-button btn-md cf-privacy-policy">Privacy Policy</button>
+          </div>
+          <div className="col-8">
+            <Checkbox
+              name="privacyPolicy"
+              onChange={this.props.onChange}
+              label="I agree to the privacy policy"
+              checked={this.props.privacyPolicy}
+              className={"cf-privacy-policy-checkbox"}
+              />
+          </div>
+        </div>
+
         {privacyPolicy}
-        <Checkbox
-          name="privacyPolicy"
-          onChange={this.props.onChange}
-          label="I agree to the privacy policy"
-          checked={this.props.privacyPolicy}
-        />
+
+        <hr />
 
         <div className="actions cf-margin-top-10px">
           {
@@ -152,9 +170,12 @@ class UserNewRequiredContainer extends React.Component {
           <button className="btn btn-sm btn-dark cf-float-right" onClick={this.handleRequiredValidation} disabled={this.props.disabled}>
             Next Page
           </button>
-          <button className="btn btn-sm btn-dark cf-float-right cf-margin-right-10px" onClick={ updateDisplayLogin }>
-            Login
-          </button>
+          <div style={loginDivStyle} className="cf-float-left">
+            <span style={loginSpanStyle}>Already Registered?</span>
+            <button className="btn btn-sm btn-link cf-margin-right-10px" onClick={ updateDisplayLogin }>
+              Login
+            </button>
+          </div>
       </div>
       </div>
     )

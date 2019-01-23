@@ -87,7 +87,7 @@ export const GenderSelector = props => {
 
   return(
     <div>
-      <label className="cf-text-medium">{props.label}</label>
+      <h4 className="cf-text-medium">{props.label}</h4>
       <div id="gender-selector" className="row cf-margin-top-bottom-10px justify-content-center">
         {genderButtons}
       </div>
@@ -107,11 +107,14 @@ const GenderButton = props => {
 };
 
 export const Input = props => {
+  var labelStyle = {
+    marginBottom: "5px"
+  }
 
   return(
     <div className="form-group">
-      <label className="cf-text-medium" htmlFor={props.name}>{props.label}</label>
-      <input autoFocus={props.focus} className={`form-control cf-margin-top-10px ${props.addClass}`} type={props.type} name={props.name} value={props.content} onChange={props.onChange}></input>
+      <label style={labelStyle} className="cf-text-medium" htmlFor={props.name}>{props.label}</label>
+      <input autoFocus={props.focus} className={`form-control cf-margin-top-5px ${props.addClass}`} type={props.type} name={props.name} value={props.content} onChange={props.onChange}></input>
     </div>
   );
 };

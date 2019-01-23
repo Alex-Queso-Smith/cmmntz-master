@@ -188,7 +188,6 @@ class UserNewContainer extends React.Component {
           if (body.errors) {
             this.setState({currentPage: 1})
           } else {
-            alert("Registration Successful")
             this.props.handleUpdateSpaId(body.user_id)
 
             this.props.updateDisplay("")
@@ -249,7 +248,7 @@ class UserNewContainer extends React.Component {
     var errorDiv, page, emailError, userNameError, passwordError, passwordConfirmationError;
     var { registrationErrors } = this.state
 
-    
+
 
     switch (this.state.currentPage) {
       case 1:
@@ -326,7 +325,7 @@ class UserNewContainer extends React.Component {
     return(
       <div className="login-container">
         <form className="form" id="cf-user-registration-form" onSubmit={this.handleSubmit} >
-          <h5 className="cf-user-title cf-text-center">User Registration</h5>
+          <h3 className="cf-user-title cf-text-center">User Registration</h3>
           {page}
           {anonWarningModal}
           {anonSubmissionModal}

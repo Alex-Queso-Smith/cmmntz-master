@@ -73,6 +73,15 @@ class SessionLoginContainer extends React.Component {
       this.props.updateDisplay("")
     }
 
+    var registerSpanStyle = {
+      fontSize: "13px",
+      fontWeight: "bold"
+    }
+
+    var registerDivStyle = {
+      lineHeight: "2"
+    }
+
     return(
       <div id="cf-user-login-container" className="login-container">
         <form className="form" id="login-form" onSubmit={this.handleSubmit}>
@@ -100,20 +109,28 @@ class SessionLoginContainer extends React.Component {
             label="Remember Me"
             onChange={this.handleChange}
           />
+        
+          <hr />
+
           <div className="form-group actions cf-margin-top-10px">
             <button type="submit" className="btn btn-sm btn-dark cf-float-right" value="Submit" disabled={this.state.formInvalid}>
               Login
             </button>
           </div>
         </form>
+
+
         {
           // <button className="btn btn-sm btn-dark float-left" onClick={ changeDisplayComments }>
           //   Close
           // </button>
         }
-        <button className="btn btn-sm btn-dark float-left cf-margin-right-10px" onClick={ changeDisplayRegister }>
-          Register
-        </button>
+        <div style={registerDivStyle} className="cf-float-left">
+          <span style={registerSpanStyle} className="cf-margin-right-5px">New To Classifilter?</span>
+          <button className="btn btn-sm btn-link cf-margin-right-10px" onClick={ changeDisplayRegister }>
+            Register
+          </button>
+        </div>
       </div>
     )
   }
