@@ -5,7 +5,7 @@ export const ConfirmCancelModal = (props) => {
     marginTop: "20px"
   }
   return(
-    <div className="cf-modal">
+    <div className="cf-modal-container">
       <section className={`cf-modal-main cf-modal-${props.className}`}>
         <div className="cf-modal-close" onClick={props.closeAction} >&times;</div>
         <h3 className="cf-text-center cf-margin-bottom-10px">{props.modalTitle}</h3>

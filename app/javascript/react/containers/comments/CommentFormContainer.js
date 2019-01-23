@@ -30,6 +30,7 @@ class CommentFormContainer extends React.Component {
   handleCloseAnonModal = this.handleCloseAnonModal.bind(this);
   handleSelfVoteButtonClick = this.handleSelfVoteButtonClick.bind(this);
   handleConfirmAnonModal = this.handleConfirmAnonModal.bind(this);
+  handleOutsideClick = this.handleOutsideClick.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (prevState.text != this.state.text) {
@@ -122,6 +123,7 @@ class CommentFormContainer extends React.Component {
       anonModalShow: true,
       anonModalShown: true
     });
+    document.addEventListener('click', this.handleOutsideClick, false)
     document.body.classList.add("cf-modal-locked");
   }
 
@@ -129,6 +131,7 @@ class CommentFormContainer extends React.Component {
     this.setState({
       anonModalShow: false
     });
+    document.removeEventListener('click', this.handleOutsideClick, false)
     document.body.classList.remove("cf-modal-locked");
   }
 
@@ -137,7 +140,16 @@ class CommentFormContainer extends React.Component {
       anonModalShow: false,
       anonymous: true
     })
+    document.removeEventListener('click', this.handleOutsideClick, false)
     document.body.classList.remove("cf-modal-locked");
+  }
+
+  handleOutsideClick(event) {
+    if (!event.target.classList.value.includes("cf-modal-container")) {
+      return;
+    } else {
+      this.handleCloseAnonModal();
+    }
   }
 
   render(){

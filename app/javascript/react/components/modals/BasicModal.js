@@ -6,10 +6,12 @@ class BasicModal extends React.Component {
 
   showModal = this.showModal.bind(this);
   hideModal = this.hideModal.bind(this)
+  handleOutsideClick = this.handleOutsideClick.bind(this);
 
   showModal(event){
     event.preventDefault();
 
+    document.addEventListener('click', this.handleOutsideClick, false)
     this.setState({ show: true });
     document.body.classList.add("cf-modal-locked");
   }
@@ -17,8 +19,17 @@ class BasicModal extends React.Component {
   hideModal(event){
     event.preventDefault();
 
+    document.removeEventListener('click', this.handleOutsideClick, false)
     this.setState({ show: false });
     document.body.classList.remove("cf-modal-locked");
+  }
+
+  handleOutsideClick(event) {
+    if (!event.target.classList.value.includes("cf-modal-container")) {
+      return;
+    } else {
+      this.hideModal(event);
+    }
   }
 
   render() {
