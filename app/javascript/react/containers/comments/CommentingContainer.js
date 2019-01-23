@@ -45,7 +45,8 @@ class CommentingContainer extends React.Component {
       ageRange: '',
       hideAnonAndGuest: true,
       setFrom: 'gallery',
-      previousCommentIds: []
+      previousCommentIds: [],
+      rawGeoData: []
     },
     gallerySettings: { },
     userSettings: { },
