@@ -523,3 +523,13 @@ a:hover {
     text-decoration: none;
   }
 }
+
+.cf-privacy-policy-checkbox {
+  margin-top: 14px;
+
+  @media (max-width: $breakpoint-phone) {
+    font-size: 12px;
+    float: right;
+    line-height: 2.3;
+  }
+}

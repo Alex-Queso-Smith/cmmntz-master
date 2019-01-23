@@ -75,8 +75,9 @@ class UserNewOptionalContainer extends React.Component {
           handleChange={this.props.onChange}
           locationAnon={locationAnon}
         />
+        <hr />
         <div className="form-group cf-margin-top-10px">
-          <label className="cf-text-medium cf-text-center" htmlFor="avatar">Avatar</label>
+          <h4 className="cf-text-medium" htmlFor="avatar">Avatar</h4>
           {selectedAvatar}
           <br />
           <Carousel
@@ -84,17 +85,14 @@ class UserNewOptionalContainer extends React.Component {
             baseUrl={this.props.globalSettings.baseUrl}
           />
         </div>
-        <div className="row actions cf-margin-top-10px">
-          <div className="col-sm-6">
+        <hr />
+        <div className="cf-margin-top-10px">
             <button id="user-registration-button-back" className="btn btn-sm btn-dark cf-float-left" onClick={this.props.handleBackClick}>
-              Close
+              Back
             </button>
-          </div>
-          <div className="col-sm-6">
             <button id="user-registration-button" type="submit" className="btn btn-sm btn-dark cf-float-right" value="Submit" disabled={this.props.disabled}>
               Register
             </button>
-          </div>
         </div>
       </div>
     )

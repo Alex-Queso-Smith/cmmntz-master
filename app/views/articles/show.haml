@@ -28,8 +28,11 @@ topics: '#{@article.topics}',
 publishDate: '#{@article.publish_date}',
 artistName: '#{@article.author.name}',
 type: "article",
-- if !Rails.env.production?
-  mode: '#{widget_mode}'
+urlOverride: '#{@article.url(request)}',
+- if Rails.env.development?
+  mode: 'development'
+- else
+  #{widget_mode}
 });
 </script>
 

@@ -236,11 +236,12 @@ class UserEditDemographicsContainer extends React.Component {
             handleChange={this.handleChange}
             locationAnon={locationAnon}
           />
+        <hr />
           <div className="form-group actions">
-            <button id="cf-user-edit-demographics-button" type="submit" className="btn btn-sm cf-float-right btn-dark cf-margin-top-10px" value="Submit">
+            <button id="cf-user-edit-demographics-button" type="submit" className="btn btn-sm cf-float-right btn-dark" value="Submit">
               Update
             </button>
-            <button className="btn btn-sm btn-dark cf-float-left cf-margin-top-10px" onClick={ this.props.updateDisplay }>
+            <button className="btn btn-sm btn-dark cf-float-left" onClick={ this.props.updateDisplay }>
               Close
             </button>
           </div>

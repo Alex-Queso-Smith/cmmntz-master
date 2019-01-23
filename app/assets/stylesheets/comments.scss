@@ -196,6 +196,18 @@ $bootstrap-blue: #0069D9;
   }
 }
 
+.cf-non-fade-button {
+  margin: 5px 5px 5px 0px;
+  color: #777777;
+  background: none;
+  background: #f8f9fa;
+  border: 1px solid #777777;
+
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
 .cf-fade-button-purple {
   color: #800080;
   &:hover {
