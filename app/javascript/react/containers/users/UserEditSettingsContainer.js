@@ -356,7 +356,8 @@ class UserEditSettingsContainer extends React.Component {
           label={"Show Comment if Censored?"}
           checked={this.state.showCensoredComments}
         />
-        <div className="cf-margin-top-10px cf-text-center">
+      <hr />
+        <div className="">
           <button className="btn btn-sm cf-float-right btn-dark" onClick={this.handleSubmit}>
             Update
           </button>

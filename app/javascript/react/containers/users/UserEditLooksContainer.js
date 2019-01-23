@@ -78,12 +78,12 @@ class UserEditLooksContainer extends React.Component {
             font={font}
             colorTheme={colorTheme}
             />
-
+          <hr />
           <div className="form-group actions">
-            <button id="cf-user-edit-looks-button" type="submit" className="btn btn-sm btn-dark cf-float-right cf-margin-top-10px" value="Submit">
+            <button id="cf-user-edit-looks-button" type="submit" className="btn btn-sm btn-dark cf-float-right" value="Submit">
               Update
             </button>
-            <button className="btn btn-sm btn-dark cf-float-left cf-margin-top-10px" onClick={ this.props.updateDisplay }>
+            <button className="btn btn-sm btn-dark cf-float-left" onClick={ this.props.updateDisplay }>
               Close
             </button>
           </div>

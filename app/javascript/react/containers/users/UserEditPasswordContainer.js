@@ -99,10 +99,13 @@ class UserEditPasswordContainer extends React.Component {
             addClass={passwordConfirmationClass}
           />
           {passwordConfirmationError}
-
-          <div className="form-group actions cf-margin-top-10px">
+          <hr />
+          <div className="form-group actions">
             <button type="submit" className="btn cf-float-right btn-sm btn-dark" value="Submit" disabled={this.state.formInvalid}>
               Update
+            </button>
+            <button type="submit" className="btn cf-float-left btn-sm btn-dark" value="Submit" onClick={this.props.updateDisplay}>
+              Close
             </button>
           </div>
         </form>
