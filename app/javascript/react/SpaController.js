@@ -26,7 +26,7 @@ class SpaController extends React.Component {
   handleUpdateSpaId = this.handleUpdateSpaId.bind(this);
 
   componentDidMount(){
-    FetchDidMount(this, `/api/v1/users/${this.state.userId}.json`)
+    FetchDidMount(this, `${this.state.globalSettings.baseUrl}/api/v1/users/${this.state.userId}.json`)
     .then(userData => {
       if (!userData.user.guest) {
         this.setState({ display: "" })
