@@ -264,6 +264,7 @@ class CommentFormContainer extends React.Component {
         closeAction={this.handleCloseAnonModal}
         confirmAction={this.handleConfirmAnonModal}
         modalTitle={'Do you wish to post anonymously?'}
+        confirmText="Ok"
       >
       Please be aware that default settings are for Anonymous & Guest comments to be filtered out so the likelihood of this comment being read are greatly reduced. Click 'OK' to post anonymously or Cancel to post as yourself.
     </ConfirmCancelModal>
