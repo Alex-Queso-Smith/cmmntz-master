@@ -132,13 +132,13 @@ class GeoSelect extends React.Component {
       heatMarkers=
       processedGeoData.map((geo) => {
         var style;
-        var r = (geo.val / rawGeoData.length) * 40
+        var d = (geo.val / rawGeoData.length) * 40
 
         style = {
-          top: geo.y - r/2 ,
-          left: geo.x - r/2,
-          height: `${r}px`,
-          width: `${r}px`
+          top: geo.y - d/2 ,
+          left: geo.x - d/2,
+          height: `${d}px`,
+          width: `${d}px`
         }
         i++
         return(
