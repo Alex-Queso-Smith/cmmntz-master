@@ -50,7 +50,7 @@ export const SortButtons = (object) => {
   })
 }
 export const UserSortButtons = (object) => {
-  var { sortDir, sortType } = object.state.sortOpts;
+  var { sortDir, sortType } = object.props.sortOpts;
 
   return SortTypes.map((type) => {
     var opacity, visibility, image;
@@ -63,7 +63,7 @@ export const UserSortButtons = (object) => {
         key={`sort_${type[1]}`}
         value={type[0]}
         opacity={opacity}
-        onClick={object.handleChange}
+        onClick={object.props.handleChange}
         image={image}
         visibility={''}
         className="cf-tooltip-container"

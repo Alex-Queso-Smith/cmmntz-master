@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { Input, Checkbox } from '../../components/form/FormComponents';
-import { FetchWithPush, CreateErrorElements, CheckInputValidation, FetchDeleteBasic} from '../../util/CoreUtil';
+import { FetchWithPush, ErrorClassValidation, CreateErrorElements, CheckInputValidation, FetchDeleteBasic} from '../../util/CoreUtil';
 
 class UserEditPasswordContainer extends React.Component {
   state = {
     password: '',
     passwordConfirmation: '',
     formInvalid: true,
-    passwordErrors: {}
+    saveErrors: {}
   }
 
   handleSubmit = this.handleSubmit.bind(this);
@@ -42,7 +42,7 @@ class UserEditPasswordContainer extends React.Component {
       user.append("user[password]", this.state.password);
       user.append("user[password_confirmation]", this.state.passwordConfirmation);
 
-      FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'passwordErrors', user)
+      FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
       .then(body => {
         if (!body.errors) {
           alert(body.message);
@@ -70,12 +70,17 @@ class UserEditPasswordContainer extends React.Component {
   }
 
   render(){
+    var { saveErrors } = this.state;
 
-    var passwordClass, passwordError, passwordConfirmationClass, passwordConfirmationError;
-    var { passwordErrors } = this.state
+    var passwordError;
+    if (saveErrors.password) { passwordError = CreateErrorElements(passwordErrors.password, "Password"); }
+    var passwordClass,
+    passwordClass = ErrorClassValidation(passwordError);
 
-    passwordError = CreateErrorElements(passwordErrors.password, "Password")
-    passwordConfirmationError = CreateErrorElements(passwordErrors.password_confirmation, "Password Confirmation")
+    var passwordConfirmationError;
+    if (saveErrors.password_confirmation) { passwordConfirmationError = CreateErrorElements(passwordErrors.password_confirmation, "Password Confirmation"); }
+    var passwordConfirmationClass;
+    passwordConfirmationClass = ErrorClassValidation(passwordConfirmationError);
 
     return(
       <div className="cf-user-edit-password-container">

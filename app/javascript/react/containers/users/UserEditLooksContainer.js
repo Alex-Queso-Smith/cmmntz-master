@@ -4,77 +4,16 @@ import UserThemeSelector from '../../components/form/UserThemeSelector';
 import { FetchDidMount, FetchWithPush } from '../../util/CoreUtil';
 
 class UserEditLooksContainer extends React.Component {
-  state = {
-    font: '',
-    colorTheme: '',
-    saveErrors: {}
-  }
-
-  _isMounted = false;
-  handleChange = this.handleChange.bind(this);
-  handleSubmit = this.handleSubmit.bind(this);
-
-  componentDidMount(){
-    this._isMounted = true;
-
-    FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`)
-    .then(body => {
-
-      var user = body.user
-
-      var userFont = user.font.replace("cf-", '')
-      var userTheme = user.color_theme.replace("cf-", '')
-      if (this._isMounted) {
-        this.setState({
-          font: userFont,
-          colorTheme: userTheme
-        })
-      }
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
-  componentWillUnmount(){
-    this._isMounted = false;
-  }
-
-  handleChange(event){
-    event.preventDefault();
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-    this.setState({ [name]: value })
-  }
-
-  handleSubmit(event){
-    event.preventDefault();
-
-    var { font, colorTheme } = this.state;
-
-    var user = new FormData();
-    user.append("user[font]", font);
-    user.append("user[color_theme]", colorTheme);
-
-    FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
-    .then(body => {
-      if (!body.errors) {
-        this.setState({ saveErrors: {} })
-        alert(`${body.message}`)
-      }
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
-
-  }
+  state = {}
 
   render(){
-    var { font, colorTheme } = this.state;
+    var { font, colorTheme } = this.props;
 
     return(
       <div id="cf-user-edit-looks-container">
-        <form className="form" id="cf-user-edit-looks-form" onSubmit={this.handleSubmit}>
+        <form className="form" id="cf-user-edit-looks-form" onSubmit={this.props.handleSubmit}>
           <UserThemeSelector
-            onChange={this.handleChange}
+            onChange={this.props.handleChange}
             font={font}
             colorTheme={colorTheme}
             />
