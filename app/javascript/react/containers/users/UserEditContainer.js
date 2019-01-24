@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { FetchDidMount } from '../../util/CoreUtil';
 import Tabs from '../../components/settings/Tabs';
 import UserEditSettingsContainer from './UserEditSettingsContainer';
 import UserEditAccountContainer from './UserEditAccountContainer';
@@ -11,10 +12,46 @@ import FeedbackFormContainer from '../FeedbackFormContainer';
 class UserEditContainer extends React.Component {
   state = {
     display: "",
-    userId: this.props.userId
+    userName: '',
+    email: '',
+    avatar: '',
+    saveErrors: {}
   }
 
+  _isMounted = false;
   handleTabClick = this.handleTabClick.bind(this);
+
+  componentDidMount(){
+    this._isMounted = true;
+
+    var { userId } = this.props;
+
+    FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${userId}.json`)
+    .then(body => {
+      var user = body.user
+
+      if (this._isMounted) {
+        this.setState({
+          userName: user.user_name,
+          email: user.email,
+          avatar: user.avatar_image
+        })
+      }
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
+  }
+
+  handleChange(event){
+    event.preventDefault();
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+    this.setState({ [name]: value })
+  }
 
   handleTabClick(event){
     const target = event.target;
@@ -24,7 +61,9 @@ class UserEditContainer extends React.Component {
   }
 
   render(){
-    var { display, userId } = this.state;
+    var { display } = this.state;
+    var { userId } = this.props;
+
     var updateDisplayComments = () => {
       this.props.updateDisplay("")
     }
