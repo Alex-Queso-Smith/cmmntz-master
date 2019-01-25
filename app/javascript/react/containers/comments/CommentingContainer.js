@@ -898,6 +898,7 @@ class CommentingContainer extends React.Component {
             <div className="cf-adverts-container">
               <FeedbackFormContainer
                 userId={this.props.userId}
+                globalSettings={this.props.globalSettings}
                 />
             </div>
           </div>
