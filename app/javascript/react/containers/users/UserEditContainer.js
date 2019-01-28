@@ -464,6 +464,8 @@ class UserEditContainer extends React.Component {
       if (!body.errors) {
         this.setState({ saveErrors: {} })
         this.props.updateDisplay("")
+      } else {
+        alert("Please fix errors before submitting again")
       }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
