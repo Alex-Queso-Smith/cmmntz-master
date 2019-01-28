@@ -203,21 +203,21 @@ class UserEditContainer extends React.Component {
     const target = event.target;
     var value = target.value;
     const name = target.name;
-
+    var anon;
     if (value === "15") {
       value = "13"
+      anon = false
     } else if (value === "10") {
       value = ""
-      this.setState({
-        [name]: value,
-        ageRangeAnon: true
-      })
+      anon = true
     } else {
-      this.setState({
-        [name]: value,
-        ageRangeAnon: false
-      })
+      anon = false
     }
+
+    this.setState({
+      [name]: value,
+      ageRangeAnon: anon
+    })
   }
 
   handleSortOptCheckChange(event) {
