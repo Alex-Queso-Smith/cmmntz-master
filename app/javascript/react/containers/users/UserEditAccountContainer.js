@@ -1,88 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import { FetchWithPush, FetchDidMount, CreateErrorElements, ErrorClassValidation } from '../../util/CoreUtil';
+import { CreateErrorElements, ErrorClassValidation } from '../../util/CoreUtil';
 import { Input, NukaCarousel as Carousel } from '../../components/form/FormComponents';
 
 class UserEditAccountContainer extends React.Component {
-  state = {
-    userName: '',
-    email: '',
-    avatar: '',
-    saveErrors: {}
-  }
-
-  _isMounted = false;
-  handleChange = this.handleChange.bind(this);
-  handleAvatarClick = this.handleAvatarClick.bind(this);
-  handleSubmit = this.handleSubmit.bind(this);
-
-  componentDidMount(){
-    this._isMounted = true;
-    FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`)
-    .then(body => {
-      var user = body.user
-
-      if (this._isMounted) {
-        this.setState({
-          userName: user.user_name,
-          email: user.email,
-          avatar: user.avatar_image
-        })
-      }
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
-  componentWillUnmount(){
-    this._isMounted = false;
-  }
-
-  handleChange(event){
-    event.preventDefault();
-    const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-    this.setState({ [name]: value })
-  }
-
-  handleAvatarClick(event){
-    event.preventDefault();
-
-    const target = event.target;
-    const value = target.name;
-    this.setState({ avatar: value })
-  }
-
-  handleSubmit(event){
-    event.preventDefault();
-
-    var user = new FormData();
-    user.append("user[user_name]", this.state.userName);
-    user.append("user[email]", this.state.email);
-    user.append("user[base_image]", this.state.avatar);
-
-    FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`, '', 'PATCH', 'saveErrors', user)
-    .then(body => {
-      if (!body.errors) {
-        this.setState({ saveErrors: {} })
-        alert(`${body.message}`)
-      }
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
+  state = {}
 
   render(){
-    var { saveErrors, userName, email, avatar } = this.state;
+    var { userName, email, avatar, saveErrors } = this.props;
 
     var emailError;
-    emailError = CreateErrorElements(saveErrors.email, "Email")
+    if (saveErrors.email) { emailError = CreateErrorElements(saveErrors.email, "Email") }
     var emailClass;
     emailClass = ErrorClassValidation(emailError);
 
     var userNameError;
-    userNameError = CreateErrorElements(saveErrors.user_name, "User Name")
+    if (saveErrors.user_name) { userNameError = CreateErrorElements(saveErrors.user_name, "User Name") }
     var userNameClass;
     userNameClass = ErrorClassValidation(userNameError);
 
@@ -101,13 +34,21 @@ class UserEditAccountContainer extends React.Component {
       </div>
     }
 
+    var redStyle = {
+      color: "red"
+    }
+
+    var updateDisplayPassword = () => {
+      this.props.updateDisplay("password")
+    }
+
     return(
       <div id="cf-user-edit-account-container">
-        <form className="form" id="cf-user-edit-form" onSubmit={this.handleSubmit} >
+        <form className="form" id="cf-user-edit-form" onSubmit={this.props.handleSubmit} >
           <Input
             name="userName"
             label="User Name"
-            onChange={this.handleChange}
+            onChange={this.props.handleChange}
             content={userName}
             type="text"
             addClass={userNameClass}
@@ -116,13 +57,20 @@ class UserEditAccountContainer extends React.Component {
           <Input
             name="email"
             label="Email"
-            onChange={this.handleChange}
+            onChange={this.props.handleChange}
             content={email}
             type="text"
             addClass={emailClass}
           />
           {emailError}
-
+          <div className="row">
+            <div className="col-6">
+              <button onClick={this.props.updateDisplayPassword} className="btn btn-link btn-sm">Change Password?</button>
+            </div>
+            <div className="col-6">
+              <button onClick={this.props.handleDeleteAccount} style={redStyle} className="btn btn-link btn-sm cf-float-right">Delete Account?</button>
+            </div>
+          </div>
           <hr />
 
           <div className="form-group cf-margin-top-10px">
@@ -130,7 +78,7 @@ class UserEditAccountContainer extends React.Component {
             <br />
             {selectedAvatar}
             <Carousel
-              onChange={this.handleAvatarClick}
+              onChange={this.props.handleAvatarClick}
               baseUrl={this.props.globalSettings.baseUrl}
             />
           </div>

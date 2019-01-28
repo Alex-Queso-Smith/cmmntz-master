@@ -29,8 +29,8 @@ const UserThemeSelector = props => {
           <br />
           <br />
           <select name="font" value={props.font} onChange={props.onChange}>
-            <option value="serif" className="cf-serif">Serif</option>
-            <option value="sans-serif" className="cf-sans-serif">Sans-Serif</option>
+            <option value="cf-serif" className="cf-serif">Serif</option>
+            <option value="cf-sans-serif" className="cf-sans-serif">Sans-Serif</option>
           </select>
           </label>
         </div>
