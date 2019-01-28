@@ -4,7 +4,7 @@ import { AgeRangeImageSelector } from '../general/General'
 
 
 export const AgeSlider = props => {
-  var selectedRange = props.value
+  var selectedRange = props.value;
   var ageRange;
   var ageImage =
   <AgeRangeImageSelector

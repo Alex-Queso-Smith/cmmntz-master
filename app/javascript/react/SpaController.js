@@ -2,6 +2,7 @@ import React from 'react';
 
 import CfCommentsApp from './CfCommentsApp';
 import UserEditContainer from './containers/users/UserEditContainer';
+import UserEditPasswordContainer from './containers/users/UserEditPasswordContainer';
 import SessionLoginContainer from './containers/sessions/SessionLoginContainer';
 import UserNewContainer from './containers/users/UserNewContainer';
 import { FetchDeleteBasic, FetchDidMount } from './util/CoreUtil';
@@ -112,6 +113,15 @@ class SpaController extends React.Component {
       case "register":
         page =
           <UserNewContainer
+            userId={userId}
+            updateDisplay={this.updateDisplay}
+            handleUpdateSpaId={this.handleUpdateSpaId}
+            globalSettings={globalSettings}
+          />
+        break;
+      case "password":
+        page =
+          <UserEditPasswordContainer
             userId={userId}
             updateDisplay={this.updateDisplay}
             handleUpdateSpaId={this.handleUpdateSpaId}
