@@ -13,7 +13,6 @@ class UserEditPasswordContainer extends React.Component {
 
   handleSubmit = this.handleSubmit.bind(this);
   handleChange = this.handleChange.bind(this);
-  handleDeleteAccount = this.handleDeleteAccount.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (
@@ -53,22 +52,6 @@ class UserEditPasswordContainer extends React.Component {
     }
   }
 
-  handleDeleteAccount(event){
-    event.preventDefault();
-
-    var confirm1 = confirm("Are you sure you wish to delete your account? Deleting your account is irreversible. Once you delete your accounts, all of your comments and interactions will become anonymous.");
-
-    if (confirm1 == true) {
-      FetchDeleteBasic(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`)
-      .then(finished => {
-
-        this.props.updateSpaId(finished.user_id);
-        this.props.updateDisplay("login")
-        }
-      )
-    }
-  }
-
   render(){
     var { saveErrors } = this.state;
 
@@ -81,6 +64,10 @@ class UserEditPasswordContainer extends React.Component {
     if (saveErrors.password_confirmation) { passwordConfirmationError = CreateErrorElements(passwordErrors.password_confirmation, "Password Confirmation"); }
     var passwordConfirmationClass;
     passwordConfirmationClass = ErrorClassValidation(passwordConfirmationError);
+
+    var updateDisplaySettings = () => {
+      this.props.updateDisplay("settings")
+    }
 
     return(
       <div className="cf-user-edit-password-container">
@@ -109,16 +96,11 @@ class UserEditPasswordContainer extends React.Component {
             <button type="submit" className="btn cf-float-right btn-sm btn-dark" value="Submit" disabled={this.state.formInvalid}>
               Update
             </button>
-            <button type="submit" className="btn cf-float-left btn-sm btn-dark" value="Submit" onClick={this.props.updateDisplay}>
+            <button type="submit" className="btn cf-float-left btn-sm btn-dark" value="Submit" onClick={updateDisplaySettings}>
               Close
             </button>
           </div>
         </form>
-        <div className="row justify-content-center">
-          <button onClick={this.handleDeleteAccount}  className="btn btn-danger btn-sm float-right">
-            Delete Account
-          </button>
-        </div>
       </div>
     )
   }

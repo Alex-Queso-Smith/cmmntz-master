@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FetchDidMount, FetchWithPush } from '../../util/CoreUtil';
+import { FetchDidMount, FetchWithPush, FetchDeleteBasic } from '../../util/CoreUtil';
 import Tabs from '../../components/settings/Tabs';
 import UserEditSettingsContainer from './UserEditSettingsContainer';
 import UserEditAccountContainer from './UserEditAccountContainer';
@@ -55,6 +55,7 @@ class UserEditContainer extends React.Component {
   handleRevertSettings = this.handleRevertSettings.bind(this);
   handleAvatarClick = this.handleAvatarClick.bind(this);
   handleFilterByClick = this.handleFilterByClick.bind(this);
+  handleDeleteAccount = this.handleDeleteAccount.bind(this);
   handleFilterClick = this.handleFilterClick.bind(this);
   handleSortDirClick = this.handleSortDirClick.bind(this);
   setLatLongClick = this.setLatLongClick.bind(this);
@@ -419,7 +420,8 @@ class UserEditContainer extends React.Component {
     event.preventDefault();
 
     var { userId } = this.props;
-    var { sortDir, sortType, notFilterList, filterList, commentsFrom, votesFrom, hideAnonAndGuest, gender, ageRange } = this.state.sortOpts;
+    var { sortDir, sortType, notFilterList, filterList, commentsFrom, votesFrom, hideAnonAndGuest } = this.state.sortOpts;
+    var { gender, ageRange } = this.state;
 
     switch (gender) {
       case "female":
@@ -467,9 +469,29 @@ class UserEditContainer extends React.Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  handleDeleteAccount(event){
+    event.preventDefault();
+
+    var confirm1 = confirm("Are you sure you wish to delete your account? Deleting your account is irreversible. Once you delete your accounts, all of your comments and interactions will become anonymous.");
+
+    if (confirm1 == true) {
+      FetchDeleteBasic(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${this.props.userId}.json`)
+      .then(finished => {
+
+        this.props.updateSpaId(finished.user_id);
+        this.props.updateDisplay("login")
+        }
+      )
+    }
+  }
+
   render(){
     var { display, saveErrors } = this.state;
     var { userId } = this.props;
+
+    var updateDisplayPassword = () => {
+      this.props.updateDisplay("password")
+    }
 
     var updateDisplayComments = () => {
       this.props.updateDisplay("")
@@ -486,9 +508,11 @@ class UserEditContainer extends React.Component {
           email={email}
           avatar={avatar}
           saveErrors={saveErrors}
-          updateDisplay={updateDisplayComments}
+          updateDisplay={updateDisplayPassword}
           globalSettings={this.props.globalSettings}
+          updateDisplayPassword={updateDisplayPassword}
           handleChange={this.handleChange}
+          handleDeleteAccount={this.handleDeleteAccount}
           handleAvatarClick={this.handleAvatarClick}
           handleSubmit={this.handleSubmit}
         />
@@ -547,15 +571,6 @@ class UserEditContainer extends React.Component {
           handleFilterByClick={this.handleFilterByClick}
           handleSubmit={this.handleSubmit}
           updateDisplay={updateDisplayComments}
-          globalSettings={this.props.globalSettings}
-        />
-        break;
-      case "password":
-        page =
-        <UserEditPasswordContainer
-          userId={ userId }
-          updateDisplay={updateDisplayComments}
-          updateSpaId={this.props.updateSpaId}
           globalSettings={this.props.globalSettings}
         />
         break;

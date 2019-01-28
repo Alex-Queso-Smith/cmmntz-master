@@ -34,6 +34,14 @@ class UserEditAccountContainer extends React.Component {
       </div>
     }
 
+    var redStyle = {
+      color: "red"
+    }
+
+    var updateDisplayPassword = () => {
+      this.props.updateDisplay("password")
+    }
+
     return(
       <div id="cf-user-edit-account-container">
         <form className="form" id="cf-user-edit-form" onSubmit={this.props.handleSubmit} >
@@ -55,7 +63,14 @@ class UserEditAccountContainer extends React.Component {
             addClass={emailClass}
           />
           {emailError}
-
+          <div className="row">
+            <div className="col-6">
+              <button onClick={this.props.updateDisplayPassword} className="btn btn-link btn-sm">Change Password?</button>
+            </div>
+            <div className="col-6">
+              <button onClick={this.props.handleDeleteAccount} style={redStyle} className="btn btn-link btn-sm cf-float-right">Delete Account?</button>
+            </div>
+          </div>
           <hr />
 
           <div className="form-group cf-margin-top-10px">
