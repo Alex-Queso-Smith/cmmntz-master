@@ -43,10 +43,21 @@ class CommentFilters extends React.Component {
         fontWeight: "bold"
       }
 
+      var alignBottom = {
+        alignSelf: "flex-end"
+      }
+
       filters =
       <div className="cf-filters-container">
 
-        <h4 style={sortStyle}>Filters</h4>
+        <div className="row">
+          <div style={alignBottom} className="col-6">
+            <h4 style={sortStyle}>Filters</h4>
+          </div>
+          <div className="col-6">
+            <button className="cf-fade-button cf-fade-button-purple btn btn-sm cf-float-right" onClick={this.props.clearFilters}>Clear</button>
+          </div>
+        </div>
         <div className="row justify-content-center cf-vote-row">
           {filterButtonsRowOne}
         </div>

@@ -508,7 +508,7 @@ class UserEditContainer extends React.Component {
           email={email}
           avatar={avatar}
           saveErrors={saveErrors}
-          updateDisplay={updateDisplayPassword}
+          updateDisplay={updateDisplayComments}
           globalSettings={this.props.globalSettings}
           updateDisplayPassword={updateDisplayPassword}
           handleChange={this.handleChange}
