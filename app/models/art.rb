@@ -17,6 +17,8 @@ class Art < ApplicationRecord
   has_many :deleted_comments, -> { where(deleted: true) }, class_name: "Comment", foreign_key: "art_id"
   has_many :approved_comments, -> { where(approved: true, deleted: false) }, class_name: "Comment", foreign_key: "art_id"
 
+  has_many :art_interactions
+
   after_create_commit :find_or_create_artist_record!
 
   scope :for_url, -> (url) {

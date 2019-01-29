@@ -28,7 +28,7 @@ class Comment < ApplicationRecord
 
   before_create :set_guest!
   before_save :censor_text!, :set_approval!
-  after_create_commit :update_last_interaction_at_for_art!
+  after_create_commit :add_art_interaction_for_art_and_user!, :update_last_interaction_at_for_art!
   after_commit :alert_admin_of_comment!
 
   def by_admin_of?(gallery_admin_ids)
@@ -107,6 +107,9 @@ class Comment < ApplicationRecord
   end
 
   ### Postprocessors
+  def add_art_interaction_for_art_and_user!
+    ArtInteraction.create_for_user_and_art(self.user_id, self.art_id)
+  end
 
   def update_last_interaction_at_for_art!
     Art.find(art_id).update_attribute("last_interaction_at", Time.now())

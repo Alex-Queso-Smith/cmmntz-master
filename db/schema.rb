@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_16_192157) do
+ActiveRecord::Schema.define(version: 2019_01_29_204649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -25,6 +25,14 @@ ActiveRecord::Schema.define(version: 2019_01_16_192157) do
     t.datetime "updated_at", null: false
     t.index ["customer_user_id"], name: "index_admin_mails_on_customer_user_id"
     t.index ["user_id"], name: "index_admin_mails_on_user_id"
+  end
+
+  create_table "art_interactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "art_id"
+    t.uuid "user_id"
+    t.datetime "created_at"
+    t.index ["art_id", "user_id"], name: "index_art_interactions_on_art_id_and_user_id"
+    t.index ["created_at"], name: "index_art_interactions_on_created_at"
   end
 
   create_table "art_topics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -82,6 +90,8 @@ ActiveRecord::Schema.define(version: 2019_01_16_192157) do
     t.text "disabled_message"
     t.uuid "gallery_artist_id"
     t.text "settings"
+    t.integer "art_interactions_count", default: 0
+    t.index ["art_interactions_count"], name: "index_arts_on_art_interactions_count"
     t.index ["created_at"], name: "index_arts_on_created_at"
     t.index ["gallery_artist_id"], name: "index_arts_on_gallery_artist_id"
     t.index ["gallery_id"], name: "index_arts_on_gallery_id"
@@ -342,6 +352,8 @@ ActiveRecord::Schema.define(version: 2019_01_16_192157) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "comment_etiquette"
+    t.string "site_url"
+    t.index ["site_url"], name: "index_galleries_on_site_url"
   end
 
   create_table "gallery_artists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
