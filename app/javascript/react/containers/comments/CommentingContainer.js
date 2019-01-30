@@ -807,11 +807,7 @@ class CommentingContainer extends React.Component {
 
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
-        <div className="row d-block d-md-none">
-          <div className="col-12">
-            <TutorialVideo />
-          </div>
-        </div>
+
         {showVoteModal}
         {filterModal}
 
