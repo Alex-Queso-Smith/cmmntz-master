@@ -2,7 +2,7 @@ import React from 'react';
 
 export const SortDir = props => {
   return(
-    <div className="col-1">
+    <div className="col-1 cf-vote-button-box">
       <img className={`sort-btn cf-cursor-pointer cf-margin-top-10px cf-vote-btn sort-${props.name}`} onClick={props.onClick} name="sortDir" data-value={props.value} src={props.image} />
     </div>
   );
