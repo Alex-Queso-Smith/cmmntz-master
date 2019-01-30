@@ -190,7 +190,7 @@ class CommentFilters extends React.Component {
 
           <div className="row cf-margin-bottom-10px">
             <div className="col-1 col-sm-1 cf-cursor-pointer" onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } }>
-              <img style={expandStyle} src={`/images/icons-v2/${expandImg}`} />
+              <img style={expandStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`} />
             </div>
             <div className="col-10 col-sm-10 cf-cursor-pointer" onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } }>
               <h4 style={fromStyle} className="cf-open-close">Show only comments from</h4>
@@ -253,7 +253,7 @@ class CommentFilters extends React.Component {
       filterRow =
       <div className="row">
         <div onClick={this.expandFilters} className="col-1 cf-cursor-pointer">
-          <img style={expandStyle} src={`/images/icons-v2/${expandImg}`} />
+          <img style={expandStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`} />
         </div>
         <div onClick={this.expandFilters} className="col-2 cf-cursor-pointer">
           <h4 style={sortStyle} >Filters</h4>
