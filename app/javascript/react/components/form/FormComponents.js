@@ -223,7 +223,7 @@ export const NukaCarousel = props => {
   var redImages = newAvatars.map((a) => {
 
     return(
-      <img style={style} onClick={props.onChange} name={`${a}_ffffff_ff0000`} key ={a} src={`/images/avatars/${a}_ffffff_ff0000.png`} />
+      <img style={style} onClick={props.onChange} name={`${a}_ffffff_ff0000`} key ={a} src={`${props.baseImageUrl}/images/avatars/${a}_ffffff_ff0000.png`} />
     )
   })
 
@@ -237,7 +237,7 @@ export const NukaCarousel = props => {
   var randomImages = randomAvatars.map((a) => {
 
     return(
-      <img style={style} onClick={props.onChange} name={`${a}`} key ={a} src={`/images/avatars/${a}.png`} />
+      <img style={style} onClick={props.onChange} name={`${a}`} key ={a} src={`${props.baseImageUrl}/images/avatars/${a}.png`} />
     )
   })
 
