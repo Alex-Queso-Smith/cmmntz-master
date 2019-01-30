@@ -7,17 +7,16 @@ class Comment < ApplicationRecord
 
   belongs_to :user
   belongs_to :art
+  belongs_to :gallery
   belongs_to :parent, class_name: 'Comment', optional: true
   has_many :replies, class_name: 'Comment', foreign_key: :parent_id
   has_many :votes
   has_many :flag_votes, -> { where(vote_type: "warn") }, class_name: "Vote", foreign_key: "comment_id"
   has_many :comment_interactions
 
-  delegate :gallery, to: :art
-
   accepts_nested_attributes_for :votes
 
-  before_validation :sanitize_text
+  before_validation :sanitize_text, :set_gallery_id
   before_validation :parse_and_build_votes, on: :create
   validates :user_id, :text, presence: true
 
@@ -71,7 +70,9 @@ class Comment < ApplicationRecord
 
 
   ### before_validations actions
-
+  def set_gallery_id
+    self.gallery_id = art.gallery_id
+  end
   def sanitize_text
     self.text = sanitize(text, tags: []) unless text.blank?
   end

@@ -146,7 +146,7 @@ users.each do |user|
   end
 end
 
-["Alber Einstein", "Douglas Adams", "Lore", "Newt Scamander"].each do |a|
+["Albert Einstein", "Douglas Adams", "Lore", "Newt Scamander"].each do |a|
   Author.create(name: a)
 end
 authors = Author.all
@@ -157,7 +157,7 @@ end
 
 article_categories = ArticleCategory.all
 
-gallery = Gallery.create(name: "Customer Newspaper Site-Test")
+gallery = Gallery.create(name: "Customer Newspaper Site-Test", site_url: "localhost:3000")
 
 # generate desired number of articles
 puts "generating #{num_articles} articles"

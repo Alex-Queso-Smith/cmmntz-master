@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_29_204649) do
+ActiveRecord::Schema.define(version: 2019_01_30_140341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -148,8 +148,10 @@ ActiveRecord::Schema.define(version: 2019_01_29_204649) do
     t.boolean "ignore_flagged", default: false, null: false
     t.string "approved_by"
     t.boolean "guest", default: false, null: false
+    t.uuid "gallery_id"
     t.index ["approved"], name: "index_comments_on_approved"
     t.index ["art_id", "art_type"], name: "index_comments_on_art_id_and_art_type"
+    t.index ["gallery_id"], name: "index_comments_on_gallery_id"
     t.index ["guest"], name: "index_comments_on_guest"
     t.index ["ignore_flagged"], name: "index_comments_on_ignore_flagged"
     t.index ["interactions_count"], name: "index_comments_on_interactions_count"
