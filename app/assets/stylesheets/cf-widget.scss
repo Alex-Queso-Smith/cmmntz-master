@@ -1,8 +1,11 @@
-@import "bootstrap";
+.cf-widget-app {
+  @import "bootstrap";
 
-@import "cf-bootstrap-override";
-@import "comments";
-@import "modal";
-@import "user";
-@import "widget";
-@import "modal";
+  @import "cf-bootstrap-override";
+  @import "comments";
+  @import "modal";
+  @import "scaffolds";
+  @import "user";
+  @import "widget";
+  @import "modal";
+}
