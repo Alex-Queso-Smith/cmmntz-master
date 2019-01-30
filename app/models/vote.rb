@@ -20,7 +20,7 @@ class Vote < ApplicationRecord
   validates :vote_type, uniqueness: { scope: [:user_id, :comment_id, :vote_type]}
   validate :vote_is_unique_from_exclusve_group, :art_is_not_deactivated, :deal_with_duplicate_top_votes
 
-  after_create_commit :add_comment_interaction_for_comment_and_user!, :update_last_interaction_at_for_art!, :auto_flag_moderator_activate!
+  after_create_commit :add_comment_interaction_for_comment_and_user!, :add_art_interaction_for_art_and_user!, :update_last_interaction_at_for_art!, :auto_flag_moderator_activate!
 
   before_destroy :art_is_not_deactivated_for_destroy
 
@@ -101,6 +101,10 @@ class Vote < ApplicationRecord
 
   def add_comment_interaction_for_comment_and_user!
     CommentInteraction.create_for_user_and_comment(self.user_id, self.comment_id)
+  end
+
+  def add_art_interaction_for_art_and_user!
+    ArtInteraction.create_for_user_and_art(self.user_id, self.comment.art_id)
   end
 
   ### Postprocessors
