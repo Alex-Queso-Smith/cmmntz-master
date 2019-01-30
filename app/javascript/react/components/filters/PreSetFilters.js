@@ -41,7 +41,8 @@ class PreSetFilters extends React.Component {
 
     var suggestionStyle = {
       marginRight: "5px",
-      fontWeight: "bold"
+      fontWeight: "bold",
+      paddingTop: "0px"
     }
 
     return(
