@@ -74,7 +74,7 @@ class HybridSortSelect extends React.Component {
       <div>
         <div className="row cf-vote-row" >
           <div className="col-1 col-sm-1 cf-cursor-pointer" onClick={ () => { this.setState({ expand: !this.state.expand }) } }>
-            <img style={expandStyle} src={`/images/icons-v2/${expandImg}`} />
+            <img style={expandStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`} />
           </div>
           <div className="col-2 col-sm-2 cf-cursor-pointer" id="cf-sort-selector" onClick={ () => { this.setState({ expand: !this.state.expand }) } }>
             <h4 style={sortStyle} >Sort</h4>
