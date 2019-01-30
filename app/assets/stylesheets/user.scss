@@ -140,6 +140,8 @@ $grayline: #D3D3D3;
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
+    padding: 0px;
+    display: inline;
   }
 
   .cf-age-slider:hover {
