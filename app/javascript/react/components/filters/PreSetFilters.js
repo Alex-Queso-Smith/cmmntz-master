@@ -47,7 +47,7 @@ class PreSetFilters extends React.Component {
     return(
       <div id="cf-preset-filters-selector">
         <div className="cf-preset-filter-row row">
-          <span><img className="cf-cursor-pointer" style={expandStyle} src={`/images/icons-v2/${expandImg}`} onClick={ () => { this.setState({ expand: !this.state.expand }) } }></img></span>
+          <span><img className="cf-cursor-pointer" style={expandStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`} onClick={ () => { this.setState({ expand: !this.state.expand }) } }></img></span>
           <h4  className="cf-cursor-pointer" onClick={ () => { this.setState({ expand: !this.state.expand }) } } style={suggestionStyle}>Suggestions</h4>
           {dropDown}
         </div>

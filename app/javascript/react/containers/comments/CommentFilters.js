@@ -184,6 +184,7 @@ class CommentFilters extends React.Component {
           <PreSetFilters
             onChange={handlePresetFilter}
             option={this.props.option}
+            globalSettings={this.props.globalSettings}
             />
           <hr />
 

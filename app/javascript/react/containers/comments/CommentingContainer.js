@@ -816,7 +816,7 @@ class CommentingContainer extends React.Component {
         {filterModal}
 
         <div className="row">
-          <div className="col-sm-12 col-md-6">
+          <div className="col-12">
             <CommentFormContainer
               handleSubmit={this.handleCommentForm}
               commentFormErrors={commentFormErrors}
@@ -889,33 +889,6 @@ class CommentingContainer extends React.Component {
             {endComments}
 
           </div>
-
-          <div className="d-none d-md-block col-md-6">
-            <div className="row justify-content-center cf-margin-top-10px">
-              <TutorialVideo />
-            </div>
-
-            <div className="cf-adverts-container">
-              <FeedbackFormContainer
-                userId={this.props.userId}
-                globalSettings={this.props.globalSettings}
-                />
-            </div>
-          </div>
-
-          <BasicModal
-            modalButtonId={"cf-feedback-button"}
-            modalButtonText={"Feedback / Bugs"}
-            modalButtonClass="btn-primary"
-            modalTitle="Feedback / Bugs"
-            hideButton={true}
-            >
-            <h5>Please select the appropriate button for reporting.</h5>
-            <FeedbackFormContainer
-              userId={this.props.userId}
-              globalSettings={this.props.globalSettings}
-              />
-          </BasicModal>
 
           <div className="cf-scroll-up-button">
             <ScrollUpButton
