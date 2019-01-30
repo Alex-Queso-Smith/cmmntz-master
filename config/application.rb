@@ -13,7 +13,7 @@ module ClassifilterMaster
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins Proc::new { true } #'*'
-        resource '*', headers: :any, methods: [:get, :post, :patch, :options], credentials: true
+        resource '*', headers: :any, methods: [:get, :post, :patch, :delete, :options], credentials: true
       end
     end
 
