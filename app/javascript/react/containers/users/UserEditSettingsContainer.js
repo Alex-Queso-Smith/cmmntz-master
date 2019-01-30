@@ -32,7 +32,7 @@ class UserEditSettingsContainer extends React.Component {
           <SortDir
             value={sortOpts.sortDir}
             onClick={this.props.handleSortDirClick}
-            image={ImageSelector(sortOpts.sortDir, this.props.globalSettings.baseUrl)}
+            image={ImageSelector(sortOpts.sortDir, this.props.globalSettings.baseImageUrl)}
             />
         </div>
         <CommentFilters

@@ -29,7 +29,7 @@ class UserNewOptionalContainer extends React.Component {
 
       selectedAvatar =
       <div className="cf-text-center">
-        <img style={style} src={`${this.props.globalSettings.baseUrl}/images/avatars/${this.props.selectedAvatar}.png`} />
+        <img style={style} src={`${this.props.globalSettings.baseImageUrl}/images/avatars/${this.props.selectedAvatar}.png`} />
       </div>
     }
 
@@ -45,7 +45,7 @@ class UserNewOptionalContainer extends React.Component {
     var loginDivStyle = {
       lineHeight: "2"
     }
-    
+
     return(
       <div id="reg-optional-1" className="form-group">
         <hr />
@@ -55,6 +55,7 @@ class UserNewOptionalContainer extends React.Component {
           onChange={this.props.handleSliderChange}
           value={this.props.ageRange}
           baseUrl={this.props.globalSettings.baseUrl}
+          baseImageUrl={this.props.globalSettings.baseImageUrl}
           focus={true}
         />
         <Checkbox
@@ -70,6 +71,7 @@ class UserNewOptionalContainer extends React.Component {
           onChange={this.props.onChange}
           value={this.props.gender}
           baseUrl={this.props.globalSettings.baseUrl}
+          baseImageUrl={this.props.globalSettings.baseImageUrl}
         />
         <Checkbox
           name="genderAnon"
@@ -97,6 +99,7 @@ class UserNewOptionalContainer extends React.Component {
           <Carousel
             onChange={this.props.handleAvatarClick}
             baseUrl={this.props.globalSettings.baseUrl}
+            baseImageUrl={this.props.globalSettings.baseImageUrl}
           />
         </div>
         <hr />

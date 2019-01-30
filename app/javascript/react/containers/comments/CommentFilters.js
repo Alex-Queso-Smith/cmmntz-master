@@ -82,11 +82,11 @@ class CommentFilters extends React.Component {
           </div>
         }
 
-        var imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-unselected.png`
+        var imageSrc = `${this.props.globalSettings.baseImageUrl}/images/icons-v2/anonymous-unselected.png`
         var anonMessage = "Show from Anonymous and Guest"
 
         if (!hideAnonAndGuest) {
-          imageSrc = `${this.props.globalSettings.baseUrl}/images/icons-v2/anonymous-selected.png`
+          imageSrc = `${this.props.globalSettings.baseImageUrl}/images/icons-v2/anonymous-selected.png`
           anonMessage = "Hide from Anonymous and Guest"
         }
 
@@ -117,6 +117,7 @@ class CommentFilters extends React.Component {
                   onChange={this.props.handleFilterByClick}
                   value={this.props.sortOpts.gender}
                   baseUrl={this.props.globalSettings.baseUrl}
+                  baseImageUrl={this.props.globalSettings.baseImageUrl}
                   />
               </div>
             </div>
@@ -129,6 +130,7 @@ class CommentFilters extends React.Component {
                   onChange={this.props.handleFilterByClick}
                   value={this.props.sortOpts.ageRange}
                   baseUrl={this.props.globalSettings.baseUrl}
+                  baseImageUrl={this.props.globalSettings.baseImageUrl}
 
                   noRangeMessageOverride="No Preference"
                   />
@@ -223,7 +225,7 @@ class CommentFilters extends React.Component {
 
         commentInfo =
         <span>
-          <span style={purpleStyle}>{this.props.grandTotalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/speech-bubble.png`} /> | <span style={greenStyle}>{this.props.totalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/check.png`} /> | <span style={redStyle}>{this.props.filteredCount}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/x.png`} />
+          <span style={purpleStyle}>{this.props.grandTotalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/speech-bubble.png`} /> | <span style={greenStyle}>{this.props.totalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/check.png`} /> | <span style={redStyle}>{this.props.filteredCount}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/x.png`} />
         </span>
       }
 

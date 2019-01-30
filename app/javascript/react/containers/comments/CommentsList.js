@@ -57,7 +57,7 @@ class CommentsList extends React.Component {
           shownText = censored_text
         }
 
-        var lengthImage = CommentLengthSorter(text, this.props.globalSettings.baseUrl)
+        var lengthImage = CommentLengthSorter(text, this.props.globalSettings.baseImageUrl)
         var userFollowed = followedUsers.includes(user_id)
         var userBlocked = blockedUsers.includes(user_id)
 

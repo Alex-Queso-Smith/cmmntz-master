@@ -179,7 +179,7 @@ class Comment extends React.Component {
       }
       followStar =
       <div className={`col-2 cf-padding-cancel cf-block-follow-box-start cf-cursor-pointer cf-tooltip-container`}>
-        <img className={`${starOpacity}`} onClick={this.handleFollow} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/star.png`} height="20px" width="20px" />
+        <img className={`${starOpacity}`} onClick={this.handleFollow} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/star.png`} height="20px" width="20px" />
         <span className="cf-tooltip-content-top cf-tooltip-content-top-user-tile">{starMessage}</span>
       </div>
 
@@ -190,7 +190,7 @@ class Comment extends React.Component {
       }
       blockSym =
       <div className={`col-2 cf-padding-cancel cf-cursor-pointer cf-tooltip-container`}>
-        <img className={`${blockOpacity}`} onClick={this.handleBlock} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/block.png`} height="20px" width="20px" />
+        <img className={`${blockOpacity}`} onClick={this.handleBlock} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/block.png`} height="20px" width="20px" />
         <span className="cf-tooltip-content-top cf-tooltip-content-top-user-tile">{blockMessage}</span>
       </div>
 

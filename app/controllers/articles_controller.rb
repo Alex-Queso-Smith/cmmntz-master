@@ -17,7 +17,7 @@ class ArticlesController < ApplicationController
     UserArticleView.create_for_user_and_article(current_user.id, @article.id)
 
     url = @article.url(request)
-    @gallery = Gallery.find_by(name: "Customer Newspaper Site-Test")
+    @gallery = Gallery.find_by(name: "Newspaper Test")
   end
 
   private

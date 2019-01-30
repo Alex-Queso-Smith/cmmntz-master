@@ -598,7 +598,7 @@ class UserEditContainer extends React.Component {
 
         <FeedbackFormContainer
           userId={this.state.userId}
-          globalSettings={this.props.globalSettings.baseUrl}
+          globalSettings={this.props.globalSettings}
         />
 
       </div>

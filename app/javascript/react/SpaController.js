@@ -12,7 +12,8 @@ class SpaController extends React.Component {
     display: "login",
     userId: document.getElementById('cf-comments-app').getAttribute('data-user-id'),
     globalSettings: {
-      baseUrl: this.getBaseUrl()
+      baseUrl: this.getBaseUrl(),
+      baseImageUrl: "https://classifilterstore.blob.core.windows.net/graphics"
     },
     themeSettings: {
       font: document.getElementById('cf-comments-app').getAttribute('data-user-font'),

@@ -19,6 +19,7 @@ class UserEditDemographicsContainer extends React.Component {
             onChange={this.props.handleSliderChange}
             value={ageRange}
             baseUrl={this.props.globalSettings.baseUrl}
+            baseImageUrl={this.props.globalSettings.baseImageUrl}
           />
           <Checkbox
             name="ageRangeAnon"
@@ -33,6 +34,7 @@ class UserEditDemographicsContainer extends React.Component {
             onChange={this.props.handleDemoChange}
             value={gender}
             baseUrl={this.props.globalSettings.baseUrl}
+            baseImageUrl={this.props.globalSettings.baseImageUrl}
           />
           <Checkbox
             name="genderAnon"

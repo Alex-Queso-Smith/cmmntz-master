@@ -63,18 +63,18 @@ export const AgeRangeImageSelector = (props) => {
     if (ageRange === "75+") {
       ageImage =
       <div>
-        <img className="cf-age-image" src={`${props.baseUrl}/images/icons-v2/age-ranges/75-plus.png`} />
+        <img className="cf-age-image" src={`${props.baseImageUrl}/images/icons-v2/age-ranges/75-plus.png`} />
       </div>
     } else {
       ageImage =
       <div>
-        <img className="cf-age-image" src={`${props.baseUrl}/images/icons-v2/age-ranges/${ageRange}.png`} />
+        <img className="cf-age-image" src={`${props.baseImageUrl}/images/icons-v2/age-ranges/${ageRange}.png`} />
       </div>
     }
   } else {
     ageImage =
     <div>
-      <img className="cf-age-image" src={`${props.baseUrl}/images/question-mark.png`} />
+      <img className="cf-age-image" src={`${props.baseImageUrl}/images/question-mark.png`} />
     </div>
   }
 

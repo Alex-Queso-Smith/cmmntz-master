@@ -30,7 +30,7 @@ class UserEditAccountContainer extends React.Component {
       selectedAvatar =
       <div className="cf-text-center">
         <h5>Selected Avatar</h5>
-        <img style={style} src={`${this.props.globalSettings.baseUrl}/images/avatars/${avatar}.png`} />
+        <img style={style} src={`${this.props.globalSettings.baseImageUrl}/images/avatars/${avatar}.png`} />
       </div>
     }
 
@@ -80,6 +80,7 @@ class UserEditAccountContainer extends React.Component {
             <Carousel
               onChange={this.props.handleAvatarClick}
               baseUrl={this.props.globalSettings.baseUrl}
+              baseImageUrl={this.props.globalSettings.baseImageUrl}
             />
           </div>
 

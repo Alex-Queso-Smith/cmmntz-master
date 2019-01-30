@@ -863,7 +863,7 @@ class CommentingContainer extends React.Component {
 
             <div className="cf-margin-top-bottom-10px cf-results-count-container">
               <span>
-                <a href="#cf-filters-top" className="cf-link-no-ul" onClick={this.clearFilters}><span style={purpleStyle}>{this.state.grandTotalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/speech-bubble.png`} /></a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={greenStyle}>{totalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/check.png`} /> </a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={redStyle}>{filteredCount}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseUrl}/images/icons-v2/x.png`} /></a>
+                <a href="#cf-filters-top" className="cf-link-no-ul" onClick={this.clearFilters}><span style={purpleStyle}>{this.state.grandTotalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/speech-bubble.png`} /></a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={greenStyle}>{totalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/check.png`} /> </a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={redStyle}>{filteredCount}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/x.png`} /></a>
               </span>
             </div>
 
