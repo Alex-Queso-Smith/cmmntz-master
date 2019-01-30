@@ -36,7 +36,7 @@ export const AgeSlider = props => {
           Age Range: {ageRange}
         </div>
       </label>
-      <input autoFocus={props.focus} onChange={props.onChange} type="range" min="10" max="75" step="5" value={selectedRange} name={props.name} className="slider" id="age-range-slider" />
+      <input autoFocus={props.focus} onChange={props.onChange} type="range" min="10" max="75" step="5" value={selectedRange} name={props.name} className="cf-age-slider" id="age-range-slider" />
     </div>
 
   )

@@ -130,7 +130,7 @@ $grayline: #D3D3D3;
     width: 100%;
   }
 
-  .slider {
+  .cf-age-slider {
     -webkit-appearance: none;
     width: 75%;
     height: 15px;
@@ -142,11 +142,11 @@ $grayline: #D3D3D3;
     transition: opacity .2s;
   }
 
-  .slider:hover {
+  .cf-age-slider:hover {
     opacity: 1;
   }
 
-  .slider::-webkit-slider-thumb {
+  .cf-age-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 25px;
@@ -156,7 +156,7 @@ $grayline: #D3D3D3;
     cursor: pointer;
   }
 
-  .slider::-moz-range-thumb {
+  .cf-age-slider::-moz-range-thumb {
     width: 25px;
     height: 25px;
     border-radius: 50%;
