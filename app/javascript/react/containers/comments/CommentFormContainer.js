@@ -211,13 +211,13 @@ class CommentFormContainer extends React.Component {
         {this.props.userInfo.userName}
       </div>
       buttonOne =
-      <div style={gearStyle} className="col-1 cf-padding-cancel">
+      <div style={gearStyle} className="col-2 cf-padding-cancel">
         <button className="btn btn-sm cf-fade-button" onClick={ changeDisplaySettings }>
           <img className={`cf-vote-btn cf-cursor-pointer`} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/gear.png`} />
         </button>
       </div>
       buttonTwo =
-      <div style={logoutStyle} className="col-2">
+      <div className="col-2">
         <button className="btn btn-sm cf-fade-button" onClick={ this.props.tempLogout }>Logout</button>
       </div>
 
