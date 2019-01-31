@@ -202,9 +202,12 @@ class CommentFormContainer extends React.Component {
         marginLeft: "5px"
       }
 
+      var logoutStyle = {
+        textAlign: "right"
+      }
 
       userNameButton =
-      <div className="col-6 cf-login-statement cf-cursor-pointer cf-padding-cancel" style={userNameStyle}  onClick={ changeDisplaySettings }>
+      <div className="col cf-login-statement cf-cursor-pointer cf-padding-cancel" style={userNameStyle}  onClick={ changeDisplaySettings }>
         {this.props.userInfo.userName}
       </div>
       buttonOne =
@@ -214,7 +217,7 @@ class CommentFormContainer extends React.Component {
         </button>
       </div>
       buttonTwo =
-      <div className="col-2 cf-padding-cancel">
+      <div style={logoutStyle} className="col-2 cf-padding-cancel">
         <button className="btn btn-sm cf-fade-button" onClick={ this.props.tempLogout }>Logout</button>
       </div>
 
@@ -283,11 +286,11 @@ class CommentFormContainer extends React.Component {
     var anonCheckBox;
     if (!userSettings.guest) {
       var imageSrc = `${this.props.globalSettings.baseImageUrl}/images/icons-v2/anonymous-unselected.png`
-      var anonMessage = "Post as Myself"
+      var anonMessage = "Post Anonymously"
 
       if (this.state.anonymous) {
         imageSrc = `${this.props.globalSettings.baseImageUrl}/images/icons-v2/anonymous-selected.png`
-        anonMessage = "Post Anonymously"
+        anonMessage = "Post as Myself"
       }
 
 
