@@ -69,33 +69,7 @@ $grayline: #D3D3D3;
 }
 
 
-/* UserThemeSelector style */
-#cf-theme-selector-options-wrapper {
-  position: relative;
-  width: 100%;
 
-  height: 80px;
-
-  select {
-    width: 90%;
-  }
-
-  #cf-theme-selector-options-left {
-    width: 50%;
-    padding: 0 5% 0 5%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  #cf-theme-selector-options-right {
-    width: 50%;
-    padding: 0 5% 0 5%;
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-}
 
 #cf-theme-selector-demo-wrapper {
   width: 60%;
