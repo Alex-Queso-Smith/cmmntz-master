@@ -87,7 +87,7 @@ class CommentingContainer extends React.Component {
   showVoteCountTrigger = this.showVoteCountTrigger.bind(this);
   handleShowVoteModal = this.handleShowVoteModal.bind(this);
   handleShowFilterModal = this.handleShowFilterModal.bind(this);
-  tempLogout = this.tempLogout.bind(this);
+  handleOutsideClick = this.handleOutsideClick.bind(this);
   _isMounted = false;
 
   componentDidMount(){
@@ -659,11 +659,21 @@ class CommentingContainer extends React.Component {
     }
   }
 
+  handleOutsideClick(event) {
+    if (!event.target.classList.value.includes("cf-modal-container")) {
+      return;
+    } else {
+      this.handleShowVoteModal();
+    }
+  }
+
   handleShowVoteModal(){
     if (this.state.showVoteModal) {
+      document.removeEventListener('click', this.handleOutsideClick, false)
       document.body.classList.remove("cf-modal-locked");
       this.setState({ showVoteModal: false })
     } else {
+      document.addEventListener('click', this.handleOutsideClick, false)
       document.body.classList.add("cf-modal-locked");
       this.setState({ showVoteModal: true })
     }
