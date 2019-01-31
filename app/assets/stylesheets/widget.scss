@@ -496,6 +496,9 @@ a:hover {
 
 .cf-self-vote-button {
   margin: 13px 0px 0px 10px !important;
+  @media (max-width: $breakpoint-phone) {
+    margin: 15px 0px 0px 5px !important;
+  }
 }
 
 .cf-results-count-container {
