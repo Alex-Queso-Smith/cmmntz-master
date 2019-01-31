@@ -328,9 +328,6 @@ class CommentFormContainer extends React.Component {
 
       commentForm =
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
-        <div className="cf-text-center">
-            <a target="_blank" href="https://www.classibridge.com"><img className="cf-logo-image-form" src={`${this.props.globalSettings.baseImageUrl}/images/Classifilter_Logo.png`} /></a>
-        </div>
         <div className="row">
           <div className="col-6">
             <div className="cf-float-left">
