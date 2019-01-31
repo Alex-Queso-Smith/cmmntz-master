@@ -177,12 +177,12 @@ class CommentFormContainer extends React.Component {
         Guest
       </div>
       buttonOne =
-      <div className="col-2 cf-padding-cancel">
-        <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayLogin }>Login</button>
+      <div className="col-3 cf-padding-cancel">
+        <button className="btn btn-sm cf-fade-button cf-float-right" onClick={ changeDisplayLogin }>Login</button>
       </div>
       buttonTwo =
-      <div className="col-2 cf-padding-cancel">
-        <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayRegister }>Register</button>
+      <div className="col-3 cf-padding-cancel ">
+        <button className="btn btn-sm cf-fade-button cf-float-right " onClick={ changeDisplayRegister }>Register</button>
       </div>
 
     } else {
