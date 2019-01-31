@@ -251,7 +251,8 @@ class CommentFilters extends React.Component {
       }
 
       var sortDivStyle = {
-        paddingLeft: "3px"
+        paddingLeft: "3px",
+        paddingRight: "3px"
       }
 
       filterRow =
