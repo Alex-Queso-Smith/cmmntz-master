@@ -1,4 +1,4 @@
-var Classifilter = Classifilter || (function(){
+var Cmmntz = Cmmntz || (function(){
     var _args = {}; // private
 
     return {
@@ -8,7 +8,7 @@ var Classifilter = Classifilter || (function(){
             this.activate(); // start it up
         },
         activate : async function() {
-          // find or create a div called classifilter-dropin
+          // find or create a div called cmmntz-dropin
           var cfDropinContainer = this.find_or_create_dropin();
 
           var galleryId = _args['galleryId']
@@ -88,15 +88,15 @@ var Classifilter = Classifilter || (function(){
         },
         find_or_create_dropin : function() {
           var cfDropinContainer;
-          cfDropinContainer = document.getElementById("classifilter-dropin");
+          cfDropinContainer = document.getElementById("cmmntz-dropin");
           if (!cfDropinContainer) {
             cfDropinContainer = this.create_dropin();
           };
           return cfDropinContainer;
         },
         create_dropin : function() {
-          document.write("<div id='classifilter-dropin'></div>");
-          var cfDropinContainer = document.getElementById("classifilter-dropin");
+          document.write("<div id='cmmntz-dropin'></div>");
+          var cfDropinContainer = document.getElementById("cmmntz-dropin");
           return cfDropinContainer
         },
         form_comments_container : function(galleryId, artId, userId, userFont, userTheme, mode) {
@@ -111,7 +111,7 @@ var Classifilter = Classifilter || (function(){
           if (mode) {
             return mode == "staging" ? "https://classifilter-staging.herokuapp.com" : "http://localhost:3000"
           } else {
-            return "https://www.classifilter.com"
+            return "https://api.cmmntz.com"
           }
         }
     };
