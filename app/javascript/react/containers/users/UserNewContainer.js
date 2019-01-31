@@ -248,8 +248,6 @@ class UserNewContainer extends React.Component {
     var errorDiv, page, emailError, userNameError, passwordError, passwordConfirmationError;
     var { registrationErrors } = this.state
 
-
-
     switch (this.state.currentPage) {
       case 1:
         page =
