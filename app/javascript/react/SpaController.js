@@ -9,7 +9,7 @@ import { FetchDeleteBasic, FetchDidMount } from './util/CoreUtil';
 
 class SpaController extends React.Component {
   state = {
-    display: "login",
+    display: "",
     userId: document.getElementById('cf-comments-app').getAttribute('data-user-id'),
     globalSettings: {
       baseUrl: this.getBaseUrl(),
@@ -26,16 +26,6 @@ class SpaController extends React.Component {
   handleLogin = this.handleLogin.bind(this);
   handleLogout = this.handleLogout.bind(this);
   handleUpdateSpaId = this.handleUpdateSpaId.bind(this);
-
-  componentDidMount(){
-    FetchDidMount(this, `${this.state.globalSettings.baseUrl}/api/v1/users/${this.state.userId}.json`)
-    .then(userData => {
-      if (!userData.user.guest) {
-        this.setState({ display: "" })
-      }
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
 
   getBaseUrl() {
     var mode = document.getElementById('cf-comments-app').getAttribute('data-mode')
@@ -70,12 +60,11 @@ class SpaController extends React.Component {
 
   handleLogout(){
     FetchDeleteBasic(this, `${this.state.globalSettings.baseUrl}/api/v1/user_sessions/${this.state.userId}.json`)
-    .then(finished => this.updateDisplay("login"))
+    .then(finished => {
+      this.handleUpdateSpaId(finished.user_id);
+    })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
 
-    // .then(finished => {
-    //   this.handleUpdateSpaId(finished.user_id);
-    // })
   }
 
   render(){

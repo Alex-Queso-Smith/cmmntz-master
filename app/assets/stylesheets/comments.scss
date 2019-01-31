@@ -33,7 +33,7 @@ $bootstrap-blue: #0069D9;
   }
 }
 
-#cf-comments-main {
+#cf-comments-app {
   max-width: 500px;
   margin-left: 50px;
 }
@@ -194,6 +194,10 @@ $bootstrap-blue: #0069D9;
   &:focus {
     box-shadow: 0 0 0 0;
   }
+}
+
+.btn-small {
+  // font-size: 14px !important;
 }
 
 .cf-non-fade-button {

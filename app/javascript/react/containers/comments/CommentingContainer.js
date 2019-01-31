@@ -88,6 +88,7 @@ class CommentingContainer extends React.Component {
   handleShowVoteModal = this.handleShowVoteModal.bind(this);
   handleShowFilterModal = this.handleShowFilterModal.bind(this);
   handleOutsideClick = this.handleOutsideClick.bind(this);
+  tempLogout = this.tempLogout.bind(this);
   _isMounted = false;
 
   componentDidMount(){
@@ -109,11 +110,8 @@ class CommentingContainer extends React.Component {
         .then(userData => {
 
           var newSortOpts = this.state.sortOpts;
-          var { followed_users, blocked_users, admin, guest, user_name, latitude, longitude } = userData.user
-
-          if (guest) {
-            this.props.updateDisplay("login")
-          }
+          var { followed_users, blocked_users, admin, guest, user_name, latitude, longitude } = userData.user;
+          
           var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, hide_anon_and_guest, set_from, gender_search, age_range_search } = userData.user.sort_opts
           var censorComments = censor === "true" || censor == true ? true : false
 
@@ -695,61 +693,61 @@ class CommentingContainer extends React.Component {
   }
 
   tempLogout(){
-    this.props.handleLogout()
+    this.props.handleLogout();
 
-    // setTimeout(function(){
-    //   FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
-    //   .then(artData => {
-    //     this.setState({
-    //       commentEtiquette: artData.art.gallery_comment_etiquette
-    //     })
-    //   })
-    //   .then(stuff => {
-    //     var { userId, galleryId } = this.props;
-    //     var test = this.props.userId;
-    //
-    //     if (userId.length > 0){
-    //       FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
-    //       .then(userData => {
-    //
-    //         var newSortOpts = this.state.sortOpts;
-    //         var { followed_users, blocked_users, admin, guest, user_name } = userData.user
-    //         var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, hide_anon_and_guest, set_from } = userData.user.sort_opts
-    //         var censorComments = censor === "true" || censor == true ? true : false
-    //
-    //         newSortOpts.sortDir = sort_dir
-    //         newSortOpts.sortType = sort_type
-    //         newSortOpts.commentsFrom = comments_from
-    //         newSortOpts.votesFrom = votes_from
-    //         newSortOpts.filterList = filter_list.length != 0 ? filter_list.split(',') : []
-    //         newSortOpts.notFilterList = not_filter_list.length != 0 ? not_filter_list.split(',') : []
-    //         newSortOpts.censor = censor
-    //         newSortOpts.setFrom = set_from
-    //         newSortOpts.hideAnonAndGuest = hide_anon_and_guest
-    //
-    //         var newUserSettings = this.state.userSettings;
-    //         newUserSettings.admin = admin;
-    //         newUserSettings.guest = guest;
-    //
-    //         var newUserInfo = this.state.userInfo;
-    //         newUserInfo.userName = user_name;
-    //
-    //         this.setState({
-    //           userSettings: newUserSettings,
-    //           userInfo: newUserInfo,
-    //           sortOpts: newSortOpts,
-    //           censor: censorComments,
-    //           blockedUsers: blocked_users,
-    //           followedUsers: followed_users
-    //         })
-    //       })
-    //       .then(finished => { this.handleFilterSubmit() })
-    //       .catch(error => console.error(`Error in fetch: ${error.message}`));
-    //     }
-    //   })
-    //   .catch(error => console.error(`Error in fetch: ${error.message}`));
-    //
-    // }.bind(this), 500)
+    setTimeout(function(){
+      FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
+      .then(artData => {
+        this.setState({
+          commentEtiquette: artData.art.gallery_comment_etiquette
+        })
+      })
+      .then(stuff => {
+        var { userId, galleryId } = this.props;
+        var test = this.props.userId;
+
+        if (userId.length > 0){
+          FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
+          .then(userData => {
+
+            var newSortOpts = this.state.sortOpts;
+            var { followed_users, blocked_users, admin, guest, user_name } = userData.user
+            var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, hide_anon_and_guest, set_from } = userData.user.sort_opts
+            var censorComments = censor === "true" || censor == true ? true : false
+
+            newSortOpts.sortDir = sort_dir
+            newSortOpts.sortType = sort_type
+            newSortOpts.commentsFrom = comments_from
+            newSortOpts.votesFrom = votes_from
+            newSortOpts.filterList = filter_list.length != 0 ? filter_list.split(',') : []
+            newSortOpts.notFilterList = not_filter_list.length != 0 ? not_filter_list.split(',') : []
+            newSortOpts.censor = censor
+            newSortOpts.setFrom = set_from
+            newSortOpts.hideAnonAndGuest = hide_anon_and_guest
+
+            var newUserSettings = this.state.userSettings;
+            newUserSettings.admin = admin;
+            newUserSettings.guest = guest;
+
+            var newUserInfo = this.state.userInfo;
+            newUserInfo.userName = user_name;
+
+            this.setState({
+              userSettings: newUserSettings,
+              userInfo: newUserInfo,
+              sortOpts: newSortOpts,
+              censor: censorComments,
+              blockedUsers: blocked_users,
+              followedUsers: followed_users
+            })
+          })
+          .then(finished => { this.handleFilterSubmit() })
+          .catch(error => console.error(`Error in fetch: ${error.message}`));
+        }
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+
+    }.bind(this), 500)
   }
 
   render(){
