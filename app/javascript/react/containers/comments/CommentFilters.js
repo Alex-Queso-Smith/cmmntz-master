@@ -145,7 +145,6 @@ class CommentFilters extends React.Component {
                 sortOpts={this.props.sortOpts}
                 />
             </div>
-            <hr />
           </div>
         }
 
@@ -192,7 +191,6 @@ class CommentFilters extends React.Component {
             <span><img style={expandStyle} className="cf-cursor-pointer cf-padding-cancel" src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`} onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } } /></span>
             <h4 style={fromStyle} className="cf-open-close cf-cursor-pointer" onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } }>Show only comments from</h4>
           </div>
-          <hr />
           {commentsFrom}
         </div>
 
