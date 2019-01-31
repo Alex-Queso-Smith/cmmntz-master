@@ -143,10 +143,10 @@ class UserNewRequiredContainer extends React.Component {
         {passwordConfirmationError}
 
         <div className="row">
-          <div className="col-4">
+          <div className="col-6 col-sm-5">
             <button onClick={ this.handlePrivacyPolicyClick } className="btn cf-non-fade-button btn-md cf-privacy-policy">Privacy Policy</button>
           </div>
-          <div className="col-8">
+          <div className="col">
             <Checkbox
               name="privacyPolicy"
               onChange={this.props.onChange}
