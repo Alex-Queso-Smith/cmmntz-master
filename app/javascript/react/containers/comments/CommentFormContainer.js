@@ -344,15 +344,13 @@ class CommentFormContainer extends React.Component {
       commentForm =
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
         <div style={marginCancel} className="row justify-content-between">
+          <PrivacyPolicy />
 
-              <PrivacyPolicy />
+          <button className="btn btn-sm cf-fade-button">
+            <span style={pbyStyle}>powered by</span><span style={cStyle}> CMMNTZ</span>
+          </button>
 
-            <button className="btn btn-sm cf-fade-button">
-              <span style={pbyStyle}>powered by</span><span style={cStyle}> CMMNTZ</span>
-            </button>
-
-              <CommentEtiquette galleryCommentEtiquette={this.props.commentEtiquette} />
-
+          <CommentEtiquette galleryCommentEtiquette={this.props.commentEtiquette} />
         </div>
         <hr className="cf-login-hr" />
         <div className="cf-login-statement-container row cf-margin-top-5px">
