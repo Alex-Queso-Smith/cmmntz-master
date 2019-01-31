@@ -145,7 +145,6 @@ class CommentFilters extends React.Component {
                 sortOpts={this.props.sortOpts}
                 />
             </div>
-            <hr />
           </div>
         }
 
