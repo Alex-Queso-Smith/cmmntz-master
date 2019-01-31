@@ -13,7 +13,7 @@ const UserThemeSelector = props => {
       <div className="row" id="cf-theme-selector-options-wrapper">
         <div className="col-6" id="cf-theme-selector-options-left">
           <label style={leftStyle} className="cf-text-medium">
-            Select Theme:
+            Theme:
             <br />
             <br />
             <select name="colorTheme" value={props.colorTheme} onChange={props.onChange} className="form-control">
@@ -25,7 +25,7 @@ const UserThemeSelector = props => {
 
         <div className="col-6" id="cf-theme-selector-options-right">
           <label style={rightStyle} className="cf-text-medium">
-          Select Font:
+          Font:
           <br />
           <br />
           <select name="font" value={props.font} onChange={props.onChange} className="form-control">

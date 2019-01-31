@@ -97,7 +97,7 @@ export const GenderSelector = props => {
 
 const GenderButton = props => {
   return(
-    <div className={`col-3`}>
+    <div className={`col-3 cf-padding-cancel`}>
       <img className={`cf-gender-btn ${props.translucency}`} onClick={props.onChange} name={props.name} value={props.value} src={`${props.baseImageUrl}/images/icons-v2/genders/gender-${props.imageName}.png`} />
       <div className="cf-text-center">
         {props.label}
