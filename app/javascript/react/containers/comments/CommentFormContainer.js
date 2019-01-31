@@ -177,11 +177,11 @@ class CommentFormContainer extends React.Component {
         Guest
       </div>
       buttonOne =
-      <div className="col-2">
+      <div className="col-2 cf-padding-cancel">
         <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayLogin }>Login</button>
       </div>
       buttonTwo =
-      <div className="col-2">
+      <div className="col-2 cf-padding-cancel">
         <button className="btn btn-sm cf-fade-button" onClick={ changeDisplayRegister }>Register</button>
       </div>
 
@@ -202,12 +202,9 @@ class CommentFormContainer extends React.Component {
         marginLeft: "5px"
       }
 
-      var logoutStyle = {
-        marginLeft: "20px"
-      }
 
       userNameButton =
-      <div className="col-6 cf-login-statement cf-cursor-pointer" style={userNameStyle}  onClick={ changeDisplaySettings }>
+      <div className="col-6 cf-login-statement cf-cursor-pointer cf-padding-cancel" style={userNameStyle}  onClick={ changeDisplaySettings }>
         {this.props.userInfo.userName}
       </div>
       buttonOne =
@@ -217,7 +214,7 @@ class CommentFormContainer extends React.Component {
         </button>
       </div>
       buttonTwo =
-      <div className="col-2">
+      <div className="col-2 cf-padding-cancel">
         <button className="btn btn-sm cf-fade-button" onClick={ this.props.tempLogout }>Logout</button>
       </div>
 
@@ -293,9 +290,6 @@ class CommentFormContainer extends React.Component {
         anonMessage = "Post Anonymously"
       }
 
-      var anonStyle = {
-        marginLeft: "35px"
-      }
 
       anonCheckBox =
       <div className="col-1 cf-padding-cancel cf-anon-login-button">

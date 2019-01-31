@@ -226,13 +226,3 @@ $grayline: #D3D3D3;
   width: auto;
   padding: 10px 10px 10px 10px;
 }
-
-@media (max-width: $breakpoint-phone) {
-  .cf-anon-login-button {
-    margin-left: 20px !important;
-  }
-}
-
-.cf-anon-login-button {
-  margin-left: 35px;
-}

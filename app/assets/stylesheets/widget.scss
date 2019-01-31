@@ -412,11 +412,11 @@ a:hover {
   color: #800080 !important;
 }
 
+.cf-login-statement-container {
+  width: 100%;
+  margin: 5px 0px 5px 0px;
+}
 @media (max-width: $breakpoint-phone) {
-  .cf-login-statement-container {
-    width: 100%;
-    margin: 5px 0px 5px 0px;
-  }
 }
 
 .cf-privacy-policy {
