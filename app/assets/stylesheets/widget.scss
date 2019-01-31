@@ -499,22 +499,8 @@ a:hover {
 }
 
 .cf-results-count-container {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 96px;
   font-size: 1.25em;
   background: #ffffff;
-  z-index: 100;
-
-  @media (max-width: 1000px) {
-    top: 45px;
-  }
-  @media (max-width: $breakpoint-tablet) {
-    top: 45px;
-  }
-  @media (max-width: $breakpoint-phone) {
-    top: 70px;
-  }
 }
 
 .cf-open-close {
