@@ -226,3 +226,12 @@ $grayline: #D3D3D3;
   width: auto;
   padding: 10px 10px 10px 10px;
 }
+
+.cf-carousel-image {
+  width: 55px;
+  height: 55px;
+  @media (max-width: $breakpoint-phone) {
+    width: 40px;
+    height: 40px;
+  }
+}

@@ -208,22 +208,17 @@ const randomAvatars = [
 
 export const NukaCarousel = props => {
 
-  var style = {
-    height: '55px',
-    width: '55px'
-  }
-
   var avatarImages = newAvatars.map((a) => {
 
     return(
-      <img style={style} onClick={props.onChange} name={`${a}_ffffff_000000`} key ={a} src={`${props.baseImageUrl}/images/avatars/${a}_ffffff_000000.png`} />
+      <img className="cf-carousel-image" onClick={props.onChange} name={`${a}_ffffff_000000`} key ={a} src={`${props.baseImageUrl}/images/avatars/${a}_ffffff_000000.png`} />
     )
   })
 
   var redImages = newAvatars.map((a) => {
 
     return(
-      <img style={style} onClick={props.onChange} name={`${a}_ffffff_ff0000`} key ={a} src={`${props.baseImageUrl}/images/avatars/${a}_ffffff_ff0000.png`} />
+      <img className="cf-carousel-image" onClick={props.onChange} name={`${a}_ffffff_ff0000`} key ={a} src={`${props.baseImageUrl}/images/avatars/${a}_ffffff_ff0000.png`} />
     )
   })
 
@@ -237,7 +232,7 @@ export const NukaCarousel = props => {
   var randomImages = randomAvatars.map((a) => {
 
     return(
-      <img style={style} onClick={props.onChange} name={`${a}`} key ={a} src={`${props.baseImageUrl}/images/avatars/${a}.png`} />
+      <img className="cf-carousel-image" onClick={props.onChange} name={`${a}`} key ={a} src={`${props.baseImageUrl}/images/avatars/${a}.png`} />
     )
   })
 
