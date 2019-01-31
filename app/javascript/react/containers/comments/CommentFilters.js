@@ -185,7 +185,6 @@ class CommentFilters extends React.Component {
             option={this.props.option}
             globalSettings={this.props.globalSettings}
             />
-          <hr />
 
           <div className="row cf-margin-bottom-10px">
             <span><img style={expandStyle} className="cf-cursor-pointer cf-padding-cancel" src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`} onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } } /></span>

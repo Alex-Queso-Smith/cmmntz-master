@@ -326,19 +326,33 @@ class CommentFormContainer extends React.Component {
       </div>
     } else {
 
+      var pbyStyle = {
+        color: "#777777"
+      }
+
+      var cStyle = {
+        color: "#c82123",
+        fontWeight: "bold"
+      }
+
+      var marginCancel = {
+        margin: "0px",
+        paddingRight: "12px",
+        paddingLeft: "12px"
+      }
+
       commentForm =
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
-        <div className="row">
-          <div className="col-6">
-            <div className="cf-float-left">
+        <div style={marginCancel} className="row justify-content-between">
+
               <PrivacyPolicy />
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="cf-float-right">
+
+            <button className="btn btn-sm cf-fade-button">
+              <span style={pbyStyle}>powered by</span><span style={cStyle}> CMMNTZ</span>
+            </button>
+
               <CommentEtiquette galleryCommentEtiquette={this.props.commentEtiquette} />
-            </div>
-          </div>
+
         </div>
         <hr className="cf-login-hr" />
         <div className="cf-login-statement-container row cf-margin-top-5px">
@@ -383,6 +397,7 @@ class CommentFormContainer extends React.Component {
         <div className="cf-clear"></div>
       </form>
     }
+
 
     return(
       <div className="cf-container">

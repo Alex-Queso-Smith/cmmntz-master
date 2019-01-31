@@ -49,7 +49,7 @@ class BasicModal extends React.Component {
 
     return(
       <div className="row">
-        <div className="col-12">
+        <div className="">
           {modalWindow}
           <button id={this.props.modalButtonId} onClick={this.showModal} className={`btn btn-sm ${this.props.modalButtonClass}`}>
             {this.props.modalButtonText}

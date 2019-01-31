@@ -63,8 +63,8 @@ export const Checkbox = props => {
 export const GenderSelector = props => {
   var translucency = "cf-translucent";
   var genders = [
-    ["0", "female", "Female"],
-    ["2", "male", "Male"],
+    ["0", "female", "Women"],
+    ["2", "male", "Men"],
     ["1", "other", "Other"]
   ];
 
