@@ -219,7 +219,7 @@ class CommentFilters extends React.Component {
 
         commentInfo =
         <span>
-          <span style={purpleStyle}>{this.props.grandTotalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/speech-bubble.png`} /> | <span style={greenStyle}>{this.props.totalComments}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/check.png`} /> | <span style={redStyle}>{this.props.filteredCount}</span> <img style={checkXStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/x.png`} />
+          <span style={purpleStyle}>{this.props.grandTotalComments} comments</span> | <span style={greenStyle}>{this.props.totalComments} shown</span> | <span style={redStyle}>{this.props.filteredCount} filtered</span>
         </span>
       }
 
