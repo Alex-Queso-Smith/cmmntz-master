@@ -74,6 +74,9 @@ $breakpoint-phone: 575px;
 
 .cf-vote-ratio {
   font-size: .8em;
+  @media (max-width: $breakpoint-phone) {
+    font-size: 1.15em;
+  }
 }
 
 /* end Side panels */
