@@ -42,7 +42,7 @@ class UserNewRequiredContainer extends React.Component {
   }
 
   render(){
-    var userNameClass, emailClass, passwordClass, passwordConfirmationClass, emailError, userNameError, passwordError, passwordConfirmationError;
+    var userNameClass, emailClass, passwordClass, passwordConfirmationClass, emailError, userNameError, passwordError, passwordConfirmationError, subscribeNewsletter;
     var { regErrors } = this.state;
 
     userNameClass = ErrorClassValidation(this.state.regErrors.user_name);
@@ -146,6 +146,11 @@ class UserNewRequiredContainer extends React.Component {
           <div className="col-6 col-sm-5">
             <button onClick={ this.handlePrivacyPolicyClick } className="btn cf-non-fade-button btn-md cf-privacy-policy">Privacy Policy</button>
           </div>
+          
+        </div>
+
+        {privacyPolicy}
+        <div className="row">
           <div className="col">
             <Checkbox
               name="privacyPolicy"
@@ -155,10 +160,16 @@ class UserNewRequiredContainer extends React.Component {
               className={"cf-privacy-policy-checkbox"}
               />
           </div>
+          <div className="col">
+            <Checkbox
+              name="subscribeNewsletter"
+              onChange={this.props.onChange}
+              label="Subscribe to Newsletter"
+              checked={this.props.subscribeNewsletter}
+              className={"cf-privacy-policy-checkbox"}
+              />
+          </div>
         </div>
-
-        {privacyPolicy}
-
         <hr />
 
         <div className="actions cf-margin-top-10px">

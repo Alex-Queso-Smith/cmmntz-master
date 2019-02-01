@@ -78,7 +78,8 @@ class Api::V1::UsersController < ApiController
         :settings_updated,
         :hide_anon_and_guest,
         :age_range_search,
-        :gender_search
+        :gender_search,
+        :subscribe_newsletter
       )
     end
 end

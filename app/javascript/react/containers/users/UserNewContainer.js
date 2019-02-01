@@ -31,6 +31,7 @@ class UserNewContainer extends React.Component {
     anonWarningShown: false,
     anonWarningShow: false,
     submissionWarningShow: false,
+    subscribeNewsletter: false,
     registrationErrors: {}
   }
 
@@ -148,7 +149,7 @@ class UserNewContainer extends React.Component {
     event.preventDefault();
 
     if (!this.state.formInvalid){
-      var { gender, userName, password, passwordConfirmation, ageRange, latitude, longitude, email, avatar } = this.state;
+      var { gender, userName, password, passwordConfirmation, ageRange, latitude, longitude, email, avatar, subscribeNewsletter } = this.state;
       var { genderAnon, locationAnon, ageRangeAnon, submissionWarningShow, submissionWarningShown } = this.state;
 
       switch (gender) {
@@ -181,6 +182,7 @@ class UserNewContainer extends React.Component {
         newUser.append("user[email]", email);
         newUser.append("user[gender]", gender);
         newUser.append("user[base_image]", avatar)
+        newUser.append("user[subscribe_newsletter]", subscribeNewsletter)
 
         FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users.json?page=2`, '', 'POST', 'registrationErrors', newUser)
         .then(body =>{
