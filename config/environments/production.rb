@@ -1,7 +1,4 @@
 Rails.application.configure do
-  # Access control for alpha testing
-  config.middleware.insert 0, Rack::WWWhisper
-
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
   # Settings specified here will take precedence over those in config/application.rb.
