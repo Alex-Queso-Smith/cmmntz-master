@@ -109,7 +109,7 @@ class SessionLoginContainer extends React.Component {
             label="Remember Me"
             onChange={this.handleChange}
           />
-        
+
           <hr />
 
           <div className="form-group actions cf-margin-top-10px">
@@ -126,7 +126,7 @@ class SessionLoginContainer extends React.Component {
           // </button>
         }
         <div style={registerDivStyle} className="cf-float-left">
-          <span style={registerSpanStyle} className="cf-margin-right-5px">New To Classifilter?</span>
+          <span style={registerSpanStyle} className="cf-margin-right-5px">New To CMMNTZ?</span>
           <button className="btn btn-sm btn-link cf-margin-right-10px" onClick={ changeDisplayRegister }>
             Register
           </button>

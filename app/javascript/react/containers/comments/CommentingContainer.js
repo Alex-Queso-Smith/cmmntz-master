@@ -111,7 +111,7 @@ class CommentingContainer extends React.Component {
 
           var newSortOpts = this.state.sortOpts;
           var { followed_users, blocked_users, admin, guest, user_name, latitude, longitude } = userData.user;
-          
+
           var { sort_dir, sort_type, comments_from, votes_from, filter_list, not_filter_list, censor, hide_anon_and_guest, set_from, gender_search, age_range_search } = userData.user.sort_opts
           var censorComments = censor === "true" || censor == true ? true : false
 
@@ -770,7 +770,7 @@ class CommentingContainer extends React.Component {
         handleClose={this.handleShowVoteModal}
         modalTitle={"Please consider voting!"}
       >
-      We’ve noticed that you’ve clicked the Show Results button a few times. Although you’re more than welcome to, please know that the full power of the Classifilter commenting widget is unlocked when users vote on comments and inform the community what they think. Also, please be aware that guests do not have to log in to leave comments or vote on comments.
+      We’ve noticed that you’ve clicked the Show Results button a few times. Although you’re more than welcome to, please know that the full power of the CMMNTZ commenting widget is unlocked when users vote on comments and inform the community what they think. Also, please be aware that guests do not have to log in to leave comments or vote on comments.
       </Modal>
     }
 

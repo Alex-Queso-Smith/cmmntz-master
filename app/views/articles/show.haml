@@ -14,9 +14,6 @@
     = render "youtube_video", article: @article
   - else @article.body
     = render "news_paper_article", article: @article
-  .article-footer
-    .row.justify-content-center
-      %p Hope you enjoyed the article. Now it's time to beta test the ClassiFilter widget!
 
 
 
@@ -35,8 +32,3 @@ urlOverride: '#{@article.url(request)}',
   #{widget_mode}
 });
 </script>
-
-
-- content_for :bottom do
-  %h3 Thanks for Beta Testing
-  %h3 Please come back again to comment and vote tomorrow!

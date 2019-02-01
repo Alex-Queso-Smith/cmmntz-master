@@ -87,7 +87,7 @@ RSpec.describe AdminMail, type: :model do
     end
 
     it "should have a subject matching protocol" do
-      subject = "Classifilter: #{admin_mail.subject}"
+      subject = "CMMNTZ: #{admin_mail.subject}"
       expect(@email.subject).to eq(subject)
     end
   end

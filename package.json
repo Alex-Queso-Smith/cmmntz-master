@@ -1,5 +1,5 @@
 {
-  "name": "classifilter_master",
+  "name": "cmmntz_master",
   "private": true,
   "dependencies": {
     "@rails/webpacker": "3.5",

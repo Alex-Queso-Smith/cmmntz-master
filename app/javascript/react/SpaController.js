@@ -33,7 +33,7 @@ class SpaController extends React.Component {
       return mode == "staging" ? "https://classifilter-staging.herokuapp.com" : "http://localhost:3000"
     } else {
       // return "http://localhost:3000"
-      return "https://www.classifilter.com"
+      return "https://api.cmmntz.com"
     }
   }
 

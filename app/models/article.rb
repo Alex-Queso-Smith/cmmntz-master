@@ -41,7 +41,7 @@ class Article < ApplicationRecord
     if !request.blank? && !request.base_url.to_s.match('staging').nil?
       base_url = "classifilter-staging.herokuapp.com"
     elsif Rails.env.production?
-      base_url = "www.classifilter.com"
+      base_url = "api.cmmntz.com"
     elsif request.blank?
       base_url = "localhost:3000"
     else
