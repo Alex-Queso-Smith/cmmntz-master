@@ -82,6 +82,7 @@ class SessionLoginContainer extends React.Component {
       lineHeight: "2"
     }
 
+
     return(
       <div id="cf-user-login-container" className="login-container">
         <form className="form" id="login-form" onSubmit={this.handleSubmit}>
@@ -119,12 +120,10 @@ class SessionLoginContainer extends React.Component {
           </div>
         </form>
 
+        <button className="btn btn-sm btn-dark float-left mr-2" onClick={ changeDisplayComments }>
+          Close
+        </button>
 
-        {
-          // <button className="btn btn-sm btn-dark float-left" onClick={ changeDisplayComments }>
-          //   Close
-          // </button>
-        }
         <div style={registerDivStyle} className="cf-float-left">
           <span style={registerSpanStyle} className="cf-margin-right-5px">New To CMMNTZ?</span>
           <button className="btn btn-sm btn-link cf-margin-right-10px" onClick={ changeDisplayRegister }>
