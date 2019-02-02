@@ -5,6 +5,10 @@ class GalleryBlacklisting < ApplicationRecord
 
   before_validation :set_expires_at
 
+  scope :not_expired, -> {
+    where(arel_table[:expires_at].gteq(Time.now))
+  }
+
   def ban_expires_at
     if expires_at > Date.today + 200.years
       "Never"

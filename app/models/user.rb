@@ -153,6 +153,6 @@ class User < ApplicationRecord
   end
 
   def user_blacklisted_for?(gallery_id)
-    gallery_blacklistings.where(gallery_id: gallery_id).size > 0
+    gallery_blacklistings.not_expired.where(gallery_id: gallery_id).size > 0
   end
 end
