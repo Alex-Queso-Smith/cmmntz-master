@@ -200,7 +200,7 @@ class CommentFilters extends React.Component {
         </div>
 
         var clearButtonStyle = {
-          marginTop: "-2px"
+          marginTop: "-6px"
         }
 
         var checkXStyle = {

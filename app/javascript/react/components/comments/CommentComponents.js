@@ -7,6 +7,7 @@ export const ReplyFieldActivated = (object) => {
   var style = {
     height: "75px"
   }
+  
   var field =
   <div>
     <Textarea
