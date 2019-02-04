@@ -79,9 +79,16 @@ class SessionLoginContainer extends React.Component {
     }
 
     var registerDivStyle = {
-      lineHeight: "2"
+      lineHeight: "2.5"
     }
 
+    var redStyle = {
+      color: '#C82023'
+    }
+
+    var registerButtonStyle = {
+      paddingTop: '0px'
+    }
 
     return(
       <div id="cf-user-login-container" className="login-container">
@@ -125,8 +132,8 @@ class SessionLoginContainer extends React.Component {
         </button>
 
         <div style={registerDivStyle} className="cf-text-center">
-          <span style={registerSpanStyle} className="cf-margin-right-5px">New To CMMNTZ?</span>
-          <button className="btn btn-sm btn-link cf-margin-right-10px" onClick={ updateDisplayRegister }>
+          <span style={registerSpanStyle} className="cf-margin-right-5px">New To <span style={redStyle}>CMMNTZ</span>?</span>
+          <button style={registerButtonStyle} className="btn btn-sm btn-link cf-margin-right-10px" onClick={ updateDisplayRegister }>
             Register
           </button>
         </div>
