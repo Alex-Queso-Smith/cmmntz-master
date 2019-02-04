@@ -168,11 +168,6 @@ class CommentFilters extends React.Component {
           marginLeft: "10px"
         }
 
-        var smallerFontStyle = {
-          fontSize: "13px",
-          lineHeight: "1.6"
-        }
-
         var { commentsFromExpanded } = this.state;
 
         var expandImg = commentsFromExpanded ? "minus.png" : "plus.png"
@@ -192,7 +187,7 @@ class CommentFilters extends React.Component {
             globalSettings={this.props.globalSettings}
             />
 
-          <div style={smallerFontStyle} className="row cf-margin-bottom-10px">
+          <div className="row cf-margin-bottom-10px">
             <span><img style={expandStyle} className="cf-cursor-pointer cf-padding-cancel" src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`} onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } } /></span>
             <h4 style={fromStyle} className="cf-open-close cf-cursor-pointer" onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } }>Show only comments from</h4>
           </div>
@@ -220,11 +215,15 @@ class CommentFilters extends React.Component {
           color: "#800080"
         }
 
+        var smallFont = {
+          fontSize: "13px"
+        }
+
         clearButton =
         <button style={clearButtonStyle} className="cf-fade-button cf-fade-button-purple btn btn-sm" onClick={this.props.clearFilters}>Clear</button>
 
         commentInfo =
-        <span>
+        <span style={smallFont}>
           <span style={purpleStyle}>{this.props.grandTotalComments} comments</span> | <span style={greenStyle}>{this.props.totalComments} shown</span> | <span style={redStyle}>{this.props.filteredCount} filtered</span>
         </span>
       }
