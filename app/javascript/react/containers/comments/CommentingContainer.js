@@ -45,6 +45,7 @@ class CommentingContainer extends React.Component {
       ageRange: '',
       hideAnonAndGuest: true,
       setFrom: 'gallery',
+      censor: false,
       previousCommentIds: [],
       rawGeoData: []
     },
@@ -53,7 +54,6 @@ class CommentingContainer extends React.Component {
     presetFilter: "",
     userInfo: { },
     commentEtiquette: null,
-    censored: false,
     showFilterModal: false,
     filterModalShown: false,
     userFeedbackForm: false,
@@ -753,7 +753,7 @@ class CommentingContainer extends React.Component {
   render(){
 
     var { artId, artType, userId, artSettings, updateAppState } = this.props;
-    var { totalComments, comments, commentFormErrors, userSettings, userThemeSettings, sortOpts, followedUsers, blockedUsers, censored } = this.state;
+    var { totalComments, comments, commentFormErrors, userSettings, userThemeSettings, sortOpts, followedUsers, blockedUsers } = this.state;
 
     var endComments;
     if (totalComments === comments.length) {
@@ -879,8 +879,8 @@ class CommentingContainer extends React.Component {
               handleTopChange={this.handleTopChange}
               followedUsers={followedUsers}
               blockedUsers={blockedUsers}
-              censored={censored}
               artSettings={artSettings}
+              censor={sortOpts.censor}
               updateAppState={updateAppState}
               adminStatus={this.state.userSettings.admin}
               guestStatus={this.state.userSettings.guest}

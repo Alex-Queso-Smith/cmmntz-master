@@ -162,7 +162,7 @@ class Comment extends React.Component {
   }
 
   render(){
-    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, blockedUsers, censored, artSettings, updateAppState, galleryId, postedAsGuest } = this.props
+    var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, censor, blockedUsers, artSettings, updateAppState, galleryId, postedAsGuest } = this.props
     var { replies, editStatus, edited, text, userFollowed, userBlocked } = this.state
 
     var followStar, blockSym, starOpacity, blockOpacity;
@@ -307,7 +307,7 @@ class Comment extends React.Component {
         handleTopChange={this.props.handleTopChange}
         handleReplyOpen={this.props.handleReplyOpen}
         replyParent={this.props.replyParent}
-        censored={censored}
+        censor={censor}
         artSettings={artSettings}
         updateAppState={updateAppState}
         banUser={this.props.banUser}

@@ -36,7 +36,7 @@ class CommentsList extends React.Component {
 
     var commentsArray;
     var { allComments } = this.state;
-    var { percentShow, followedUsers, blockedUsers, artType, artId, currentUserId , artSettings, updateAppState, adminStatus, guestStatus, censored } = this.props
+    var { percentShow, followedUsers, blockedUsers, artType, artId, currentUserId , artSettings, updateAppState, adminStatus, guestStatus, censor } = this.props
 
     if (allComments) {
       commentsArray = allComments.map((comment) => {
@@ -53,7 +53,7 @@ class CommentsList extends React.Component {
         var { user_name, gender, age_range, user_id, show_censored, posted_as_guest } = comment.user
 
         var shownText = text;
-        if (censored && censored_text) {
+        if (censor && censored_text) {
           shownText = censored_text
         }
 
@@ -68,7 +68,7 @@ class CommentsList extends React.Component {
 
         var showCensored = true;
 
-        if (censored && user_id != userId) {
+        if (censor && user_id != currentUserId) {
           if (show_censored === "false") {
             showCensored = false
           }
@@ -107,7 +107,7 @@ class CommentsList extends React.Component {
 
                 artId={artId}
                 artType={artType}
-                censored={censored}
+                censor={censor}
                 galleryId={this.props.galleryId}
 
                 handleTopChange={this.props.handleTopChange}

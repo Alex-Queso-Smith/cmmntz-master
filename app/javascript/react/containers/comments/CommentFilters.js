@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { AgeRangeSelector, AgeSlider, GenderSelector, Checkbox  } from '../../components/form/FormComponents';
+import { AgeRangeSelector, AgeSlider, GenderSelector, Checkbox } from '../../components/form/FormComponents';
 import { SortDir, SortButton } from '../../components/filters/SortSelect'
 import { ImageSelector } from '../../util/VoteUtil';
 import { SortButtons, FilterButtonsRowOne, FilterButtonsRowTwo, FilterCommentsBy, FilterVotesBy } from '../../util/FilterUtil'
@@ -136,6 +136,7 @@ class CommentFilters extends React.Component {
                   />
               </div>
             </div>
+
             <div id="advanced-filters">
               <br />
               <GeoSelect
