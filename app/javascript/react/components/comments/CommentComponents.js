@@ -4,7 +4,7 @@ import { Checkbox } from '../form/FormComponents';
 import Reply from './Reply';
 
 export const ReplyFieldActivated = (object) => {
-  style = {
+  var style = {
     height: "75px"
   }
   var field =
