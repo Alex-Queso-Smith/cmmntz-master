@@ -49,9 +49,10 @@ var Cmmntz = Cmmntz || (function(){
           wi.append("widget_init[email]", _args['email'])
           var widget_settings ;
 
-          base_url = this.get_base_url(_args['mode'])
-          // alert(base_url)
-          return fetch(`${base_url}/api/v1/widget_inits.json`, {
+          var base_url = this.get_base_url(_args['mode'])
+          var full_url = base_url+"/api/v1/widget_inits.json"
+
+          return fetch(full_url, {
             method: 'POST',
             credentials: 'include', // cross when separated
             body: wi
