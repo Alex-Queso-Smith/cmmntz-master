@@ -167,6 +167,11 @@ class CommentFilters extends React.Component {
           marginLeft: "10px"
         }
 
+        var smallerFontStyle = {
+          fontSize: "13px",
+          lineHeight: "1.6"
+        }
+
         var { commentsFromExpanded } = this.state;
 
         var expandImg = commentsFromExpanded ? "minus.png" : "plus.png"
@@ -186,7 +191,7 @@ class CommentFilters extends React.Component {
             globalSettings={this.props.globalSettings}
             />
 
-          <div className="row cf-margin-bottom-10px">
+          <div style={smallerFontStyle} className="row cf-margin-bottom-10px">
             <span><img style={expandStyle} className="cf-cursor-pointer cf-padding-cancel" src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`} onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } } /></span>
             <h4 style={fromStyle} className="cf-open-close cf-cursor-pointer" onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } }>Show only comments from</h4>
           </div>
@@ -194,7 +199,7 @@ class CommentFilters extends React.Component {
         </div>
 
         var clearButtonStyle = {
-          marginTop: "-4px"
+          marginTop: "-6px"
         }
 
         var checkXStyle = {
