@@ -481,7 +481,7 @@ class UserEditContainer extends React.Component {
       .then(finished => {
 
         this.props.updateSpaId(finished.user_id);
-        this.props.updateDisplay("login")
+        this.props.updateDisplay("")
         }
       )
     }
