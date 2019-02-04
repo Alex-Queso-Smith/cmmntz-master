@@ -346,9 +346,9 @@ class CommentFormContainer extends React.Component {
         <div style={marginCancel} className="row justify-content-between">
           <PrivacyPolicy />
 
-          <button className="btn btn-sm cf-fade-button">
+          <a href="http://www.cmmntz.com" target="_blank" className="btn btn-sm cf-fade-button">
             <span style={pbyStyle}>powered by</span><span style={cStyle}> CMMNTZ</span>
-          </button>
+          </a>
 
           <CommentEtiquette galleryCommentEtiquette={this.props.commentEtiquette} />
         </div>
