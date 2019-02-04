@@ -198,6 +198,9 @@ class Comment extends React.Component {
 
     var textBox;
     if (editStatus) {
+      var style = {
+        height: "75px"
+      }
       textBox =
       <Textarea
         maxLength="3000"
@@ -205,6 +208,7 @@ class Comment extends React.Component {
         name="text"
         value={text}
         onChange={ this.handleChange }
+        style={style}
         />
     } else {
       var text_length = 400 ;

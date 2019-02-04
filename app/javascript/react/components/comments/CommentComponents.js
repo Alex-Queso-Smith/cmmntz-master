@@ -4,6 +4,9 @@ import { Checkbox } from '../form/FormComponents';
 import Reply from './Reply';
 
 export const ReplyFieldActivated = (object) => {
+  style = {
+    height: "75px"
+  }
   var field =
   <div>
     <Textarea
@@ -13,6 +16,7 @@ export const ReplyFieldActivated = (object) => {
       value={object.state.replyText}
       rows={3}
       onChange={object.handleChange}
+      style={style}
       />
     <Checkbox
       name="replyAnonymous"
