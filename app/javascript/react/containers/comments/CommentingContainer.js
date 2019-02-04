@@ -696,7 +696,7 @@ class CommentingContainer extends React.Component {
     this.props.handleLogout();
 
     setTimeout(function(){
-      FetchDidMount(this, `/api/v1/arts/${this.props.artId}.json`)
+      FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/arts/${this.props.artId}.json`)
       .then(artData => {
         this.setState({
           commentEtiquette: artData.art.gallery_comment_etiquette
@@ -707,7 +707,7 @@ class CommentingContainer extends React.Component {
         var test = this.props.userId;
 
         if (userId.length > 0){
-          FetchDidMount(this, `/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
+          FetchDidMount(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${userId}.json?gallery_id=${galleryId}`)
           .then(userData => {
 
             var newSortOpts = this.state.sortOpts;
