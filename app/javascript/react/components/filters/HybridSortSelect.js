@@ -57,7 +57,7 @@ class HybridSortSelect extends React.Component {
       fontWeight: "bold",
       fontSize: "1em",
       marginBottom: "0px",
-      lineHeight: "1.7"
+      lineHeight: "1"
     }
 
     var expandStyle = {

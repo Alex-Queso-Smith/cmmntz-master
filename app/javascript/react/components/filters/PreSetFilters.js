@@ -42,7 +42,7 @@ class PreSetFilters extends React.Component {
     var suggestionStyle = {
       marginRight: "5px",
       fontWeight: "bold",
-      lineHeight: "1.7",
+      lineHeight: "1",
       paddingTop: "0px"
     }
 

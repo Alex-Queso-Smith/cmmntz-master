@@ -164,7 +164,7 @@ class CommentFilters extends React.Component {
           fontWeight: "bold",
           fontSize: "1em",
           marginBottom: "0px",
-          lineHeight: "1.7",
+          lineHeight: "1",
           marginLeft: "10px"
         }
 
@@ -245,7 +245,7 @@ class CommentFilters extends React.Component {
         fontWeight: "bold",
         fontSize: "1em",
         marginBottom: "0px",
-        lineHeight: "1.7"
+        lineHeight: "1"
       }
 
       var expandDivStyle = {
