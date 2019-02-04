@@ -106,7 +106,7 @@ class UserNewRequiredContainer extends React.Component {
       <div id="reg-required" className="form-group">
         <Input
           name="userName"
-          label="User Name"
+          placeholder="User Name"
           onChange={this.props.onChange}
           content={this.props.userName}
           type="text"
@@ -116,7 +116,7 @@ class UserNewRequiredContainer extends React.Component {
         {userNameError}
         <Input
           name="email"
-          label="Email"
+          placeholder="Email"
           onChange={this.props.onChange}
           content={this.props.email}
           type="text"
@@ -125,7 +125,7 @@ class UserNewRequiredContainer extends React.Component {
         {emailError}
         <Input
           name="password"
-          label="Password"
+          placeholder="Password"
           onChange={this.props.onChange}
           content={this.props.password}
           type="password"
@@ -134,7 +134,7 @@ class UserNewRequiredContainer extends React.Component {
         {passwordError}
         <Input
           name="passwordConfirmation"
-          label="Password Confirmation"
+          placeholder="Password Confirmation"
           onChange={this.props.onChange}
           content={this.props.passwordConfirmation}
           type="password"
@@ -146,7 +146,7 @@ class UserNewRequiredContainer extends React.Component {
           <div className="col-6 col-sm-5">
             <button onClick={ this.handlePrivacyPolicyClick } className="btn cf-non-fade-button btn-md cf-privacy-policy">Privacy Policy</button>
           </div>
-          
+
         </div>
 
         {privacyPolicy}
@@ -178,10 +178,13 @@ class UserNewRequiredContainer extends React.Component {
             //   Back
             // </button>
           }
+          <button className="btn btn-sm btn-dark float-left mr-2" onClick={ updateDisplayComments }>
+            Close
+          </button>
           <button className="btn btn-sm btn-dark cf-float-right" onClick={this.handleRequiredValidation} disabled={this.props.disabled}>
             Next Page
           </button>
-          <div style={loginDivStyle} className="cf-float-left">
+          <div style={loginDivStyle} className="cf-text-center">
             <span style={loginSpanStyle}>Already Registered?</span>
             <button className="btn btn-sm btn-link cf-margin-right-10px" onClick={ updateDisplayLogin }>
               Login

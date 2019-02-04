@@ -65,11 +65,11 @@ class SessionLoginContainer extends React.Component {
     userNameError = CreateErrorElements(loginErrors.user_name, "User Name")
     passwordError = CreateErrorElements(loginErrors.password, "Password")
 
-    var changeDisplayRegister = () => {
+    var updateDisplayRegister = () => {
       this.props.updateDisplay("register")
     }
 
-    var changeDisplayComments = () => {
+    var updateDisplayComments = () => {
       this.props.updateDisplay("")
     }
 
@@ -89,7 +89,7 @@ class SessionLoginContainer extends React.Component {
           <h3 className="cf-user-title cf-text-center">Login</h3>
           <Input
             name="userName"
-            label="User Name"
+            placeholder="User Name"
             onChange={this.handleChange}
             content={this.userName}
             type="text"
@@ -98,7 +98,7 @@ class SessionLoginContainer extends React.Component {
           {userNameError}
           <Input
             name="password"
-            label="Password"
+            placeholder="Password"
             onChange={this.handleChange}
             content={this.password}
             type="password"
@@ -120,13 +120,13 @@ class SessionLoginContainer extends React.Component {
           </div>
         </form>
 
-        <button className="btn btn-sm btn-dark float-left mr-2" onClick={ changeDisplayComments }>
+        <button className="btn btn-sm btn-dark float-left mr-2" onClick={ updateDisplayComments }>
           Close
         </button>
 
-        <div style={registerDivStyle} className="cf-float-left">
+        <div style={registerDivStyle} className="cf-text-center">
           <span style={registerSpanStyle} className="cf-margin-right-5px">New To CMMNTZ?</span>
-          <button className="btn btn-sm btn-link cf-margin-right-10px" onClick={ changeDisplayRegister }>
+          <button className="btn btn-sm btn-link cf-margin-right-10px" onClick={ updateDisplayRegister }>
             Register
           </button>
         </div>

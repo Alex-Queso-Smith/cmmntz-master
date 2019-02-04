@@ -114,7 +114,7 @@ export const Input = props => {
   return(
     <div className="form-group">
       <label style={labelStyle} className="cf-text-medium" htmlFor={props.name}>{props.label}</label>
-      <input autoFocus={props.focus} className={`form-control cf-margin-top-5px ${props.addClass}`} type={props.type} name={props.name} value={props.content} onChange={props.onChange}></input>
+      <input placeholder={props.placeholder} autoFocus={props.focus} className={`form-control cf-margin-top-5px ${props.addClass}`} type={props.type} name={props.name} value={props.content} onChange={props.onChange}></input>
     </div>
   );
 };
