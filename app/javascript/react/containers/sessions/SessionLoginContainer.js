@@ -43,7 +43,7 @@ class SessionLoginContainer extends React.Component {
           element.setAttribute('data-user-font', `cf-${body.font}`);
           element.setAttribute('data-user-theme', `cf-${body.theme}`);
 
-          this.props.updateDisplay("")
+          this.props.updateDisplay("", event)
           this.props.handleLogin(body.user_id, body.font, body.color)
         }
       })

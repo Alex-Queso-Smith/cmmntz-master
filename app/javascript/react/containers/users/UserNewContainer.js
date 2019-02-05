@@ -192,7 +192,7 @@ class UserNewContainer extends React.Component {
           } else {
             this.props.handleUpdateSpaId(body.user_id)
 
-            this.props.updateDisplay("")
+            this.props.updateDisplay("", event)
           }
         })
         .catch(error => console.error(`Error in fetch: ${error.message}`));

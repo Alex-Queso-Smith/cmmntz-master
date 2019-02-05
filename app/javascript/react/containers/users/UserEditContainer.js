@@ -463,7 +463,7 @@ class UserEditContainer extends React.Component {
     .then(body => {
       if (!body.errors) {
         this.setState({ saveErrors: {} })
-        this.props.updateDisplay("")
+        this.props.updateDisplay("", event)
       } else {
         alert("Please fix errors before submitting again")
       }
@@ -481,7 +481,7 @@ class UserEditContainer extends React.Component {
       .then(finished => {
 
         this.props.updateSpaId(finished.user_id);
-        this.props.updateDisplay("")
+        this.props.updateDisplay("", event)
         }
       )
     }
