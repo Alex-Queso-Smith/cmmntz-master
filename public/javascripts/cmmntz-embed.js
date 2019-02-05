@@ -112,8 +112,7 @@ var Cmmntz = Cmmntz || (function(){
           if (mode) {
             return mode == "staging" ? "https://classifilter-staging.herokuapp.com" : "http://localhost:3000"
           } else {
-            // return "https://api.cmmntz.com"
-            return "https://classifilter-master.herokuapp.com"
+            return "https://api.cmmntz.com"
           }
         }
     };
