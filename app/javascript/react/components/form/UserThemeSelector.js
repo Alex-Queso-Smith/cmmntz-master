@@ -1,18 +1,21 @@
 import React from 'react';
 
 const UserThemeSelector = props => {
-  var leftStyle={
-    float: "right"
+  var leftStyle = {
+    float: "right",
+    marginRight: "13px"
   }
+
   var rightStyle = {
     marginLeft: "13px"
   }
+
   return(
     <div className="user-theme-selector">
 
       <div className="row" id="cf-theme-selector-options-wrapper">
         <div className="col-6" id="cf-theme-selector-options-left">
-          <label style={leftStyle} className="cf-text-medium">
+          <label style={leftStyle} className="cf-text-medium cf-theme-select">
             Theme:
             <br />
             <br />
@@ -24,7 +27,7 @@ const UserThemeSelector = props => {
         </div>
 
         <div className="col-6" id="cf-theme-selector-options-right">
-          <label style={rightStyle} className="cf-text-medium">
+          <label style={rightStyle} className="cf-text-medium cf-theme-select">
           Font:
           <br />
           <br />
