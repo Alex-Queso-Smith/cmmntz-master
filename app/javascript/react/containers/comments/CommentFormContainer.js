@@ -164,12 +164,13 @@ class CommentFormContainer extends React.Component {
 
     var userNameButton, buttonOne, buttonTwo;
     if (this.props.userSettings.guest) {
-      var changeDisplayLogin = () => {
-        this.props.updateDisplay("login")
+
+      var changeDisplayLogin = (event) => {
+        this.props.updateDisplay("login", event)
       }
 
-      var changeDisplayRegister = () => {
-        this.props.updateDisplay("register")
+      var changeDisplayRegister = (event) => {
+        this.props.updateDisplay("register", event)
       }
 
       userNameButton =
