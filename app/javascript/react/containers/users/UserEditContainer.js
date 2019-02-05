@@ -7,7 +7,6 @@ import UserEditAccountContainer from './UserEditAccountContainer';
 import UserEditLooksContainer from './UserEditLooksContainer';
 import UserEditDemographicsContainer from './UserEditDemographicsContainer';
 import UserEditPasswordContainer from './UserEditPasswordContainer';
-import FeedbackFormContainer from '../FeedbackFormContainer';
 
 class UserEditContainer extends React.Component {
   state = {
@@ -593,13 +592,6 @@ class UserEditContainer extends React.Component {
         />
 
         {page}
-
-        <hr />
-
-        <FeedbackFormContainer
-          userId={this.state.userId}
-          globalSettings={this.props.globalSettings}
-        />
 
       </div>
     )
