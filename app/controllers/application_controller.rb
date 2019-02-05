@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   # include ControllerIncludes::CurrentUser # methods regarding current_user
 
   helper_method :current_user_session, :current_user, :output_log_stream
-  ALL_FILTERS = [:require_user, :current_user, :current_user_session, :create_guest_unless_logged_in]
+  ALL_FILTERS = [:current_user, :current_user_session, :create_guest_unless_logged_in]
   BEFORE_LOG_FILTERS= [:before_log_activity]
   AFTER_LOG_FILTERS= [:after_log_activity]
   before_action *ALL_FILTERS, *BEFORE_LOG_FILTERS

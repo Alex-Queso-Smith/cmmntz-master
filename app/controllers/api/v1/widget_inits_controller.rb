@@ -1,5 +1,4 @@
 class Api::V1::WidgetInitsController < ApiController
-  skip_before_action :require_user, only: [:create] 
   def create
     @widget_init = WidgetInit.new(widget_init_params)
 
