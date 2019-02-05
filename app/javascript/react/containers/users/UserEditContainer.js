@@ -456,8 +456,8 @@ class UserEditContainer extends React.Component {
     user.append("user[show_censored_comments]", this.state.showCensoredComments)
     user.append("user[settings_updated]", !this.state.useGalleryDefault)
     user.append("user[hide_anon_and_guest]", hideAnonAndGuest)
-    user.append("user[age_range_search]", ageRange)
-    user.append("user[gender_search]", gender)
+    user.append("user[age_range_search]", this.state.sortOpts.ageRange)
+    user.append("user[gender_search]", this.state.sortOpts.gender)
 
     FetchWithPush(this, `${this.props.globalSettings.baseUrl}/api/v1/users/${userId}.json`, '', 'PATCH', 'saveErrors', user)
     .then(body => {
