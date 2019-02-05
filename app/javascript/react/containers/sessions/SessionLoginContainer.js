@@ -65,12 +65,12 @@ class SessionLoginContainer extends React.Component {
     userNameError = CreateErrorElements(loginErrors.user_name, "User Name")
     passwordError = CreateErrorElements(loginErrors.password, "Password")
 
-    var updateDisplayRegister = () => {
-      this.props.updateDisplay("register")
+    var updateDisplayRegister = (event) => {
+      this.props.updateDisplay("register", event)
     }
 
-    var updateDisplayComments = () => {
-      this.props.updateDisplay("")
+    var updateDisplayComments = (event) => {
+      this.props.updateDisplay("", event)
     }
 
     var registerSpanStyle = {

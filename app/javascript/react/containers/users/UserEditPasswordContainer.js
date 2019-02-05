@@ -65,8 +65,8 @@ class UserEditPasswordContainer extends React.Component {
     var passwordConfirmationClass;
     passwordConfirmationClass = ErrorClassValidation(passwordConfirmationError);
 
-    var updateDisplaySettings = () => {
-      this.props.updateDisplay("settings")
+    var updateDisplaySettings = (event) => {
+      this.props.updateDisplay("settings", event)
     }
 
     return(

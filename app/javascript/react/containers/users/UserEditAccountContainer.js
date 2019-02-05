@@ -38,8 +38,8 @@ class UserEditAccountContainer extends React.Component {
       color: "red"
     }
 
-    var updateDisplayPassword = () => {
-      this.props.updateDisplay("password")
+    var updateDisplayPassword = (event) => {
+      this.props.updateDisplay("password", event)
     }
 
     return(

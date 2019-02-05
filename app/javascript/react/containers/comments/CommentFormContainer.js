@@ -188,8 +188,8 @@ class CommentFormContainer extends React.Component {
 
     } else {
 
-      var changeDisplaySettings = () => {
-        this.props.updateDisplay("settings")
+      var changeDisplaySettings = (event) => {
+        this.props.updateDisplay("settings", event)
       }
 
       var userNameStyle;

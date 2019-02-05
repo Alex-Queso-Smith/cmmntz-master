@@ -33,8 +33,8 @@ class UserNewOptionalContainer extends React.Component {
       </div>
     }
 
-    var updateDisplayLogin = () => {
-      this.props.updateDisplay("login")
+    var updateDisplayLogin = (event) => {
+      this.props.updateDisplay("login", event)
     }
 
     var loginSpanStyle = {

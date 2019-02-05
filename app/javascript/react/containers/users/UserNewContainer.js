@@ -319,8 +319,8 @@ class UserNewContainer extends React.Component {
       </Modal>
     }
 
-    var changeDisplayLogin = () => {
-      this.props.updateDisplay("login")
+    var changeDisplayLogin = (event) => {
+      this.props.updateDisplay("login", event)
     }
 
     return(

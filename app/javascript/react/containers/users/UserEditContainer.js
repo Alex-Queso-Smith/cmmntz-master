@@ -491,12 +491,12 @@ class UserEditContainer extends React.Component {
     var { display, saveErrors } = this.state;
     var { userId } = this.props;
 
-    var updateDisplayPassword = () => {
-      this.props.updateDisplay("password")
+    var updateDisplayPassword = (event) => {
+      this.props.updateDisplay("password", event)
     }
 
-    var updateDisplayComments = () => {
-      this.props.updateDisplay("")
+    var updateDisplayComments = (event) => {
+      this.props.updateDisplay("", event)
     }
 
     var page;

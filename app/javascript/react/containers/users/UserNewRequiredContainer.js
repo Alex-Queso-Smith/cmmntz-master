@@ -85,12 +85,12 @@ class UserNewRequiredContainer extends React.Component {
       </div>
     }
 
-    var updateDisplayComments = () => {
-      this.props.updateDisplay("")
+    var updateDisplayComments = (event) => {
+      this.props.updateDisplay("", event)
     }
 
-    var updateDisplayLogin = () => {
-      this.props.updateDisplay("login")
+    var updateDisplayLogin = (event) => {
+      this.props.updateDisplay("login", event)
     }
 
     var loginSpanStyle = {
