@@ -154,23 +154,14 @@ class CommentFilters extends React.Component {
           this.setState({ filtersExpanded: true })
         }
 
-        var expandStyle = {
-          height: '12px',
-          width: '12px',
-          marginLeft: "50px"
-        }
-
-        var fromStyle = {
-          fontWeight: "bold",
-          fontSize: "1em",
-          marginBottom: "0px",
-          lineHeight: "1",
-          marginLeft: "10px"
-        }
-
         var { commentsFromExpanded } = this.state;
 
-        var expandImg = commentsFromExpanded ? "minus.png" : "plus.png"
+        var expandImg = commentsFromExpanded ? "minus.png" : "plus.png";
+
+        var span = <span className="cf-margin-left-10px">&#9658;</span>
+        if (this.state.commentsFromExpanded) {
+          var span = <span className="cf-margin-left-10px">&#9660;</span>
+        }
 
         filters =
         <div className="cf-filters-container">
@@ -188,15 +179,12 @@ class CommentFilters extends React.Component {
             />
 
           <div className="row cf-margin-bottom-10px">
-            <span><img style={expandStyle} className="cf-cursor-pointer cf-padding-cancel" src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`} onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } } /></span>
-            <h4 style={fromStyle} className="cf-open-close cf-cursor-pointer" onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } }>Show only comments from</h4>
+            <div className="col">
+              <button className="cf-cursor-pointer cf-sort-filter-button btn btn-sm cf-float-left" onClick={ () => { this.setState({ commentsFromExpanded: !this.state.commentsFromExpanded }) } }>Show only comments from{span}</button>
+            </div>
           </div>
           {commentsFrom}
         </div>
-
-        var clearButtonStyle = {
-          marginTop: "-6px"
-        }
 
         var checkXStyle = {
           width: "15px",
@@ -216,16 +204,10 @@ class CommentFilters extends React.Component {
         }
 
         var smallFont = {
-          fontSize: "13px"
+          fontSize: ".75em"
         }
 
-        clearButton =
-        <button style={clearButtonStyle} className="cf-fade-button cf-fade-button-purple btn btn-sm" onClick={this.props.clearFilters}>Clear</button>
-
-        commentInfo =
-        <span style={smallFont}>
-          <span style={purpleStyle}>{this.props.grandTotalComments} comments</span> | <span style={greenStyle}>{this.props.totalComments} shown</span> | <span style={redStyle}>{this.props.filteredCount} filtered</span>
-        </span>
+        clearButton = <button className="cf-fade-button cf-fade-button-purple btn btn-sm cf-float-right" onClick={this.props.clearFilters}>Clear</button>
       }
 
     }
@@ -235,45 +217,22 @@ class CommentFilters extends React.Component {
     var filterRow;
     if (!this.props.hideFilterLink) {
 
-      var expandStyle = {
-        height: '12px',
-        width: '12px'
-      }
-
-      var sortStyle = {
-        fontWeight: "bold",
-        fontSize: "1em",
-        marginBottom: "0px",
-        lineHeight: "1"
-      }
-
-      var expandDivStyle = {
-        marginLeft: "25px",
-        maxWidth: "20px"
-      }
-
-      var sortDivStyle = {
-        paddingLeft: "3px",
-        paddingRight: "3px"
+      var span = <span className="cf-margin-left-10px">&#9658;</span>
+      if (this.state.expandFilters) {
+        var span = <span className="cf-margin-left-10px">&#9660;</span>
       }
 
       filterRow =
       <div className="row">
-        <div style={expandDivStyle} onClick={this.expandFilters} className="col-1 cf-cursor-pointer cf-padding-cancel">
-          <img style={expandStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`} />
+        <div className="col-2">
+          <button onClick={this.expandFilters} className="btn cf-sort-filter-button cf-cursor-pointer btn-sm">Filters{span}</button>
         </div>
-        <div style={sortDivStyle} onClick={this.expandFilters} className="col-2 cf-cursor-pointer">
-          <h4 style={sortStyle} >Filters</h4>
-        </div>
-        <div className="col-3">
+
+        <div className="col">
           {clearButton}
         </div>
-        <div className="col">
-          <div className="cf-float-right">
-            {commentInfo}
-          </div>
-        </div>
       </div>
+
     } else {
       filterRow =
         <div className="row">

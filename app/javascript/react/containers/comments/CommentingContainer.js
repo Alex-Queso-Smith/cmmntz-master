@@ -808,6 +808,10 @@ class CommentingContainer extends React.Component {
       color: "#800080"
     }
 
+    var spanStyle = {
+      fontSize: ".75em"
+    }
+
     var handleFilterSubmitSorting = (event) => {
       this.handleChange(event);
       this.handleFilterSubmit();
@@ -866,8 +870,8 @@ class CommentingContainer extends React.Component {
             <hr />
 
             <div className="cf-margin-top-bottom-10px cf-results-count-container">
-              <span>
-                <a href="#cf-filters-top" className="cf-link-no-ul" onClick={this.clearFilters}><span style={purpleStyle}>{this.state.grandTotalComments} comments</span></a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={greenStyle}>{totalComments} shown</span></a> | <a href="#cf-filters-top" className="cf-link-no-ul"><span style={redStyle}>{filteredCount} filtered</span></a>
+              <span style={spanStyle}>
+                <span style={purpleStyle}>{this.state.grandTotalComments} comments</span> | <span style={greenStyle}>{totalComments} shown</span> | <span style={redStyle}>{filteredCount} filtered</span>
               </span>
             </div>
 

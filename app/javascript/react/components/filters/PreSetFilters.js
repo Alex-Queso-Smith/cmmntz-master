@@ -8,12 +8,16 @@ class PreSetFilters extends React.Component {
   render(){
     var { expand } = this.state;
 
-    var expandImg = expand ? "minus.png" : "plus.png"
+    var expandImg = expand ? "minus.png" : "plus.png";
+
+    var selectStyle = {
+      marginRight: "15px"
+    }
 
     var dropDown;
     if (expand) {
       dropDown =
-      <select name="presetFilter" value={this.props.option} onChange={this.props.onChange}>
+      <select style={selectStyle} className="col cf-margin-top-10px" name="presetFilter" value={this.props.option} onChange={this.props.onChange}>
         <option  value='0' />
         <option value="1" className="filter-list-item">
           Funny comments posted near me
@@ -33,24 +37,18 @@ class PreSetFilters extends React.Component {
       </select>
     }
 
-    var expandStyle = {
-      height: "12px",
-      width: "12px",
-      marginRight: "10px"
-    }
-
-    var suggestionStyle = {
-      marginRight: "5px",
-      fontWeight: "bold",
-      lineHeight: "1",
-      paddingTop: "0px"
+    var span = <span className="cf-margin-left-10px">&#9658;</span>
+    if (this.state.expand) {
+      var span = <span className="cf-margin-left-10px">&#9660;</span>
     }
 
     return(
       <div id="cf-preset-filters-selector">
         <div className="cf-preset-filter-row row">
-          <span><img className="cf-cursor-pointer cf-padding-cancel" style={expandStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`} onClick={ () => { this.setState({ expand: !this.state.expand }) } }></img></span>
-          <h4  className="cf-cursor-pointer" onClick={ () => { this.setState({ expand: !this.state.expand }) } } style={suggestionStyle}>Suggestions</h4>
+
+          <div className="col">
+            <button className="cf-cursor-pointer cf-sort-filter-button btn btn-sm cf-float-left" onClick={ () => { this.setState({ expand: !this.state.expand }) } }>Suggestions{span}</button>
+          </div>
           {dropDown}
         </div>
       </div>

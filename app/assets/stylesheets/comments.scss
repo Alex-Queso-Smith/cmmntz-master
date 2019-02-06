@@ -5,6 +5,8 @@ $grayline: #D3D3D3;
 $dark-grayline: #7A7A7A;
 $bootstrap-blue: #0069D9;
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 @media (max-width: $breakpoint-tablet) {
   .cf-comment-replies-wrapper {
 
@@ -195,6 +197,21 @@ $bootstrap-blue: #0069D9;
     color: #777777;
     background: #f8f9fa;
     border: 1px solid #777777;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
+.cf-sort-filter-button {
+  margin: 5px 0px 5px 0px;
+  color: #131519;
+  border: none;
+  background: none;
+  font-family: 'Open-Sans', sans-serif;
+  &:hover {
+    color: #131519;
+    background: none;
   }
   &:focus {
     box-shadow: 0 0 0 0;

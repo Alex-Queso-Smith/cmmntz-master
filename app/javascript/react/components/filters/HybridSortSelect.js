@@ -53,37 +53,32 @@ class HybridSortSelect extends React.Component {
       this.setState({ expand: true })
     }
 
-    var sortStyle = {
-      fontWeight: "bold",
-      fontSize: "1em",
-      marginBottom: "0px",
-      lineHeight: "1"
-    }
-
-    var expandStyle = {
-      height: '12px',
-      width: '12px',
-      marginRight: "10px"
-    }
-
     var selectStyle = {
-      marginTop: "2px",
-      marginLeft: "15px"
+      marginTop: "10px",
+      float: "right"
     }
 
-    var sortContainerStyle = {
-      marginLeft: "25px"
+    var marginLeft22px = {
+      marginLeft: "22px"
+    }
+
+    var span = <span style={marginLeft22px}>&#9658;</span>
+    if (this.state.expand) {
+      var span = <span style={marginLeft22px}>&#9660;</span>
     }
 
     return(
-      <div style={sortContainerStyle} className="cf-sort-container">
+      <div className="cf-sort-container">
         <div className="row cf-vote-row" >
-          <span><img className="cf-cursor-pointer cf-padding-cancel" style={expandStyle} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/${expandImg}`}  onClick={ () => { this.setState({ expand: !this.state.expand }) } }/></span>
-          <h4 style={sortStyle} className="cf-cursor-pointer" onClick={ () => { this.setState({ expand: !this.state.expand }) } } >Sort</h4>
-          <select style={selectStyle} name="hybridSortSelect" value={this.props.option} onChange={handleSelectChange}>
-            <option value="" />
-            {options}
+          <div className="col-2">
+            <button onClick={ () => { this.setState({ expand: !this.state.expand }) } } className="cf-sort-filter-button btn btn-sm cf-cursor-pointer cf-float-left">Sort{span}</button>
+          </div>
+          <div className="col">
+            <select style={selectStyle} name="hybridSortSelect" value={this.props.option} onChange={handleSelectChange}>
+              <option value="" />
+              {options}
             </select>
+          </div>
         </div>
         {sort}
       </div>
