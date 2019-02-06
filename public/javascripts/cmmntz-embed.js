@@ -5,12 +5,17 @@ var Cmmntz = Cmmntz || (function(){
         init : function(Args) {
             _args = Args;
             // some other initialising
-            this.activate(); // start it up
-        },
-        activate : async function() {
-          // find or create a div called cmmntz-dropin
-          var cfDropinContainer = this.find_or_create_dropin();
+            // find or create a div called cmmntz-dropin
+            var cfDropinContainer = this.find_or_create_dropin();
 
+            this.initialize_cookie(cfDropinContainer);
+            let self = this;
+            setTimeout(function(){
+              self.activate(cfDropinContainer)
+            }, 300)
+
+        },
+        activate : async function(cfDropinContainer) {
           var galleryId = _args['galleryId']
           // var [authorized, packUrl, cssUrl, artId, userId, userFont, userTheme] = this.authorize_and_retrieve_art_info();
           var [authorized, packUrl, jsUrl, cssUrl, artId, userId, userFont, userTheme] = await(this.authorize_and_retrieve_art_info())
@@ -23,6 +28,13 @@ var Cmmntz = Cmmntz || (function(){
             // insert the comment div into the dropin container
             cfDropinContainer.innerHTML = commentDiv;
           };
+        },
+        initialize_cookie : function(cfDropinContainer) {
+          var base_url = this.get_base_url(_args['mode'])
+          var current_url = window.location.href
+          var url = `${this.get_base_url(_args['mode'])}/init?redir=${encodeURIComponent(current_url)}`
+          var iframe = `<iframe src="${url}" style="width:1px; height: 1px;"></iframe>`
+          cfDropinContainer.innerHTML = iframe;
         },
         load_externals : function(packUrl, jsUrl, cssUrl) {
           new LukesLazyLoader(packUrl, jsUrl, cssUrl, function() {
