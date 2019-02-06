@@ -37,7 +37,7 @@ gem 'cancancan'
 gem 'useragent'
 
 # new relic APM Tracking
-gem 'newrelic_rpm'
+# gem 'newrelic_rpm'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

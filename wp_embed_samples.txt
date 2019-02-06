@@ -1,0 +1,50 @@
+<script src="http://localhost:3000/javascripts/cmmntz-embed.js"></script>
+<script type="text/javascript">
+Cmmntz.init({
+galleryId: '7286d9ed-fef1-4dbf-8ab0-68fd51637b4b',
+topics: '<?php foreach((get_the_category()) as $category) { echo $category->cat_name . ','; } ?>',
+publishDate: '<?php the_date('Y-m-d h:i:s'); ?>',
+artistName: '<?php the_author(); ?>',
+type: "article",
+urlOverride: '<?php echo get_permalink($post); ?>',
+mode: 'development'
+});
+</script>
+<noscript>
+Please enable JavaScript to see comments powered by CMMNTZ.
+</noscript>
+
+<script src="https://classifilter-staging.herokuapp.com/javascripts/cmmntz-embed.js"></script>
+<script type="text/javascript">
+Cmmntz.init({
+galleryId: '3ab981a1-f252-462d-8367-0adccd1872d5',
+topics: '<?php foreach((get_the_category()) as $category) { echo $category->cat_name . ','; } ?>',
+publishDate: '<?php the_date('Y-m-d h:i:s'); ?>',
+artistName: '<?php the_author(); ?>',
+type: "article",
+urlOverride: '<?php echo get_permalink($post); ?>',
+mode: 'staging'
+});
+</script>
+<noscript>
+Please enable JavaScript to see comments powered by CMMNTZ.
+</noscript>
+
+<script src="https://api.cmmntz.com/javascripts/cmmntz-embed.js"></script>
+<script type="text/javascript">
+Cmmntz.init({
+galleryId: '82966840-a3a8-4b2c-9813-2a223f03fbfe',
+topics: '<?php foreach((get_the_category()) as $category) { echo $category->cat_name . ','; } ?>',
+publishDate: '<?php the_date('Y-m-d h:i:s'); ?>',
+artistName: '<?php the_author(); ?>',
+type: "article",
+urlOverride: '<?php echo get_permalink($post); ?>'
+});
+</script>
+<noscript>
+Please enable JavaScript to see comments powered by CMMNTZ.
+</noscript>
+
+
+
+_________
