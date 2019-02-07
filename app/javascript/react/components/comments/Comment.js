@@ -358,8 +358,14 @@ class Comment extends React.Component {
             <div className="cf-cf-fade-button-group">
               {editButton}
               {cancelButton}
-              {deleteCommentButton}
-              {banUserButton}
+              <div className="row">
+                <div className="col-4">
+                  {deleteCommentButton}
+                </div>
+                <div className="col-3">
+                  {banUserButton}
+                </div>
+              </div>
             </div>
           </div>
 
