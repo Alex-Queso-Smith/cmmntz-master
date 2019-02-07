@@ -375,7 +375,7 @@ class CommentFormContainer extends React.Component {
         </div>
         {textError}
         {approvalMsg}
-        <div className="row">
+        <div className="row cf-comment-actions-row">
           <div className=" cf-margin-top-10px cf-float-left col-2">
             <button className="btn btn-sm btn-dark" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
           </div>

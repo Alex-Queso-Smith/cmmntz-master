@@ -218,7 +218,7 @@ class CommentFilters extends React.Component {
     if (!this.props.hideFilterLink) {
 
       var span = <span className="cf-margin-left-10px">&#9658;</span>
-      if (this.state.expandFilters) {
+      if (this.state.filtersExpanded) {
         var span = <span className="cf-margin-left-10px">&#9660;</span>
       }
 
