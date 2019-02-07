@@ -31,7 +31,12 @@ var Cmmntz = Cmmntz || (function(){
         },
         initialize_cookie : function(cfDropinContainer) {
           var base_url = this.get_base_url(_args['mode'])
-          var current_url = window.location.href
+          var current_url;
+          if (_args['urlOverride']) {
+            current_url = _args['urlOverride']
+          } else {
+            current_url = window.location.href
+          }
           var url = `${this.get_base_url(_args['mode'])}/init?redir=${encodeURIComponent(current_url)}`
           var iframe = `<iframe src="${url}" style="width:1px; height: 1px;"></iframe>`
           cfDropinContainer.innerHTML = iframe;
