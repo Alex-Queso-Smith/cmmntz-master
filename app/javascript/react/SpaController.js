@@ -38,7 +38,7 @@ class SpaController extends React.Component {
   }
 
   updateDisplay(page, event){
-    event.persist();
+    event.preventDefault();
     this.setState({ display: page })
   }
 
