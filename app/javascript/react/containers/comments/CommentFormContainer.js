@@ -200,7 +200,8 @@ class CommentFormContainer extends React.Component {
       }
 
       var gearStyle = {
-        marginLeft: "5px"
+        marginLeft: "5px",
+        marginTop: "5px"
       }
 
       var logoutStyle = {
@@ -213,7 +214,7 @@ class CommentFormContainer extends React.Component {
       </div>
       buttonOne =
       <div style={gearStyle} className="col-2 cf-padding-cancel">
-        <button className="btn btn-sm cf-fade-button" onClick={ changeDisplaySettings }>
+        <button className="btn btn-sm" onClick={ changeDisplaySettings }>
           <img className={`cf-vote-btn cf-cursor-pointer`} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/gear.png`} />
         </button>
       </div>
@@ -342,12 +343,16 @@ class CommentFormContainer extends React.Component {
         paddingLeft: "12px"
       }
 
+      var logoStyle = {
+        marginTop: "5px"
+      }
+
       commentForm =
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
         <div style={marginCancel} className="row justify-content-between">
           <PrivacyPolicy />
 
-          <a href="http://www.cmmntz.com" target="_blank" className="btn btn-sm cf-fade-button">
+          <a style={logoStyle} href="http://www.cmmntz.com" target="_blank" className="btn btn-sm">
             <span style={pbyStyle}>powered by</span><span style={cStyle}> CMMNTZ</span>
           </a>
 
@@ -377,7 +382,7 @@ class CommentFormContainer extends React.Component {
         {approvalMsg}
         <div className="row cf-comment-actions-row">
           <div className=" cf-margin-top-10px cf-float-left col-2">
-            <button className="btn btn-sm btn-dark" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
+            <button className="btn btn-sm cf-dark-button" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
           </div>
           <div id="cf-filters-top" />
           <div className="col-8">
@@ -387,7 +392,7 @@ class CommentFormContainer extends React.Component {
             </div>
           <div className="cf-margin-top-10px col-2">
             <div className="cf-float-right">
-              <button id="comments-button" type="submit" className="btn btn-sm btn-dark" value="Submit" disabled={formInvalid}>
+              <button id="comments-button" type="submit" className="btn btn-sm cf-dark-button" value="Submit" disabled={formInvalid}>
                 Submit
               </button>
             </div>

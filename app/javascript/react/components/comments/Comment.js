@@ -336,14 +336,10 @@ class Comment extends React.Component {
 
           <div className="cf-comment-w-meta">
             <div className="cf-comment-comment-meta row">
-              <div className="cf-comment-user-name col-10">
+              <div className="cf-comment-user-name col">
                 {this.props.userName}{adminFlag}
               </div>
-              <div className="cf-comment-length col-2">
-                <div className="cf-float-right">
-                  <img src={lengthImage} height="20px" width="20px"/>
-                </div>
-              </div>
+
             </div>
 
             <div className="row">

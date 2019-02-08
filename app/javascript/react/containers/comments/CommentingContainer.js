@@ -805,7 +805,7 @@ class CommentingContainer extends React.Component {
     }
 
     var purpleStyle = {
-      color: "#800080"
+      color: "#544382"
     }
 
     var spanStyle = {

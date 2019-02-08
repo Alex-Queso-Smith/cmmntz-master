@@ -7,7 +7,7 @@ export const ReplyFieldActivated = (object) => {
   var style = {
     height: "75px"
   }
-  
+
   var field =
   <div>
     <Textarea
@@ -31,7 +31,7 @@ export const ReplyFieldActivated = (object) => {
 
 export const ReplyButtonActive = (object) => {
   var replyButton =
-  <button className="btn cf-fade-button btn-sm" onClick={object.handleReplySubmit} disabled={object.state.formInvalid}>
+  <button className="btn cf-fade-button-classi btn-sm" onClick={object.handleReplySubmit} disabled={object.state.formInvalid}>
     Submit Reply
   </button>
   return replyButton

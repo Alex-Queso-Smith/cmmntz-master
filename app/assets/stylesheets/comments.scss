@@ -5,6 +5,9 @@ $grayline: #D3D3D3;
 $dark-grayline: #7A7A7A;
 $bootstrap-blue: #0069D9;
 
+$black: #202430;
+$classi-purple: #544382;
+
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 @media (max-width: $breakpoint-tablet) {
@@ -116,7 +119,7 @@ $bootstrap-blue: #0069D9;
           width: 50%;
           float: left;
           font-size: 1.25em;
-          color: purple;
+          color: #544382;
           font-weight: bold;
         }
         .cf-comment-len-date{
@@ -190,13 +193,44 @@ $bootstrap-blue: #0069D9;
 
 .cf-fade-button {
   margin: 5px 0px 5px 0px;
-  color: #777777;
+  color: $black;
   background: none;
 
   &:hover {
-    color: #777777;
-    background: #f8f9fa;
-    border: 1px solid #777777;
+    color: #FFF;
+    background: $black;
+    border: 1px solid $black;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
+.cf-dark-button {
+  margin: 5px 0px 5px 0px;
+  color: #fff;
+  background: $black;
+
+  &:hover {
+    color: #FFF;
+    background: $black;
+    border: 1px solid $black;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
+.cf-fade-button-classi {
+  margin: 5px 0px 5px 0px;
+  color: $classi-purple;
+  background: none;
+  border: 1px solid $classi-purple;
+
+  &:hover {
+    color: #fff;
+    background: $classi-purple;
+    border: 1px solid $classi-purple;
   }
   &:focus {
     box-shadow: 0 0 0 0;
@@ -235,10 +269,10 @@ $bootstrap-blue: #0069D9;
 }
 
 .cf-fade-button-purple {
-  color: #800080;
+  color: #544382;
   &:hover {
-    color: #800080;
-    border-color: #800080;
+    color: #544382;
+    border-color: #544382;
   }
 }
 

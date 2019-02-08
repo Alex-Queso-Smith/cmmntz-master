@@ -1,7 +1,9 @@
 // override checkbox appearance
 .custom-checkbox > [type="checkbox"]:checked + label:before {
-  background: #000 !important;
-  box-shadow: none;
+  background: #202430 !important;
+  box-shadow: 0px 0px 10px rgba(32, 36, 48, 1);
+  border: 1px solid #202430;
+  border-radius: 5px;
 }
 .custom-checkbox > [type="checkbox"]:not(:checked) + label:before {
   box-shadow: none;
@@ -14,7 +16,7 @@
 
 .form-control:focus {
   box-shadow: 0 0 0 0.2rem rgba(128, 0, 128, 0.25);
-  border-color: #800080;
+  border-color: #544382;
 }
 
 .nav-link {
