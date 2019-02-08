@@ -817,6 +817,17 @@ class CommentingContainer extends React.Component {
       this.handleFilterSubmit();
     }
 
+    var topButton;
+
+    var savedTopButton =
+    <div className="cf-scroll-up-button">
+      <ScrollUpButton
+        ToggledStyle={ {left: '20px', bottom: '10px'} }
+        ShowAtPosition={widgetPageY + 150}
+        StopPosition={widgetPageY - 100}
+        />
+    </div>
+
     return(
       <div id="cf-comments-main" className={`${userThemeSettings.font} ${userThemeSettings.colorTheme}`}>
 
@@ -898,13 +909,7 @@ class CommentingContainer extends React.Component {
 
           </div>
 
-          <div className="cf-scroll-up-button">
-            <ScrollUpButton
-              ToggledStyle={ {left: '20px', bottom: '10px'} }
-              ShowAtPosition={widgetPageY + 150}
-              StopPosition={widgetPageY - 100}
-              />
-          </div>
+          {topButton}
           <BottomScollListener
             onBottom={this.handleLoadMoreComments}
             offset={500}

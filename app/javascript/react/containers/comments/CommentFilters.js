@@ -207,7 +207,7 @@ class CommentFilters extends React.Component {
           fontSize: ".75em"
         }
 
-        clearButton = <button className="cf-fade-button cf-fade-button-purple btn btn-sm cf-float-right" onClick={this.props.clearFilters}>Clear</button>
+        clearButton = <button className="cf-fade-button btn btn-sm cf-float-right" onClick={this.props.clearFilters}>Clear</button>
       }
 
     }
