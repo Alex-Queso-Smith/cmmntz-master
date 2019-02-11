@@ -174,14 +174,14 @@ class UserNewRequiredContainer extends React.Component {
 
         <div className="actions cf-margin-top-10px">
           {
-            // <button className="btn btn-sm btn-dark cf-float-left" onClick={ updateDisplayComments }>
+            // <button className="btn btn-sm cf-dark-button cf-float-left" onClick={ updateDisplayComments }>
             //   Back
             // </button>
           }
-          <button className="btn btn-sm btn-dark float-left mr-2" onClick={ updateDisplayComments }>
+          <button className="btn btn-sm cf-dark-button float-left mr-2" onClick={ updateDisplayComments }>
             Close
           </button>
-          <button className="btn btn-sm btn-dark cf-float-right" onClick={this.handleRequiredValidation} disabled={this.props.disabled}>
+          <button className="btn btn-sm cf-dark-button cf-float-right" onClick={this.handleRequiredValidation} disabled={this.props.disabled}>
             Next Page
           </button>
           <div style={loginDivStyle} className="cf-text-center">

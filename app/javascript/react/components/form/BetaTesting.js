@@ -14,17 +14,17 @@ export const BugForm = (props)  => {
     buttons =
     <div className="row">
       <div className="col-6">
-        <button className="btn btn-sm btn-dark cf-float-left cf-margin-top-10px" onClick={ props.cancelFeedbackForm }>Cancel</button>
+        <button className="btn btn-sm cf-dark-button cf-float-left cf-margin-top-10px" onClick={ props.cancelFeedbackForm }>Cancel</button>
       </div>
       <div className="col-6">
-        <button className="btn btn-sm btn-dark cf-float-right cf-margin-top-10px" onClick={ props.feedbackFormSubmit } >Submit</button>
+        <button className="btn btn-sm cf-dark-button cf-float-right cf-margin-top-10px" onClick={ props.feedbackFormSubmit } >Submit</button>
       </div>
     </div>
   } else {
     buttons =
     <div className="row">
       <div className="col-6">
-        <button className="btn btn-sm btn-dark cf-float-right cf-margin-top-10px" onClick={ props.feedbackFormSubmit } >Submit</button>
+        <button className="btn btn-sm cf-dark-button cf-float-right cf-margin-top-10px" onClick={ props.feedbackFormSubmit } >Submit</button>
       </div>
     </div>
   }

@@ -110,7 +110,7 @@ class UserNewOptionalContainer extends React.Component {
                 Login
               </button>
             </div>
-            <button id="user-registration-button" type="submit" className="btn btn-sm btn-dark cf-float-right" value="Submit" disabled={this.props.disabled}>
+            <button id="user-registration-button" type="submit" className="btn btn-sm cf-dark-button cf-float-right" value="Submit" disabled={this.props.disabled}>
               Register
             </button>
         </div>

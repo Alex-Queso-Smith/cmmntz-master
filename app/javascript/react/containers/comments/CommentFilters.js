@@ -55,7 +55,7 @@ class CommentFilters extends React.Component {
             <h4 style={sortStyle}>Filters</h4>
           </div>
           <div className="col-6">
-            <button className="cf-fade-button cf-fade-button-purple btn btn-sm cf-float-right" onClick={this.props.clearFilters}>Clear</button>
+            <button className="cf-fade-button btn btn-sm cf-float-right" onClick={this.props.clearFilters}>Clear</button>
           </div>
         </div>
         <div className="row justify-content-center cf-vote-row">

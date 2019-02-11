@@ -101,6 +101,8 @@ class VotingContainerBase extends React.Component {
           })
         }
 
+        this.props.updateCommentInteractions(body.total_interactions)
+
         // update app
         var artSettings = this.props.artSettings
         if (artSettings.userCanPost != body.user_can_post) {

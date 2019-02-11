@@ -64,10 +64,10 @@ class UserEditSettingsContainer extends React.Component {
         />
       <hr />
         <div className="">
-          <button className="btn btn-sm cf-float-right btn-dark" onClick={this.props.handleSubmit}>
+          <button className="btn btn-sm cf-float-right cf-dark-button" onClick={this.props.handleSubmit}>
             Update
           </button>
-          <button className="btn btn-sm btn-dark cf-float-left" onClick={ this.props.updateDisplay }>
+          <button className="btn btn-sm cf-dark-button cf-float-left" onClick={ this.props.updateDisplay }>
             Close
           </button>
         </div>

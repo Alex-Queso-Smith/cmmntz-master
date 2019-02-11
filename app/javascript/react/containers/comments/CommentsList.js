@@ -5,15 +5,13 @@ import { CommentLengthSorter } from '../../util/CommentUtil';
 import Comment from '../../components/comments/Comment';
 
 class CommentsList extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      replyParent: null,
-      allComments: this.props.allComments
-    }
-    this.handleReplyOpen = this.handleReplyOpen.bind(this);
-    this.handleEditUpdate = this.handleEditUpdate.bind(this);
+  state = {
+    replyParent: null,
+    allComments: this.props.allComments
   }
+
+  handleReplyOpen = this.handleReplyOpen.bind(this);
+  handleEditUpdate = this.handleEditUpdate.bind(this);
 
   componentDidUpdate(prevProps, prevState){
     if (prevProps.allComments != this.props.allComments) {

@@ -223,10 +223,10 @@ class Reply extends React.Component {
     var cancelButton, editButton;
     if (!artSettings.disabled) {
       if (editStatus && currentUserId === replyUserId) {
-        editButton = <button className="btn btn-dark btn-sm cf-fade-button" onClick={this.handleEditSubmit}>Edit Comment</button>
+        editButton = <button className="btn cf-dark-button btn-sm cf-fade-button" onClick={this.handleEditSubmit}>Edit Comment</button>
         cancelButton = <button className="btn btn-light btn-sm cf-fade-button" onClick={this.handleCancelEditReply}>Cancel Edit</button>
       } else if (currentUserId === replyUserId) {
-        editButton = <button className="btn btn-dark btn-sm cf-fade-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
+        editButton = <button className="btn cf-dark-button btn-sm cf-fade-button" name="editStatus" onClick={this.handleStateFlip}>Edit Comment</button>
       }
     }
 

@@ -92,7 +92,7 @@ class AdminMailContainer extends React.Component {
 
           <div className="cf-margin-top-10px col-12 col-sm-12">
             <div className="cf-float-right">
-              <button id="comments-button" type="submit" className="btn btn-large btn-dark" value="Submit" disabled={this.state.formInvalid}>
+              <button id="comments-button" type="submit" className="btn btn-large cf-dark-button" value="Submit" disabled={this.state.formInvalid}>
                 Submit Admin Mail
               </button>
             </div>

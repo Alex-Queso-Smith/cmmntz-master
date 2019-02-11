@@ -21,6 +21,7 @@ class Comment extends React.Component {
     userFollowed: this.props.userFollowed,
     userBlocked: this.props.userBlocked,
     replies: this.props.replies,
+    totalInteractions: this.props.totalInteractions,
     isReply: this.props.isReply
   }
 
@@ -32,6 +33,7 @@ class Comment extends React.Component {
   handleEditSubmit = this.handleEditSubmit.bind(this);
   showVotes = this.showVotes.bind(this);
   updateUserVoted = this.updateUserVoted.bind(this);
+  updateCommentInteractions = this.updateCommentInteractions.bind(this);
 
   handleChange(event){
     const target = event.target;
@@ -161,6 +163,12 @@ class Comment extends React.Component {
     this.setState({ userVoted: true })
   }
 
+  updateCommentInteractions(newCount){
+    this.setState({
+      totalInteractions: newCount
+    })
+  }
+
   render(){
     var { userName, createdAt, lengthImage, currentUserId, commentUserId, artId, artType, commentId, userInfo, followedUsers, censor, blockedUsers, artSettings, updateAppState, galleryId, postedAsGuest } = this.props
     var { replies, editStatus, edited, text, userFollowed, userBlocked } = this.state
@@ -272,7 +280,6 @@ class Comment extends React.Component {
 
     }
 
-    var { totalInteractions } = this.props;
     var showVotesButton;
 
     if (!this.state.userVoted) {
@@ -280,7 +287,7 @@ class Comment extends React.Component {
       showVotesButton =
       <div className="row cf-comment-interaction-row">
         <div className="col-6 col-sm-6 cf-comment-interaction-line">
-          {`${totalInteractions} votes`}
+          {`${this.state.totalInteractions} votes`}
         </div>
         <div className="col-6 col-sm-6">
           <button onClick={this.showVotes} className="btn btn-sm cf-float-right cf-fade-button">
@@ -292,7 +299,7 @@ class Comment extends React.Component {
       showVotesButton =
       <div className="row cf-comment-interaction-row">
         <div className="col-12 col-sm-12 cf-comment-interaction-line">
-          {`${totalInteractions} votes`}
+          {`${this.state.totalInteractions} votes`}
         </div>
       </div>
     }
@@ -371,7 +378,7 @@ class Comment extends React.Component {
           commentId={this.props.commentId}
           currentUserId={currentUserId}
           commentVotes={this.props.commentVotes}
-          totalInteractions={this.props.totalInteractions}
+          totalInteractions={this.state.totalInteractions}
           votePercents={this.props.votePercents}
           showVotes={this.showVotes}
           voteCounts={this.props.voteCounts}
@@ -380,6 +387,7 @@ class Comment extends React.Component {
           artSettings={artSettings}
           updateAppState={updateAppState}
           updateUserVoted={this.updateUserVoted}
+          updateCommentInteractions={this.updateCommentInteractions}
           globalSettings={this.props.globalSettings}
         />
       {replies}

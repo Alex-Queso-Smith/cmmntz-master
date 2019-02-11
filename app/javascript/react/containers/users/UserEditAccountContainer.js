@@ -87,10 +87,10 @@ class UserEditAccountContainer extends React.Component {
           <hr />
 
           <div className="form-group actions">
-            <button id="user-registration-button" type="submit" className="btn cf-float-right btn-sm btn-dark" value="Submit">
+            <button id="user-registration-button" type="submit" className="btn cf-float-right btn-sm cf-dark-button" value="Submit">
               Update
             </button>
-            <button className="btn btn-sm btn-dark float-left" onClick={ this.props.updateDisplay }>
+            <button className="btn btn-sm cf-dark-button float-left" onClick={ this.props.updateDisplay }>
               Close
             </button>
           </div>

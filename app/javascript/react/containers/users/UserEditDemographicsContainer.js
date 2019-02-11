@@ -56,10 +56,10 @@ class UserEditDemographicsContainer extends React.Component {
           />
         <hr />
           <div className="form-group actions">
-            <button id="cf-user-edit-demographics-button" type="submit" className="btn btn-sm cf-float-right btn-dark" value="Submit">
+            <button id="cf-user-edit-demographics-button" type="submit" className="btn btn-sm cf-float-right cf-dark-button" value="Submit">
               Update
             </button>
-            <button className="btn btn-sm btn-dark cf-float-left" onClick={ this.props.updateDisplay }>
+            <button className="btn btn-sm cf-dark-button cf-float-left" onClick={ this.props.updateDisplay }>
               Close
             </button>
           </div>

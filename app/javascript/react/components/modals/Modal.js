@@ -4,7 +4,7 @@ class Modal extends React.Component {
   state = {}
 
   render(){
-    var button = <button onClick={this.props.handleClose} className="btn btn-dark btn-sm cf-float-right cf-modal-ok-button">Ok</button>
+    var button = <button onClick={this.props.handleClose} className="btn cf-dark-button btn-sm cf-float-right cf-modal-ok-button">Ok</button>
 
     if (this.props.hideButton) {
       button = <div />;

@@ -121,13 +121,13 @@ class SessionLoginContainer extends React.Component {
           <hr />
 
           <div className="form-group actions cf-margin-top-10px">
-            <button type="submit" className="btn btn-sm btn-dark cf-float-right" value="Submit" disabled={this.state.formInvalid}>
+            <button type="submit" className="btn btn-sm cf-dark-button cf-float-right" value="Submit" disabled={this.state.formInvalid}>
               Login
             </button>
           </div>
         </form>
 
-        <button className="btn btn-sm btn-dark float-left mr-2" onClick={ updateDisplayComments }>
+        <button className="btn btn-sm cf-dark-button float-left mr-2" onClick={ updateDisplayComments }>
           Close
         </button>
 

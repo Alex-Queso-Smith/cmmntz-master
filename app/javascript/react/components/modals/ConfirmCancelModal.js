@@ -12,10 +12,10 @@ export const ConfirmCancelModal = (props) => {
         <div style={contentStyle} className="cf-modal-contents">
           {props.children}
           <div className="cf-margin-top-10px">
-            <button className="cf-float-right btn btn-dark btn-sm cf-margin-right-10px" name={props.name} onClick={props.confirmAction}>
+            <button className="cf-float-right btn cf-dark-button btn-sm cf-margin-right-10px" name={props.name} onClick={props.confirmAction}>
               {props.confirmText}
             </button>
-            <button className="cf-float-left btn btn-dark btn-sm cf-margin-right-10px" onClick={props.closeAction}>
+            <button className="cf-float-left btn cf-dark-button btn-sm cf-margin-right-10px" onClick={props.closeAction}>
               Cancel
             </button>
           </div>
