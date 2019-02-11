@@ -98,10 +98,6 @@ class UserNewRequiredContainer extends React.Component {
       fontWeight: "bold"
     }
 
-    var loginDivStyle = {
-      lineHeight: "2"
-    }
-
     return(
       <div id="reg-required" className="form-group">
         <Input
@@ -146,11 +142,6 @@ class UserNewRequiredContainer extends React.Component {
           <div className="col-6 col-sm-5">
             <button onClick={ this.handlePrivacyPolicyClick } className="btn cf-non-fade-button btn-md cf-privacy-policy">Privacy Policy</button>
           </div>
-
-        </div>
-
-        {privacyPolicy}
-        <div className="row">
           <div className="col">
             <Checkbox
               name="privacyPolicy"
@@ -160,16 +151,11 @@ class UserNewRequiredContainer extends React.Component {
               className={"cf-privacy-policy-checkbox"}
               />
           </div>
-          <div className="col">
-            <Checkbox
-              name="subscribeNewsletter"
-              onChange={this.props.onChange}
-              label="Subscribe to Newsletter"
-              checked={this.props.subscribeNewsletter}
-              className={"cf-privacy-policy-checkbox"}
-              />
-          </div>
+
         </div>
+
+        {privacyPolicy}
+        
         <hr />
 
         <div className="actions cf-margin-top-10px">
@@ -184,7 +170,7 @@ class UserNewRequiredContainer extends React.Component {
           <button className="btn btn-sm cf-dark-button cf-float-right" onClick={this.handleRequiredValidation} disabled={this.props.disabled}>
             Next Page
           </button>
-          <div style={loginDivStyle} className="cf-text-center">
+          <div className="cf-text-center">
             <span style={loginSpanStyle}>Already Registered?</span>
             <button className="btn btn-sm btn-link cf-margin-right-10px" onClick={ updateDisplayLogin }>
               Login

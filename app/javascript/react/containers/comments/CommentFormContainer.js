@@ -329,12 +329,12 @@ class CommentFormContainer extends React.Component {
     } else {
 
       var pbyStyle = {
-        color: "#777777"
+        color: "#777777",
+        fontSize: "12px"
       }
 
-      var cStyle = {
-        color: "#c82123",
-        fontWeight: "bold"
+      var imageStyle = {
+        height: "30px"
       }
 
       var marginCancel = {
@@ -353,7 +353,7 @@ class CommentFormContainer extends React.Component {
           <PrivacyPolicy />
 
           <a style={logoStyle} href="http://www.cmmntz.com" target="_blank" className="btn btn-sm">
-            <span style={pbyStyle}>powered by</span><span style={cStyle}> CMMNTZ</span>
+            <span style={pbyStyle}>powered by</span><span><img style={imageStyle} src={`${this.props.globalSettings.baseImageUrl}/images/logo_gray.png`} /></span>
           </a>
 
           <CommentEtiquette galleryCommentEtiquette={this.props.commentEtiquette} />
@@ -385,7 +385,7 @@ class CommentFormContainer extends React.Component {
             <button className="btn btn-sm cf-dark-button" onClick={this.handleSelfVoteButtonClick} >Self Vote</button>
           </div>
           <div id="cf-filters-top" />
-          <div className="col-8">
+          <div className="col-8 cf-margin-top-5px">
             <div className="row justify-content-center">
               {selfVoteButtonsRowTwo}
             </div>

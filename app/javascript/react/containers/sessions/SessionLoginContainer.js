@@ -78,16 +78,17 @@ class SessionLoginContainer extends React.Component {
       fontWeight: "bold"
     }
 
-    var registerDivStyle = {
-      lineHeight: "2.5"
-    }
-
     var redStyle = {
       color: '#C82023'
     }
 
     var registerButtonStyle = {
       paddingTop: '0px'
+    }
+
+    var imageStyle = {
+      height: "30px",
+      marginTop: "5px"
     }
 
     return(
@@ -132,10 +133,12 @@ class SessionLoginContainer extends React.Component {
         </button>
 
         <div style={registerDivStyle} className="cf-text-center">
-          <span style={registerSpanStyle} className="cf-margin-right-5px">New To <span style={redStyle}>CMMNTZ</span>?</span>
-          <button style={registerButtonStyle} className="btn btn-sm btn-link cf-margin-right-10px" onClick={ updateDisplayRegister }>
-            Register
-          </button>
+          <div className="cf-logo-box">
+            <span style={registerSpanStyle} className="cf-margin-right-5px">New To <img style={imageStyle} src={`${this.props.globalSettings.baseImageUrl}/images/logo_gray.png`} />?</span>
+            <button style={registerButtonStyle} className="btn btn-sm btn-link cf-margin-right-10px" onClick={ updateDisplayRegister }>
+              Register
+            </button>
+          </div>
         </div>
       </div>
     )

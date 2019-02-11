@@ -103,6 +103,17 @@ class UserNewOptionalContainer extends React.Component {
           />
         </div>
         <hr />
+        <div className="row">
+          <div className="col">
+            <Checkbox
+              name="subscribeNewsletter"
+              onChange={this.props.onChange}
+              label="Subscribe to Newsletter"
+              checked={this.props.subscribeNewsletter}
+              className={"cf-privacy-policy-checkbox"}
+              />
+          </div>
+        </div>
         <div className="cf-margin-top-10px">
             <div style={loginDivStyle} className="cf-float-left">
               <span style={loginSpanStyle}>Already Registered?</span>
