@@ -132,7 +132,7 @@ class SessionLoginContainer extends React.Component {
           Close
         </button>
 
-        <div style={registerDivStyle} className="cf-text-center">
+        <div className="cf-text-center">
           <div className="cf-logo-box">
             <span style={registerSpanStyle} className="cf-margin-right-5px">New To <img style={imageStyle} src={`${this.props.globalSettings.baseImageUrl}/images/logo_gray.png`} />?</span>
             <button style={registerButtonStyle} className="btn btn-sm btn-link cf-margin-right-10px" onClick={ updateDisplayRegister }>
