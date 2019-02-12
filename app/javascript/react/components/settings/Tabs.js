@@ -15,7 +15,6 @@ const Tabs = (props) => {
   const types = [
     ["Account", ""],
     ["Demographics", "demographics"],
-    ["Looks", "looks"],
     ["Search", "settings"]
   ]
 
