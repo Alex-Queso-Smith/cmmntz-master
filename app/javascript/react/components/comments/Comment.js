@@ -155,7 +155,7 @@ class Comment extends React.Component {
   }
 
   showVotes(){
-    this.setState({ userVoted: true })
+    this.setState({ userVoted: !this.state.userVoted })
     this.props.showVoteCountTrigger()
   }
 
@@ -282,7 +282,7 @@ class Comment extends React.Component {
 
     var showVotesButton;
 
-    if (!this.state.userVoted) {
+    // if (!this.state.userVoted) {
 
       showVotesButton =
       <div className="row cf-comment-interaction-row">
@@ -295,14 +295,14 @@ class Comment extends React.Component {
           </button>
         </div>
       </div>
-    } else {
-      showVotesButton =
-      <div className="row cf-comment-interaction-row">
-        <div className="col-12 col-sm-12 cf-comment-interaction-line">
-          {`${this.state.totalInteractions} votes`}
-        </div>
-      </div>
-    }
+    // } else {
+    //   showVotesButton =
+    //   <div className="row cf-comment-interaction-row">
+    //     <div className="col-12 col-sm-12 cf-comment-interaction-line">
+    //       {`${this.state.totalInteractions} votes`}
+    //     </div>
+    //   </div>
+    // }
 
     var replies;
     if (!this.state.isReply) {
