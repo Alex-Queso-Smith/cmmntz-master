@@ -345,7 +345,7 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit(){
     var search = new FormData();
 
-    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius, gender, ageRange, hideAnonAndGuest, previousCommentIds, topic } = this.state.sortOpts;
+    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius, gender, ageRange, hideAnonAndGuest, previousCommentIds, selectedTopic } = this.state.sortOpts;
     var { artType, artId } = this.props;
     search.append("art_type", artType)
     search.append("art_id", artId)
@@ -368,8 +368,8 @@ class CommentingContainer extends React.Component {
     if (hideAnonAndGuest) {
       search.append("search[hide_anon_and_guest]", hideAnonAndGuest)
     }
-    if (topic) {
-      search.append("search[topic]", topic)
+    if (selectedTopic) {
+      search.append("search[topic]", selectedTopic)
     }
 
     if (previousCommentIds.length) {
