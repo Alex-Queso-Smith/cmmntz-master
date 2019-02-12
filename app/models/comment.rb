@@ -5,7 +5,7 @@ class Comment < ApplicationRecord
 
   attr_accessor :vote_types, :force, :old_top_id
 
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :art
   belongs_to :gallery
   belongs_to :parent, class_name: 'Comment', optional: true
