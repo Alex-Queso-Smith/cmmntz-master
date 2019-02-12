@@ -127,7 +127,7 @@ $breakpoint-phone: 575px;
   .cf-filter-btn-container {
     padding: 0px;
 
-    .cf-filter-btn {
+    .cf-filter-btn:not(.cf-topic-button) {
       border-radius: 0;
       width: 43%
     }

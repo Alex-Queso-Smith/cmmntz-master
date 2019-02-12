@@ -189,6 +189,7 @@ export const TopicFilterButtons = (props) => {
         onClick={props.onClick}
         value={topic}
         opacityClass={opacity}
+        extraClass="cf-topic-button"
       />
     )
   })
@@ -202,6 +203,7 @@ export const TopicFilterButtons = (props) => {
           onClick={props.onClick}
           value=""
           opacityClass={articleOpacity}
+          extraClass="cf-topic-button"
         />
         {topicButtons}
       </div>
