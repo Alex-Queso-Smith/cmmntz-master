@@ -419,7 +419,6 @@ class CommentingContainer extends React.Component {
         var newOpts = this.state.sortOpts
         newOpts.selectedTopic = this.props.artSettings.artTopics[0]
         this.setState({ sortOpts: newOpts})
-        debugger
         this.handleFilterSubmit();
       }
     })
@@ -837,7 +836,7 @@ class CommentingContainer extends React.Component {
     }
 
     var topicButtons;
-    if (artSettings.artTopics) {
+    if (artSettings.artTopics.length > 0) {
       topicButtons =
       <TopicFilterButtons
           topics={artSettings.artTopics}
