@@ -175,7 +175,7 @@ class CommentingContainer extends React.Component {
         })
         .then(finished => {
           if (this._isMounted) {
-            this.handleFilterSubmit()
+            this.handleFilterSubmit(true)
           }
         })
         .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -342,7 +342,7 @@ class CommentingContainer extends React.Component {
     }
   }
 
-  handleFilterSubmit(){
+  handleFilterSubmit(mount = false){
     var search = new FormData();
 
     var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius, gender, ageRange, hideAnonAndGuest, previousCommentIds, topic } = this.state.sortOpts;
@@ -411,8 +411,20 @@ class CommentingContainer extends React.Component {
         totalComments: commentData.total_comments,
         grandTotalComments: commentData.grand_total_comments
       })
+      return commentData;
+    })
+    .then(fn => {
+      if (mount && this.state.comments.length < 10
+        && this.props.artSettings.artTopics.length > 0) {
+        var newOpts = this.state.sortOpts
+        newOpts.selectedTopic = this.props.artSettings.artTopics[0]
+        this.setState({ sortOpts: newOpts})
+        debugger
+        this.handleFilterSubmit();
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+
   }
 
   handleFilterSubmitMan(event){
