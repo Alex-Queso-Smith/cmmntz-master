@@ -201,7 +201,8 @@ class CommentFormContainer extends React.Component {
 
       var gearStyle = {
         marginLeft: "5px",
-        marginTop: "5px"
+        marginTop: "5px",
+        background: "none"
       }
 
       var logoutStyle = {
@@ -343,14 +344,16 @@ class CommentFormContainer extends React.Component {
         paddingLeft: "12px"
       }
 
+      var logo =
+      <a href="http://www.cmmntz.com" target="_blank" className="btn btn-sm">
+        <span style={pbyStyle}>powered by</span><span><img style={imageStyle} src={`${this.props.globalSettings.baseImageUrl}/images/logo_gray.png`} /></span>
+      </a>
+
+
       commentForm =
       <form className="cf-comment-form form" id="cf-comment-form"  onSubmit={this.handleFormSubmit}>
         <div style={marginCancel} className="row justify-content-between">
           <PrivacyPolicy />
-
-          <a href="http://www.cmmntz.com" target="_blank" className="btn btn-sm">
-            <span style={pbyStyle}>powered by</span><span><img style={imageStyle} src={`${this.props.globalSettings.baseImageUrl}/images/logo_gray.png`} /></span>
-          </a>
 
           <CommentEtiquette galleryCommentEtiquette={this.props.commentEtiquette} />
         </div>
