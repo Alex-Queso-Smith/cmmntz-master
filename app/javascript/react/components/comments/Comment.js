@@ -329,6 +329,15 @@ class Comment extends React.Component {
       />
     }
 
+    var artLink;
+
+    if (this.props.commentArtId != this.props.artId) {
+      artLink =
+      <div className="cf-art-link">
+        Comment From: <a target="_blank" href={`http://${this.props.artUrl}`}>{this.props.artUrl}</a>
+      </div>
+    }
+
     return(
       <div className="cf-comment">
         <div className="cf-comment-wrapper">
@@ -358,6 +367,7 @@ class Comment extends React.Component {
 
             {textBox}
             {lastEdited}
+            {artLink}
             <div className="cf-cf-fade-button-group">
               {editButton}
               {cancelButton}

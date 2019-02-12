@@ -1,4 +1,6 @@
 json.id comment.id
+json.art_id comment.art_id
+json.art_url comment.art.url
 json.approved comment.approved?
 json.text comment.text
 json.censored_text comment.censored_text

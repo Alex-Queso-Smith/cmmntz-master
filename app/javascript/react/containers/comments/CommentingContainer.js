@@ -14,6 +14,7 @@ import { presetOptions } from '../../components/filters/SortSelect';
 import { BugForm } from '../../components/form/BetaTesting';
 import TutorialVideo from '../../components/general/TutorialVideo';
 import FeedbackFormContainer from '../FeedbackFormContainer';
+import { TopicFilterButtons } from '../../util/FilterUtil'
 
 class CommentingContainer extends React.Component {
   state = {
@@ -43,9 +44,11 @@ class CommentingContainer extends React.Component {
       longitude: '',
       gender: '',
       ageRange: '',
-      hideAnonAndGuest: true,
+      hideAnonAndGuest: false,
       setFrom: 'gallery',
       censor: false,
+      topics: "",
+      selectedTopic: "",
       previousCommentIds: [],
       rawGeoData: []
     },
@@ -330,7 +333,7 @@ class CommentingContainer extends React.Component {
 
       FetchWithUpdate(this, `${this.props.globalSettings.baseUrl}/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
       .then(success => {
-        
+
         var allComments = this.state.comments;
         var filteredComments = allComments.filter(comment => comment.id != commentId)
         this.setState({ comments: filteredComments })
@@ -342,7 +345,7 @@ class CommentingContainer extends React.Component {
   handleFilterSubmit(){
     var search = new FormData();
 
-    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius, gender, ageRange, hideAnonAndGuest, previousCommentIds } = this.state.sortOpts;
+    var { sortDir, page, sortType, filterList, notFilterList, commentsFrom, votesFrom, latitude, longitude, radius, gender, ageRange, hideAnonAndGuest, previousCommentIds, topic } = this.state.sortOpts;
     var { artType, artId } = this.props;
     search.append("art_type", artType)
     search.append("art_id", artId)
@@ -364,6 +367,9 @@ class CommentingContainer extends React.Component {
     }
     if (hideAnonAndGuest) {
       search.append("search[hide_anon_and_guest]", hideAnonAndGuest)
+    }
+    if (topic) {
+      search.append("search[topic]", topic)
     }
 
     if (previousCommentIds.length) {
@@ -818,6 +824,16 @@ class CommentingContainer extends React.Component {
       this.handleFilterSubmit();
     }
 
+    var topicButtons;
+    if (artSettings.artTopics) {
+      topicButtons =
+      <TopicFilterButtons
+          topics={artSettings.artTopics}
+          selectedTopic={sortOpts.selectedTopic}
+          onClick={this.handleFilterByClick}
+      />
+    }
+
     var topButton;
 
     var savedTopButton =
@@ -848,6 +864,7 @@ class CommentingContainer extends React.Component {
               tempLogout={this.tempLogout}
               globalSettings={this.props.globalSettings}
               />
+            {topicButtons}
             <HybridSortSelect
               onChange={this.handleSortSelectChange}
               option={this.state.sortOpts.hybridSortSelect}

@@ -42,6 +42,10 @@ class Art < ApplicationRecord
     return a
   end
 
+  def self.find_by_topic(topic)
+    joins(:topics).where(topics: {name: topic})
+  end
+
   ### General methods
 
   def grand_total_comments(user)

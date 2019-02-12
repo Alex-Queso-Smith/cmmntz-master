@@ -177,6 +177,38 @@ export const FilterCommentsBy = (props) => {
   )
 }
 
+export const TopicFilterButtons = (props) => {
+  var topicButtons =
+  props.topics.map((topic) => {
+    var opacity = props.selectedTopic == topic ? "" : "cf-translucent"
+    return(
+      <FilterFromButton
+        key={`topic_button_${topic}`}
+        title={topic}
+        name="selectedTopic"
+        onClick={props.onClick}
+        value={topic}
+        opacityClass={opacity}
+      />
+    )
+  })
+  var articleOpacity = props.selectedTopic == '' ? "" : "cf-translucent"
+  return(
+    <div className="row cf-margin-bottom-10px">
+      <div className="col-12">
+        <FilterFromButton
+          title="This Article"
+          name="selectedTopic"
+          onClick={props.onClick}
+          value=""
+          opacityClass={articleOpacity}
+        />
+        {topicButtons}
+      </div>
+    </div>
+  )
+}
+
 export const FilterVotesBy = (props) => {
   return(
     FilterFromTypes.map((type) => {

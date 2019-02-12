@@ -47,7 +47,7 @@ class CommentsList extends React.Component {
           this.props.banUser(comment.user.user_id, event)
         }
 
-        var { id, edited, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text, vote_counts, total_interactions, replies } = comment
+        var { id, edited, text, created_at, vote_percents, user_has_voted, current_users_votes, censored_text, vote_counts, total_interactions, replies, art_url, art_id } = comment
         var { user_name, gender, age_range, user_id, show_censored, posted_as_guest } = comment.user
 
         var shownText = text;
@@ -104,6 +104,8 @@ class CommentsList extends React.Component {
                 postedAsGuest={posted_as_guest}
 
                 artId={artId}
+                artUrl={art_url}
+                commentArtId={art_id}
                 artType={artType}
                 censor={censor}
                 galleryId={this.props.galleryId}

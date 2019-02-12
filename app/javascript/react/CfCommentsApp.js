@@ -14,7 +14,8 @@ class CfCommentsApp extends React.Component {
       deactivated: false,
       blacklisted: false,
       disabledMessage: "",
-      userCanPost: true
+      userCanPost: true,
+      artTopics: []
     }
   }
   handleAppSetState = this.handleAppSetState.bind(this)
@@ -35,6 +36,7 @@ class CfCommentsApp extends React.Component {
       newArtSettings.disabledMessage = artData.art.disabled_message
       // newArtSettings.userCanPost = artData.art.user_can_post
       newArtSettings.userCanPost = true // override to deactivate check
+      newArtSettings.artTopics = artData.art.topics
 
       this.setState({
         artSettings: newArtSettings

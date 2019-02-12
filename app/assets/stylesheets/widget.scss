@@ -5,6 +5,7 @@ $grayline: #D3D3D3;
 
 $dark-base: #7A7A7A;
 $dark: #7A7A7A;
+$black: #202430;
 $dark-grayline: #D3D3D3;
 $bootstrap-blue: #0069D9;
 
@@ -80,6 +81,13 @@ $breakpoint-phone: 575px;
 }
 
 /* end Side panels */
+
+.cf-filter-btn {
+  &:hover {
+    background-color: $black;
+    opacity: 1;
+  }
+}
 
 @media (min-width: $breakpoint-phone) {
   #cf-comments-main {
@@ -531,4 +539,9 @@ a:hover {
 
 .cf-logo-box {
   margin-top: 15px;
+}
+
+.cf-art-link {
+  margin: 5px 0px 5px 0px;
+  font-size: .87em;
 }
