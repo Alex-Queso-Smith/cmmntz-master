@@ -330,6 +330,7 @@ class CommentingContainer extends React.Component {
 
       FetchWithUpdate(this, `${this.props.globalSettings.baseUrl}/api/v1/comments/${commentId}.json?gallery_id=${galleryId}`, "DELETE", updateComment )
       .then(success => {
+        
         var allComments = this.state.comments;
         var filteredComments = allComments.filter(comment => comment.id != commentId)
         this.setState({ comments: filteredComments })

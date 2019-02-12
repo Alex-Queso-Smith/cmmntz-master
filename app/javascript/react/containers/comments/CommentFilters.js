@@ -224,7 +224,7 @@ class CommentFilters extends React.Component {
 
       filterRow =
       <div className="row">
-        <div className="col-2">
+        <div onClick={this.expandFilters} className="col-2">
           <button onClick={this.expandFilters} className="btn cf-sort-filter-button cf-cursor-pointer btn-sm">Filters{span}</button>
         </div>
 
