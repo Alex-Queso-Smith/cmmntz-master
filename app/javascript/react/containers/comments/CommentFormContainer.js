@@ -201,12 +201,15 @@ class CommentFormContainer extends React.Component {
 
       var gearStyle = {
         marginLeft: "5px",
-        marginTop: "5px",
-        background: "none"
+        marginTop: "5px"
       }
 
       var logoutStyle = {
         textAlign: "right"
+      }
+
+      var backgroundCancelStyle = {
+        background: "none"
       }
 
       userNameButton =
@@ -215,7 +218,7 @@ class CommentFormContainer extends React.Component {
       </div>
       buttonOne =
       <div style={gearStyle} className="col-2 cf-padding-cancel">
-        <button className="btn btn-sm" onClick={ changeDisplaySettings }>
+        <button style={backgroundCancelStyle} className="btn btn-sm" onClick={ changeDisplaySettings }>
           <img className={`cf-vote-btn cf-cursor-pointer`} src={`${this.props.globalSettings.baseImageUrl}/images/icons-v2/gear.png`} />
         </button>
       </div>
