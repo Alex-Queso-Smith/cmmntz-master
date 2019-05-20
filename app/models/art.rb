@@ -66,6 +66,10 @@ class Art < ApplicationRecord
     disabled? ? true : thread_expired? ? true : false
   end
 
+  def deactivated?
+    deactivated? ? true : thread_expired? ? true : false
+  end
+
   def thread_expired?
     return false unless default_art_thread_expiration_days.is_a? Integer
     Time.now > (published_at + default_art_thread_expiration_days.days)
